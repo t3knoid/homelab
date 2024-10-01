@@ -2,6 +2,18 @@
 
 The following process joins a Proxmox VE server to the refol.us active directory domain. These instructions assumes an active directory server is on IP 192.168.2.251.
 
+- [Systems Requirement](#systems-requirement)
+- [Install Required Packages](#install-required-packages)
+- [Point DNS Setting to Active Directory Server](#point-dns-setting-to-active-directory-server)
+- [Discover Active Directory Domain](#discover-active-directory-domain)
+- [Join Machine to Domain](#join-machine-to-domain)
+- [sssd.conf File and Home Directory](#sssdconf-file-and-home-directory)
+- [Enable mkhomedir](#enable-mkhomedir)
+  - [Verify Domain Group and User Access](#verify-domain-group-and-user-access)
+- [SSSD Log](#sssd-log)
+- [Add User to Sudoers Group](#add-user-to-sudoers-group)
+- [References](#references)
+
 ## Systems Requirement
 
 Windows DNS Server must be installed in the Windows Domain controller.

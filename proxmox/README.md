@@ -1,5 +1,11 @@
 # Proxmox
 
+Proxmox provides hosting for Virtual Machines.
+
+- [Proxmox Cluster](#proxmox-cluster)
+- [Host Details](#host-details)
+
+## Proxmox Cluster
 Proxmox is configured as a three-node cluster with the following nodes:
 
 - pve-0 (https://192.168.2.200:8006/)
@@ -18,21 +24,3 @@ Each host uses the same mini PC platform, [ACEMAGIC S1 Mini PC](https://www.amaz
 | pve-2 | 192.168.2.202 | 16MB | 512GB | 512GB |
 
 The secondary drive is a [Western Digital Red SA500 NAS SSD SATA III drive](https://www.amazon.com/dp/B07YFG1N7Q?ref=ppx_yo2ov_dt_b_fed_asin_title). This drive is used to provide [DRBD](https://linbit.com/drbd/) (Distributed Replicated Block Device) type storage used in the Linstor configuration.
-
-## Virtual Machine Agent Install
-
-In order to get information from Virtual Machines, a [guest agent](https://pve.proxmox.com/wiki/Qemu-guest-agent) is installed in the virtual machine.
-
-### Linux
-
-Perform the following to install the guest agent in a Linux operating system.
-
-```bash
-apt-get install qemu-guest-agent
-systemctl start qemu-guest-agent
-systemctl enable qemu-guest-agent
-```
-
-### Windows
-
-Download and mount the [Windows VirtIO Drivers ISO file](https://pve.proxmox.com/wiki/Windows_VirtIO_Drivers). Execute the agent installer inside the guest-agent folder.

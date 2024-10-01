@@ -1,6 +1,25 @@
 # Ansible
 
-https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
+- [Virtual Machine Configuration](#virtual-machine-configuration)
+  - [Adding Second Drive](#adding-second-drive)
+  - [Join Machine to Active Directory](#join-machine-to-active-directory)
+  - [Configure Ansible Become User](#configure-ansible-become-user)
+- [Ansible Installation](#ansible-installation)
+  - [Install Python](#install-python)
+    - [Create a Python Virtual Environment](#create-a-python-virtual-environment)
+    - [Download the Python venv module](#download-the-python-venv-module)
+    - [Create and activate the virtual environment](#create-and-activate-the-virtual-environment)
+    - [Make sure the latest version of pip is installed](#make-sure-the-latest-version-of-pip-is-installed)
+    - [Use pip to install Ansible](#use-pip-to-install-ansible)
+  - [Install Python Modules](#install-python-modules)
+    - [proxmoxer](#proxmoxer)
+    - [requests](#requests)
+  - [Other Installations](#other-installations)
+- [Ansible Getting Started](#ansible-getting-started)
+- [Configure SSH Access to Proxmox Servers](#configure-ssh-access-to-proxmox-servers)
+- [Ansible Lint](#ansible-lint)
+- [References](#references)
+
 
 ## Virtual Machine Configuration
 
@@ -22,7 +41,9 @@ Ansible will be installed on a VM running a minimal Ubuntu 24 installation. A se
 
 The [Join an Ubuntu 24.04 VM to Active Directory Domain](../activedirectory/join_an_ubuntu_24.04_to_active_directory_domain.md) document provides instructions on how to join the machine to active directory.
 
-### Create Ansible Group
+### Configure Ansible Become User
+
+To provide some semblance of security, use a non-root user as the become_user. The Active Directory user ansible@refol.us will be used. 
 
 Create the ansible group.
 
@@ -30,16 +51,37 @@ Create the ansible group.
 sudo addgroup ansible
 ```
 
-Add users to the group.
+Add the ansible@refol.us to the ansible group.
 
 ```bash
-sudo adduser frank ansible
+sudo usermod -a -G ansible ansible@refol.us
+```
+
+```bash
+sudo usermod -a -G ansible ansible
+```
+
+Add ansible@refol.us to the sudo group.
+
+```bash
+sudo usermod -a -G sudo ansible@refol.us
+```
+
+```bash
+sudo usermod -a -G sudo ansible
+```
+
+The following must be configured in Ansible when elevating Ansible to use root access.
+
+```bash
+become: true
+become_user: ansible
+become_method: sudo
 ```
 
 ## Ansible Installation
 
 As of this writing, the latest version of Ansible is version [10.4.0](https://github.com/ansible-community/ansible-build-data/blob/main/10/CHANGELOG-v10.md#ansible-core) which contains ansible-core 2.17.4.
-
 
 ### Install Python
 
@@ -105,6 +147,26 @@ ansible [core 2.17.4]
   libyaml = True
 ```
 
+### Install Python Modules
+
+#### proxmoxer
+
+```bash
+python -m pip install proxmoxer
+```
+
+#### requests
+
+```bash
+python -m pip install requests
+```
+
+### Other Installations
+
+```bash
+sudo apt install sshpass
+```
+
 ## Ansible Getting Started
 
 Change to the Ansible working folder.
@@ -125,16 +187,38 @@ Initialize a new ansible.cfg
 ansible-config init --disabled -t all > ansible.cfg
 ```
 
+## Configure SSH Access to Proxmox Servers
+
+Since we are using Proxmox as the VM provider, the Ansible account used to execute playbooks must be configured to access each Proxmox node via SSH.
+
+```bash
+ssh pve-0
+ssh pve-1
+ssh pve-2
+```
+
+Similarly, ensure that the become_root user (i.e., ansible@refol.us) has access as well.
+
+```bash
+ssh root@pve-0
+ssh root@pve-1
+ssh root@pve-2
+```
+
+
+
+## Ansible Lint
+
+```bash
+pip3 install ansible-lint
+```
+
+
 ## References
 
 - https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installation-guide
 - https://docs.ansible.com/ansible/latest/cli/ansible-config.html#ansible-config
 - https://docs.ansible.com/ansible/latest/reference_appendices/config.html
+- https://ansible.readthedocs.io/projects/lint/installing/
+- https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
 
-## Semaphore
-
-https://github.com/semaphoreui/semaphore
-
-https://hub.docker.com/r/semaphoreui/semaphore
-
-https://semaphoreui.com/install/docker/2_10_22/

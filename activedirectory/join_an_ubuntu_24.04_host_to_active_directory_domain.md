@@ -1,21 +1,32 @@
 # Join an Ubuntu 24.04 Host to Active Directory Domain
 
 The following process joins an Ubuntu 24.04 host to the refol.us active directory domain. These instructions assumes an active directory server is on IP 192.168.2.251.
+- [1. Systems Requirement](#1-systems-requirement)
+- [2. Install Required Packages](#2-install-required-packages)
+- [3. Point DNS Setting to Active Directory Server](#3-point-dns-setting-to-active-directory-server)
+- [4. Discover Active Directory Domain](#4-discover-active-directory-domain)
+- [5. Join Machine to Domain](#5-join-machine-to-domain)
+- [6. sssd.conf File and Home Directory](#6-sssdconf-file-and-home-directory)
+- [7. Enable mkhomedir](#7-enable-mkhomedir)
+- [8. Verify Domain Group and User Access](#8-verify-domain-group-and-user-access)
+- [9. SSSD Log](#9-sssd-log)
+- [10. Add User to Sudoers Group](#10-add-user-to-sudoers-group)
+- [11. References](#11-references)
 
-## Systems Requirement
+## 1. Systems Requirement
 
 Windows DNS Server must be installed in the Windows Domain controller.
 
 Configure Pi-Hole  DNS Setting Conditional Forwarding to point to the AD host.
 
-## Install Required Packages
+## 2. Install Required Packages
 
 ```bash
 sudo apt update
 sudo apt -y install realmd sssd sssd-tools libnss-sss libpam-sss adcli samba-common-bin oddjob oddjob-mkhomedir packagekit
 ```
 
-## Point DNS Setting to Active Directory Server
+## 3. Point DNS Setting to Active Directory Server
 
 Edit /etc/netplan/50-cloud-init.yaml and set the DNS server to the active directory server.
 
@@ -45,7 +56,7 @@ Apply change.
 sudo netplan apply
 ```
 
-## Discover Active Directory Domain
+## 4. Discover Active Directory Domain
 
 ```bash
 frank@ubuntu:~$ sudo realm discover refol.us
@@ -74,7 +85,7 @@ Notice that the host has not been configured to the active directory domain.
 configured: no
 ```
 
-## Join Machine to Domain
+## 5. Join Machine to Domain
 
 Run the following command to join the machine to the domain.
 
@@ -172,7 +183,7 @@ login-formats: %U@refol.us
 
 This can be modified to only use the username in the next section.
 
-## sssd.conf File and Home Directory
+## 6. sssd.conf File and Home Directory
 
 By default, the realm command has already configured this file. It added the pam and nss modules and started the necessary services.
 
@@ -205,7 +216,6 @@ Edit this file so that the domain name is not needed when authenticating with a 
 ```bash
 use_fully_qualified_names = False
 ```
-
 Restart the sssd service.
 
 ```bash
@@ -222,7 +232,7 @@ The fallback_homedir is /home/%u@%d. For example, a user will have a home direct
 
 The use_fully_qualified_names is set to True. As a result, users must log in using the format user@domain.
 
-## Enable mkhomedir
+## 7. Enable mkhomedir
 
 The realm command doesn’t set up pam_mkhomedir. Let’s configure it:
 
@@ -230,7 +240,7 @@ The realm command doesn’t set up pam_mkhomedir. Let’s configure it:
 sudo pam-auth-update --enable mkhomedir
 ```
 
-## Verify Domain Group and User Access
+## 8. Verify Domain Group and User Access
 
 ```bash
 sudo getent passwd frank@refol.us
@@ -253,7 +263,7 @@ uid=873401104(frank@refol.us) gid=873400513(domain users@refol.us) groups=873400
 ```
 </details>
 
-## SSSD Log
+## 9. SSSD Log
 
 Monitor the SSSD log in the event of an authentication issue. 
 
@@ -261,13 +271,13 @@ Monitor the SSSD log in the event of an authentication issue.
 sudo tail -f /var/log/sssd/sssd_refol.us.log
 ```
 
-## Add User to Sudoers Group
+## 10. Add User to Sudoers Group
 
 ```bash
 sudo usermod -a -G sudo frank@refol.us
 ```
 
-## References
+## 11. References
 
 - https://www.server-world.info/en/note?os=Ubuntu_24.04&p=realmd
 - https://ubuntu.com/server/docs/how-to-set-up-sssd-with-active-directory

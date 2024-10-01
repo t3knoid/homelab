@@ -1,86 +1,29 @@
 # Administering Active Directory
 
-The following is a [list of PowerShell commands](https://learn.microsoft.com/en-us/powershell/module/activedirectory/?view=windowsserver2022-ps) useful in administering Active Directory.
+The following provides different ways of managing Windows Server Core.
 
-## Change Administrator Password
-```powershell
-net user administrator *
-```
+- [Server Manager](#server-manager)
+- [MMC](#mmc)
+- [Powershell](#powershell)
+- [References](#references)
 
-## Show the available cmdlets in the ADDSDeployment module
-
-```powershell
-Get-Command -Module ADDSDeployment
-```
-
-## Add a Domain User
+> [!IMPORTANT] 
+> Execute the following powershell command to configure the Windows server firewall to allow remote management.
 
 ```powershell
-New-ADUser -Name "Frank Refol" -GivenName "Frank" -Surname "Refol" -SamAccountName "frank" -UserPrincipalName "frank@refol.us" -AccountPassword(Read-Host -AsSecureString "Input Password") -Enabled $true
+Enable-NetFirewallRule -DisplayGroup "Windows Remote Management"
 ```
+## Server Manager
 
-Enter a password when prompted.
+Server Manager must be installed separately. In Windows 11, for example, open settings and navigate to the **Add an optional feature** window. Click the **View features** button and enable  the **RSAT: Server Manager** feature.
 
-## Add User to Domain Admins Group
+## MMC
 
-```powershell
-Add-ADGroupMember -Identity "Domain Admins" -Members frank
-```
+Open the MMC application and navigate to **File > Add/Remove Snap-ins." Choose **Computer Management** from the Add or Remove Snap-ins window. Enter the server IP or host to manage.
 
-## List all Domain Administrators
+## Powershell 
 
-```powershell
-Get-ADGroupMember -Identity Administrators -Recursive
-```
-
-## Show Windows Features Installed
-
-```powershell
-get-windowsfeature
-```
-
-## Get specific computer that shows all properties
-
-```powershell
- Get-ADComputer -Identity "ansible-0" -Properties *
- ```
-
- ## Get all computer accounts using a filter
-
- ```powershell
- Get-ADComputer -Filter *
- ```
-
-## Get Network Address
-
-```powershell
-Get-NetIPInterface
-```
-
-### Set Static IP Network Address
-
-If there is an existing static IP address set, remove it first with the following command.
-
-```powershell
-Remove-NetIPAddress
-```
-If DHCP is enabled, disable it first,
-
-```powershell
-Set-NetIPInterface
-```
-
-Use the following to set the new static IP address.
-
-```powershell
-New-NetIPaddress -InterfaceIndex 6 -IPAddress 192.168.2.251 -PrefixLength 24 -DefaultGateway 192.168.2.1
-```
-
-### Set DNS 
-
-```bash
-Set-DNSClientServerAddress –InterfaceIndex 12 -ServerAddresses 192.168.2.252,192.168.2.253
-```
+The [Powershell Commands for Server Management](powershell_commands_for_server_management.md) is a active list of Powershell commands to help with managing a Window Server Core from a Powershell command-line.
 
  ## References
 

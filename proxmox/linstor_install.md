@@ -4,9 +4,21 @@ Linstor provides support of failover of VMs. It uses DRBD to provide persistent 
 
 Use the following [guide](https://linbit.com/blog/linstor-setup-proxmox-ve-volumes/) to install and configure Linstor.
 
+- [Linstor Install Overview](#linstor-install-overview)
+  - [Prepare Storage](#prepare-storage)
+  - [Install Components](#install-components)
+  - [Add Nodes](#add-nodes)
+  - [Configure Storage](#configure-storage)
+  - [Linstor Resource Groups](#linstor-resource-groups)
+  - [Linstor Plugin Setup](#linstor-plugin-setup)
+  - [Restart Services](#restart-services)
+- [Changing IP Address of Clusters](#changing-ip-address-of-clusters)
+  - [Modify Node IP Address](#modify-node-ip-address)
+  - [Verify Node Cluster](#verify-node-cluster)
+
 ## Linstor Install Overview
 
-The following is an abridged version of the afformentioned guide.
+The following is an abridged version of the aforementioned guide.
 
 ### Prepare Storage
 

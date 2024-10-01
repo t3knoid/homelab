@@ -1,40 +1,18 @@
-# Join an Ubuntu 24.04 VM to Active Directory Domain
+# Join an Ubuntu 24.04 Host to Active Directory Domain
+
+The following process joins an Ubuntu 24.04 host to the refol.us active directory domain. These instructions assumes an active directory server is on IP 192.168.2.251.
 
 ## Systems Requirement
 
 Windows DNS Server must be installed in the Windows Domain controller.
 
-Configure Pi-Hole  DNS Setting Conditional Forwarding to point to the AD host (e.g. 192.168.2.251).
+Configure Pi-Hole  DNS Setting Conditional Forwarding to point to the AD host.
 
 ## Install Required Packages
 
 ```bash
 sudo apt update
 sudo apt -y install realmd sssd sssd-tools libnss-sss libpam-sss adcli samba-common-bin oddjob oddjob-mkhomedir packagekit
-```
-
-## Verify the Domain is Discoverable via DNS
-
-```bash
-sudo realm -v discover refol.us
- * Resolving: _ldap._tcp.refol.us
- * Performing LDAP DSE lookup on: 192.168.2.252
- ! Can't contact LDAP server
- * Performing LDAP DSE lookup on: 192.168.2.251
- * Successfully discovered: refol.us
-refol.us
-  type: kerberos
-  realm-name: REFOL.US
-  domain-name: refol.us
-  configured: no
-  server-software: active-directory
-  client-software: sssd
-  required-package: sssd-tools
-  required-package: sssd
-  required-package: libnss-sss
-  required-package: libpam-sss
-  required-package: adcli
-  required-package: samba-common-bin
 ```
 
 ## Point DNS Setting to Active Directory Server
@@ -67,16 +45,13 @@ Apply change.
 sudo netplan apply
 ```
 
-## Verify DNS Server
-
-```bash
-resolvectl status
-```
-
 ## Discover Active Directory Domain
 
 ```bash
 frank@ubuntu:~$ sudo realm discover refol.us
+```
+<details>
+<summary>Click to show output</summary>
 refol.us
   type: kerberos
   realm-name: REFOL.US
@@ -91,13 +66,24 @@ refol.us
   required-package: adcli
   required-package: samba-common-bin
 ```
+</details>
+
+Notice that the host has not been configured to the active directory domain.
+
+```bash
+configured: no
+```
+
 ## Join Machine to Domain
 
 Run the following command to join the machine to the domain.
 
 ```bash
 sudo realm join -v refol.us
+```
 
+<details>
+<summary>Click to show output</summary>
  * Resolving: _ldap._tcp.refol.us
  * Performing LDAP DSE lookup on: 192.168.2.251
  * Successfully discovered: refol.us
@@ -139,23 +125,59 @@ Password for Administrator:
  * /usr/sbin/service sssd restart
  * Successfully enrolled machine in realm
 ```
+</details>
 
 Enter the domain administrator's password when prompted.
 
-## View the Current Realmd Details
+## Verify Machine has been Joined to Active Directory 
 
-To view our current realmd details, we run the realm list command. The output should be similar to that of realm discover.
+Verify the machine has been joined to Active Directory using the **realmd** command.  The output should be similar to that of realm discover.
 
 ```bash
 sudo realm list
 ```
+
+<details>
+<summary>Click to show output</summary>
+```bash
+root@pve-0:~# sudo realm discover refol.us
+refol.us
+  type: kerberos
+  realm-name: REFOL.US
+  domain-name: refol.us
+  configured: kerberos-member
+  server-software: active-directory
+  client-software: sssd
+  required-package: sssd-tools
+  required-package: sssd
+  required-package: libnss-sss
+  required-package: libpam-sss
+  required-package: adcli
+  required-package: samba-common-bin
+  login-formats: %U@refol.us
+  login-policy: allow-realm-logins
+```
+</details>
+
+Observe that Active Directory has been configured as shown here.
+
+```bash
+configured: kerberos-member
+```
+Also notice that the login-formats is set to username@domain as shown here.
+
+```bash
+login-formats: %U@refol.us
+```
+
+This can be modified to only use the username in the next section.
 
 ## sssd.conf File and Home Directory
 
 By default, the realm command has already configured this file. It added the pam and nss modules and started the necessary services.
 
 ```bash
-frank@ansible-0:~$ sudo cat /etc/sssd/sssd.conf
+sudo cat /etc/sssd/sssd.conf
 ```
 
 ```ini
@@ -178,8 +200,20 @@ ldap_id_mapping = True
 access_provider = ad
 ```
 
-Note:
-Something very important to remember is that this file must have permissions 0600 and ownership root:root, or else SSSD won’t start!
+Edit this file so that the domain name is not needed when authenticating with a domain user.
+
+```bash
+use_fully_qualified_names = False
+```
+
+Restart the sssd service.
+
+```bash
+sudo service sssd restart
+```
+
+> [!IMPORTANT] 
+> Something very important to remember is that this file must have permissions 0600 and ownership root:root, or else SSSD won’t start!
 
 From the configurations file, we can observe a few things:
 
@@ -188,50 +222,40 @@ The fallback_homedir is /home/%u@%d. For example, a user will have a home direct
 
 The use_fully_qualified_names is set to True. As a result, users must log in using the format user@domain.
 
+## Enable mkhomedir
+
 The realm command doesn’t set up pam_mkhomedir. Let’s configure it:
 
 ```bash
 sudo pam-auth-update --enable mkhomedir
 ```
 
-## Verify Connected to Domain Controller
-
-```bash
-frank@ansible-0:~$ sudo realm -v discover refol.us
- * Resolving: _ldap._tcp.refol.us
- * Resolving: refol.us
- * Performing LDAP DSE lookup on: 192.168.2.251
- * Successfully discovered: refol.us
-refol.us
-  type: kerberos
-  realm-name: REFOL.US
-  domain-name: refol.us
-  configured: kerberos-member
-  server-software: active-directory
-  client-software: sssd
-  required-package: sssd-tools
-  required-package: sssd
-  required-package: libnss-sss
-  required-package: libpam-sss
-  required-package: adcli
-  required-package: samba-common-bin
-  login-formats: %U@refol.us
-  login-policy: allow-realm-logins
-  ```
-
 ## Verify Domain Group and User Access
 
 ```bash
-frank@ansible-0:~$ sudo getent passwd frank@refol.us
+sudo getent passwd frank@refol.us
+```
+<details>
+<summary>Click to show output</summary>
+```bash
 frank@refol.us:*:873401104:873400513:Frank Refol:/home/frank@refol.us:/bin/bash
 ```
+</details>
 
 ```bash
 sudo id frank@refol.us
-uid=873401104(frank@refol.us) gid=873400513(domain users@refol.us) groups=873400513(domain users@refol.us),873400512(domain admins@refol.us),873400572(denied rodc password replication group@refol.us)
 ```
 
+<details>
+<summary>Click to show output</summary>
+```bash
+uid=873401104(frank@refol.us) gid=873400513(domain users@refol.us) groups=873400513(domain users@refol.us),873400512(domain admins@refol.us),873400572(denied rodc password replication group@refol.us)
+```
+</details>
+
 ## SSSD Log
+
+Monitor the SSSD log in the event of an authentication issue. 
 
 ```bash
 sudo tail -f /var/log/sssd/sssd_refol.us.log

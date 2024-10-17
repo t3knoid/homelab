@@ -4,6 +4,9 @@ Proxmox provides hosting for Virtual Machines.
 
 - [Proxmox Cluster](#proxmox-cluster)
 - [Host Details](#host-details)
+- [Proxmox Hints](#proxmox-hints)
+  - [ISO Images](#iso-images)
+  - [CT Templates](#ct-templates)
 
 ## Proxmox Cluster
 Proxmox is configured as a three-node cluster with the following nodes:
@@ -24,3 +27,20 @@ Each host uses the same mini PC platform, [ACEMAGIC S1 Mini PC](https://www.amaz
 | pve-2 | 192.168.2.202 | 16MB | 512GB | 512GB |
 
 The secondary drive is a [Western Digital Red SA500 NAS SSD SATA III drive](https://www.amazon.com/dp/B07YFG1N7Q?ref=ppx_yo2ov_dt_b_fed_asin_title). This drive is used to provide [DRBD](https://linbit.com/drbd/) (Distributed Replicated Block Device) type storage used in the Linstor configuration.
+
+## Proxmox Hints
+
+### ISO Images
+
+ISO Images are located in the following folder of a respective Proxmox node.
+
+```bash
+/var/lib/vz/template/iso/
+```
+
+### CT Templates
+
+CT Templates are located in the following folder of a respective Proxmox node.
+```bash
+ /var/lib/vz/template/cache/
+ ```

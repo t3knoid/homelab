@@ -17,6 +17,10 @@ Unbound will need to be configured to work with the Pi-hole instance that is run
 
 Create a new file /etc/unbound/unbound.conf.d/pi-hole.conf. Use the following content as a starting point.
 
+```bash
+sudo vi /etc/unbound/unbound.conf.d/pi-hole.conf
+```
+
 ```yaml
 server:
     # If no logfile is specified, syslog is used
@@ -87,6 +91,10 @@ server:
 ```
 
 Create the file /etc/dnsmasq.d/99-edns.conf and add the following line to signal FTL to adhere to this limit.:
+
+```bash
+sudo vi //etc/dnsmasq.d/99-edns.conf
+```
 
 ```ini
 edns-packet-max=1232

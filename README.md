@@ -8,24 +8,42 @@ My home lab centers around a [Proxmox](proxmox/README.md) server cluster providi
 
 To simplify networking, the existing home network will be used instead of creating a separate VLAN. The network is comprised of [TP-Link Omada](omada/README.md) devices.
 
-The lab consists of the following services:
 
-- [Microsoft Active Directory](activedirectory/README.md)
-- [Pi-Hole DNS](pi-hole/README.md)
-- [Jenkins](jenkins/README.md)
-- [Ansible](ansible/README.md)
 
-## Load Balancing
-  - https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/
+
+## Virtualization
+
+Virtual machines will be hosted in [Proxmox](proxmox/README.md). [Linstor](/proxmox/linstor_install.md) will provide high-availability for virtual machine storage.
 
 ## Active Directory
-  - refol.us domain
 
+The [Microsoft Active Directory](activedirectory/README.md) server is hosted in virtual machine running Windows 2022.
+
+## DNS
+
+DNS is provided using [Pi-Hole DNS](pi-hole/README.md). There are two active Pi-hole servers that are hosted in virtual machines in Proxmox.
+
+## Ansible
+
+[Ansible](ansible/README.md) will be used to automate most of the virtual management and its associated applications.
+
+[Semaphore](semaphore/README.md) will be use as a front-end for running Ansible scripts.
+
+## Jenkins
+
+[Jenkins](jenkins/README.md) will be used as the primary CI/CD frontend.
+
+## Load Balancing
+
+[Nginx](https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/) will be used for load-balancing.
 
 ## Forward Proxy
-  - tinyproxy
-  -    
-## Nginx
+
+[tinyproxy](tinyproxy/README.md)
+
+## Reverse Proxy
+
+[Nginx](nginx/README.md)
 
 ## VDI
   - https://github.com/joshpatten/PVE-VDIClient
@@ -39,25 +57,9 @@ The lab consists of the following services:
   - KeyCloak, https://www.keycloak.org/
   - Authentik (https://goauthentik.io/)
 
-## Ansible
-
-
-## DNS
-
-Pi-Hole will be used as the primary DNS server. There are three DNS servers configured:
-
-- dns-0 (192.168.2.252)
-- dns-1 (192.168.2.253)
-- dns-2 (192.168.2.254)
-
 ## References and Tutorials
 
 - https://github.com/afro-systems/lxc-guac-setup
-- 
 
-## LINSTOR Cluster
-  - multiple nodes
-  - shared storage
-    - https://linbit.com/drbd-user-guide/linstor-guide-1_0-en/#s-proxmox-installing-from-linbit-public-repos
-    - https://linbit.com/blog/linstor-setup-proxmox-ve-volumes/
+
 

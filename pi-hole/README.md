@@ -46,3 +46,5 @@ Open the TP-Link Omada management page at https://omada.tplinkcloud.com/ and per
 3. Set the DNS Server to Manual.
 4. Enter 192.168.2.252, 192.168.2.253, 192.168.2.254.
 
+- https://docs.pi-hole.net/ftldns/configfile/
+- 

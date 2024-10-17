@@ -4,6 +4,11 @@
   - [Adding Second Drive](#adding-second-drive)
   - [Join Machine to Active Directory](#join-machine-to-active-directory)
   - [Configure Ansible Become User](#configure-ansible-become-user)
+    - [Create Ansible Active Directory User](#create-ansible-active-directory-user)
+    - [Give the **ansible** domain user permission in the Proxmox cluster.](#give-the-ansible-domain-user-permission-in-the-proxmox-cluster)
+    - [Create a Proxmox API Token](#create-a-proxmox-api-token)
+    - [Create the ansible group.](#create-the-ansible-group)
+    - [Add the ansible@refol.us to the ansible group.](#add-the-ansiblerefolus-to-the-ansible-group)
 - [Ansible Installation](#ansible-installation)
   - [Install Python](#install-python)
     - [Create a Python Virtual Environment](#create-a-python-virtual-environment)
@@ -14,12 +19,15 @@
   - [Install Python Modules](#install-python-modules)
     - [proxmoxer](#proxmoxer)
     - [requests](#requests)
+    - [pycdlib](#pycdlib)
   - [Other Installations](#other-installations)
 - [Ansible Getting Started](#ansible-getting-started)
+  - [Activate Working Environment](#activate-working-environment)
+  - [Create Ansible.cfg](#create-ansiblecfg)
+  - [Set the Vault Password File](#set-the-vault-password-file)
 - [Configure SSH Access to Proxmox Servers](#configure-ssh-access-to-proxmox-servers)
 - [Ansible Lint](#ansible-lint)
 - [References](#references)
-
 
 ## Virtual Machine Configuration
 
@@ -45,13 +53,43 @@ The [Join an Ubuntu 24.04 VM to Active Directory Domain](../activedirectory/join
 
 To provide some semblance of security, use a non-root user as the become_user. The Active Directory user ansible@refol.us will be used. 
 
-Create the ansible group.
+#### Create Ansible Active Directory User
+
+Create an active directory user that will be used as the Ansible privileged user.
+
+```powershell
+New-ADUser -Name "Ansible" -GivenName "Ansible" -Surname "User" -SamAccountName "ansible" -UserPrincipalName "ansible@refol.us" -AccountPassword(Read-Host -AsSecureString "Input Password") -Enabled $true
+```
+
+Enter a password when prompted.
+
+#### Give the **ansible** domain user permission in the Proxmox cluster.
+
+From the Proxmox select **Datacenter > Permissions > Users**. Click **Add**. Add *ansible* in the User name field.
+
+> [!IMPORTANT] 
+> The active directory, refol.us, must be added as a Realm in Proxmox before the ansible user can be added. Open **Datacenter > Permissions > Realms > Add > Active Directory Server** to add an active directory realm.
+
+#### Create a Proxmox API Token
+
+The API token will be used by Ansible when performing API calls on the Proxmox server. Select **Datacenter > Permissions > API Tokens > Add**. Enter 
+
+User: ansible@refol.us
+Token ID: ansible_become_user
+
+Click **Add** when done. The Token Secret will be shown. Copy the Token ID and Secret values.
+
+#### Create the ansible group.
+
+Execute the following from the ansible control node.
 
 ```bash
 sudo addgroup ansible
 ```
 
-Add the ansible@refol.us to the ansible group.
+#### Add the ansible@refol.us to the ansible group.
+
+Execute the following from the ansible control node.
 
 ```bash
 sudo usermod -a -G ansible ansible@refol.us
@@ -161,30 +199,48 @@ python -m pip install proxmoxer
 python -m pip install requests
 ```
 
+#### pycdlib
+
+```bash
+python -m pip install pycdlib
+```
+
 ### Other Installations
 
 ```bash
-sudo apt install sshpass
+sudo apt install sshpass acl
 ```
 
 ## Ansible Getting Started
 
+### Activate Working Environment
+
 Change to the Ansible working folder.
 
 ```bash
-cd /ansible
+cd /ansible/dev
 ```
 
 Activate the environment with the following command.
 
 ```bash
-source python3.12.3_ansible10.4.0/bin/activate
+source ../python3.12.3_ansible10.4.0/bin/activate
 ```
+
+### Create Ansible.cfg
 
 Initialize a new ansible.cfg
 
 ```bash
 ansible-config init --disabled -t all > ansible.cfg
+```
+
+### Set the Vault Password File 
+
+Create a ~/.vault_pass.txt file. Add vault passwords in this file. Edit ansible.cfg to set the **vault_password_file** setting to the path to this file.
+
+```bash
+vault_password_file=~/.vault_pass.txt
 ```
 
 ## Configure SSH Access to Proxmox Servers
@@ -200,11 +256,18 @@ ssh pve-2
 Similarly, ensure that the become_root user (i.e., ansible@refol.us) has access as well.
 
 ```bash
-ssh root@pve-0
-ssh root@pve-1
-ssh root@pve-2
+ssh ansible@pve-0
+ssh ansible@pve-1
+ssh ansible@pve-2
 ```
 
+Test the become user setting using the following command. Note this command assumes that the specified inventory is available where the ansible host has been defined.
+
+```bash
+ansible pvenodes -i inventory/pve/inventory.ini -m ping --user=ansible -k
+```
+
+Enter the ansible user password when prompted.
 
 
 ## Ansible Lint

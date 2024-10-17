@@ -15,6 +15,7 @@ Use the following [guide](https://linbit.com/blog/linstor-setup-proxmox-ve-volum
 - [Changing IP Address of Clusters](#changing-ip-address-of-clusters)
   - [Modify Node IP Address](#modify-node-ip-address)
   - [Verify Node Cluster](#verify-node-cluster)
+- [References](#references)
 
 ## Linstor Install Overview
 
@@ -175,3 +176,8 @@ root@pve-0:~# linstor node list
 ┊ pve-2 ┊ COMBINED ┊ 192.168.2.202:3366 (PLAIN) ┊ Online ┊
 ╰────────────────────────────────────────────────────────╯
 ```
+
+## References
+
+- https://linbit.com/drbd-user-guide/linstor-guide-1_0-en/#s-proxmox-installing-from-linbit-public-repos
+- https://linbit.com/blog/linstor-setup-proxmox-ve-volumes/

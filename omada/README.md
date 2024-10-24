@@ -22,7 +22,10 @@ The Astoria Omada Controller is Cloud-based named Omada Controller_3F0877. Login
 
 ### Networking
 
-
+- DHCP Range: 192.168.2.1-192.168.2.100
+- DNS Server:
+    - 192.168.2.252
+    - 192.168.2.253
 
 ## Freehold
 

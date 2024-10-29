@@ -1,13 +1,9 @@
 # Proxmox Backup Server
 - [Summary](#summary)
-- [Zotac Zbox P1331](#zotac-zbox-p1331)
-  - [Zbox Hardware Specification](#zbox-hardware-specification)
-- [Debian 12 Installation](#debian-12-installation)
-- [Join Proxmox Backup Server Host to Active Directory](#join-proxmox-backup-server-host-to-active-directory)
 - [Proxmox Backup Server Installation](#proxmox-backup-server-installation)
 - [Proxmox Backup Client Installation](#proxmox-backup-client-installation)
 - [Access to the Proxmox Backup Server](#access-to-the-proxmox-backup-server)
-- [Configuring the Datastore](#configuring-the-datastore)
+- [Configuring the iSCSI Datastore](#configuring-the-iscsi-datastore)
   - [Configure the iSCSI Target](#configure-the-iscsi-target)
   - [Configure the iSCSI Initiator](#configure-the-iscsi-initiator)
     - [Install Open-SCSI Package](#install-open-scsi-package)
@@ -26,45 +22,13 @@
 
 ## Summary
 
-The Proxmox Backup Server (i.e. PBS) is installed on an old [Zotac Zbox P1331](https://www.zotac.com/download/mediadrivers/mb/man/pb309pi331.pdf). It uses an iSCSI target located on a [Synology](../synology/README.md) NAS device for its datastore.
-
-## Zotac Zbox P1331
-
-The Zbox came with Windows 10 installed. The plan is to install PBS using its ISO image burned into a USB dongle. Unfortunately, this wasn't possible due to a hardware incompatibility with the Zbox that causes the installer to simply freeze during installation. The alternate plan is to install [Debian 12](https://www.debian.org/releases/stable/amd64/) first then install PBS afterwards. This method worked, albeit, Debian 12 must be installed in non-graphical mode.
-
-### Zbox Hardware Specification
-
-The following is an abridge specification of the Zotac Zbox P1331.
-
-- Memory: 4GB LPDDR3
-- Processors: Intel Atom X5-Z8500 (quad-core, 1.44GHz up to 2.24GHz)
-- Storage: 64GB eMMC
-- Network Device: 1Gbps Ethernet
-
-## Debian 12 Installation
-
-Debian 12 was chosen because the PBS installation ISO uses the same operating system. This avoids any incompatibilities and makes the process of installing PBS simple.
-
-The Debian 12 installation is fairly straightforward. Download the Debian 12 from https://www.debian.org/download. Use [balena Etcher](https://etcher.balena.io/) to write the ISO image into a USB drive. 
-
-Because of the incompatibility with the video hardware in the Zbox, use the text-based installation. Furthermore, do not install a Debian desktop environment when prompted. To simplify the installation, a single partition was created using all available space in Zbox's 64GB eMMC storage.
-
-A fixed network IP address is used by configuring /etc/network/interfaces with the following.
-
-```bash
-iface enp2s0 inet static
-        address 192.168.2.215/24
-        gateway 192.168.2.1
-```
-## Join Proxmox Backup Server Host to Active Directory
-
-Joining a Proxmox Backup Server host to active directory is detailed in the [Join a Proxmox Host to Active Directory Domain](join_a_proxmox_host_to_active_directory_domain.md) document.
+The Proxmox Backup Server (i.e. PBS) is installed on the third Proxmox Virtual Environment node, [pve-2](https://pve-2.refol.us:8007/). A local datastore is also available and is used to sync backups from the iscsi target for redundancy. A second installation of PBS is installed on [pve-1](https://pve-1.refol.us:8007/). It is used to sync backups from pve-2 to its local datastore for more redundancy. It uses an iSCSI target located on a [Synology](../synology/README.md) NAS device for its datastore.
 
 ## Proxmox Backup Server Installation
 
 The [Proxmox Backup Server installation](https://pbs.proxmox.com/docs/installation.html#install-proxmox-backup-server-on-debian) uses Debian's APT package management tool. This requires configuring the apt source.list file in order to access the PBS package.
 
-Edit the /etc/apt/sources.ist file and add the following.
+Edit the /etc/apt/sources.list file and add the following.
 
 ```bash
 # Proxmox Backup Server pbs-no-subscription repository provided by proxmox.com,
@@ -104,9 +68,11 @@ sudo apt install proxmox-backup-client
 
 After successfully installing the Proxmox Backup Server, it should be accessible on port 8007 of the host IP address or hostname.
 
-[https://pbs-0.refol.us:8007](https://pbs-0.refol.us:8007)
+[https://pve-2.refol.us:8007](https://pve-2.refol.us:8007)
 
-## Configuring the Datastore
+Login using the default root@pam user.
+
+## Configuring the iSCSI Datastore
 
 Before backups can be created, a [datastore](https://pbs.proxmox.com/docs/storage.html#datastore) must be configured. An iSCSI target hosted in [Synology](../synology/README.md) NAS device will be mounted locally and used as the datastore for the backups. Synology will provide storage redundancy. 
 

@@ -216,6 +216,12 @@ Edit this file so that the domain name is not needed when authenticating with a 
 ```bash
 use_fully_qualified_names = False
 ```
+
+Modify the fallback_homedir to not include the domain.
+
+```bash
+fallback_homedir = /home/%u
+```
 Restart the sssd service.
 
 ```bash

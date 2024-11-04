@@ -13,6 +13,9 @@
 - [Get Network Address](#get-network-address)
   - [Set Static IP Network Address](#set-static-ip-network-address)
   - [Set DNS](#set-dns)
+- [Get All Groups](#get-all-groups)
+  - [Add a an Active Directory Group](#add-a-an-active-directory-group)
+  - [Add Users to a Group](#add-users-to-a-group)
 - [References](#references)
 
 
@@ -121,8 +124,26 @@ New-NetIPaddress -InterfaceIndex 6 -IPAddress 192.168.2.251 -PrefixLength 24 -De
 
 ### Set DNS 
 
-```bash
+```powershell
 Set-DNSClientServerAddress –InterfaceIndex 12 -ServerAddresses 192.168.2.252,192.168.2.253
+```
+
+## Get All Groups
+
+```powershell
+Get-ADGroup -Filter * | Select-Object Name
+```
+
+### Add a an Active Directory Group
+
+```powershell
+New-ADGroup -Name "GroupName" -SamAccountName "GroupName" -GroupScope Global -GroupCategory Security
+```
+
+### Add Users to a Group
+
+```powershell
+New-ADGroup -Name "ITSupport" -SamAccountName "ITSupport" -GroupScope Global -GroupCategory Security
 ```
 
 ## References

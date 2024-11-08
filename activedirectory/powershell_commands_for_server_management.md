@@ -15,11 +15,11 @@
 - [Get specific computer that shows all properties](#get-specific-computer-that-shows-all-properties)
 - [Get all computer accounts using a filter](#get-all-computer-accounts-using-a-filter)
 - [Get Network Address](#get-network-address)
-  - [Set Static IP Network Address](#set-static-ip-network-address)
-  - [Set DNS](#set-dns)
+- [Set Static IP Network Address](#set-static-ip-network-address)
+- [Set DNS](#set-dns)
 - [Get All Groups](#get-all-groups)
-  - [Add a an Active Directory Group](#add-a-an-active-directory-group)
-  - [Add Users to a Group](#add-users-to-a-group)
+- [Add an Active Directory Group](#add-an-active-directory-group)
+- [Add Users to a Group](#add-users-to-a-group)
 - [References](#references)
 
 
@@ -136,7 +136,7 @@ get-windowsfeature
 Get-NetIPInterface
 ```
 
-### Set Static IP Network Address
+## Set Static IP Network Address
 
 If there is an existing static IP address set, remove it first with the following command.
 
@@ -155,7 +155,7 @@ Use the following to set the new static IP address.
 New-NetIPaddress -InterfaceIndex 6 -IPAddress 192.168.2.251 -PrefixLength 24 -DefaultGateway 192.168.2.1
 ```
 
-### Set DNS 
+## Set DNS 
 
 ```powershell
 Set-DNSClientServerAddress –InterfaceIndex 12 -ServerAddresses 192.168.2.252,192.168.2.253
@@ -167,16 +167,16 @@ Set-DNSClientServerAddress –InterfaceIndex 12 -ServerAddresses 192.168.2.252,1
 Get-ADGroup -Filter * | Select-Object Name
 ```
 
-### Add a an Active Directory Group
+## Add an Active Directory Group
 
 ```powershell
 New-ADGroup -Name "GroupName" -SamAccountName "GroupName" -GroupScope Global -GroupCategory Security
 ```
 
-### Add Users to a Group
+## Add Users to a Group
 
 ```powershell
-New-ADGroup -Name "ITSupport" -SamAccountName "ITSupport" -GroupScope Global -GroupCategory Security
+Add-ADGroupMember -Identity SvcAccPSOGroup -Members SQL01, SQL02
 ```
 
 ## References

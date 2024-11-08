@@ -15,9 +15,7 @@ sudo bash basic-install.sh
 
 The server is installed on a very minimal VM. 
 
-There are three Pi-Hole instances hosted in the hosts 192.168.2.252, 192.168.2.253, 192.168.2.254.
-
-Note that 192.168.2.254 is not actively used. The to nodes, 192.168.2.252 and 192.168.2.253 are synced using [gravity-sync](https://github.com/vmstan/gravity-sync/wiki/Installing).
+There are two Pi-Hole instances hosted in the hosts 192.168.2.252, 192.168.2.253. The nodes are synced using [gravity-sync](https://github.com/vmstan/gravity-sync/wiki/Installing).
 
 ## Configuration
 

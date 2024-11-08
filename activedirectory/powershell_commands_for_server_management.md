@@ -1,11 +1,15 @@
 # Powershell Commands for Server Management
 
 - [Change Administrator Password](#change-administrator-password)
-- [Remove Password Expiration](#remove-password-expiration)
 - [Show the available cmdlets in the ADDSDeployment module](#show-the-available-cmdlets-in-the-addsdeployment-module)
 - [Add a Domain User](#add-a-domain-user)
-- [Set User Password](#set-user-password)
 - [Add User to Domain Admins Group](#add-user-to-domain-admins-group)
+- [Enable or Disable a User Account](#enable-or-disable-a-user-account)
+- [Set User Password to Never Expire](#set-user-password-to-never-expire)
+- [Verify PasswordNeverExpires Property](#verify-passwordneverexpires-property)
+- [Change a User Password](#change-a-user-password)
+- [Get User Information](#get-user-information)
+- [Delete a User Account](#delete-a-user-account)
 - [List all Domain Administrators](#list-all-domain-administrators)
 - [Show Windows Features Installed](#show-windows-features-installed)
 - [Get specific computer that shows all properties](#get-specific-computer-that-shows-all-properties)
@@ -25,11 +29,6 @@ The following is a [list of PowerShell commands](https://learn.microsoft.com/en-
 ```powershell
 net user administrator *
 ```
-## Remove Password Expiration
-
-```powershell
-Set-AdUser administrator -PasswordNeverExpires $false
-```
 
 ## Show the available cmdlets in the ADDSDeployment module
 
@@ -39,22 +38,19 @@ Get-Command -Module ADDSDeployment
 
 ## Add a Domain User
 
+**Prompt for a Password**
+
 ```powershell
 New-ADUser -Name "Frank Refol" -GivenName "Frank" -Surname "Refol" -SamAccountName "frank" -UserPrincipalName "frank@refol.us" -AccountPassword(Read-Host -AsSecureString "Input Password") -Enabled $true
 ```
 
+**Enter Password on Command-Line**
+
+```powershell
+New-ADUser -Name "Frank Refol" -GivenName "Frank" -Surname "Refol" -SamAccountName "frank" -UserPrincipalName "frank@refol.us" -AccountPassword (ConvertTo-SecureString "MySecurePassword123" -AsPlainText -Force) -Enabled $true
+```
+
 Enter a password when prompted.
-
-## Set User Password
-
-```powershell
-Set-ADAccountPassword -Identity [username] -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "[newpassword]" -Force)
-```
-
-**Prompt for a password**
-```powershell
-Set-ADAccountPassword -Identity [username] -Reset -New(Read-Host -AsSecureString "Input Password") 
-```
 
 ## Add User to Domain Admins Group
 
@@ -62,15 +58,52 @@ Set-ADAccountPassword -Identity [username] -Reset -New(Read-Host -AsSecureString
 Add-ADGroupMember -Identity "Domain Admins" -Members frank
 ```
 
-# Get User Properties
+## Enable or Disable a User Account
+
 ```powershell
-Get-Aduser administrator
+Enable-ADAccount -Identity "jdoe"
 ```
 
-# Delete a user
+```powershell
+Disable-ADAccount -Identity "jdoe"
+```
+
+## Set User Password to Never Expire
 
 ```powershell
-Remove-AdUser username
+Set-ADUser -Identity "username" -PasswordNeverExpires $true
+```
+
+## Verify PasswordNeverExpires Property
+
+```powershell
+Get-ADUser -Identity "username" | Select-Object PasswordNeverExpires
+```
+
+## Change a User Password
+
+**Prompt for Password**
+
+```powershell
+Set-ADAccountPassword -Identity "jdoe" -NewPassword (Read-Host -AsSecureString "Input Password") -Reset
+```
+
+**Enter Password on Command-line**
+
+```powershell
+Set-ADAccountPassword -Identity "jdoe" -NewPassword (ConvertTo-SecureString "NewPassword123" -AsPlainText -Force) -Reset
+```
+
+## Get User Information
+
+```powershell
+Get-ADUser -Identity "jdoe" -Properties * | Select-Object Name, UserPrincipalName, SamAccountName, Enabled
+```
+
+## Delete a User Account
+
+```powershell
+Remove-ADUser -Identity "jdoe" -Confirm:$false
 ```
 
 ## List all Domain Administrators

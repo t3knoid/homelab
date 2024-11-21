@@ -1,44 +1,47 @@
 # LDAP
 
-The following provides an overview on installing LDAP in Windows 2022 Core.
+User: ldap_bind_user
+DN: "CN=LDAP Bind User,OU=Service Accounts,DC=refol,DC=us"
 
-## Install Active Directory Lightweight Directory Services
+## Testing LDAP Using python-ldap library
 
-```powershell
-Install-WindowsFeature -Name ADLDS -IncludeAllSubFeature -IncludeManagementTools
+Use the following code to test LDAP connection. Install [python-ldap](https://www.python-ldap.org/en/python-ldap-3.4.3/installing.html#installing) before proceeding.
+
+```python
+import ldap
+import logging
+
+# Enable logging for debugging
+logging.basicConfig(level=logging.DEBUG)
+
+# LDAP server details
+ldap_server = "ldap://192.168.2.251"
+bind_dn = "CN=LDAP Bind User,OU=Service Accounts,DC=refol,DC=us"
+password = "mysecurepassword"
+search_base = "CN=Users,DC=refol,DC=us"
+search_filter = "(sAMAccountName=frank)"  # Replace with your search filter
+
+try:
+    # Initialize LDAP connection
+    ldap_connection = ldap.initialize(ldap_server)
+    ldap_connection.set_option(ldap.OPT_REFERRALS, 0)  # Important for AD
+
+    # Bind/Authenticate with the server
+    ldap_connection.simple_bind_s(bind_dn, password)
+    print("LDAP bind successful")
+
+    # Perform an LDAP search
+    result = ldap_connection.search_s(search_base, ldap.SCOPE_SUBTREE, search_filter)
+    print("LDAP search result:", result)
+
+except ldap.INVALID_CREDENTIALS:
+    print("Invalid credentials")
+except ldap.LDAPError as e:
+    print("LDAP error:", e)
+finally:
+    # Unbind the connection
+    ldap_connection.unbind_s()
 ```
-
-## Creating an unattended install of a new AD LDS instance 
-
-The following uses the adaminstall.exe tool to install an unattended install of a new AD LDS instance.
-
-### Create an Answer File
-The first step is to create an answer file.
-
-```ini
-[ADAMInstall]
-; The following line specifies to install a unique ADAM instance.
-InstallType=Unique
-; The following line specifies the name to be assigned to the new instance.
-InstanceName=MyFirstInstance
-; The following line specifies the communications port to use for LDAP.
-LocalLDAPPortToListenOn=389
-; The following line specifies an application partition to create
-NewApplicationPartitionToCreate="o=microsoft,c=us"
-; The following line specifies the directory to use for ADAM data files.
-DataFilesPath=C:\Program Files\Microsoft ADAM\instance1\data
-; The following line specifies the directory to use for ADAM log files.
-LogFilesPath=C:\Program Files\Microsoft ADAM\instance1\data
-; The following line specifies the .ldf files to import into the ADAM schema.
-ImportLDIFFiles="ms-inetorgperson.ldf" "ms-user.ldf"
-```
-
-```powershell
-Start-Process -FilePath "$env:SystemRoot\ADAM\adaminstall.exe" -ArgumentList
-"/answer:C:\install_adam_example.txt" -WindowStyle Hidden 
-```
-
-
 
 ## References
 

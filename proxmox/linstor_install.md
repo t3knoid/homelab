@@ -15,6 +15,7 @@ Use the following [guide](https://linbit.com/blog/linstor-setup-proxmox-ve-volum
 - [Changing IP Address of Clusters](#changing-ip-address-of-clusters)
   - [Modify Node IP Address](#modify-node-ip-address)
   - [Verify Node Cluster](#verify-node-cluster)
+  - [List Resources](#list-resources)
 - [References](#references)
 
 ## Linstor Install Overview
@@ -176,6 +177,42 @@ root@pve-0:~# linstor node list
 ┊ pve-2 ┊ COMBINED ┊ 192.168.2.202:3366 (PLAIN) ┊ Online ┊
 ╰────────────────────────────────────────────────────────╯
 ```
+
+### List Resources
+
+Use the following command to list resources.
+
+```bash
+linstor resource list
+```
+
+This command shows something like the following.
+
+```bash
+root@pve-0:/tmp# linstor resource list
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+┊ ResourceName ┊ Node  ┊ Port ┊ Usage  ┊ Conns                   ┊              State ┊ CreatedOn           ┊
+╞═══════════════════════════════════════════════════════════════════════════════════════════════════════════╡
+┊ pm-0c0e1528  ┊ pve-0 ┊ 7011 ┊ Unused ┊ Ok                      ┊           UpToDate ┊ 2024-09-18 10:37:42 ┊
+┊ pm-0c0e1528  ┊ pve-1 ┊ 7011 ┊ Unused ┊ Ok                      ┊           UpToDate ┊ 2024-09-18 10:37:47 ┊
+┊ pm-0c0e1528  ┊ pve-2 ┊ 7011 ┊ InUse  ┊ Ok                      ┊           UpToDate ┊ 2024-09-18 10:37:47 ┊
+```
+
+If a resource shows a property of *SkipDisk* as shown here,
+
+```bash
+┊ pm-0c0e1528  ┊ pve-2 ┊ 7011 ┊ InUse  ┊ Ok    ┊ Diskless, SkipDisk (R) ┊ 2024-09-18 10:37:47 ┊
+```
+
+This indicates an IO error on the affected resource(s). Remove this property (using 'linstor resource set-property $node $rsc DrbdOptions/SkipDisk') to instruct LINSTOR and DRBD to adjust (and recreate if necessary) the affected logical volumes again. For more information please visit: https://linbit.com/drbd-user-guide/linstor-guide-1_0-en/#s-linstor-drbd-skip-disk
+
+Use the following one-liner to find all affected resource and remove this property.
+
+```bash
+linstor resource list | grep "SkipDisk (R)" | awk -F'|' '{print $2 $3}' | xargs -I{} bash -c 'set -- {}; linstor resource set-property $2 $1 DrbdOptions/SkipDisk'
+```
+
+
 
 ## References
 

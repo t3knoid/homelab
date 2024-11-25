@@ -8,6 +8,8 @@
 - [Set User Password to Never Expire](#set-user-password-to-never-expire)
 - [Verify PasswordNeverExpires Property](#verify-passwordneverexpires-property)
 - [Change a User Password](#change-a-user-password)
+- [Check if a user has been locked out](#check-if-a-user-has-been-locked-out)
+  - [Get more information of user lock out](#get-more-information-of-user-lock-out)
 - [Get User Information](#get-user-information)
 - [Delete a User Account](#delete-a-user-account)
 - [List all Domain Administrators](#list-all-domain-administrators)
@@ -92,6 +94,20 @@ Set-ADAccountPassword -Identity "jdoe" -NewPassword (Read-Host -AsSecureString "
 
 ```powershell
 Set-ADAccountPassword -Identity "jdoe" -NewPassword (ConvertTo-SecureString "NewPassword123" -AsPlainText -Force) -Reset
+```
+
+## Check if a user has been locked out
+
+```powershell
+Get-ADUser -Identity <username> -Properties LockedOut | Select-Object LockedOut
+```
+
+This will return True if the account is locked, and False if it is not.
+
+### Get more information of user lock out
+
+```powershell
+Get-ADUser -Identity <username> -Properties * | Select-Object LockedOut, AccountLockoutTime, BadLogonCount
 ```
 
 ## Get User Information

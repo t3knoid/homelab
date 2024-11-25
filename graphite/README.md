@@ -54,6 +54,18 @@ graphite_setup_ldap_user_query: "(sAMAccountName=%s)"
 graphite_setup_ldap_user_dn_template: "CN=%(username)s,CN=Users,DC=refol,DC=us"
 ```
 
+## Troubleshooting
+
+Use journalctl to tail graphite-web.service debug output.
+
+```bash
+journalctl -f -u graphite-web.service
+```
+Log files are located in 
+- /opt/graphite/storage/log
+- /opt/var/log/nginx
+- /var/log/postgresql/postgresql-17-main.log
+
 ## References
 
 - https://graphite.readthedocs.io/en/latest/install-pip.html

@@ -10,7 +10,7 @@ The terraform_setup role, installs Terraform from a downloaded archive. The vers
 
 ## Proxmox Integration
 
-Proxmox is integrated with Terraform by using the [Telmate Proxmox Provider](https://registry.terraform.io/providers/Telmate/proxmox/latest/docs). The provider is configured to use token authentication to authenticate with Proxmox.
+Proxmox is integrated with Terraform by using the [Telmate Proxmox Provider](https://registry.terraform.io/providers/Telmate/proxmox/latest/docs). The provider is configured to use API keys authentication to authenticate with Proxmox.
 
 ## Ansible Integration
 

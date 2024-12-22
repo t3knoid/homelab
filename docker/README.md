@@ -35,6 +35,11 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
+### Docker Compose
+
+[Docker Compose](https://docs.docker.com/compose/) is used to manage Docker containers. It is installed by downloading the release from it's [GitHub Release Download page](https://github.com/docker/compose/releases/).
+
 ## References
 
 - https://docs.docker.com/engine/install/ubuntu/
+- https://github.com/docker/compose

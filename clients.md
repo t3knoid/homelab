@@ -29,7 +29,8 @@ The following table lists the clients in the home network. The DHCP range is lim
 | Device | Model | Serial Number | MAC Address | IP Address | 
 |----------|----------|----------|----------|----------|
 | Gateway | ER605 v1.0 | Y219022001431 | 6C-5A-B0-28-3C-77 | 192.168.2.1 
-| POE Switch | TL-SG2428P v1.0 | Y221049001026 | 54-AF-97-17-0E-6D | 192.168.2.22 |
-| Lower Level AP | EAP620 HD(US) v3.0 | 22231D3004494 | 54-AF-97-C2-6F-D6 | 192.168.2.18 |
-| Office AP | EAP615-Wall(US) v1.0 | 22260N4002862 | 34-60-F9-BB-93-82 | 192.168.2.6 |
-| Upper Level AP | EAP235-Wall(US) v1.0 | 221C1R9000960 | 14-EB-B6-53-3A-82 | 192.168.2.19 |
+| POE Switch | TL-SG2428P v1.0 | Y221049001026 | 54-AF-97-17-0E-6D | 192.168.2.54 |
+| Lab Switch | SG2008 v4.20 | Y2430N4000118 | 20-23-51-10-EB-9D | 192.168.2.45 |
+| Lower Level AP | EAP620 HD(US) v3.0 | 22231D3004494 | 54-AF-97-C2-6F-D6 | 192.168.2.6 |
+| Office AP | EAP615-Wall(US) v1.0 | 22260N4002862 | 34-60-F9-BB-93-82 | 192.168.2.8 |
+| Upper Level AP | EAP235-Wall(US) v1.0 | 221C1R9000960 | 14-EB-B6-53-3A-82 | 192.168.2.7 |

@@ -35,6 +35,24 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
+### Docker Compose
+
+[Docker Compose](https://docs.docker.com/compose/) is used to manage Docker containers. It is installed by downloading the release from it's [GitHub Release Download page](https://github.com/docker/compose/releases/).
+
+## Docker Volumes
+
+The /config folder holds files that are persistent for a given container. This folder is a mounted virtual disk.
+
+The following example shows the /config folder mounted as a Docker volume in the Lidarr container.
+
+```bash
+    volumes:
+      - /config:/config
+      - /nfs/music:/music #optional
+      - /nfs/downloads:/downloads #optional
+```
+
 ## References
 
 - https://docs.docker.com/engine/install/ubuntu/
+- https://github.com/docker/compose

@@ -10,6 +10,7 @@
 - [Change a User Password](#change-a-user-password)
 - [Check if a user has been locked out](#check-if-a-user-has-been-locked-out)
   - [Get more information of user lock out](#get-more-information-of-user-lock-out)
+- [Get a List of Users and their Respective Password Expiry Dates](#get-a-list-of-users-and-their-respective-password-expiry-dates)
 - [Get User Information](#get-user-information)
 - [Delete a User Account](#delete-a-user-account)
 - [List all Domain Administrators](#list-all-domain-administrators)
@@ -23,7 +24,6 @@
 - [Add an Active Directory Group](#add-an-active-directory-group)
 - [Add Users to a Group](#add-users-to-a-group)
 - [References](#references)
-
 
 The following is a [list of PowerShell commands](https://learn.microsoft.com/en-us/powershell/module/activedirectory/?view=windowsserver2022-ps) useful in administering Active Directory.
 
@@ -108,6 +108,15 @@ This will return True if the account is locked, and False if it is not.
 
 ```powershell
 Get-ADUser -Identity <username> -Properties * | Select-Object LockedOut, AccountLockoutTime, BadLogonCount
+```
+
+## Get a List of Users and their Respective Password Expiry Dates
+
+The following lists users whose passwords have an expiration.
+
+```powershell
+Get-ADUser -filter {Enabled -eq $True -and PasswordNeverExpires -eq $False} –Properties "DisplayName", "msDS-UserPasswordExpiryTimeComputed" |
+Select-Object -Property "Displayname",@{Name="ExpiryDate";Expression={[datetime]::FromFileTime($_."msDS-UserPasswordExpiryTimeComputed")}}
 ```
 
 ## Get User Information

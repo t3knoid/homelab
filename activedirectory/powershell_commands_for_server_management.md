@@ -79,7 +79,7 @@ Set-ADUser -Identity "username" -PasswordNeverExpires $true
 ## Verify PasswordNeverExpires Property
 
 ```powershell
-Get-ADUser -Identity "username" | Select-Object PasswordNeverExpires
+Get-ADUser -Identity "username" -Properties PasswordNeverExpires | Select-Object PasswordNeverExpires
 ```
 
 ## Change a User Password

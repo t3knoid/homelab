@@ -1,3 +1,7 @@
+---
+title: "🔐 LDAP Authentication"
+---
+
 # 🔐 LDAP Authentication
 
 **Lightweight Directory Access Protocol (LDAP)** is a standard protocol used to authenticate and query directory services such as **Active Directory (AD)**. In this environment, LDAP provides centralized authentication for applications that support directory integration, ensuring consistent identity management across systems.

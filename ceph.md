@@ -1,3 +1,7 @@
+---
+title: "📦 Ceph Distributed Storage"
+---
+
 # 📦 Ceph Distributed Storage
 
 **Ceph** is a highly available, distributed storage system tightly integrated with **Proxmox VE**. It provides block, object, and filesystem storage in a unified platform. In this homelab, Ceph is the primary shared storage backend for virtual machines and containers, enabling seamless live migration and enterprise‑style resiliency.

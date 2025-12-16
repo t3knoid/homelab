@@ -1,3 +1,7 @@
+---
+title: "📑 Markdown Cheat Sheet"
+---
+
 Here’s the updated **Markdown Helper Reference Cheat Sheet** with a new section on links to external web pages, internal wiki pages, and images:
 
 ---

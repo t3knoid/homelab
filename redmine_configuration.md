@@ -1,3 +1,7 @@
+---
+title: "Redmine Configuration"
+---
+
 # Redmine Configuration
 
 Redmine plays a central role in the homelab environment—serving as the hub for issue tracking, documentation, project visibility, and integration with infrastructure-as-code workflows. This page details how Redmine is integrated with **Active Directory for authentication** and how it interfaces with a **local Git mirror** of the homelab's Ansible repository.

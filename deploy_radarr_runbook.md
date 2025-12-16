@@ -1,3 +1,7 @@
+---
+title: "🏃 Deploy Radarr Runbook"
+---
+
 # 🏃 Deploy Radarr Runbook
 
 This runbook provides **step‑by‑step instructions to deploy or update Radarr** in the Home Lab. It uses the corresponding Ansible playbook to manage the version and deployment.

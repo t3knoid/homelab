@@ -1,3 +1,7 @@
+---
+title: "Calibre Deployment (Docker) - Role Overview"
+---
+
 # Calibre Deployment (Docker) - Role Overview
 
 This page documents the **Calibre Docker deployment using Ansible**, illustrating the workflow, architecture, and best practices for deploying this containerized ebook management application with version control, persistent storage, and optional integration with external resources.

@@ -1,3 +1,7 @@
+---
+title: "⚙️ Proxmox Virtual Environment (PVE)"
+---
+
 # ⚙️ Proxmox Virtual Environment (PVE)
 
 **Proxmox VE** is an open‑source virtualization platform that combines KVM (Kernel‑based Virtual Machine) and LXC (Linux Containers) into a single management interface. It provides clustering, high availability, storage integration, and a powerful web‑based UI—making it ideal for both enterprise and homelab deployments.

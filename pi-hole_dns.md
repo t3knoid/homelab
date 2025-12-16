@@ -1,3 +1,7 @@
+---
+title: "🌐 Pi‑hole DNS"
+---
+
 # 🌐 Pi‑hole DNS
 
 [Pi‑hole](https://pi-hole.net/) is a lightweight DNS solution that provides **network‑wide ad blocking** and centralized DNS management. It is particularly useful in homelab environments where visibility, filtering, and integration with existing directory services are important.

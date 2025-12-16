@@ -1,3 +1,7 @@
+---
+title: "Docker Deployment Commands vs Ansible Workflow"
+---
+
 # Docker Deployment Commands vs Ansible Workflow
 
 This page illustrates the **equivalence between manual Docker commands and the automated Ansible tasks** used in the homelab roles for containerized applications. It serves as a reference to understand how Ansible simplifies and standardizes container deployment.

@@ -1,3 +1,7 @@
+---
+title: "Create a Service Principal in Microsoft Entra ID"
+---
+
 # Create a Service Principal in Microsoft Entra ID
 
 

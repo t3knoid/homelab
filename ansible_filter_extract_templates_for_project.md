@@ -1,3 +1,7 @@
+---
+title: "🧩 **Ansible Filter: `extract_templates_for_project`**"
+---
+
 # 🧩 **Ansible Filter: `extract_templates_for_project`**
 
 The `extract_templates_for_project` filter is a **custom Ansible filter** used in the `semaphoreui_setup` role to generate **dynamic templates** for a specific project.

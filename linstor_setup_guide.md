@@ -1,3 +1,7 @@
+---
+title: "Linstor Setup Guide"
+---
+
 # Linstor Setup Guide
 
 The following is an abridged version of Linbit's [Linstor Setup Guide](https://linbit.com/blog/linstor-setup-proxmox-ve-volumes/).

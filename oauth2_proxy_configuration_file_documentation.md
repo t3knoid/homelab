@@ -1,3 +1,7 @@
+---
+title: "OAuth2 Proxy Configuration File Documentation"
+---
+
 # OAuth2 Proxy Configuration File Documentation
 
 The following sections describe the common configuration properties used in an **OAuth2 Proxy** `.cfg` file and explain how each setting affects authentication behavior, security, and integration with upstream services.

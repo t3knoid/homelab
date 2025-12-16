@@ -1,3 +1,7 @@
+---
+title: "🏃 Deploy Sonarr Runbook"
+---
+
 # 🏃 Deploy Sonarr Runbook
 
 This runbook provides **step‑by‑step instructions to deploy or update Sonarr** in the Home Lab using a corresponding Ansible playbook.

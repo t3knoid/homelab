@@ -1,3 +1,7 @@
+---
+title: "🔧 Replace failed disk and recreate the OSD"
+---
+
 # 🔧 Replace failed disk and recreate the OSD
 
 Follow this sequence to safely remove a failed OSD, replace the physical disk, and recreate the OSD in your Ceph cluster. Commands assume Proxmox with Ceph and use the same conventions from your setup.

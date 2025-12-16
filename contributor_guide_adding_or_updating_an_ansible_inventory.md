@@ -1,3 +1,7 @@
+---
+title: "👩‍💻 Contributor Guide: Adding or Updating an Ansible Inventory"
+---
+
 # 👩‍💻 Contributor Guide: Adding or Updating an Ansible Inventory
 
 ## 📖 Purpose

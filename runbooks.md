@@ -1,3 +1,7 @@
+---
+title: "Runbooks"
+---
+
 # Runbooks
 
 Welcome to the **Home Lab Runbooks**. This page serves as an index for all operational runbooks related to deploying, updating, and managing services in your home lab. Each runbook provides **step-by-step instructions** and references the corresponding Ansible playbooks.

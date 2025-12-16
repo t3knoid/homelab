@@ -1,3 +1,7 @@
+---
+title: "🏃 Deploy Sabnzbd Runbook"
+---
+
 # 🏃 Deploy Sabnzbd Runbook
 
 This runbook provides **step‑by‑step instructions to deploy or update Sabnzbd** in the Home Lab using Ansible. It follows the same pattern you use for other service deployments.

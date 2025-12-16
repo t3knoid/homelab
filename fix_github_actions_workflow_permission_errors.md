@@ -1,3 +1,7 @@
+---
+title: "🔧 Fix GitHub Actions Workflow Permission Errors"
+---
+
 # 🔧 Fix GitHub Actions Workflow Permission Errors
 
 If one of your GitHub Actions workflows keeps failing with a permission error — such as not being able to push code, commit changes, or create pull requests — this guide shows exactly how to fix it. These errors happen when GitHub hasn’t given the workflow the right access. We’ll walk through how to give it what it needs safely and easily.

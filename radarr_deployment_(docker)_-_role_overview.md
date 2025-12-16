@@ -1,3 +1,7 @@
+---
+title: "Radarr Deployment (Docker) - Role Overview"
+---
+
 # Radarr Deployment (Docker) - Role Overview
 
 This page documents the **Radarr Docker deployment using Ansible**, illustrating the workflow, architecture, and best practices for deploying this containerized application with version control, persistent storage, and integration with an external PostgreSQL database.

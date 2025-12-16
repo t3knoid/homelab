@@ -1,3 +1,7 @@
+---
+title: "🏃 Deploy SemaphoreUI Runbook"
+---
+
 # 🏃 Deploy SemaphoreUI Runbook
 
 This runbook provides **step-by-step instructions to deploy or update SemaphoreUI** in the Home Lab using the corresponding Ansible playbook.

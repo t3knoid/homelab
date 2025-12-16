@@ -1,3 +1,7 @@
+---
+title: "👩‍💻 Contributor Guide: Adding a New Ansible Playbook"
+---
+
 # 👩‍💻 Contributor Guide: Adding a New Ansible Playbook
 
 ## 📖 Purpose

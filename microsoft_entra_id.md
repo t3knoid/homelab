@@ -1,3 +1,7 @@
+---
+title: "🔐 Microsoft Entra ID"
+---
+
 # 🔐 Microsoft Entra ID
 
 **Microsoft Entra ID** (formerly Azure Active Directory) is the cloud‑based identity and access management platform used in the homelab to provide **centralized authentication**, **OAuth2 identity services**, and **secure application access**.  

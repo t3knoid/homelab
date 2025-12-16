@@ -1,3 +1,7 @@
+---
+title: "🛠️ **Semaphore UI Setup – Role Overview**"
+---
+
 # 🛠️ **Semaphore UI Setup – Role Overview**
 
 The `semaphoreui_setup` role configures the [Semaphore UI](https://docs.semaphoreui.com/administration-guide/api/) application on designated hosts.

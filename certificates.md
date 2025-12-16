@@ -1,3 +1,7 @@
+---
+title: "🔒 Certificates"
+---
+
 # 🔒 Certificates
 
 Web certificates are managed using **Certbot**, a widely used tool for obtaining trusted SSL/TLS certificates from **Let’s Encrypt**.  

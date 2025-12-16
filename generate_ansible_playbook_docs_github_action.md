@@ -1,3 +1,7 @@
+---
+title: "⚙️ GitHub Action: Generate Playbook Docs"
+---
+
 # ⚙️ GitHub Action: Generate Playbook Docs
 
 ## 📖 Purpose

@@ -1,3 +1,7 @@
+---
+title: "Proxmox installation"
+---
+
 # Proxmox installation
 
 The [installation of Proxmox VE](https://www.proxmox.com/en/proxmox-virtual-environment/get-started) is pretty straightforward. It's a matter of downloading the ISO image and copy it to a USB drive using [Balena Etcher](https://etcher.balena.io/), booting the USB drive and starting the installation.

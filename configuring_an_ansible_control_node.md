@@ -1,3 +1,7 @@
+---
+title: "Configuring an Ansible Control Node"
+---
+
 # Configuring an Ansible Control Node
 
 The following are steps in configuring an Ansible control node. These steps have been automated using an [Ansible playbook](https://homelab.refol.us/projects/home-lab/repository/ansible/revisions/main/entry/playbooks/ansible/deploy_ansible.yml).

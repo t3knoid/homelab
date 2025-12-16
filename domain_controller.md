@@ -1,3 +1,7 @@
+---
+title: "🖥️ Domain Controller Overview"
+---
+
 # 🖥️ Domain Controller Overview
 
 A **standalone domain controller** provides centralized authentication and directory services for all hosts connected to the **refol.us** domain.  

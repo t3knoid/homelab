@@ -1,5 +1,5 @@
 ---
-title: Home Lab Overview
+title: "🏠 Home Lab Overview"
 ---
 
 # 🏠 Home Lab Overview

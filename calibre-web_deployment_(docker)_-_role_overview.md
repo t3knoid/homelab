@@ -1,3 +1,7 @@
+---
+title: "Docker Deployment (Calibre-Web) - Role Overview"
+---
+
 # Docker Deployment (Calibre-Web) - Role Overview
 
 This page documents the **Calibre-Web Docker deployment using Ansible**, illustrating the workflow, architecture, and best practices for deploying this containerized application with version control, persistent storage, and optional network-mounted backups.

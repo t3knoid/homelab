@@ -1,3 +1,7 @@
+---
+title: "🔗 Joining an Ubuntu 24.04 Host to Active Directory"
+---
+
 # 🔗 Joining an Ubuntu 24.04 Host to Active Directory
 
 This guide details the process of joining an **Ubuntu 24.04** host to the **refol.us Active Directory domain**.  

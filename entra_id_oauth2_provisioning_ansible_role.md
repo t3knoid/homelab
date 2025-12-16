@@ -1,3 +1,7 @@
+---
+title: "Entra ID OAuth2 Provisioning Ansible Role"
+---
+
 # Entra ID OAuth2 Provisioning Ansible Role
 
 This role automates the creation and management of Microsoft Entra ID (Azure AD) OAuth2 application credentials for sites protected by SSO in the reverse-proxy environment.

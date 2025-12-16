@@ -1,3 +1,7 @@
+---
+title: "🧰 Ceph Operations Cheat Sheet"
+---
+
 # 🧰 Ceph Operations Cheat Sheet
 
 This page provides quick reference commands and practices for monitoring, troubleshooting, and maintaining your Ceph cluster in the homelab.

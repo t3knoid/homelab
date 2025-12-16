@@ -1,3 +1,7 @@
+---
+title: "Terraform"
+---
+
 # Terraform
 
 HashiCorp [Terraform](https://developer.hashicorp.com/terraform/intro) is an infrastructure as code (IaC) tool similar to Ansible that lets you define network resources in human-readable configuration files. In this home lab, it is used to provision virtual machines from the Proxmox Virtual Environment.

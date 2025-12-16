@@ -1,3 +1,7 @@
+---
+title: "🖥️ Ubuntu Virtual Machine Disk Expansion Reference Guide"
+---
+
 # 🖥️ Ubuntu Virtual Machine Disk Expansion Reference Guide
 
 This guide provides **documentation for increasing the disk size of an Ubuntu virtual machine** hosted in a Proxmox Virtual Environment. It covers both the **virtual disk resize in Proxmox** and the **steps inside Ubuntu to use the additional space**.

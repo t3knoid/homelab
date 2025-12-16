@@ -1,3 +1,7 @@
+---
+title: "OAuth2 Proxy Architecture and Integration"
+---
+
 # OAuth2 Proxy Architecture and Integration
 
 This environment uses **OAuth2 Proxy** in combination with **Nginx** to enforce authentication across selected domains, with **Microsoft Entra ID (Azure Active Directory)** serving as the centralized identity provider. Authentication is handled through dedicated OAuth2 Proxy instances, each associated with its own domain and configuration file under `/etc/oauth2-proxy/`. This approach ensures clean separation of concerns, predictable automation, and domain-specific access control.

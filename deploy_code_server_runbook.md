@@ -1,3 +1,7 @@
+---
+title: "🏃 Deploy Code Server Runbook"
+---
+
 # 🏃 Deploy Code Server Runbook
 
 This runbook provides **step-by-step instructions to deploy or update Code Server** using Ansible.

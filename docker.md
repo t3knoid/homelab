@@ -1,3 +1,7 @@
+---
+title: "🐳 Docker"
+---
+
 # 🐳 Docker
 
 This page documents **containerized application deployment using Docker and Ansible** in the homelab. It covers architecture, deployment workflow, version pinning, and integration with external resources like PostgreSQL or NFS.

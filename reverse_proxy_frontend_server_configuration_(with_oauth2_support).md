@@ -1,3 +1,7 @@
+---
+title: "Nginx Reverse Proxy Cluster with OAuth2 Integration"
+---
+
 # Nginx Reverse Proxy Cluster with OAuth2 Integration
 
 The Nginx reverse-proxy cluster forms the front line of the homelab’s application delivery architecture. It abstracts internal services, offloads TLS/SSL operations, provides intelligent load distribution, and now enforces **centralized authentication via OAuth2 Proxy with Microsoft Entra ID** for services that require identity-aware access.

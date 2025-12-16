@@ -1,3 +1,7 @@
+---
+title: "🏃 Deploy Linux Security Updates Runbook"
+---
+
 # 🏃 Deploy Linux Security Updates Runbook
 
 This runbook provides **step-by-step instructions to apply Linux security updates** on one or more hosts in your Home Lab using an Ansible playbook. Note that this process **may reboot target systems** if required by the updates.

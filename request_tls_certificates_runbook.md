@@ -1,3 +1,7 @@
+---
+title: "🏃 Request TLS Certificates Runbook"
+---
+
 # 🏃 Request TLS Certificates Runbook
 
 This runbook provides **step‑by‑step instructions to request and stage TLS certificates** for all hostnames in the homelab.

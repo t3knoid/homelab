@@ -1,3 +1,7 @@
+---
+title: "🚦 Semaphore UI"
+---
+
 # 🚦 Semaphore UI
 
 [Semaphore UI](https://semaphoreui.com/install/) is a lightweight web interface for managing and executing Ansible playbooks. It provides a user‑friendly dashboard to organize inventories, credentials, and playbook runs—ideal for homelab automation and infrastructure orchestration.

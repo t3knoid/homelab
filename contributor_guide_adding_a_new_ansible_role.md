@@ -1,3 +1,7 @@
+---
+title: "👩‍💻 Contributor Guide: Adding a New Ansible Role"
+---
+
 # 👩‍💻 Contributor Guide: Adding a New Ansible Role
 
 ## 📖 Purpose

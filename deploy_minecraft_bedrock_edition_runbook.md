@@ -1,3 +1,7 @@
+---
+title: "🏃 Deploy Minecraft Bedrock Edition Runbook"
+---
+
 # 🏃 Deploy Minecraft Bedrock Edition Runbook
 
 This runbook provides **step-by-step instructions to deploy or update a Minecraft Bedrock Edition server** using Ansible.

@@ -1,3 +1,7 @@
+---
+title: "Linstor Management"
+---
+
 # Linstor Management
 
 The following page provides some insight on managing Linstor.

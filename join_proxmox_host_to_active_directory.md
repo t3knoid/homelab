@@ -1,3 +1,7 @@
+---
+title: "Join Proxmox host to active directory"
+---
+
 # Join Proxmox host to active directory
 
 The following process joins a Proxmox VE server to the refol.us active directory domain. These instructions assumes an active directory server is on IP 192.168.2.251.

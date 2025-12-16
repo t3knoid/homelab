@@ -1,3 +1,7 @@
+---
+title: "🏃 Deploy Calibre‑web Runbook"
+---
+
 # 🏃 Deploy Calibre‑web Runbook
 
 This runbook provides **step‑by‑step instructions to deploy or update Calibre‑web** in the Home Lab using Ansible.

@@ -1,3 +1,7 @@
+---
+title: "⚙️ Ansible"
+---
+
 # ⚙️ Ansible
 
 Ansible is the automation framework used to manage virtual machine operations across the homelab environment. It provides:

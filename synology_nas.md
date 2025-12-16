@@ -1,3 +1,7 @@
+---
+title: "📦 Synology NAS"
+---
+
 # 📦 Synology NAS
 
 The **Synology NAS** provides **iSCSI storage** that is integrated with the **Proxmox Backup Server**.  

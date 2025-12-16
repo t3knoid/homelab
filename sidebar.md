@@ -1,3 +1,7 @@
+---
+title: "🗂 Home Lab"
+---
+
 # 🗂 Home Lab
 
 <details>

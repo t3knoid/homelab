@@ -1,3 +1,7 @@
+---
+title: "⚙️ GitHub Action: Generate Ansible Role Docs"
+---
+
 # ⚙️ GitHub Action: Generate Ansible Role Docs
 
 ## 📖 Purpose

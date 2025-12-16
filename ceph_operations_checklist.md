@@ -1,3 +1,7 @@
+---
+title: "📋 Ceph Operations Checklist"
+---
+
 # 📋 Ceph Operations Checklist
 
 ## ✅ Daily Tasks

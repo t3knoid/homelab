@@ -1,3 +1,7 @@
+---
+title: "🧰 Configuring Semaphore UI Projects"
+---
+
 # 🧰 Configuring Semaphore UI Projects
 
 

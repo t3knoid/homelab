@@ -1,3 +1,7 @@
+---
+title: "List of Ansible Playbooks"
+---
+
 # List of Ansible Playbooks
 
 ## Provisioning a Virtual Machine

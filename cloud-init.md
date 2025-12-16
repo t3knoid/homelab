@@ -1,3 +1,7 @@
+---
+title: "Cloud-Init"
+---
+
 # Cloud-Init
 
 The following provides instructions on creating a Cloud-Init ready Ubuntu 24.04 template using Proxmox. These instructions were derived from [Proxmox Cloud-Init Support documentation](https://pve.proxmox.com/wiki/Cloud-Init_Support).

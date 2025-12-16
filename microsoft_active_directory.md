@@ -1,3 +1,7 @@
+---
+title: "🗂️ Microsoft Active Directory"
+---
+
 # 🗂️ Microsoft Active Directory
 
 **Active Directory (AD)** is hosted on the domain controller and provides centralized authentication, authorization, and directory services.  

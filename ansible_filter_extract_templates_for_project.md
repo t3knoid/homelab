@@ -97,6 +97,7 @@ Each entry in `dynamic_template_sets` must contain:
 
 Dynamic templates are merged into the project definition during setup:
 
+{% raw %}
 ```yaml
 - name: "Append dynamic templates to projects"
   ansible.builtin.set_fact:
@@ -116,7 +117,9 @@ Dynamic templates are merged into the project definition during setup:
   loop_control:
     loop_var: item
 ```
+{% endraw %}
 
 This ensures that **dynamic templates** are fully included alongside **static templates** before Semaphore UI task creation.
+
 
 

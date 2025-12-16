@@ -1,5 +1,5 @@
 ---
-title: "🧩 **Ansible Filter: `extract_templates_for_project`**"
+title: "Ansible Filter: extract_templates_for_project"
 ---
 
 # 🧩 **Ansible Filter: `extract_templates_for_project`**
@@ -116,3 +116,4 @@ Dynamic templates are merged into the project definition during setup:
 ```
 
 This ensures that **dynamic templates** are fully included alongside **static templates** before Semaphore UI task creation.
+

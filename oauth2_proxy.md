@@ -6,7 +6,7 @@ Nginx delegates authentication to OAuth2 Proxy via `auth_request`, while OAuth2 
 
 > [!TIP]
 > **For details on how OAuth2 Proxy is integrated with Nginx and the reverse-proxy cluster, 
-> see [[Reverse Proxy Frontend Server Configuration (with_OAuth2_Support)]]**
+> see [Reverse Proxy Frontend Server Configuration (with_OAuth2_Support)](reverse_proxy_frontend_server_configuration_(with_oauth2_support).md)**
 
 ---
 

@@ -10,9 +10,9 @@ Use these runbooks to ensure consistent deployment, updates, and verification of
 
 | Runbook                                                                | Description                                                                                                                    |
 | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| **[[Deploy Lidarr Runbook]]**                     | Step-by-step instructions to deploy or update Lidarr. |
-| **[[Deploy Plex Media Server Runbook]]**                     | Step-by-step instructions to deploy or update Plex Media Server.                                                |
-| **[[Update Pi-hole DNS Servers Runbook]]**                     | Step-by-step instructions to deploy or update Pi-hole DNS Servers.                                                |
+| **[Deploy Lidarr Runbook](deploy_lidarr_runbook.md)**                     | Step-by-step instructions to deploy or update Lidarr. |
+| **[Deploy Plex Media Server Runbook](deploy_plex_media_server_runbook.md)**                     | Step-by-step instructions to deploy or update Plex Media Server.                                                |
+| **[Update Pi-hole DNS Servers Runbook](update_pi-hole_dns_servers_runbook.md)**                     | Step-by-step instructions to deploy or update Pi-hole DNS Servers.                                                |
 | **[Deploy Plex Media Server](link-to-deploy-plex-runbook)**            | Instructions to update or deploy Plex Media Server in your home lab.                                                           |
 | **[Deploy Pi-hole](link-to-deploy-pihole-runbook)**                    | Instructions to update or deploy Pi-hole DNS server.                                                                           |
 | **[Reverse Proxy Setup](link-to-reverse-proxy-runbook)**               | Steps to configure or update the reverse proxy for your services.                                                              |

@@ -8,5 +8,5 @@ When I initially started automating my home lab, I used [Ansible to provision vi
 
 ## HashiCorp Vault
 
-Another opportunity to learn a new technology is using [[HashiCorp Vault]] to keep secrets used in deploying virtual machines. The current Ansible tasks use Ansible's vault. In time, I will probably use HashiCorp Vault for all secrets used in Ansible playbooks.
+Another opportunity to learn a new technology is using [HashiCorp Vault](hashicorp_vault.md) to keep secrets used in deploying virtual machines. The current Ansible tasks use Ansible's vault. In time, I will probably use HashiCorp Vault for all secrets used in Ansible playbooks.
 

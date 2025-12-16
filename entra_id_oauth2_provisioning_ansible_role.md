@@ -131,7 +131,7 @@ The role requires a dedicated **service principal** with permissions to:
 * Create and manage Azure AD applications
 * Generate client secrets
 
-The [[Create a Service Principal in Microsoft Entra ID]] page details on creating a service principal.
+The [Create a Service Principal in Microsoft Entra ID](create_a_service_principal_in_microsoft_entra_id.md) page details on creating a service principal.
 
 ---
 

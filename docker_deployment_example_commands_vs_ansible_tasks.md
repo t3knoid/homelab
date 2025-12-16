@@ -99,10 +99,10 @@ Using Ansible roles for Docker deployments provides:
 
 ## **8. Related Pages**
 
-* **[[Docker Deployment - Home Lab Overview]]**
-* **[[Radarr Deployment (Docker) - Role Overview]]**
-* **[[Sonarr Deployment (Docker) - Role Overview]]**
-* **[[Lidarr Deployment (Docker) - Role Overview]]**
-* **[[SABnzbd Deployment (Docker) - Role Overview]]**
-* **[[LazyLibrarian Deployment (Docker) - Role Overview]]**
+* **[Docker Deployment - Home Lab Overview](docker_deployment_-_home_lab_overview.md)**
+* **[Radarr Deployment (Docker) - Role Overview](radarr_deployment_(docker)_-_role_overview.md)**
+* **[Sonarr Deployment (Docker) - Role Overview](sonarr_deployment_(docker)_-_role_overview.md)**
+* **[Lidarr Deployment (Docker) - Role Overview](lidarr_deployment_(docker)_-_role_overview.md)**
+* **[SABnzbd Deployment (Docker) - Role Overview](sabnzbd_deployment_(docker)_-_role_overview.md)**
+* **[LazyLibrarian Deployment (Docker) - Role Overview](lazylibrarian_deployment_(docker)_-_role_overview.md)**
 

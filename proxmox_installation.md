@@ -33,7 +33,7 @@ Execute ```apt update``` afterwards.
 
 ## Joining Proxmox Hosts to Active Directory
 
-[[Join Proxmox host to active directory]] details the process on joining each Proxmox node to active directory.
+[Join Proxmox host to active directory](join_proxmox_host_to_active_directory.md) details the process on joining each Proxmox node to active directory.
 
 
 ## Proxmox Virtual Machine Agent Install

@@ -217,7 +217,7 @@ Each project is processed using `setup_project.yml`, which calls:
 # 📌 **Dynamic Template Handling**
 
 1. Static templates come directly from `semaphoreui_setup_projects_templates`.
-2. Dynamic templates come from `dynamic_template_sets` via the [[Ansible_Filter_extract_templates_for_project]].
+2. Dynamic templates come from `dynamic_template_sets` via the [Ansible_Filter_extract_templates_for_project](ansible_filter_extract_templates_for_project.md).
 3. Both sets are **appended and deduplicated** automatically before creating tasks in Semaphore UI.
 
 ---

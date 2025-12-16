@@ -33,7 +33,7 @@ The secondary drive is a [Western Digital Red SA500 NAS SSD](https://www.amazon.
 
 ## 📦 Ceph Storage
 
-[[Ceph]] is tightly integrated with Proxmox and provides the cluster’s primary shared storage backend.
+[Ceph](ceph.md) is tightly integrated with Proxmox and provides the cluster’s primary shared storage backend.
 
 ### Why Ceph?
 - **High Availability:** VM disks are replicated across nodes, eliminating single points of failure.  

@@ -116,7 +116,7 @@ docker-compose -f /config/appname/docker-compose.yml pull
 docker-compose -f /config/appname/docker-compose.yml up -d
 ```
 
-The [[Docker Deployment Example Commands vs Ansible Tasks]] page provides a side-by-side equivalence between manual Docker deployment commands and the automated Ansible tasks.
+The [Docker Deployment Example Commands vs Ansible Tasks](docker_deployment_example_commands_vs_ansible_tasks.md) page provides a side-by-side equivalence between manual Docker deployment commands and the automated Ansible tasks.
 
 ---
 
@@ -163,13 +163,13 @@ app_setup_pg_port: 5432
 
 ## 📚 Related Pages
 
-* [[Calibre Deployment (Docker) - Role Overview]]
-* [[Calibre-Web Deployment (Docker) - Role Overview]]
-* [[Docker Command Cheat Sheet]]
-* [[Docker Deployment Example Commands vs Ansible Tasks]]
-* [[LazyLibrarian Deployment (Docker) - Role Overview]]
-* [[Lidarr Deployment (Docker) - Role Overview]]
-* [[Radarr Deployment (Docker) - Role Overview]]
-* [[SABnzbd Deployment (Docker) - Role Overview]]
-* [[Sonarr Deployment (Docker) - Role Overview]]
+* [Calibre Deployment (Docker) - Role Overview](calibre_deployment_(docker)_-_role_overview.md)
+* [Calibre-Web Deployment (Docker) - Role Overview](calibre-web_deployment_(docker)_-_role_overview.md)
+* [Docker Command Cheat Sheet](docker_command_cheat_sheet.md)
+* [Docker Deployment Example Commands vs Ansible Tasks](docker_deployment_example_commands_vs_ansible_tasks.md)
+* [LazyLibrarian Deployment (Docker) - Role Overview](lazylibrarian_deployment_(docker)_-_role_overview.md)
+* [Lidarr Deployment (Docker) - Role Overview](lidarr_deployment_(docker)_-_role_overview.md)
+* [Radarr Deployment (Docker) - Role Overview](radarr_deployment_(docker)_-_role_overview.md)
+* [SABnzbd Deployment (Docker) - Role Overview](sabnzbd_deployment_(docker)_-_role_overview.md)
+* [Sonarr Deployment (Docker) - Role Overview](sonarr_deployment_(docker)_-_role_overview.md)
 

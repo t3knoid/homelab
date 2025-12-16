@@ -9,17 +9,17 @@ Entra ID integrates seamlessly with the homelab’s automation stack, allowing s
 
 ## 📘 Related Pages
 
-### ✅ [[Entra ID OAuth2 Provisioning Ansible Role]]
+### ✅ [Entra ID OAuth2 Provisioning Ansible Role](entra_id_oauth2_provisioning_ansible_role.md)
 Automates the creation and configuration of OAuth2 applications, redirect URIs, secrets, and permissions in Entra ID using Ansible.
 
 ---
 
-### ✅ [[Create a Service Principal in Microsoft Entra ID]]
+### ✅ [Create a Service Principal in Microsoft Entra ID](create_a_service_principal_in_microsoft_entra_id.md)
 Step‑by‑step instructions for creating a service principal, assigning roles, and preparing credentials for use with automation tools and OAuth2‑protected services.
 
 ---
 
-### ✅ [[Reverse Proxy Frontend Server Configuration (with_OAuth2_Support)]]
+### ✅ [Reverse Proxy Frontend Server Configuration (with_OAuth2_Support)](reverse_proxy_frontend_server_configuration_(with_oauth2_support).md)
 Configuration guide for the homelab’s Nginx frontend server — managing TLS, backend routing, and Microsoft Entra ID OAuth2 authentication for protected sites.
 
 ---

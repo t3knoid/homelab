@@ -7,11 +7,11 @@ Ansible is the automation framework used to manage virtual machine operations ac
 - **Configuration management** of applications whenever possible  
 
 By leveraging Ansible, infrastructure tasks become streamlined, repeatable, and highly maintainable.  
-A curated [[List of Ansible Playbooks]] supports standardized workflows across the environment. 
+A curated [List of Ansible Playbooks](list_of_ansible_playbooks.md) supports standardized workflows across the environment. 
 
-Each Ansible playbook includes its own `README.md` for documentation. A consolidated [Playbook Index](https://homelab.refol.us/projects/home-lab/repository/ansible/revisions/main/entry/playbooks/README.md) is available in the `playbooks/` root folder. The documentation process is explained in the [[Ansible Playbook Documentation Workflow]] page.
+Each Ansible playbook includes its own `README.md` for documentation. A consolidated [Playbook Index](https://homelab.refol.us/projects/home-lab/repository/ansible/revisions/main/entry/playbooks/README.md) is available in the `playbooks/` root folder. The documentation process is explained in the [Ansible Playbook Documentation Workflow](ansible_playbook_documentation_workflow.md) page.
 
-Each Ansible role includes its own `README.md` for documentation. A consolidated [Role Index](https://homelab.refol.us/projects/home-lab/repository/ansible/revisions/main/entry/roles/README.md) is available in the `roles/` root folder. The documentation process is explained in the [[Ansible Role Documentation Workflow]] page.
+Each Ansible role includes its own `README.md` for documentation. A consolidated [Role Index](https://homelab.refol.us/projects/home-lab/repository/ansible/revisions/main/entry/roles/README.md) is available in the `roles/` root folder. The documentation process is explained in the [Ansible Role Documentation Workflow](ansible_role_documentation_workflow.md) page.
 
 ---
 
@@ -67,10 +67,10 @@ This playbook automates installation and configuration, keeping control nodes co
 
 Automated scripts generate Markdown documentation whenever changes are made, ensuring playbooks and roles remain self‑documenting and contributor‑friendly:
 
-- **[[Ansible Role Documentation Workflow]]**  
+- **[Ansible Role Documentation Workflow](ansible_role_documentation_workflow.md)**  
   Enforces mandatory metadata in each role and builds role‑level READMEs plus a global index.
 
-- **[[Ansible Playbook Documentation Workflow]]**  
+- **[Ansible Playbook Documentation Workflow](ansible_playbook_documentation_workflow.md)**  
   Enforces mandatory `# Purpose:` comments, generates per‑playbook READMEs, builds folder‑level summaries, and maintains the global playbook index.
 
 These workflows provide contributor guidance, examples of generated outputs, and expectations for adding new roles or playbooks.

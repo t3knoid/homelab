@@ -1,3 +1,7 @@
+---
+title: Home Lab Overview
+---
+
 # 🏠 Home Lab Overview
 
 My home lab is a fully featured technical environment designed to sharpen skills in systems engineering, automation, DevOps, and modern infrastructure management. It simulates a production-grade ecosystem using industry-standard tools, allowing me to design, test, and refine solutions across virtualization, orchestration, authentication, and CI/CD.

@@ -93,7 +93,7 @@ The configuration section ensures the domain controller is not just installed, b
 ## 🐧 Authenticate Linux Hosts
 
 Linux systems can be joined to the Active Directory domain for centralized authentication.  
-See: [Join an Ubuntu 24.04 Host to Active Directory Domain](Join_an_Ubuntu_2404_Host_to_Active_Directory_Domain).
+See: [Join an Ubuntu 24.04 Host to Active Directory Domain](join_an_ubuntu_2404_host_to_active_directory_domain.md).
 
 ---
 

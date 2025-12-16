@@ -16,8 +16,8 @@ Each Ansible role includes its own `README.md` for documentation. A consolidated
 ---
 
 ## 🗂 Documentation Map
-- [Quick-Start Checklist](Ansible_Quick‑Start_Checklist)  
-- [Directory Structure & Conventions](Ansible_Directory_Structure_&_Conventions)  
+- [Quick-Start Checklist](ansible_quick‑start_checklist.md)  
+- [Directory Structure & Conventions](ansible_directory_structure_&_conventions.md)  
 - [Semaphore](../Semaphore)  
 
 ---
@@ -49,7 +49,7 @@ git pull
 This ensures you are operating with the latest codebase and dependencies.  
 For details on repository organization, see [Directory Structure & Conventions](./ansible-directory-structure.md).
 
-💡 Playbooks can also be executed through [Semaphore UI](Semaphore), a web-based interface that provides a dashboard for managing inventories, credentials, and runs—ideal if you prefer not to work directly from the console.
+💡 Playbooks can also be executed through [Semaphore UI](semaphore.md), a web-based interface that provides a dashboard for managing inventories, credentials, and runs—ideal if you prefer not to work directly from the console.
 
 ### Deploying or Updating Ansible
 To deploy or update Ansible on a control node:
@@ -79,4 +79,4 @@ These workflows provide contributor guidance, examples of generated outputs, and
 
 ## 🚀 Quick-Start Checklist
 
-For a fast onboarding guide with essential commands and common playbooks, see the [Ansible Quick-Start Checklist](Ansible_Quick‑Start_Checklist).
+For a fast onboarding guide with essential commands and common playbooks, see the [Ansible Quick-Start Checklist](ansible_quick‑start_checklist.md).

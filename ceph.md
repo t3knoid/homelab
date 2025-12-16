@@ -125,7 +125,7 @@ Useful commands:
 
 ## 🧰 Troubleshooting Ceph
 
-The [Ceph Operations Cheat Sheet](Ceph_Cheat_Sheet) page provides a quick reference to commands and practices for monitoring, troubleshooting, and maintaining your Ceph cluster in the homelab. [Performing regular maintenance operations](Ceph_Operations_Checklist) can go a long way to ensuring a healthy system.
+The [Ceph Operations Cheat Sheet](ceph_cheat_sheet.md) page provides a quick reference to commands and practices for monitoring, troubleshooting, and maintaining your Ceph cluster in the homelab. [Performing regular maintenance operations](ceph_operations_checklist.md) can go a long way to ensuring a healthy system.
 
 Even in a homelab, Ceph can encounter issues. Here are common problems and fixes:
 
@@ -135,7 +135,7 @@ Even in a homelab, Ceph can encounter issues. Here are common problems and fixes
   ```bash
   systemctl restart ceph-osd@<id>
   ```
-  If the disk failed, [replace it and recreate the OSD](Replace_failed_disk_and_recreate_the_OSD).
+  If the disk failed, [replace it and recreate the OSD](replace_failed_disk_and_recreate_the_osd.md).
 
 ### 2. PGs (Placement Groups) Stuck
 - **Symptom:** `ceph -s` shows PGs in `stuck` or `inactive` state.  

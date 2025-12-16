@@ -116,17 +116,17 @@ This architecture is intentionally layered to balance security, reliability, and
 
 ### **1. Clear Separation of Responsibilities**
 
-* **[Frontend Nginx](Reverse-proxy#%EF%B8%8F-Frontend-Server-Configuration)**
+* **[Frontend Nginx](reverse-proxy#%ef%b8%8f-frontend-server-configuration.md)**
 
   * Terminates SSL
   * Performs OAuth2 authentication
   * Controls routing
-* **[OAuth2 Proxy](Oauth2_Proxy)**
+* **[OAuth2 Proxy](oauth2_proxy.md)**
 
   * Handles identity logic
   * Integrates with Microsoft Entra ID
   * Injects identity headers
-* **[Backend Nginx](Reverse-proxy#%EF%B8%8F-Backend-Server-Configuration)**
+* **[Backend Nginx](reverse-proxy#%ef%b8%8f-backend-server-configuration.md)**
 
   * Only performs simple reverse proxy duties
 

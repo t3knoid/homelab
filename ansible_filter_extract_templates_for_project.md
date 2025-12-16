@@ -52,6 +52,7 @@ Each entry in `dynamic_template_sets` must contain:
 3. Expands each template across all inventories listed in the template set.
 4. Generates a **list of dictionaries** in the following format:
 
+{% raw %}
 ```yaml
 - project: "Home Lab"
   name: "Check connection to Plex"
@@ -65,6 +66,7 @@ Each entry in `dynamic_template_sets` must contain:
   view: "Linux Checks"
   environment: "Empty"
 ```
+{% endraw %}
 
 ---
 
@@ -116,4 +118,5 @@ Dynamic templates are merged into the project definition during setup:
 ```
 
 This ensures that **dynamic templates** are fully included alongside **static templates** before Semaphore UI task creation.
+
 

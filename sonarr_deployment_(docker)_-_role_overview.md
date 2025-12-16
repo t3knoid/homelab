@@ -1,0 +1,170 @@
+# Sonarr Deployment (Docker) - Role Overview
+
+This page documents the **Sonarr Docker deployment using Ansible**, illustrating the workflow, architecture, and best practices for deploying this containerized application with version control, persistent storage, and integration with an external PostgreSQL database.
+
+---
+
+## **1. Overview**
+
+Sonarr is deployed in a Docker container using Ansible. Key steps include:
+
+* **Stop existing container** safely
+* **Prepare persistent configuration and backup directories**
+* **Deploy templated Docker Compose and application configuration files**
+* **Version control the Docker image** to prevent accidental upgrades
+* **Start the container**
+
+Additionally, Sonarr connects to an **external PostgreSQL database**, separating storage from the application for improved reliability and scalability.
+
+---
+
+## **2. Persistent Configuration and Backups**
+
+Persistent storage ensures application data is preserved across container restarts:
+
+* Configuration directory: `/config`
+* Backup directory: `/nfs/backups/sonarr`
+
+Example variables from the role:
+
+```yaml
+sonarr_setup_config_dir: "/config"
+sonarr_setup_backups_dir: "/nfs/backups/sonarr"
+sonarr_setup_backup_filename: "{{ sonarr_setup_backup_prefix }}{{ ansible_date_time.date }}.sqlc"
+```
+
+* Directories are **created and owned** by a dedicated system user
+* Supports NFS-mounted storage for centralized backups
+* Ensures container can read/write configs and backup files
+
+---
+
+## **3. Docker Image Version Control**
+
+The role pins a specific Docker image version:
+
+```yaml
+sonarr_setup_version: 4.0.15.2941
+sonarr_setup_docker_image_name: "sonarr:{{ sonarr_setup_version }}"
+```
+
+* Avoids pulling `latest` automatically
+* Guarantees reproducible deployments
+* Allows testing and validation of known working versions
+
+---
+
+## **4. Deployment Workflow**
+
+The sequence for deploying Sonarr is:
+
+1. **Stop and remove existing container**
+
+```bash
+docker stop sonarr
+docker rm sonarr
+docker network prune -f
+```
+
+2. **Ensure persistent directories exist**
+
+```bash
+mkdir -p {{ sonarr_setup_config_dir }}
+mkdir -p {{ sonarr_setup_backups_dir }}
+chown <user>:<group> {{ sonarr_setup_config_dir }}
+```
+
+3. **Deploy configuration files and Docker Compose**
+
+* `docker-compose.yml`
+* `config.xml` (application-specific configuration)
+
+4. **Prune unused Docker images** (optional)
+
+```bash
+docker image prune -f
+```
+
+5. **Pull the pinned Docker image**
+
+```bash
+docker-compose -f {{ sonarr_setup_config_dir }}/docker-compose.yml pull
+```
+
+6. **Start the container**
+
+```bash
+docker-compose -f {{ sonarr_setup_config_dir }}/docker-compose.yml up -d
+```
+
+---
+
+## **5. Architecture Diagram**
+
+```
+                 ┌──────────────────────────────┐
+                 │  Host / Docker Environment   │
+                 │                              │
+                 │ ┌──────────────────────────┐ │
+                 │ │ Sonarr Container         │ │
+                 │ │ - Pinned Image           │ │
+                 │ │ - Config & Backup Volumes│ │
+                 │ │ - Exposed Ports 8989/9898│ │
+                 │ └──────────────────────────┘ │
+                 │                              │
+                 └────────────────▲─────────────┘
+                                 │ Access
+                 ┌───────────────┴─────────────┐
+                 │ Users / Clients             │
+                 │ Web Browser / API           │
+                 └───────────────▲─────────────┘
+                                 │ Database Connection
+                 ┌───────────────┴─────────────┐
+                 │ External PostgreSQL Server  │
+                 │ - Database: sonarr-main     │
+                 │ - User: sonarr              │
+                 │ - Port: 5432                │
+                 └─────────────────────────────┘
+```
+
+* Config directory is mounted inside the container
+* Backups can reside on NFS for centralized storage
+* Container connects to **external PostgreSQL** for data persistence
+
+---
+
+## **6. Key Features**
+
+* Automated deployment via **Ansible**
+* Persistent configuration and backups
+* Pinned Docker image version for reproducibility
+* Optional NFS storage for backups
+* Integration with **external PostgreSQL** for database separation
+* Reusable workflow applicable to other home lab containerized apps
+
+---
+
+## **7. Summary**
+
+The Sonarr deployment role demonstrates a **robust, production-like container workflow**:
+
+* Safe, repeatable container start/stop sequences
+* Version-controlled Docker images to prevent accidental updates
+* Persistent storage and automated backups for configuration and data
+* Separation of application and database layers using PostgreSQL
+* Template-driven configuration to allow scalable and consistent deployments
+
+> This workflow can be adapted for other containerized applications in the home lab, ensuring maintainability, reliability, and consistent infrastructure-as-code practices.
+
+---
+
+## **8. Related Pages**
+
+* [[Calibre Deployment (Docker) - Role Overview]]
+* [[Calibre-Web Deployment (Docker) - Role Overview]]
+* [[Docker Command Cheat Sheet]]
+* [[Docker Deployment Example Commands vs Ansible Tasks]]
+* [[LazyLibrarian Deployment (Docker) - Role Overview]]
+* [[Lidarr Deployment (Docker) - Role Overview]]
+* [[Radarr Deployment (Docker) - Role Overview]]
+* [[SABnzbd Deployment (Docker) - Role Overview]]

@@ -1,0 +1,74 @@
+# ⚙️ GitHub Action: Generate Playbook Docs
+
+## 📖 Purpose
+
+This workflow ensures that documentation for all Ansible roles is **automatically generated and kept up to date**. Whenever code is pushed or a pull request is opened, the workflow runs the `generate_role_docs.py` script, which regenerates per‑playbook README.md files, builds folder‑level summaries, and maintains a global index of playbooks.
+
+## 🛠 Workflow File
+Located at: `.github/workflows/generate-playbook-docs.yml`
+
+```yaml
+name: Generate Ansible Playbook Docs
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  generate-playbook-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # needed for committing back
+
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # Install dependencies (if any)
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Run the documentation generator
+      - name: Generate playbook docs
+        run: |
+          python ./scripts/generate_playbook_docs.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add playbooks/*/README.md playbooks/README.md
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(docs): auto-generate playbook documentation"
+            git push origin HEAD:${{ github.ref }}
+          else
+            echo "No documentation changes to commit."
+          fi
+```
+
+---
+
+## 🔑 Key Points
+
+- **Trigger:** Runs on every push to `main` and on pull requests.  
+- **Checkout:** Uses `actions/checkout@v4` with `fetch-depth: 0` so commits can be pushed back.  
+- **Python Setup:** Uses Python 3.11 (adjustable).  
+- **Dependencies:** Installs from `requirements.txt` (currently only PyYAML).  
+- **Script Execution:** Runs `scripts/generate_playbook_docs.py` to regenerate playbook documentation.  
+- **Commit Logic:**  
+  - Stages only playbook READMEs and the global index.  
+  - Commits only if changes exist (`git diff --cached --quiet` prevents empty commits).  
+  - Pushes back to the branch that triggered the workflow.  
+- **Permissions:** Requires repository **Actions → Workflow permissions** set to **Read and write** so the built‑in `GITHUB_TOKEN` can push commits.  
+

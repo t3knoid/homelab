@@ -1,7 +1,12 @@
 title: Homelab Documentation
 markdown: kramdown
+kramdown:
+  math_engine: mathjax
+  syntax_highlighter: rouge
+highlighter: rouge
 plugins:
   - jekyll-relative-links
+  - jemoji
 theme: just-the-docs
 relative_links:
   enabled: true

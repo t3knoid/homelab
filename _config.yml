@@ -13,3 +13,11 @@ relative_links:
   enabled: true
   collections: true
 baseurl: "/homelab"
+header_pages:
+  - index.md
+  - ansible.md
+  - proxmox.md
+  - reverse-proxy.md
+  - certificates.md
+linkedin_username: frefol
+github_username: t3knoid

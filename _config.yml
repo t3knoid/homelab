@@ -1,13 +1,14 @@
 title: Homelab Documentation
 markdown: kramdown
 kramdown:
+  input: GFM
   math_engine: mathjax
   syntax_highlighter: rouge
 highlighter: rouge
 plugins:
   - jekyll-relative-links
   - jemoji
-theme: just-the-docs
+theme: minima
 relative_links:
   enabled: true
   collections: true

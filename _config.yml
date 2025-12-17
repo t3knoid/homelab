@@ -12,7 +12,7 @@ theme: minima
 relative_links:
   enabled: true
   collections: true
-baseurl: "/homelab"
+baseurl: "/"
 header_pages:
   - index.md
   - ansible.md

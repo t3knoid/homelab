@@ -1,0 +1,35 @@
+<nav class="site-header" role="navigation" aria-label="Primary">
+  <style>
+    .site-header { padding: 0.6rem 1rem; background: #fff; border-bottom: 1px solid #e6e6e6; }
+    .site-header .site-nav { list-style: none; margin: 0; padding: 0; display: flex; gap: 1rem; align-items: center; }
+    .site-header .site-nav a { color: inherit; text-decoration: none; font-weight: 600; }
+
+    /* Responsive: hide menu on small screens and show toggle */
+    .nav-toggle { display: none; }
+    .nav-toggle-label { display: none; cursor: pointer; padding: 8px; border: 1px solid transparent; border-radius: 4px; }
+    .nav-toggle-label svg { width: 20px; height: 20px; vertical-align: middle; }
+
+    @media (max-width: 700px) {
+      .site-header { padding: 0.5rem; }
+      .site-header .site-nav { display: none; flex-direction: column; gap: 0; margin: 0; padding: 0; }
+      .site-header .site-nav li { padding: 0; }
+      .site-header .site-nav a { display: block; padding: 6px 10px; line-height: 1.2; }
+      .nav-toggle { display: inline-block; }
+      .nav-toggle-label { display: inline-block; float: right; }
+      .nav-toggle:checked + .nav-toggle-label + .site-nav { display: flex; }
+    }
+  </style>
+
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
+  <label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle navigation">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </label>
+
+  <ul class="site-nav">
+    <li><a href="/homelab/">Home Lab Overview</a></li>
+    <li><a href="/homelab/ansible.html">️ Ansible</a></li>
+    <li><a href="/homelab/proxmox.html">️ Proxmox Virtual Environment (PVE)</a></li>
+    <li><a href="/homelab/reverse-proxy.html">Nginx Reverse Proxy Cluster</a></li>
+    <li><a href="/homelab/certificates.html">Certificates</a></li>
+  </ul>
+</nav>

@@ -1,5 +1,5 @@
 ---
-title: "⚙️ Proxmox Virtual Environment (PVE)"
+title: "️ Proxmox Virtual Environment (PVE)"
 ---
 
 # ⚙️ Proxmox Virtual Environment (PVE)
@@ -52,6 +52,7 @@ The secondary drive is a [Western Digital Red SA500 NAS SSD](https://www.amazon.
 - VM disks stored on Ceph can be live‑migrated between nodes without downtime.  
 
 ### Storage Flow (Text Diagram)
+{% raw %}
 ```
 [ VM Disk ] → stored in → [ Ceph Pool ]
                  ↑
@@ -59,6 +60,7 @@ The secondary drive is a [Western Digital Red SA500 NAS SSD](https://www.amazon.
                  ↑
    managed by → [ Ceph MONs on all nodes ]
 ```
+{% endraw %}
 
 This mirrors enterprise‑grade storage practices while remaining lightweight enough for homelab hardware.
 
@@ -69,16 +71,20 @@ This mirrors enterprise‑grade storage practices while remaining lightweight en
 ### ISO Images
 Store ISO images in the following directory on each node:
 
+{% raw %}
 ```bash
 /var/lib/vz/template/iso/
 ```
+{% endraw %}
 
 ### CT Templates
 Container templates are stored here:
 
+{% raw %}
 ```bash
 /var/lib/vz/template/cache/
 ```
+{% endraw %}
 
 ### Handy Notes
 - Keep ISOs and templates synchronized across nodes for consistency.  

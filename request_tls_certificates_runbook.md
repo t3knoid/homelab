@@ -1,5 +1,5 @@
 ---
-title: "🏃 Request TLS Certificates Runbook"
+title: "Request TLS Certificates Runbook"
 ---
 
 # 🏃 Request TLS Certificates Runbook
@@ -12,11 +12,13 @@ This runbook provides **step‑by‑step instructions to request and stage TLS c
 
 Start by logging into a control node with Ansible installed and prepare the environment:
 
+{% raw %}
 ```shell
 cd ~/ansible
 source /opt/python_3.12/bin/activate
 INV=inventory/rproxy/inventory.ini
 ```
+{% endraw %}
 
 > ⚡ Important: Always start on the control node so all subsequent commands run in the correct environment.
 
@@ -26,9 +28,11 @@ INV=inventory/rproxy/inventory.ini
 
 Ensure your local repository is up to date:
 
+{% raw %}
 ```shell
 git pull origin main
 ```
+{% endraw %}
 
 > ⚡ Important: Pulling the latest code first prevents conflicts and ensures you’re working with the most recent version.
 
@@ -38,9 +42,11 @@ git pull origin main
 
 Run the Ansible playbook that requests Let’s Encrypt certificates for all configured hostnames:
 
+{% raw %}
 ```shell
 ansible-playbook -i $INV -k playbooks/certs/generate_all_certs.yml
 ```
+{% endraw %}
 
 > ⚡ Note: The `‑k` option prompts for SSH password if needed.
 
@@ -54,9 +60,11 @@ After this completes successfully, new certificates should be available on the r
 
 Once the certificates have been generated, stage (copy and prepare) them for use:
 
+{% raw %}
 ```shell
 ansible-playbook -i $INV -k playbooks/certs/stage_all_certs.yml
 ```
+{% endraw %}
 
 After staging, the certificates will be available on the host in hostname-specific folders under:
 

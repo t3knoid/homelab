@@ -1,5 +1,5 @@
 ---
-title: "🚦 Semaphore UI"
+title: "Semaphore UI"
 ---
 
 # 🚦 Semaphore UI
@@ -33,6 +33,7 @@ Data folder: `/ansible/pgdata`
 
 Example configuration:
 
+{% raw %}
 ```json
 "postgres": {
   "host": "192.168.2.102",
@@ -42,6 +43,7 @@ Example configuration:
 },
 "dialect": "postgres"
 ```
+{% endraw %}
 
 ---
 
@@ -75,6 +77,7 @@ Semaphore also supports OAuth2 authentication. In this setup, **Microsoft Entra 
 
 Semaphore UI runs automatically via a systemd unit file (`/etc/systemd/system/semaphore.service`):
 
+{% raw %}
 ```ini
 [Unit]
 Description=Semaphore Ansible
@@ -96,6 +99,7 @@ RestartSec=10s
 [Install]
 WantedBy=multi-user.target
 ```
+{% endraw %}
 
 > **Note:** The service runs as user `semaphore` and group `ansible`, using a Python virtual environment.
 
@@ -105,11 +109,13 @@ WantedBy=multi-user.target
 
 A dedicated Active Directory account must be created to run the Semaphore UI service. Example PowerShell command:
 
+{% raw %}
 ```powershell
 New-ADUser -Name "Semaphore" -GivenName "Semaphore" -Surname "User" `
   -SamAccountName "semaphore" -UserPrincipalName "semaphore@refol.us" `
   -AccountPassword (Read-Host -AsSecureString "Input Password") -Enabled $true
 ```
+{% endraw %}
 
 ---
 
@@ -126,9 +132,11 @@ Semaphore UI is accessible at: **https://semaphore.refol.us**
 Semaphore does not maintain its own log file. All output is sent to system messages.  
 View logs with:
 
+{% raw %}
 ```shell
 sudo journalctl -u semaphore -f
 ```
+{% endraw %}
 
 ---
 
@@ -137,31 +145,41 @@ sudo journalctl -u semaphore -f
 Semaphore UI can be provisioned and deployed using Ansible playbooks.
 
 ### 1. Provision Ubuntu VM
+{% raw %}
 ```shell
 ansible-playbook -u ansible -k -i inventory/ansible/inventory.ini playbooks/provision_vm.yml -l ansible-1
 ```
+{% endraw %}
 
 ### 2. Deploy Semaphore UI
+{% raw %}
 ```shell
 ansible-playbook -k -i inventory/ansible/inventory.ini playbooks/deploy_semaphoreui.yml
 ```
+{% endraw %}
 > Uses the `postgresql_setup` role plus Python/Ansible modules.
 
 ### 3. Configure Reverse Proxy
+{% raw %}
 ```shell
 ansible-playbook -k -i inventory/ansible/inventory.ini playbooks/rproxy/config_rproxy.yml
 ```
+{% endraw %}
 
 ### 4. Generate Certificates
+{% raw %}
 ```shell
 ansible-playbook -k -i inventory/ansible/inventory.ini playbooks/certs/generate_certs.yml
 ansible-playbook -k -i inventory/ansible/inventory.ini playbooks/certs/stage_certs.yml
 ```
+{% endraw %}
 
 ### 5. Backup Database
+{% raw %}
 ```shell
 ansible-playbook -k -i inventory/ansible/inventory.ini playbooks/semaphoreui/backup_db.yml
 ```
+{% endraw %}
 > Uses `pg_dump` to `/nfs/backups/` with filenames prefixed `semaphoreui_YYYY-MM-DD`.
 
 ---

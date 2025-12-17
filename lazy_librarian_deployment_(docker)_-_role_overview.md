@@ -31,11 +31,13 @@ Persistent storage ensures application data is preserved across container restar
 
 Example variables from the role:
 
+{% raw %}
 ```yaml
 lazylibrarian_setup_config_dir: "/config/lazylibrarian"
 lazylibrarian_setup_backups_dir: "{{ lazylibrarian_setup_mount_point }}/lazy"
 lazylibrarian_setup_backup_filename: "{{ lazylibrarian_setup_backup_prefix }}{{ ansible_date_time.date }}.sqlc"
 ```
+{% endraw %}
 
 * Directories are **created and owned** by a dedicated system user
 * Supports NFS-mounted storage for centralized backups
@@ -47,10 +49,12 @@ lazylibrarian_setup_backup_filename: "{{ lazylibrarian_setup_backup_prefix }}{{ 
 
 The role pins a specific Docker image version:
 
+{% raw %}
 ```yaml
 lazylibrarian_setup_version: 0c862d0f
 lazylibrarian_setup_docker_image_name: "lazylibrarian:version-{{ lazylibrarian_setup_version }}"
 ```
+{% endraw %}
 
 * Avoids pulling `latest` automatically
 * Guarantees reproducible deployments
@@ -64,19 +68,23 @@ The sequence for deploying Lazy Librarian is:
 
 1. **Stop and remove existing container**
 
+{% raw %}
 ```bash
 docker stop lazylibrarian
 docker rm lazylibrarian
 docker network prune -f
 ```
+{% endraw %}
 
 2. **Ensure persistent directories exist**
 
+{% raw %}
 ```bash
 mkdir -p {{ lazylibrarian_setup_config_dir }}
 mkdir -p {{ lazylibrarian_setup_backups_dir }}
 chown <user>:<group> {{ lazylibrarian_setup_config_dir }}
 ```
+{% endraw %}
 
 3. **Deploy Docker Compose file**
 
@@ -84,26 +92,33 @@ chown <user>:<group> {{ lazylibrarian_setup_config_dir }}
 
 4. **Prune unused Docker images** (optional)
 
+{% raw %}
 ```bash
 docker image prune -f
 ```
+{% endraw %}
 
 5. **Pull the pinned Docker image**
 
+{% raw %}
 ```bash
 docker-compose -f {{ lazylibrarian_setup_config_dir }}/docker-compose.yml pull
 ```
+{% endraw %}
 
 6. **Start the container**
 
+{% raw %}
 ```bash
 docker-compose -f {{ lazylibrarian_setup_config_dir }}/docker-compose.yml up -d
 ```
+{% endraw %}
 
 ---
 
 ## **5. Architecture Diagram**
 
+{% raw %}
 ```
                  ┌──────────────────────────────┐
                  │  Host / Docker Environment   │
@@ -122,6 +137,7 @@ docker-compose -f {{ lazylibrarian_setup_config_dir }}/docker-compose.yml up -d
                  │ Web Browser / API           │
                  └─────────────────────────────┘
 ```
+{% endraw %}
 
 * Config directory is mounted inside the container
 * Backups can reside on NFS for centralized storage

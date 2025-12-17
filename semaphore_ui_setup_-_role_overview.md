@@ -1,5 +1,5 @@
 ---
-title: "🛠️ **Semaphore UI Setup – Role Overview**"
+title: "️ Semaphore UI Setup – Role Overview"
 ---
 
 # 🛠️ **Semaphore UI Setup – Role Overview**
@@ -33,12 +33,15 @@ The role uses:
 
 All project-related configuration is defined **per inventory**, usually under:
 
+{% raw %}
 ```
 inventory/semaphore/group_vars/semaphore/
 ```
+{% endraw %}
 
 Recommended layout (simplified, no redundant prefixes):
 
+{% raw %}
 ```
 group_vars/semaphore/
   ├── projects.yml
@@ -48,6 +51,7 @@ group_vars/semaphore/
   ├── templates.yml
   └── dynamic_templates.yml
 ```
+{% endraw %}
 
 Each file provides one piece of the full project structure.
 `dynamic_templates.yml` contains dynamic template sets assigned **per project**.
@@ -61,6 +65,7 @@ It becomes the **complete, consolidated list of projects** including everything 
 
 **Example structure (static + dynamic templates):**
 
+{% raw %}
 ```yaml
 semaphoreui_setup_projects:
   - name: "Home Lab"
@@ -102,6 +107,7 @@ semaphoreui_setup_projects:
         view: "Linux Checks"
         environment: "Empty"
 ```
+{% endraw %}
 
 ---
 
@@ -109,6 +115,7 @@ semaphoreui_setup_projects:
 
 Dynamic templates are now **grouped by project**:
 
+{% raw %}
 ```yaml
 dynamic_template_sets:
   "Home Lab":
@@ -136,6 +143,7 @@ dynamic_template_sets:
       repository: "Ansible"
       environment: "Empty"
 ```
+{% endraw %}
 
 * Each template set applies only to its **specified project**.
 * Templates are expanded across all inventories listed in `inventories`.
@@ -147,21 +155,27 @@ dynamic_template_sets:
 
 The role’s entry point:
 
+{% raw %}
 ```
 roles/semaphoreui_setup/tasks/main.yml
 ```
+{% endraw %}
 
 Imports the setup entry point:
 
+{% raw %}
 ```yaml
 - import_tasks: setup/main.yml
 ```
+{% endraw %}
 
 All setup logic resides under:
 
+{% raw %}
 ```
 roles/semaphoreui_setup/tasks/setup/
 ```
+{% endraw %}
 
 ### **Task Files and Their Purpose**
 
@@ -240,6 +254,7 @@ Each project is processed using `setup_project.yml`, which calls:
 
 # 🗺️ **Flowchart Overview**
 
+{% raw %}
 ```
 ┌──────────────────────────────────────────────┐
 │         Project Definition Files             │
@@ -301,3 +316,4 @@ Each project is processed using `setup_project.yml`, which calls:
 │  • Create template                           │
 └──────────────────────────────────────────────┘
 ```
+{% endraw %}

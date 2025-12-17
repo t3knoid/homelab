@@ -1,5 +1,5 @@
 ---
-title: "🏃 Deploy Lidarr Runbook"
+title: "Deploy Lidarr Runbook"
 ---
 
 # 🏃 Deploy Lidarr Runbook
@@ -12,11 +12,13 @@ This runbook provides **step-by-step instructions to deploy or update Lidarr** i
 
 Start by logging into a control node that has Ansible installed and prepare the environment:
 
+{% raw %}
 ```shell
 cd ~/ansible
 source /opt/python_3.12/bin/activate
 INV=inventory/services/inventory.ini
 ```
+{% endraw %}
 
 > ⚡ Important: Always start on the control node so all subsequent commands run in the correct environment.
 
@@ -26,9 +28,11 @@ INV=inventory/services/inventory.ini
 
 Before making any changes, ensure your local repository is up to date:
 
+{% raw %}
 ```shell
 git pull origin main   # Pull the latest code
 ```
+{% endraw %}
 
 > ⚡ Important: Pulling the latest code first prevents conflicts and ensures you’re working on the most recent version.
 
@@ -38,15 +42,19 @@ git pull origin main   # Pull the latest code
 
 Edit the file:
 
+{% raw %}
 ```
 inventory/services/group_vars/lidarr/main.yml
 ```
+{% endraw %}
 
 Set the variable:
 
+{% raw %}
 ```
 lidarr_setup_version
 ```
+{% endraw %}
 
 to the **version you want to deploy**.
 
@@ -61,11 +69,13 @@ to the **version you want to deploy**.
 
 After updating the version, commit your changes to the repository:
 
+{% raw %}
 ```shell
 git add inventory/services/group_vars/lidarr/main.yml
 git commit -m "Update Lidarr version to <version_number>"
 git push origin main   # Push your changes to GitHub
 ```
+{% endraw %}
 
 > ⚡ Important: Replace `<version_number>` with the actual version you set.
 
@@ -75,9 +85,11 @@ git push origin main   # Push your changes to GitHub
 
 Run the following command to deploy Lidarr:
 
+{% raw %}
 ```shell
 ansible-playbook -i $INV -k playbooks/services/deploy_lidarr.yml
 ```
+{% endraw %}
 
 > ⚡ Note: The `-k` option prompts for SSH password if needed.
 

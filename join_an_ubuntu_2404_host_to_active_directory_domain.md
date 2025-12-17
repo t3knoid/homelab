@@ -1,5 +1,5 @@
 ---
-title: "🔗 Joining an Ubuntu 24.04 Host to Active Directory"
+title: "Joining an Ubuntu 24.04 Host to Active Directory"
 ---
 
 # 🔗 Joining an Ubuntu 24.04 Host to Active Directory
@@ -21,10 +21,12 @@ It assumes an Active Directory Domain Controller is available at **192.168.2.251
 
 Update the system and install the necessary packages for realm discovery, SSSD integration, and AD joining:
 
+{% raw %}
 ```bash
 sudo apt update
 sudo apt -y install realmd sssd sssd-tools libnss-sss libpam-sss adcli samba-common-bin oddjob oddjob-mkhomedir packagekit
 ```
+{% endraw %}
 
 ---
 
@@ -32,6 +34,7 @@ sudo apt -y install realmd sssd sssd-tools libnss-sss libpam-sss adcli samba-com
 
 Edit the Netplan configuration (`/etc/netplan/50-cloud-init.yaml`) to use the AD DNS server:
 
+{% raw %}
 ```yaml
 network:
     ethernets:
@@ -49,12 +52,15 @@ network:
               via: 192.168.2.1
     version: 2
 ```
+{% endraw %}
 
 Apply the changes:
 
+{% raw %}
 ```bash
 sudo netplan apply
 ```
+{% endraw %}
 
 ---
 
@@ -62,12 +68,15 @@ sudo netplan apply
 
 Use `realm discover` to confirm the AD domain is visible:
 
+{% raw %}
 ```bash
 sudo realm discover refol.us
 ```
+{% endraw %}
 
 Expected output (note `configured: no` before joining):
 
+{% raw %}
 ```
 refol.us
   type: kerberos
@@ -77,6 +86,7 @@ refol.us
   server-software: active-directory
   client-software: sssd
 ```
+{% endraw %}
 
 ---
 
@@ -84,9 +94,11 @@ refol.us
 
 Run the join command:
 
+{% raw %}
 ```bash
 sudo realm join -v refol.us
 ```
+{% endraw %}
 
 You will be prompted for the **Administrator password**.  
 Successful output confirms enrollment and creation of the computer account in AD.
@@ -97,12 +109,15 @@ Successful output confirms enrollment and creation of the computer account in AD
 
 Check the realm configuration:
 
+{% raw %}
 ```bash
 sudo realm list
 ```
+{% endraw %}
 
 Expected output:
 
+{% raw %}
 ```
 refol.us
   type: kerberos
@@ -114,6 +129,7 @@ refol.us
   login-formats: %U@refol.us
   login-policy: allow-realm-logins
 ```
+{% endraw %}
 
 ---
 
@@ -122,17 +138,21 @@ refol.us
 By default, `realm join` configures `/etc/sssd/sssd.conf`.  
 To simplify logins and home directory paths:
 
+{% raw %}
 ```ini
 [domain/refol.us]
 use_fully_qualified_names = False
 fallback_homedir = /home/%u
 ```
+{% endraw %}
 
 Restart SSSD:
 
+{% raw %}
 ```bash
 sudo service sssd restart
 ```
+{% endraw %}
 
 > ⚠️ **Important:** Ensure `sssd.conf` has permissions `0600` and ownership `root:root`. Otherwise, SSSD will fail to start.
 
@@ -142,9 +162,11 @@ sudo service sssd restart
 
 Configure PAM to create home directories on first login:
 
+{% raw %}
 ```bash
 sudo pam-auth-update --enable mkhomedir
 ```
+{% endraw %}
 
 ---
 
@@ -152,15 +174,19 @@ sudo pam-auth-update --enable mkhomedir
 
 Check user resolution:
 
+{% raw %}
 ```bash
 sudo getent passwd frank@refol.us
 ```
+{% endraw %}
 
 Check group memberships:
 
+{% raw %}
 ```bash
 sudo id frank@refol.us
 ```
+{% endraw %}
 
 > 🔒 Note: The **“Denied RODC Password Replication”** group prevents caching of privileged account credentials on Read‑Only Domain Controllers, enhancing security.
 
@@ -170,9 +196,11 @@ sudo id frank@refol.us
 
 For troubleshooting authentication issues:
 
+{% raw %}
 ```bash
 sudo tail -f /var/log/sssd/sssd_refol.us.log
 ```
+{% endraw %}
 
 ---
 
@@ -180,9 +208,11 @@ sudo tail -f /var/log/sssd/sssd_refol.us.log
 
 Add a domain user to the sudo group:
 
+{% raw %}
 ```bash
 sudo usermod -a -G sudo frank@refol.us
 ```
+{% endraw %}
 
 ---
 

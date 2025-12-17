@@ -1,5 +1,5 @@
 ---
-title: "🖥️ Ubuntu Virtual Machine Disk Expansion Reference Guide"
+title: "️ Ubuntu Virtual Machine Disk Expansion Reference Guide"
 ---
 
 # 🖥️ Ubuntu Virtual Machine Disk Expansion Reference Guide
@@ -42,12 +42,15 @@ After booting the VM, follow these steps to make the extra space available insid
 
 ### 2.1 Verify the New Disk Size
 
+{% raw %}
 ```shell
 sudo lsblk
 ```
+{% endraw %}
 
 > ✅ Example output:
 
+{% raw %}
 ```
 NAME                      MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
 sda                         8:0    0   15G  0 disk
@@ -56,6 +59,7 @@ sda                         8:0    0   15G  0 disk
 └─sda3                      8:3    0 13.2G  0 part
   └─ubuntu--vg-ubuntu--lv 252:0    0 13.2G  0 lvm  /
 ```
+{% endraw %}
 
 > ⚡ The `SIZE` column should reflect the new disk size.
 
@@ -63,78 +67,98 @@ sda                         8:0    0   15G  0 disk
 
 ### 2.2 Grow the Partition
 
+{% raw %}
 ```shell
 sudo growpart /dev/sda 3
 ```
+{% endraw %}
 
 > ✅ Example output:
 
+{% raw %}
 ```
 CHANGED: partition=3 start=3674112 old: size=17297408 end=20971519 new: size=27787231 end=31461342
 ```
+{% endraw %}
 
 ---
 
 ### 2.3 Resize the Physical Volume
 
+{% raw %}
 ```shell
 sudo pvresize /dev/sda3
 ```
+{% endraw %}
 
 > ✅ Example output:
 
+{% raw %}
 ```
 Physical volume "/dev/sda3" changed
 1 physical volume(s) resized or updated / 0 physical volume(s) not resized
 ```
+{% endraw %}
 
 ---
 
 ### 2.4 Extend the Logical Volume
 
+{% raw %}
 ```shell
 sudo lvextend -l +100%FREE /dev/mapper/ubuntu--vg-ubuntu--lv
 ```
+{% endraw %}
 
 > ✅ Example output:
 
+{% raw %}
 ```
 Size of logical volume ubuntu-vg/ubuntu-lv changed from <8.25 GiB (2111 extents) to <13.25 GiB (3391 extents).
 Logical volume ubuntu-vg/ubuntu-lv successfully resized.
 ```
+{% endraw %}
 
 ---
 
 ### 2.5 Resize the File System
 
+{% raw %}
 ```shell
 sudo resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv
 ```
+{% endraw %}
 
 > ✅ Example output:
 
+{% raw %}
 ```
 resize2fs 1.47.0 (5-Feb-2023)
 Filesystem at /dev/mapper/ubuntu--vg-ubuntu--lv is mounted on /; on-line resizing required
 old_desc_blocks = 2, new_desc_blocks = 2
 The filesystem on /dev/mapper/ubuntu--vg-ubuntu--lv is now 3472384 (4k) blocks long.
 ```
+{% endraw %}
 
 ---
 
 ### 2.6 Verify the New Size
 
+{% raw %}
 ```shell
 df -h
 ```
+{% endraw %}
 
 > ✅ Example output:
 
+{% raw %}
 ```
 Filesystem                         Size  Used Avail Use% Mounted on
 /dev/mapper/ubuntu--vg-ubuntu--lv   13G  6.9G  5.5G  56% /
 /dev/sda2                          1.7G  191M  1.4G  12% /boot
 ```
+{% endraw %}
 
 ---
 

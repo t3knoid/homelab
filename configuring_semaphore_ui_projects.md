@@ -1,5 +1,5 @@
 ---
-title: "🧰 Configuring Semaphore UI Projects"
+title: "Configuring Semaphore UI Projects"
 ---
 
 # 🧰 Configuring Semaphore UI Projects
@@ -8,18 +8,22 @@ title: "🧰 Configuring Semaphore UI Projects"
 This page documents how to configure **Semaphore UI** using inventory-based variables.
 All project definitions live inside inventory group vars under:
 
+{% raw %}
 ```
 inventory/<env>/group_vars/semaphore/
 ```
+{% endraw %}
 
 The role `semaphoreui_setup` remains generic and only handles *how* to configure Semaphore UI.
 Your inventory controls *what* gets created.
 
 All variables follow:
 
+{% raw %}
 ```
 semaphoreui_setup_<category>
 ```
+{% endraw %}
 
 ---
 
@@ -27,6 +31,7 @@ semaphoreui_setup_<category>
 
 Inside your environment’s inventory:
 
+{% raw %}
 ```
 inventory/
 └── semaphore/
@@ -38,6 +43,7 @@ inventory/
             ├── views.yml
             ├── templates.yml
 ```
+{% endraw %}
 
 Each file contains one category of Semaphore UI configuration.
 
@@ -47,6 +53,7 @@ Each file contains one category of Semaphore UI configuration.
 
 `inventory/semaphore/group_vars/semaphore/projects.yml`:
 
+{% raw %}
 ```yaml
 semaphoreui_setup_projects_meta:
   - name: "Home Lab"
@@ -61,6 +68,7 @@ semaphoreui_setup_projects_meta:
     alert_chat: "alerts-prod"
     max_parallel_tasks: 3
 ```
+{% endraw %}
 
 Only per-project metadata belongs here.
 
@@ -70,6 +78,7 @@ Only per-project metadata belongs here.
 
 `inventory/semaphore/group_vars/semaphore/repositories.yml`:
 
+{% raw %}
 ```yaml
 semaphoreui_setup_projects_repositories:
   "Home Lab":
@@ -79,6 +88,7 @@ semaphoreui_setup_projects_repositories:
 
   "Production": []
 ```
+{% endraw %}
 
 Project names **must match exactly**, including spaces.
 
@@ -88,11 +98,13 @@ Project names **must match exactly**, including spaces.
 
 `inventory/semaphore/group_vars/semaphore/keystores.yml`:
 
+{% raw %}
 ```yaml
 semaphoreui_setup_projects_keystores:
   "Home Lab": []
   "Production": []
 ```
+{% endraw %}
 
 ---
 
@@ -100,11 +112,13 @@ semaphoreui_setup_projects_keystores:
 
 `inventory/semaphore/group_vars/semaphore/views.yml`:
 
+{% raw %}
 ```yaml
 semaphoreui_setup_projects_views:
   "Home Lab": []
   "Production": []
 ```
+{% endraw %}
 
 ---
 
@@ -112,11 +126,13 @@ semaphoreui_setup_projects_views:
 
 `inventory/semaphore/group_vars/semaphore/templates.yml`:
 
+{% raw %}
 ```yaml
 semaphoreui_setup_projects_templates:
   "Home Lab": []
   "Production": []
 ```
+{% endraw %}
 
 ---
 
@@ -126,10 +142,12 @@ Inside your role:
 
 `roles/semaphoreui_setup/tasks/main.yml`:
 
+{% raw %}
 ```yaml
 - name: Execute Semaphore UI setup tasks
   ansible.builtin.include_tasks: setup/main.yml
 ```
+{% endraw %}
 
 This is the **only** task reference required in the role.
 All configuration variables come from your inventory.
@@ -140,12 +158,15 @@ All configuration variables come from your inventory.
 
 Your playbook lives at:
 
+{% raw %}
 ```
 playbooks/semaphoreui/setup_semaphoreui.yml
 ```
+{% endraw %}
 
 Example structure:
 
+{% raw %}
 ```yaml
 - name: Configure Semaphore UI
   hosts: semaphore
@@ -154,6 +175,7 @@ Example structure:
   roles:
     - semaphoreui_setup
 ```
+{% endraw %}
 
 This playbook loads the inventory vars, passes them to the role, and the role runs `setup/main.yml`.
 

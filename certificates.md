@@ -1,5 +1,5 @@
 ---
-title: "🔒 Certificates"
+title: "Certificates"
 ---
 
 # 🔒 Certificates
@@ -14,9 +14,11 @@ Automation is handled via **Ansible playbooks**, ensuring consistency and repeat
 
 Certificates are generated using the Ansible playbook:
 
+{% raw %}
 ```
 playbooks/certs/generate_certs.yml
 ```
+{% endraw %}
 
 - The **Certbot/Let’s Encrypt** working directory is located at `/data/letsencrypt` on the host defined in the `[certs]` inventory group.  
 - This is typically the **main reverse proxy host**.  
@@ -25,6 +27,7 @@ playbooks/certs/generate_certs.yml
 - Multiple sites can be specified in the inventory when required.
 
 ### Example Configuration
+{% raw %}
 ```yaml
 rproxy_setup_sites:
   - server_name: homelab.refol.us
@@ -37,6 +40,7 @@ rproxy_setup_sites:
       - 70.107.117.124
     restricted: false
 ```
+{% endraw %}
 
 > 💡 This configuration allows Certbot to generate certificates for `homelab.refol.us` while enforcing access controls via the `allow_list`.
 
@@ -46,9 +50,11 @@ rproxy_setup_sites:
 
 Once generated, certificates are staged using:
 
+{% raw %}
 ```
 playbooks/certs/stage_certs.yml
 ```
+{% endraw %}
 
 This playbook copies the following files from the Let’s Encrypt folder into the appropriate host folder under `/data/certs`:
 
@@ -57,10 +63,12 @@ This playbook copies the following files from the Let’s Encrypt folder into th
 
 These files are then referenced in the NGINX site configuration:
 
+{% raw %}
 ```nginx
 ssl_certificate     /data/certs/homelab.refol.us/fullchain.pem;
 ssl_certificate_key /data/certs/homelab.refol.us/privkey.pem;
 ```
+{% endraw %}
 
 > ✅ Staging ensures certificates are consistently deployed and referenced by reverse proxy configurations.
 
@@ -70,11 +78,13 @@ ssl_certificate_key /data/certs/homelab.refol.us/privkey.pem;
 
 To generate and stage certificates for `homelab.refol.us`:
 
+{% raw %}
 ```bash
 INV=inventory/redmine/inventory.ini
 ansible-playbook -i $INV playbooks/certs/generate_certs.yml -k
 ansible-playbook -i $INV playbooks/certs/stage_certs.yml -k
 ```
+{% endraw %}
 
 ---
 

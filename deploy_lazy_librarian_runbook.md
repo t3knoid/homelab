@@ -1,5 +1,5 @@
 ---
-title: "🏃 Deploy Lazy Librarian Runbook"
+title: "Deploy Lazy Librarian Runbook"
 ---
 
 # 🏃 Deploy Lazy Librarian Runbook
@@ -12,11 +12,13 @@ This runbook provides **step‑by‑step instructions to deploy or update Lazy L
 
 Start by logging into a control node that has Ansible installed and prepare the environment:
 
+{% raw %}
 ```shell
 cd ~/ansible
 source /opt/python_3.12/bin/activate
 INV=inventory/services/inventory.ini
 ```
+{% endraw %}
 
 > ⚡ Important: Always begin on the control node so all commands run in the correct environment.
 
@@ -26,9 +28,11 @@ INV=inventory/services/inventory.ini
 
 Ensure your local Ansible repository is up to date:
 
+{% raw %}
 ```shell
 git pull origin main
 ```
+{% endraw %}
 
 > ⚡ Important: Pulling the latest code first prevents conflicts and ensures you’re working with the most recent configuration.
 
@@ -38,15 +42,19 @@ git pull origin main
 
 Edit the following file:
 
+{% raw %}
 ```
 inventory/services/group_vars/lazylibrarian/main.yml
 ```
+{% endraw %}
 
 Locate and update the version variable:
 
+{% raw %}
 ```yaml
 lazylibrarian_setup_version: <desired_version>
 ```
+{% endraw %}
 
 ### Where to Find the Latest Version
 
@@ -58,11 +66,13 @@ lazylibrarian_setup_version: <desired_version>
 
 After updating the version value, commit the change:
 
+{% raw %}
 ```shell
 git add inventory/services/group_vars/lazylibrarian/main.yml
 git commit -m "Update Lazy Librarian version to <version_number>"
 git push origin main
 ```
+{% endraw %}
 
 > ⚡ Important: Replace `<version_number>` with the actual version you set.
 
@@ -72,9 +82,11 @@ git push origin main
 
 Run the Ansible playbook to deploy the specified version:
 
+{% raw %}
 ```shell
 ansible-playbook -i $INV -k playbooks/services/deploy_lazylibrarian.yml
 ```
+{% endraw %}
 
 > ⚡ Note: The `‑k` option will prompt for an SSH password if required.
 

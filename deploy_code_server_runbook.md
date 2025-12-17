@@ -1,5 +1,5 @@
 ---
-title: "🏃 Deploy Code Server Runbook"
+title: "Deploy Code Server Runbook"
 ---
 
 # 🏃 Deploy Code Server Runbook
@@ -12,11 +12,13 @@ This runbook provides **step-by-step instructions to deploy or update Code Serve
 
 Start by logging into an Ansible control node and prepare the environment:
 
+{% raw %}
 ```shell
 cd ~/ansible
 source /opt/python_3.12/bin/activate
 INV=inventory/ansible/inventory.ini
 ```
+{% endraw %}
 
 > ⚡ Important: Always begin on the control node so all commands run in the correct environment.
 
@@ -26,9 +28,11 @@ INV=inventory/ansible/inventory.ini
 
 Ensure your local Ansible repository is up to date:
 
+{% raw %}
 ```shell
 git pull origin main
 ```
+{% endraw %}
 
 > ⚡ Important: Pulling the latest code first prevents conflicts and ensures you’re working with the most recent configuration.
 
@@ -57,11 +61,13 @@ git pull origin main
 
 After updating the version, commit the change:
 
+{% raw %}
 ```shell
 git add inventory/ansible/group_vars/code_server/main.yml
 git commit -m "Update Code Server version to 4.100.2"
 git push origin main
 ```
+{% endraw %}
 
 > ⚡ Important: Always commit version changes before deployment.
 
@@ -71,9 +77,11 @@ git push origin main
 
 Run the Ansible playbook to deploy the new Code Server version:
 
+{% raw %}
 ```shell
 ansible-playbook -i $INV -k playbooks/deploy_code_server.yml
 ```
+{% endraw %}
 
 > ⚡ Note: The `-k` option will prompt for an SSH password if required.
 

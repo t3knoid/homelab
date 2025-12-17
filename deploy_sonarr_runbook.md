@@ -1,5 +1,5 @@
 ---
-title: "🏃 Deploy Sonarr Runbook"
+title: "Deploy Sonarr Runbook"
 ---
 
 # 🏃 Deploy Sonarr Runbook
@@ -12,11 +12,13 @@ This runbook provides **step‑by‑step instructions to deploy or update Sonarr
 
 Start by logging into a control node that has Ansible installed and prepare the environment:
 
+{% raw %}
 ```shell
 cd ~/ansible
 source /opt/python_3.12/bin/activate
 INV=inventory/services/inventory.ini
 ```
+{% endraw %}
 
 > ⚡ Important: Always begin on the control node so all commands run in the correct environment.
 
@@ -26,9 +28,11 @@ INV=inventory/services/inventory.ini
 
 Ensure your local Ansible repository is up to date:
 
+{% raw %}
 ```shell
 git pull origin main
 ```
+{% endraw %}
 
 > ⚡ Important: Pulling the latest code first prevents conflicts and ensures you’re working with the most recent configuration.
 
@@ -38,15 +42,19 @@ git pull origin main
 
 Edit the following file:
 
+{% raw %}
 ```
 inventory/services/group_vars/sonarr/main.yml
 ```
+{% endraw %}
 
 Locate and update the version variable:
 
+{% raw %}
 ```
 sonarr_setup_version: <desired_version>
 ```
+{% endraw %}
 
 To find the latest stable version:
 
@@ -59,11 +67,13 @@ To find the latest stable version:
 
 After updating the version, commit the change:
 
+{% raw %}
 ```shell
 git add inventory/services/group_vars/sonarr/main.yml
 git commit -m "Update Sonarr version to <version_number>"
 git push origin main
 ```
+{% endraw %}
 
 > ⚡ Important: Replace `<version_number>` with the actual version you’re deploying.
 
@@ -73,9 +83,11 @@ git push origin main
 
 Run the Ansible playbook to deploy the new version:
 
+{% raw %}
 ```shell
 ansible-playbook -i $INV -k playbooks/services/deploy_sonarr.yml
 ```
+{% endraw %}
 
 > ⚡ Note: The `-k` option will prompt for an SSH password if required.
 

@@ -54,6 +54,7 @@ Each role must include a `README.md` for documentation.
 ## Visual Diagram
 Here’s a simplified view of the repository hierarchy:
 
+{% raw %}
 ```
 ansible/
 ├── ansible.cfg          # Core configuration
@@ -72,4 +73,5 @@ ansible/
 │   └── ...
 └── filter_plugins/      # Custom Jinja2 filters
 ```
+{% endraw %}
 

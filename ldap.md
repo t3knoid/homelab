@@ -1,5 +1,5 @@
 ---
-title: "🔐 LDAP Authentication"
+title: "LDAP Authentication"
 ---
 
 # 🔐 LDAP Authentication
@@ -27,14 +27,17 @@ Applications bind to the domain controller using a dedicated service account. Th
 You can validate LDAP connectivity using the **python‑ldap** library.
 
 ### 1. Install prerequisites
+{% raw %}
 ```shell
 sudo apt-get install build-essential python3-dev \
     libldap2-dev libsasl2-dev slapd ldap-utils tox \
     lcov valgrind
 python -m pip install python-ldap
 ```
+{% endraw %}
 
 ### 2. Example test script
+{% raw %}
 ```python
 import ldap
 import logging
@@ -63,6 +66,7 @@ except ldap.LDAPError as e:
 finally:
     ldap_connection.unbind_s()
 ```
+{% endraw %}
 
 ---
 

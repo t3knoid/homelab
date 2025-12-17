@@ -1,5 +1,5 @@
 ---
-title: "🗂️ Microsoft Active Directory"
+title: "️ Microsoft Active Directory"
 ---
 
 # 🗂️ Microsoft Active Directory
@@ -14,19 +14,25 @@ For applications requiring Lightweight Directory Access Protocol (**LDAP**), **A
 Active Directory is deployed on **Windows Server 2022 Core**. Installation and configuration are performed using PowerShell commands.
 
 ### 1. Install AD Domain Services Role
+{% raw %}
 ```powershell
 Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools
 ```
+{% endraw %}
 
 ### 2. Import the AD DS Deployment Module
+{% raw %}
 ```powershell
 Import-Module ADDSDeployment
 ```
+{% endraw %}
 
 ### 3. Create the Domain Forest
+{% raw %}
 ```powershell
 Install-ADDSForest -DomainName "refol.us" -InstallDNS:$False
 ```
+{% endraw %}
 
 During installation:
 - You will be prompted to set the **Safe Mode Administrator Password**.  
@@ -34,6 +40,7 @@ During installation:
 - The server will reboot automatically after configuration.
 
 Example prompt:
+{% raw %}
 ```
 SafeModeAdministratorPassword: **********
 ConfirmSafeModeAdministratorPassword: **********
@@ -41,6 +48,7 @@ The target server will be configured as a domain controller and restarted when t
 Do you want to continue with this operation?
 [Y] Yes  [A] Yes to All  [N] No  [L] No to All  [S] Suspend  [?] Help (default is "Y"):
 ```
+{% endraw %}
 
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "🏃 Deploy Linux Security Updates Runbook"
+title: "Deploy Linux Security Updates Runbook"
 ---
 
 # 🏃 Deploy Linux Security Updates Runbook
@@ -12,10 +12,12 @@ This runbook provides **step-by-step instructions to apply Linux security update
 
 Start by logging into a control node with Ansible installed and prepare the environment:
 
+{% raw %}
 ```shell
 cd ~/ansible
 source /opt/python_3.12/bin/activate
 ```
+{% endraw %}
 
 > ⚡ Important: All subsequent steps must be run in this Ansible environment.
 
@@ -25,9 +27,11 @@ source /opt/python_3.12/bin/activate
 
 Ensure your local repository is up to date:
 
+{% raw %}
 ```shell
 git pull origin main
 ```
+{% endraw %}
 
 > ⚡ Important: Pulling the latest code first prevents conflicts and ensures you’re working with the most recent playbook and inventory definitions.
 
@@ -37,15 +41,19 @@ git pull origin main
 
 Before running the playbook, set the inventory of the target nodes you want to update:
 
+{% raw %}
 ```shell
 INV=<set this to the inventory of target nodes to update>
 ```
+{% endraw %}
 
 For example, to update all Ubuntu servers:
 
+{% raw %}
 ```shell
 INV=inventory/linux/inventory.ini
 ```
+{% endraw %}
 
 > ⚡ Tip: Adjust this to the specific inventory group you want to patch (e.g., `inventory/servers/inventory.ini`, `inventory/web/inventory.ini`, etc.).
 
@@ -55,9 +63,11 @@ INV=inventory/linux/inventory.ini
 
 Run the Ansible playbook to apply Linux security updates:
 
+{% raw %}
 ```shell
 ansible-playbook -i $INV -k playbooks/linux/deploy_updates.yml
 ```
+{% endraw %}
 
 > ⚡ Note: The `-k` option will prompt for SSH password if needed.
 > ⚠ If updates require a reboot, the target host may restart during this process.
@@ -72,9 +82,11 @@ After the playbook completes:
 2. Check that the system is running and reachable.
 3. Optionally, verify that critical packages have been updated:
 
+{% raw %}
 ```shell
 sudo apt list --upgradable
 ```
+{% endraw %}
 
 It should return **no upgradable packages** if updates were applied successfully.
 

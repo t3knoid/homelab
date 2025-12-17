@@ -12,26 +12,34 @@ After the installation, the Proxmox No subscription APT sources must be added to
 
 Edit /etc/apt/sources.list.
 
+{% raw %}
 ```bash
 vi /etc/apt/sources.list
 ```
+{% endraw %}
 Add the Proxmox VE no subscription repository.
 
+{% raw %}
 ```bash
 deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription
 ```
+{% endraw %}
 
 Edit the Proxmox Enterprise APT source list.
 
+{% raw %}
 ``` shell
 vi /etc/apt/sources.list.d/pve-enterprise.list
 ```
+{% endraw %}
 
 Comment out the following line.
 
+{% raw %}
 ``` shell
 # deb https://enterprise.proxmox.com/debian/pve bookworm pve-enterprise
 ```
+{% endraw %}
 
 Execute ```apt update``` afterwards.
 
@@ -48,11 +56,13 @@ In order to get information from Virtual Machines, a [guest agent](https://pve.p
 
 Perform the following to install the guest agent in a Linux operating system.
 
+{% raw %}
 ```bash
 apt-get install qemu-guest-agent
 systemctl start qemu-guest-agent
 systemctl enable qemu-guest-agent
 ```
+{% endraw %}
 
 ### Windows
 

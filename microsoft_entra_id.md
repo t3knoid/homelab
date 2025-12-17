@@ -1,5 +1,5 @@
 ---
-title: "🔐 Microsoft Entra ID"
+title: "Microsoft Entra ID"
 ---
 
 # 🔐 Microsoft Entra ID

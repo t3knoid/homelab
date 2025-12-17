@@ -31,11 +31,13 @@ Persistent storage ensures application data is preserved across container restar
 
 Example variables from the role:
 
+{% raw %}
 ```yaml
 calibre_setup_config_dir: "/config/calibre"
 calibre_setup_library_dir: "/books"
 calibre_setup_backup_dir: "/nfs/backups/calibre"
 ```
+{% endraw %}
 
 * Directories are **created and owned** by a dedicated system user
 * Supports **NFS or other network storage** for centralized ebook libraries
@@ -47,10 +49,12 @@ calibre_setup_backup_dir: "/nfs/backups/calibre"
 
 The role pins a specific Docker image version:
 
+{% raw %}
 ```yaml
 calibre_setup_version: "6.23.0"
 calibre_setup_docker_image_name: "ghcr.io/linuxserver/calibre:version-{{ calibre_setup_version }}"
 ```
+{% endraw %}
 
 * Avoids pulling `latest` automatically
 * Guarantees reproducible deployments
@@ -108,6 +112,7 @@ All of these steps are **automated in the Ansible role**.
 
 ## **5. Architecture Diagram**
 
+{% raw %}
 ```
                  ┌───────────────────────────────┐
                  │   Host / Docker Environment   │
@@ -132,6 +137,7 @@ All of these steps are **automated in the Ansible role**.
                  │ - /nfs/backups/calibre       │
                  └──────────────────────────────┘
 ```
+{% endraw %}
 
 * Config directory and library volumes are mounted inside the container
 * Optional NFS storage allows centralized library and backup management

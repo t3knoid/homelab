@@ -14,6 +14,7 @@ A primary frontend node terminates HTTPS traffic, performs OAuth2 authentication
 
 The primary frontend Nginx server defines an *upstream pool* of backend proxy nodes:
 
+{% raw %}
 ```nginx
 http {
 # BEGIN ANSIBLE MANAGED BLOCK
@@ -24,10 +25,12 @@ upstream backend {
 # END ANSIBLE MANAGED BLOCK
 }
 ```
+{% endraw %}
 
 Each HTTPS vhost then proxies authenticated traffic into the backend pool.
 If the site uses OAuth2, its configuration includes an authentication gate:
 
+{% raw %}
 ```nginx
 location = /oauth2/auth {
     proxy_pass http://127.0.0.1:4180; 
@@ -46,6 +49,7 @@ location / {
     proxy_pass http://backend;
 }
 ```
+{% endraw %}
 
 The OAuth2 Proxy service running locally on the frontend authenticates the user via **Microsoft Entra ID** before backend servers ever see the request.
 
@@ -56,11 +60,13 @@ The OAuth2 Proxy service running locally on the frontend authenticates the user 
 Backend Nginx servers are intentionally simple.
 They act only as reverse proxies to the internal application servers and do **not** terminate SSL or run OAuth2 logic:
 
+{% raw %}
 ```nginx
 location / {
     proxy_pass http://192.168.2.186:80;
 }
 ```
+{% endraw %}
 
 Frontend nodes perform all heavy lifting — SSL, authentication, routing — while backend nodes focus purely on forwarding.
 
@@ -70,6 +76,7 @@ Frontend nodes perform all heavy lifting — SSL, authentication, routing — wh
 
 ### ASCII Architecture Diagram
 
+{% raw %}
 ```
                            ┌──────────────────────────────┐
                            │        Internet Client       │
@@ -111,6 +118,7 @@ Frontend nodes perform all heavy lifting — SSL, authentication, routing — wh
 │ App Server(s) │    │ App Server(s)│
 └───────────────┘    └──────────────┘
 ```
+{% endraw %}
 
 ---
 
@@ -177,12 +185,14 @@ The architecture supports HA using lightweight but effective mechanisms:
 
 The upstream block:
 
+{% raw %}
 ```
 upstream backend {
   server rproxy-1:80 max_fails=3 fail_timeout=5s;
   server rproxy-2:80 backup;
 }
 ```
+{% endraw %}
 
 achieves:
 

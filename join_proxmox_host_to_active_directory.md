@@ -15,10 +15,12 @@ The following are required.
 
 ## Install Required Packages
 
+{% raw %}
 ``` shell
 sudo apt update
 sudo apt -y install realmd sssd sssd-tools libnss-sss libpam-sss adcli samba-common-bin oddjob oddjob-mkhomedir packagekit
 ```
+{% endraw %}
 
 ## Point DNS Setting to Active Directory Server
 
@@ -26,17 +28,21 @@ Edit /etc/resolv.conf and set the DNS server to the active directory server.
 
 The following points the nameserver to 192.168.2.251.
 
+{% raw %}
 ``` shell
 search refol.us
 nameserver 192.168.2.251
 nameserver 192.168.2.252
 nameserver 192.168.2.253
 ```
+{% endraw %}
 ## Discover Active Directory Domain
 
+{% raw %}
 ``` shell
 sudo realm discover refol.us
 ```
+{% endraw %}
 <details>
 <summary>Click to show output</summary>
 refol.us
@@ -52,21 +58,26 @@ refol.us
   required-package: libpam-sss
   required-package: adcli
   required-package: samba-common-bin
+{% raw %}
 ```
 </details>
 
 Notice that the host has not been configured to the active directory domain.
 
-``` shell
+```
+{% endraw %} shell
 configured: no
+{% raw %}
 ```
 
 ## Join Machine to Domain
 
 Run the following command to join the machine to the domain.
 
-``` shell
+```
+{% endraw %} shell
 sudo realm join -v refol.us
+{% raw %}
 ```
 
 <details>
@@ -123,6 +134,7 @@ Password for Administrator:
  * /usr/sbin/service sssd restart
  * Successfully enrolled machine in realm
 ```
+{% endraw %}
 </details>
 
 Enter the domain administrator's password when prompted.
@@ -131,12 +143,15 @@ Enter the domain administrator's password when prompted.
 
 Verify the machine has been joined to Active Directory using the **realmd** command.  The output should be similar to that of realm discover.
 
+{% raw %}
 ``` shell
 sudo realm list
 ```
+{% endraw %}
 
 <details>
 <summary>Click to show output</summary>
+{% raw %}
 ``` shell
 root@pve-0:~# sudo realm discover refol.us
 refol.us
@@ -155,19 +170,24 @@ refol.us
   login-formats: %U@refol.us
   login-policy: allow-realm-logins
 ```
+{% endraw %}
 </details>
 
 Observe that Active Directory has been configured as shown here.
 
+{% raw %}
 ``` shell
 configured: kerberos-member
 ```
+{% endraw %}
 
 Also notice that the login-formats is set to username@domain as shown here.
 
+{% raw %}
 ``` shell
 login-formats: %U@refol.us
 ```
+{% endraw %}
 
 This can be modified to only use the username in the next section.
 
@@ -175,10 +195,13 @@ This can be modified to only use the username in the next section.
 
 By default, the realm command has already configured this file. It added the pam and nss modules and started the necessary services.
 
+{% raw %}
 ``` shell
 sudo vi /etc/sssd/sssd.conf
 ```
+{% endraw %}
 
+{% raw %}
 ``` ini
 [sssd]
 domains = refol.us
@@ -198,18 +221,23 @@ use_fully_qualified_names = True
 ldap_id_mapping = True
 access_provider = ad
 ```
+{% endraw %}
 
 Edit this file so that the domain name is not needed when authenticating with a domain user.
 
+{% raw %}
 ``` shell
 use_fully_qualified_names = False
 ```
+{% endraw %}
 
 Restart the sssd service.
 
+{% raw %}
 ``` shell
 sudo service sssd restart
 ```
+{% endraw %}
 
 > [!IMPORTANT] 
 > Something very important to remember is that this file must have permissions 0600 and ownership root:root, or else SSSD won’t start!
@@ -225,35 +253,45 @@ The use_fully_qualified_names is set to True. As a result, users must log in usi
 
 The realm command doesn’t set up pam_mkhomedir. Enabling mkhomedir will ensure that domain user home directory is created. 
 
+{% raw %}
 ``` shell
 sudo pam-auth-update --enable mkhomedir
 ```
+{% endraw %}
 
 ### Verify Domain Group and User Access
 
+{% raw %}
 ``` shell
 sudo getent passwd frank@refol.us
 frank@refol.us:*:873401104:873400513:Frank Refol:/home/frank@refol.us:/bin/bash
 ```
+{% endraw %}
 
+{% raw %}
 ``` shell
 sudo id frank@refol.us
 uid=873401104(frank@refol.us) gid=873400513(domain users@refol.us) groups=873400513(domain users@refol.us),873400512(domain admins@refol.us),873400572(denied rodc password replication group@refol.us)
 ```
+{% endraw %}
 
 ## SSSD Log
 
 Monitor the SSSD log in the event of an authentication issue. 
 
+{% raw %}
 ``` shell
 sudo tail -f /var/log/sssd/sssd_refol.us.log
 ```
+{% endraw %}
 
 ## Add User to Sudoers Group
 
+{% raw %}
 ``` shell
 sudo usermod -a -G sudo frank@refol.us
 ```
+{% endraw %}
 
 ## References
 

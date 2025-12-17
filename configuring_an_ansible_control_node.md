@@ -30,9 +30,11 @@ To provide some semblance of security, use a non-root user as the become_user. T
 
 Create an active directory user that will be used as the Ansible privileged user.
 
+{% raw %}
 ```powershell
 New-ADUser -Name "Ansible" -GivenName "Ansible" -Surname "User" -SamAccountName "ansible" -UserPrincipalName "ansible@refol.us" -AccountPassword(Read-Host -AsSecureString "Input Password") -Enabled $true
 ```
+{% endraw %}
 
 Enter a password when prompted.
 
@@ -56,39 +58,51 @@ Click **Add** when done. The Token Secret will be shown. Copy the Token ID and S
 
 Execute the following from the ansible control node.
 
+{% raw %}
 ``` shell
 sudo addgroup ansible
 ```
+{% endraw %}
 
 #### Add the ansible@refol.us to the ansible group.
 
 Execute the following from the ansible control node.
 
+{% raw %}
 ``` shell
 sudo usermod -a -G ansible ansible@refol.us
 ```
+{% endraw %}
 
+{% raw %}
 ``` shell
 sudo usermod -a -G ansible ansible
 ```
+{% endraw %}
 
 Add ansible@refol.us to the sudo group.
 
+{% raw %}
 ``` shell
 sudo usermod -a -G sudo ansible@refol.us
 ```
+{% endraw %}
 
+{% raw %}
 ``` shell
 sudo usermod -a -G sudo ansible
 ```
+{% endraw %}
 
 The following must be configured in Ansible when elevating Ansible to use root access.
 
+{% raw %}
 ``` shell
 become: true
 become_user: ansible
 become_method: sudo
 ```
+{% endraw %}
 
 ## Ansible Installation
 
@@ -98,10 +112,12 @@ As of this writing, the latest version of Ansible is version [10.4.0](https://gi
 
 Install Python3 from Ubuntu repository.
 
+{% raw %}
 ``` shell
 sudo apt-get update
 sudo apt-get install python3
 ```
+{% endraw %}
 
 #### Create a Python Virtual Environment
 
@@ -109,10 +125,12 @@ A Python virtual environment will be created to run Ansible. This will allow for
 
 #### Download the Python venv module
 
+{% raw %}
 ``` shell
 sudo apt-get update
 sudo apt-get install python3.12-venv
 ```
+{% endraw %}
 
 #### Create and activate the virtual environment
 
@@ -120,31 +138,40 @@ Create a specific Python virtual environment allows the use of different version
 
 Notice the use of version numbers in the environment name for transparency.
 
+{% raw %}
 ``` shell
 cd /ansible
 python3 -m venv python3.12.3_ansible10.4.0
 ```
+{% endraw %}
 
 Activate the environment with the following command.
 
+{% raw %}
 ``` shell
 source python3.12.3_ansible10.4.0/bin/activate
 ```
+{% endraw %}
 
 To deactivate this environment, simply run **deactivate**.
 
 #### Make sure the latest version of pip is installed
 
+{% raw %}
 ``` shell
 pip install --upgrade pip setuptools
 ```
+{% endraw %}
 
 #### Use pip to install Ansible
 
+{% raw %}
 ``` shell
 pip install ansible
 ```
+{% endraw %}
 
+{% raw %}
 ``` shell
 ansible --version
 ansible [core 2.17.4]
@@ -157,32 +184,41 @@ ansible [core 2.17.4]
   jinja version = 3.1.4
   libyaml = True
 ```
+{% endraw %}
 
 ### Install Python Modules
 
 #### proxmoxer
 
+{% raw %}
 ``` shell
 python -m pip install proxmoxer
 ```
+{% endraw %}
 
 #### requests
 
+{% raw %}
 ``` shell
 python -m pip install requests
 ```
+{% endraw %}
 
 #### pycdlib
 
+{% raw %}
 ``` shell
 python -m pip install pycdlib
 ```
+{% endraw %}
 
 ### Other Installations
 
+{% raw %}
 ``` shell
 sudo apt install sshpass acl
 ```
+{% endraw %}
 
 ## Ansible Getting Started
 
@@ -190,64 +226,80 @@ sudo apt install sshpass acl
 
 Change to the Ansible working folder.
 
+{% raw %}
 ``` shell
 cd /ansible/dev
 ```
+{% endraw %}
 
 Activate the environment with the following command.
 
+{% raw %}
 ``` shell
 source ../python3.12.3_ansible10.4.0/bin/activate
 ```
+{% endraw %}
 
 ### Create Ansible.cfg
 
 Initialize a new ansible.cfg
 
+{% raw %}
 ``` shell
 ansible-config init --disabled -t all > ansible.cfg
 ```
+{% endraw %}
 
 ### Set the Vault Password File 
 
 Create a ~/.vault_pass.txt file. Add vault passwords in this file. Edit ansible.cfg to set the **vault_password_file** setting to the path to this file.
 
+{% raw %}
 ``` shell
 vault_password_file=~/.vault_pass.txt
 ```
+{% endraw %}
 
 ## Configure SSH Access to Proxmox Servers
 
 Since we are using Proxmox as the VM provider, the Ansible account used to execute playbooks must be configured to access each Proxmox node via SSH.
 
+{% raw %}
 ``` shell
 ssh pve-0
 ssh pve-1
 ssh pve-2
 ```
+{% endraw %}
 
 Similarly, ensure that the become_root user (i.e., ansible@refol.us) has access as well.
 
+{% raw %}
 ``` shell
 ssh ansible@pve-0
 ssh ansible@pve-1
 ssh ansible@pve-2
 ```
+{% endraw %}
 
 Test the become user setting using the following command. Note this command assumes that the specified inventory is available where the ansible host has been defined.
 
+{% raw %}
 ``` shell
 ansible pvenodes -i inventory/pve/inventory.ini -m ping --user=ansible -k
 ```
+{% endraw %}
 
 Enter the ansible user password when prompted.
 
 
 ## Ansible Lint
 
+{% raw %}
 ``` shell
 pip3 install ansible-lint
 ```
+{% endraw %}
 
 ## References
 

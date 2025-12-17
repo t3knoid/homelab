@@ -1,5 +1,5 @@
 ---
-title: "👩‍💻 Contributor Guide: Adding a New Ansible Role"
+title: "Contributor Guide: Adding a New Ansible Role"
 ---
 
 # 👩‍💻 Contributor Guide: Adding a New Ansible Role
@@ -77,6 +77,7 @@ After adding `roles/my_new_role/` and pushing, you’ll see:
 
 ## 📑 `meta/main.yml` Starter Template
 
+{% raw %}
 ```yaml
 galaxy_info:
   role_name: my_new_role
@@ -101,6 +102,7 @@ galaxy_info:
 # These will be documented automatically in the README.
 dependencies: []
 ```
+{% endraw %}
 
 ---
 

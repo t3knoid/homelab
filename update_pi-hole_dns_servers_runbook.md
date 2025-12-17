@@ -1,5 +1,5 @@
 ---
-title: "🏃 Update Pi-hole DNS Servers Runbook"
+title: "Update Pi-hole DNS Servers Runbook"
 ---
 
 # 🏃 Update Pi-hole DNS Servers Runbook
@@ -12,11 +12,13 @@ This runbook provides **step-by-step instructions to update Pi-hole DNS Servers*
 
 Start by logging into a control node with Ansible installed and prepare the environment:
 
+{% raw %}
 ```shell
 cd ~/ansible
 source /opt/python_3.12/bin/activate
 INV=inventory/dns/inventory.ini
 ```
+{% endraw %}
 
 > ⚡ Important: Always start on the control node so all subsequent commands run in the correct environment.
 
@@ -26,9 +28,11 @@ INV=inventory/dns/inventory.ini
 
 Ensure your local repository is up to date:
 
+{% raw %}
 ```shell
 git pull origin main
 ```
+{% endraw %}
 
 > ⚡ Important: Pulling the latest code first prevents conflicts and ensures you’re working with the most recent version.
 
@@ -46,9 +50,11 @@ Open the Pi-hole interface to see if an update is available. Take note of the ve
 
 Run the Ansible playbook to update Pi-hole DNS Servers:
 
+{% raw %}
 ```shell
 ansible-playbook -i $INV -k playbooks/dns/update_pihole_dns.yml
 ```
+{% endraw %}
 
 > ⚡ Note: The `-k` option prompts for SSH password if needed.
 

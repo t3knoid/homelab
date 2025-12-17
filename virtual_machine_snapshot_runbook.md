@@ -1,5 +1,5 @@
 ---
-title: "🏃 Virtual Machine Snapshot Runbook"
+title: "Virtual Machine Snapshot Runbook"
 ---
 
 # 🏃 Virtual Machine Snapshot Runbook
@@ -12,10 +12,12 @@ This runbook provides **step-by-step instructions to create and remove virtual m
 
 Start by logging into a control node with Ansible installed and prepare the environment:
 
+{% raw %}
 ```shell
 cd ~/ansible
 source /opt/python_3.12/bin/activate
 ```
+{% endraw %}
 
 > ⚡ Important: Always start on the control node so all subsequent commands run in the correct environment.
 
@@ -25,9 +27,11 @@ source /opt/python_3.12/bin/activate
 
 Ensure your local Ansible repository is up to date:
 
+{% raw %}
 ```shell
 git pull origin main
 ```
+{% endraw %}
 
 > ⚡ Important: Pulling the latest code first prevents conflicts and ensures you’re using the latest playbooks and inventory.
 
@@ -37,9 +41,11 @@ git pull origin main
 
 To create a snapshot for a specific host or VM group:
 
+{% raw %}
 ```shell
 ansible-playbook -i $INV -k playbooks/vms/create_vm_snapshot.yml 
 ```
+{% endraw %}
 
 * The playbook will create a snapshot with a timestamped name.
 
@@ -59,9 +65,11 @@ ansible-playbook -i $INV -k playbooks/vms/create_vm_snapshot.yml
 
 After verifying updates or if the snapshot is no longer needed, remove it:
 
+{% raw %}
 ```shell
 ansible-playbook -i $INV -k playbooks/vms/remove_vm_snapshot.yml
 ```
+{% endraw %}
 
 * Confirm the snapshot has been deleted via your virtualization interface.
 

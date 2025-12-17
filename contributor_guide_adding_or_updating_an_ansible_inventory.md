@@ -1,5 +1,5 @@
 ---
-title: "👩‍💻 Contributor Guide: Adding or Updating an Ansible Inventory"
+title: "Contributor Guide: Adding or Updating an Ansible Inventory"
 ---
 
 # 👩‍💻 Contributor Guide: Adding or Updating an Ansible Inventory
@@ -20,11 +20,13 @@ Inventory files are located under the `inventory/` directory.
 
 Examples:
 
+{% raw %}
 ```
 inventory/ad/inventory.ini
 inventory/grafana/inventory.ini
 inventory/new_service/inventory.ini
 ```
+{% endraw %}
 
 * Organize inventories by service, environment, or host type.
 * Each inventory should be a valid **INI-style Ansible inventory**.
@@ -35,6 +37,7 @@ inventory/new_service/inventory.ini
 
 A typical inventory may contain:
 
+{% raw %}
 ```ini
 [webservers]
 web-0 ansible_host=10.0.0.10
@@ -49,6 +52,7 @@ webservers
 [all:vars]
 ntp_server=ntp.local
 ```
+{% endraw %}
 
 Guidelines:
 
@@ -79,9 +83,11 @@ The **Generate Ansible Inventory Docs** GitHub Action runs automatically on push
 
 It executes:
 
+{% raw %}
 ```
 scripts/generate_inventory_docs.py
 ```
+{% endraw %}
 
 The script:
 
@@ -89,16 +95,20 @@ The script:
 ✅ Extracts hosts, groups, group variables, host variables, and child groups
 ✅ Generates per-inventory Markdown docs:
 
+{% raw %}
 ```
 docs/inventory/<inventory>.md
 ```
+{% endraw %}
 
 ✅ Builds a **Global Host Index**:
 
+{% raw %}
 ```
 docs/inventory/README.md
 inventory/README.md
 ```
+{% endraw %}
 
 ✅ Detects duplicate hosts across inventories and logs a warning
 ✅ Supports **strict mode** (`--strict`) to enforce unique host definitions
@@ -115,6 +125,7 @@ To help contributors spot inventories with multiple hosts:
 * Inventories with **more than one host** are flagged with a 📌 pin next to their name in the global index.
 * Example:
 
+{% raw %}
 ```markdown
 | Inventory | Description |
 |-----------|-------------|
@@ -122,6 +133,7 @@ To help contributors spot inventories with multiple hosts:
 | [`plex`](plex.md) | Inventory for `plex` hosts |
 | [`minecraft`](minecraft.md) 📌 | Inventory for `minecraft` hosts |
 ```
+{% endraw %}
 
 * This draws attention to larger inventories without adding extra columns.
 * It helps identify inventories where duplicate hosts or complex group structures may exist.
@@ -132,9 +144,11 @@ To help contributors spot inventories with multiple hosts:
 
 To debug a specific inventory file:
 
+{% raw %}
 ```bash
 python scripts/generate_inventory_docs.py --inventory inventory/ad/inventory.ini --debug
 ```
+{% endraw %}
 
 * Only the specified inventory is parsed and documented.
 * Global host index is updated with its hosts.
@@ -148,17 +162,21 @@ The GitHub Action automatically:
 
 1. Adds generated docs:
 
+{% raw %}
 ```
 inventory/README.md
 docs/inventory/README.md
 docs/inventory/*.md
 ```
+{% endraw %}
 
 2. Commits with:
 
+{% raw %}
 ```
 chore(docs): auto-generate inventory documentation
 ```
+{% endraw %}
 
 3. Pushes to the current branch if there are changes.
 
@@ -183,6 +201,7 @@ No manual editing of the documentation files is required.
 
 Adding a new inventory for a hypothetical service `ombi`:
 
+{% raw %}
 ```ini
 [ombi]
 ombi-0 vms_proxmox_node=pve-0 pihole_cname_entries='[{"domain": "ombi.refol.us","target":"rproxy-0.refol.us"}]'
@@ -193,6 +212,7 @@ ombi
 [all:vars]
 ntp_server=ntp.local
 ```
+{% endraw %}
 
 After committing:
 

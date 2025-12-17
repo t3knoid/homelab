@@ -10,6 +10,7 @@ The Nginx Reverse Proxy Cluster serves as the public gateway into the homelab’
 
 ## 🗺️ Architecture Overview (ASCII Diagram)
 
+{% raw %}
 ```
                           ┌───────────────────────────┐
                           │         Internet          │
@@ -39,6 +40,7 @@ The Nginx Reverse Proxy Cluster serves as the public gateway into the homelab’
                   │ (No SSL – Trust Boundary)│
                   └──────────────────────────┘
 ```
+{% endraw %}
 
 ---
 
@@ -46,6 +48,7 @@ The Nginx Reverse Proxy Cluster serves as the public gateway into the homelab’
 
 The frontend server uses an Nginx upstream block to define the backend cluster. Traffic is routed to the first server listed unless it becomes unreachable, at which point Nginx automatically promotes the backup node.
 
+{% raw %}
 ```nginx
 http {
     # BEGIN ANSIBLE MANAGED BLOCK
@@ -56,9 +59,11 @@ http {
     # END ANSIBLE MANAGED BLOCK
 }
 ```
+{% endraw %}
 
 Example virtual host configuration (TLS termination happens here):
 
+{% raw %}
 ```nginx
 server {
     listen 443 ssl http2;
@@ -75,6 +80,7 @@ server {
     }
 }
 ```
+{% endraw %}
 
 ---
 
@@ -82,11 +88,13 @@ server {
 
 Backend servers are identical. They operate purely as reverse proxies to internal applications—no SSL, no domain logic, no routing complexity.
 
+{% raw %}
 ```nginx
 location / {
     proxy_pass http://192.168.2.186:80;
 }
 ```
+{% endraw %}
 
 This consistency allows either backend node to assume full responsibility during failover.
 

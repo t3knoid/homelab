@@ -2,7 +2,7 @@ title: Homelab Documentation
 markdown: kramdown
 plugins:
   - jekyll-relative-links
-
+theme: just-the-docs
 relative_links:
   enabled: true
   collections: true

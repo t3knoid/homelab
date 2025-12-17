@@ -12,9 +12,11 @@ It takes a set of dynamic template definitions and outputs a **list of fully exp
 
 ## 🔹 **Filter Signature**
 
+{% raw %}
 ```python
 extract_templates_for_project(dynamic_template_sets, inventory_list, project_name)
 ```
+{% endraw %}
 
 ### **Parameters**
 
@@ -72,6 +74,7 @@ Each entry in `dynamic_template_sets` must contain:
 
 ## 🔹 **Usage Example in a Playbook or Role**
 
+{% raw %}
 ```yaml
 - name: "Generate dynamic templates for a project"
   ansible.builtin.set_fact:
@@ -83,6 +86,7 @@ Each entry in `dynamic_template_sets` must contain:
   ansible.builtin.debug:
     var: home_lab_dynamic_templates
 ```
+{% endraw %}
 
 ### **Explanation**
 
@@ -120,6 +124,7 @@ Dynamic templates are merged into the project definition during setup:
 {% endraw %}
 
 This ensures that **dynamic templates** are fully included alongside **static templates** before Semaphore UI task creation.
+
 
 
 

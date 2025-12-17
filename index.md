@@ -6,7 +6,7 @@ title: "🏠 Home Lab Overview"
 
 My home lab is a fully featured technical environment designed to sharpen skills in systems engineering, automation, DevOps, and modern infrastructure management. It simulates a production-grade ecosystem using industry-standard tools, allowing me to design, test, and refine solutions across virtualization, orchestration, authentication, and CI/CD.
 
-Built on a clustered **[Proxmox](proxmox.md)** environment, the lab integrates automated provisioning, centralized identity, infrastructure-as-code, high-availability services, and modern authentication. It mirrors enterprise technologies while serving as a personal platform for continuous learning.
+Built on a clustered **[[Proxmox]]** environment, the lab integrates automated provisioning, centralized identity, infrastructure-as-code, high-availability services, and modern authentication. It mirrors enterprise technologies while serving as a personal platform for continuous learning.
 
 ---
 
@@ -115,5 +115,6 @@ The home lab is more than an experiment—it’s a platform for continuous learn
 * Distributed storage and backup
 * Reverse proxying and certificate management
 * DNS and network services
+
 
 It enables prototyping, troubleshooting, and staying current with modern infrastructure technologies.

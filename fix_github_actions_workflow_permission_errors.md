@@ -1,5 +1,5 @@
 ---
-title: "🔧 Fix GitHub Actions Workflow Permission Errors"
+title: "Fix GitHub Actions Workflow Permission Errors"
 ---
 
 # 🔧 Fix GitHub Actions Workflow Permission Errors
@@ -47,6 +47,7 @@ This method is more secure because you only give the workflow only the permissio
 1. Open your workflow YAML file (e.g., `.github/workflows/your‑workflow.yml`).
 2. Add a `permissions` block at the top to grant the minimum required access:
 
+{% raw %}
 ```yaml
 # Gives permission to read and write repo contents
 permissions:
@@ -58,14 +59,17 @@ jobs:
     steps:
       # ... your steps here ...
 ```
+{% endraw %}
 
 3. If a step needs the token explicitly (such as `actions/checkout`), include it:
 
+{% raw %}
 ```yaml
 - uses: actions/checkout@v4
   with:
     token: ${{ secrets.GITHUB_TOKEN }}
 ```
+{% endraw %}
 
 🔐 **Tip:** You can list many permissions (e.g., `issues: write`, `pull‑requests: write`) depending on what actions your workflow performs. This works because GitHub lets you define exactly what scopes `GITHUB_TOKEN` has for a workflow or job. ([GitHub Docs][2])
 

@@ -31,11 +31,13 @@ Persistent storage ensures application data is preserved across container restar
 
 Example variables from the role:
 
+{% raw %}
 ```yaml
 radarr_setup_config_dir: "/config"
 radarr_setup_backups_dir: "/nfs/backups/radarr"
 radarr_setup_backup_filename: "{{ radarr_setup_backup_prefix }}{{ ansible_date_time.date }}.sqlc"
 ```
+{% endraw %}
 
 * Directories are **created and owned** by a dedicated system user
 * Supports NFS-mounted storage for centralized backups
@@ -47,10 +49,12 @@ radarr_setup_backup_filename: "{{ radarr_setup_backup_prefix }}{{ ansible_date_t
 
 The role pins a specific Docker image version:
 
+{% raw %}
 ```yaml
 radarr_setup_version: "5.27.5.10198"
 radarr_setup_docker_image_name: "radarr:{{ radarr_setup_version }}"
 ```
+{% endraw %}
 
 * Avoids pulling `latest` automatically
 * Guarantees reproducible deployments
@@ -105,6 +109,7 @@ The sequence for deploying Radarr is:
 
 ## **5. Architecture Diagram**
 
+{% raw %}
 ```
                  ┌──────────────────────────────┐
                  │  Host / Docker Environment   │
@@ -130,6 +135,7 @@ The sequence for deploying Radarr is:
                  │ - Port: 5432                │
                  └─────────────────────────────┘
 ```
+{% endraw %}
 
 * Config directory is mounted inside the container
 * Backups can reside on NFS for centralized storage

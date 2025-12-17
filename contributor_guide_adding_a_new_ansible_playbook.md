@@ -1,5 +1,5 @@
 ---
-title: "👩‍💻 Contributor Guide: Adding a New Ansible Playbook"
+title: "Contributor Guide: Adding a New Ansible Playbook"
 ---
 
 # 👩‍💻 Contributor Guide: Adding a New Ansible Playbook
@@ -16,15 +16,19 @@ The documentation system enforces a consistent structure, extracts metadata from
 ### 1. **Create the playbook file**
 Add your playbook under the `playbooks/` directory:
 
+{% raw %}
 ```
 playbooks/my_new_playbook.yml
 ```
+{% endraw %}
 
 You may organize playbooks into subfolders:
 
+{% raw %}
 ```
 playbooks/infra/my_new_playbook.yml
 ```
+{% endraw %}
 
 Both are supported.
 
@@ -35,6 +39,7 @@ Every playbook **must** begin with a `# Purpose:` comment.
 
 Example:
 
+{% raw %}
 ```yaml
 # Purpose: Prepares a new VM for Kubernetes workloads.
 # Installs container runtime, configures networking, and applies baseline security.
@@ -43,6 +48,7 @@ Example:
   roles:
     - k8s_node
 ```
+{% endraw %}
 
 Guidelines:
 
@@ -61,6 +67,7 @@ The documentation generator detects roles via:
 
 Examples:
 
+{% raw %}
 ```yaml
 roles:
   - common
@@ -71,6 +78,7 @@ tasks:
     ansible.builtin.import_role:
       name: k8s_node
 ```
+{% endraw %}
 
 These roles will be listed in the generated documentation.
 
@@ -93,9 +101,11 @@ The **Generate Ansible Playbook Docs** GitHub Action runs automatically on push/
 
 It executes:
 
+{% raw %}
 ```
 scripts/generate_playbook_docs.py
 ```
+{% endraw %}
 
 The script:
 
@@ -103,21 +113,27 @@ The script:
 ✅ Detects roles used in the playbook  
 ✅ Generates documentation at:
 
+{% raw %}
 ```
 docs/playbooks/<playbook>.md
 ```
+{% endraw %}
 
 ✅ Updates folder‑level indexes inside:
 
+{% raw %}
 ```
 playbooks/<folder>/README.md
 ```
+{% endraw %}
 
 ✅ Updates the global index at:
 
+{% raw %}
 ```
 docs/playbooks/README.md
 ```
+{% endraw %}
 
 No documentation is written inside the playbook folder itself — only folder‑level indexes remain there.
 
@@ -140,12 +156,15 @@ No documentation is written inside the playbook folder itself — only folder‑
 
 After adding:
 
+{% raw %}
 ```
 playbooks/infra/prepare_node.yml
 ```
+{% endraw %}
 
 With:
 
+{% raw %}
 ```yaml
 # Purpose: Prepares a VM or baremetal host for Ansible management.
 ---
@@ -154,6 +173,7 @@ With:
     - common
     - ansible_node
 ```
+{% endraw %}
 
 The workflow will generate:
 

@@ -1,5 +1,5 @@
 ---
-title: "📦 Synology NAS"
+title: "Synology NAS"
 ---
 
 # 📦 Synology NAS
@@ -25,9 +25,11 @@ Synology devices are updated through the **web GUI**:
 
 From the `pve-2` terminal, log out of the active iSCSI session:
 
+{% raw %}
 ```bash
 sudo iscsiadm -m node --logout -T iqn.2000-01.com.synology:synology-0.Target-1.76fd697e949
 ```
+{% endraw %}
 
 ---
 
@@ -35,9 +37,11 @@ sudo iscsiadm -m node --logout -T iqn.2000-01.com.synology:synology-0.Target-1.7
 
 Once the update is complete, restore the iSCSI session:
 
+{% raw %}
 ```bash
 sudo iscsiadm -m node --targetname iqn.2000-01.com.synology:synology-0.Target-1.76fd697e949 --portal 192.168.2.240 --login
 ```
+{% endraw %}
 
 ---
 
@@ -45,12 +49,15 @@ sudo iscsiadm -m node --targetname iqn.2000-01.com.synology:synology-0.Target-1.
 
 Confirm that the iSCSI session is active:
 
+{% raw %}
 ```bash
 sudo iscsiadm --mode session --print=1
 ```
+{% endraw %}
 
 Expected output:
 
+{% raw %}
 ```text
 Target: iqn.2000-01.com.synology:synology-0.Target-1.76fd697e949 (non-flash)
         Current Portal: 192.168.2.240:3260,1
@@ -69,6 +76,7 @@ Target: iqn.2000-01.com.synology:synology-0.Target-1.76fd697e949 (non-flash)
                 iSCSI Session State: LOGGED_IN
                 Internal iscsid Session State: NO CHANGE
 ```
+{% endraw %}
 
 ---
 
@@ -76,9 +84,11 @@ Target: iqn.2000-01.com.synology:synology-0.Target-1.76fd697e949 (non-flash)
 
 Finally, mount the iSCSI drive to make the backup datastore available:
 
+{% raw %}
 ```bash
 sudo mount /mnt/datastore/backups/
 ```
+{% endraw %}
 
 ---
 

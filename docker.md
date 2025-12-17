@@ -1,5 +1,5 @@
 ---
-title: "🐳 Docker"
+title: "Docker"
 ---
 
 # 🐳 Docker
@@ -12,6 +12,7 @@ Think of this as a **generic framework** for all containerized services in the h
 
 ## 🏗 Architecture Overview
 
+{% raw %}
 ```
                   ┌───────────────────────────┐
                   │ Host / Docker Environment │
@@ -40,6 +41,7 @@ Think of this as a **generic framework** for all containerized services in the h
                   │ - NFS / Network Storage   │
                   └───────────────────────────┘
 ```
+{% endraw %}
 
 **Key Notes:**
 
@@ -64,6 +66,7 @@ Think of this as a **generic framework** for all containerized services in the h
 
 **Example Directory Layout:**
 
+{% raw %}
 ```
 /config/
    ├── app1/
@@ -76,6 +79,7 @@ Think of this as a **generic framework** for all containerized services in the h
    ├── app1/
    └── app2/
 ```
+{% endraw %}
 
 ---
 
@@ -83,19 +87,23 @@ Think of this as a **generic framework** for all containerized services in the h
 
 **1. Stop & remove existing container**
 
+{% raw %}
 ```bash
 docker stop <container>
 docker rm <container>
 docker network prune -f
 ```
+{% endraw %}
 
 **2. Ensure persistent directories exist**
 
+{% raw %}
 ```bash
 mkdir -p /config/appname
 mkdir -p /nfs/backups/appname
 chown <user>:<group> /config/appname
 ```
+{% endraw %}
 
 **3. Deploy templated configuration files**
 
@@ -104,21 +112,27 @@ chown <user>:<group> /config/appname
 
 **4. Prune unused Docker images (optional)**
 
+{% raw %}
 ```bash
 docker image prune -f
 ```
+{% endraw %}
 
 **5. Pull pinned Docker image**
 
+{% raw %}
 ```bash
 docker-compose -f /config/appname/docker-compose.yml pull
 ```
+{% endraw %}
 
 **6. Start container**
 
+{% raw %}
 ```bash
 docker-compose -f /config/appname/docker-compose.yml up -d
 ```
+{% endraw %}
 
 The [Docker Deployment Example Commands vs Ansible Tasks](docker_deployment_example_commands_vs_ansible_tasks.md) page provides a side-by-side equivalence between manual Docker deployment commands and the automated Ansible tasks.
 
@@ -128,10 +142,12 @@ The [Docker Deployment Example Commands vs Ansible Tasks](docker_deployment_exam
 
 * Always **pin Docker images to a specific version**:
 
+{% raw %}
 ```yaml
 app_setup_version: "1.2.3"
 app_setup_docker_image_name: "appname:{{ app_setup_version }}"
 ```
+{% endraw %}
 
 * Avoid `latest` for reproducibility
 * Use **templated Docker Compose files**
@@ -144,10 +160,12 @@ app_setup_docker_image_name: "appname:{{ app_setup_version }}"
 
 * **Databases**: e.g., Radarr, Sonarr, Lidarr use external PostgreSQL
 
+{% raw %}
 ```yaml
 app_setup_pg_host: "{{ global_ip_addresses[groups['pgdb'][0]] }}"
 app_setup_pg_port: 5432
 ```
+{% endraw %}
 
 * **Network Storage**: Configs, downloads, backups mounted from NFS or Ceph
 * Containers connect via **environment variables and mounted volumes**

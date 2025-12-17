@@ -12,39 +12,49 @@ The [Proxmox Backup Server installation](https://pbs.proxmox.com/docs/installati
 
 Edit the /etc/apt/sources.list file and add the following.
 
+{% raw %}
 ``` shell
 # Proxmox Backup Server pbs-no-subscription repository provided by proxmox.com,
 # NOT recommended for production use
 deb http://download.proxmox.com/debian/pbs bookworm pbs-no-subscription
 ```
+{% endraw %}
 
 Download the GPG signature that's required by APT to trust the Proxmox Backup Server repository.
 
+{% raw %}
 ``` shell
 sudo wget https://enterprise.proxmox.com/debian/proxmox-release-bookworm.gpg -O /etc/apt/trusted.gpg.d/proxmox-release-bookworm.gpg
 ```
+{% endraw %}
 
 Finally, install PBS with the following commands:
 
+{% raw %}
 ``` shell
 sudo apt update
 sudo apt install proxmox-backup
 ```
+{% endraw %}
 
 ## Proxmox Backup Client Installation
 
 Optionally install the [PBS client software](https://pbs.proxmox.com/docs/installation.html#proxmox-backup-client-only-repository). Create a new file, /etc/apt/sources.list.d/pbs-client.list, with the following content.
 
+{% raw %}
 ``` shell
 deb http://download.proxmox.com/debian/pbs-client bookworm main
 ```
+{% endraw %}
 
 Install the backup client with the following commands.
 
+{% raw %}
 ``` shell
 sudo apt update
 sudo apt install proxmox-backup-client
 ```
+{% endraw %}
 
 ## Access to the Proxmox Backup Server
 
@@ -82,20 +92,24 @@ The [iSCSI initiator](https://wiki.debian.org/SAN/iSCSI/open-iscsi) or client is
 
 The **Open-SCSI** package must be installed first 
 
+{% raw %}
 ``` shell
 sudo apt update
 sudo apt install open-scsi
 sudo systemctl enable open-iscsi
 sudo systemctl enable iscsid
 ```
+{% endraw %}
 
 #### Discover the Target
 
 Verify the iSCSI target with the following command where the iSCSI target host (i.e. Synology server) has an IP address of 192.168.2.240.
 
+{% raw %}
 ``` shell
 sudo iscsiadm -m discovery -t st -p 192.168.2.240
 ```
+{% endraw %}
 
 This should return the target properties similar to the following.
 
@@ -107,17 +121,21 @@ This should return the target properties similar to the following.
 
 Using the IQN number and target host IP address, use the following command to open a session with target.
 
+{% raw %}
 ``` shell
 sudo iscsiadm -m node --targetname iqn.2000-01.com.synology:synology-0.Target-1.76fd697e949 --portal 192.168.2.240 --login
 ```
+{% endraw %}
 
 #### Verify the iSCSI Session
 
 The device should now be available locally in the Proxmox Backup Server. Verify using the following command.
 
+{% raw %}
 ``` shell
 sudo iscsiadm --mode session --print=1
 ```
+{% endraw %}
 
 ### Prepare the iSCSI Disk for Use
 
@@ -127,9 +145,11 @@ Before the iSCSI disk can be used, it must be formatted and mounted to the Proxm
 
 A new /dev/sd*x* device should now be available (e.g. /dev/sda). This device is linked to /dev/disk/by-ath/ip-* device. Format the disk as an ext4 file system.
 
+{% raw %}
 ``` shell
 sudo mkfs.ext4 /dev/sda
 ```
+{% endraw %}
 
 #### Mount iSCSI Target
 
@@ -137,15 +157,19 @@ The formatted disk can now be mounted just like any local drive.
 
 Create the mount point, in this case */mnt/datastore/backups*. 
 
+{% raw %}
 ``` shell
 sudo mkdir -p /mnt/datastore/backups
 ```
+{% endraw %}
 
 Mount the iSCSI drive to the mount point assuming the drive is /dev/sda.
 
+{% raw %}
 ``` shell
 sudo mount /dev/sda /mnt/datastore/backups
 ```
+{% endraw %}
 
 #### Automatically Login to iSCSI Target on Boot
 
@@ -153,29 +177,37 @@ The **node.start** parameter of the target must be set to automatic. The default
 
 Use the discover command to enumerate the **iqn** and **network** values.
 
+{% raw %}
 ``` shell
 sudo iscsiadm -m discovery -t st -p 192.168.2.240
 ```
+{% endraw %}
 
 The output should something similar to the following:
 
+{% raw %}
 ``` shell
 192.168.2.240:3260,1 iqn.2000-01.com.synology:synology-0.Target-1.76fd697e949
 [fe80::211:32ff:fe8a:51d9]:3260,1 iqn.2000-01.com.synology:synology-0.Target-1.76fd697e949
 ```
+{% endraw %}
 
 There are two discovered targets (one for IPv4 and one for IPv6). Using the values from the above output, the two default files are expected in the following:
 
+{% raw %}
 ``` shell
 /etc/iscsi/nodes/iqn.2000-01.com.synology:synology-0.Target-1.76fd697e949/192.168.2.240,3260,1/default
  /etc/iscsi/nodes/iqn.2000-01.com.synology:synology-0.Target-1.76fd697e949/fe80::211:32ff:fe8a:51d9,3260,1/default
 ```
+{% endraw %}
 
 Edit each file and find **node.start** parameter to automatic.
 
+{% raw %}
 ``` ini
 node.startup = automatic
 ```
+{% endraw %}
 
 #### Automatically Mount the iSCSI Target on Boot
 
@@ -183,15 +215,19 @@ Adding an entry in /etc/fstab will automatically mount the iSCSI drive to the Pr
 
 The following labels /dev/sda to *backups*.
 
+{% raw %}
 ``` shell
 sudo e2label /dev/sda backups
 ```
+{% endraw %}
 
 In /etc/fstab, add the following entry
 
+{% raw %}
 ``` shell
 LABEL=backups   /mnt/datastore/backups  ext4    _netdev 0       0
 ```
+{% endraw %}
 
 ## Use the iSCSI Drive as a Datastore
 

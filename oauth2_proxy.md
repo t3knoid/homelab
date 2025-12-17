@@ -16,6 +16,7 @@ Nginx delegates authentication to OAuth2 Proxy via `auth_request`, while OAuth2 
 
 ## ⚙️ Nginx Configuration Example (`code.refol.us`)
 
+{% raw %}
 ```nginx
 server {
     listen 443 ssl http2;
@@ -75,11 +76,13 @@ server {
 }
 
 ```
+{% endraw %}
 
 ---
 
 ## 📁 OAuth2 Proxy Configuration (`code.refol.us`)
 
+{% raw %}
 ```ini
 # /etc/oauth2-proxy/oauth2-proxy_code.refol.us.cfg
 
@@ -108,6 +111,7 @@ request_logging = true
 metrics_address = "127.0.0.1:9100"
 
 ```
+{% endraw %}
 
 ---
 
@@ -131,11 +135,13 @@ metrics_address = "127.0.0.1:9100"
 
 ### ASCII Diagram
 
+{% raw %}
 ```
 User Browser → Nginx → oauth2-proxy → Microsoft Entra ID
                     ↘ authenticated ↙
                           Backend
 ```
+{% endraw %}
 
 ### Step-by-Step Table
 

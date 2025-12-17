@@ -1,5 +1,5 @@
 ---
-title: "🏃 [Service Name] Runbook"
+title: "[Service Name] Runbook"
 ---
 
 # 🏃 [Service Name] Runbook
@@ -12,11 +12,13 @@ This runbook provides **step-by-step instructions to deploy or update [Service N
 
 Start by logging into a control node with Ansible installed and prepare the environment:
 
+{% raw %}
 ```shell
 cd ~/ansible
 source /opt/python_3.12/bin/activate
 INV=inventory/services/inventory.ini
 ```
+{% endraw %}
 
 > ⚡ Important: Always start on the control node so all subsequent commands run in the correct environment.
 
@@ -26,9 +28,11 @@ INV=inventory/services/inventory.ini
 
 Ensure your local repository is up to date:
 
+{% raw %}
 ```shell
 git pull origin main
 ```
+{% endraw %}
 
 > ⚡ Important: Pulling the latest code first prevents conflicts and ensures you’re working with the most recent version.
 
@@ -38,15 +42,19 @@ git pull origin main
 
 Edit the relevant file:
 
+{% raw %}
 ```
 [inventory path or config file]
 ```
+{% endraw %}
 
 Set the variable:
 
+{% raw %}
 ```
 [variable_name]
 ```
+{% endraw %}
 
 to the **desired value/version**.
 
@@ -59,11 +67,13 @@ to the **desired value/version**.
 
 After modifying the configuration, commit your changes:
 
+{% raw %}
 ```shell
 git add [file_path]
 git commit -m "Update [Service Name] version/config to <value>"
 git push origin main
 ```
+{% endraw %}
 
 > ⚡ Important: Replace `<value>` with the actual version or configuration value.
 
@@ -73,9 +83,11 @@ git push origin main
 
 Run the corresponding playbook:
 
+{% raw %}
 ```shell
 ansible-playbook -i $INV [playbook_file].yml
 ```
+{% endraw %}
 
 > ⚡ Note: Use `-k` if prompted for SSH password.
 

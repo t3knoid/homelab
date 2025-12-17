@@ -1,5 +1,5 @@
 ---
-title: "🗂 Home Lab"
+title: "Home Lab"
 ---
 
 # 🗂 Home Lab

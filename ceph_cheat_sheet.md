@@ -1,5 +1,5 @@
 ---
-title: "🧰 Ceph Operations Cheat Sheet"
+title: "Ceph Operations Cheat Sheet"
 ---
 
 # 🧰 Ceph Operations Cheat Sheet

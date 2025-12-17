@@ -1,5 +1,5 @@
 ---
-title: "⚙️ Ansible"
+title: "️ Ansible"
 ---
 
 # ⚙️ Ansible
@@ -44,11 +44,13 @@ Two [Ansible control nodes](https://homelab.refol.us/projects/home-lab/repositor
 ### Working on a Control Node
 After connecting to a control node (e.g., via SSH), initialize your environment with:
 
+{% raw %}
 ```shell
 source /opt/python_3.12/bin/activate
 cd ~/ansible
 git pull
 ```
+{% endraw %}
 
 This ensures you are operating with the latest codebase and dependencies.  
 For details on repository organization, see [Directory Structure & Conventions](./ansible-directory-structure.md).
@@ -58,10 +60,12 @@ For details on repository organization, see [Directory Structure & Conventions](
 ### Deploying or Updating Ansible
 To deploy or update Ansible on a control node:
 
+{% raw %}
 ```shell
 INV=inventory/ansible/inventory.ini
 ansible-playbook -k -i $INV playbooks/ansible/deploy_ansible.yml
 ```
+{% endraw %}
 
 This playbook automates installation and configuration, keeping control nodes consistent and up to date.
 

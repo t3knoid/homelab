@@ -48,9 +48,11 @@ The script performs the following steps:
   - Usage example (`ansible-playbook playbooks/<path>`)
 - **Writes the generated documentation to:**
 
+{% raw %}
 ```
 docs/playbooks/<playbook>.md
 ```
+{% endraw %}
 
 - No documentation files are written inside the `playbooks/` directory.
 
@@ -64,9 +66,11 @@ docs/playbooks/<playbook>.md
   - **Subfolder entries** — playbooks inside nested directories
 - A global index is generated at:
 
+{% raw %}
 ```
 docs/playbooks/README.md
 ```
+{% endraw %}
 
 - The index contains two tables:
   - Playbooks in the root directory
@@ -88,9 +92,11 @@ docs/playbooks/README.md
 
 If the script is run with a specific playbook path:
 
+{% raw %}
 ```bash
 python scripts/generate_playbook_docs.py playbooks/infra/prepare-node.yml
 ```
+{% endraw %}
 
 - Only that playbook’s documentation is generated under `docs/playbooks/`.
 - No global index or folder‑level indexes are updated.
@@ -101,6 +107,7 @@ python scripts/generate_playbook_docs.py playbooks/infra/prepare-node.yml
 
 ## Per‑Playbook Documentation (`docs/playbooks/deploy-ansible.md`)
 
+{% raw %}
 ```markdown
 # 📖 Playbook: deploy-ansible.yml
 
@@ -112,8 +119,10 @@ Sets up the Ansible control node and prepares managed nodes with required roles.
 - [`ansible_node`](../roles/ansible_node.md)
 
 ## 🚀 Usage
-```bash
+```
+{% endraw %}bash
 ansible-playbook playbooks/deploy-ansible.yml
+{% raw %}
 ```
 ```
 
@@ -121,19 +130,22 @@ ansible-playbook playbooks/deploy-ansible.yml
 
 ## Folder Index (`playbooks/ansible/README.md`)
 
-```markdown
+```
+{% endraw %}markdown
 # 📚 Playbooks in `ansible`
 
 | Playbook | Purpose |
 |----------|---------|
 | [`deploy_ansible.yml`](../../docs/playbooks/deploy_ansible.md) | Prepares VMs and baremetal hosts for Ansible management |
+{% raw %}
 ```
 
 ---
 
 ## Global Index (`docs/playbooks/README.md`)
 
-```markdown
+```
+{% endraw %}markdown
 # 📚 Playbook Index
 
 ## 📂 Playbooks in root `playbooks/`

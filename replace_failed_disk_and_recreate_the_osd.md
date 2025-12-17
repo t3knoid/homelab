@@ -1,5 +1,5 @@
 ---
-title: "🔧 Replace failed disk and recreate the OSD"
+title: "Replace failed disk and recreate the OSD"
 ---
 
 # 🔧 Replace failed disk and recreate the OSD
@@ -73,12 +73,14 @@ Follow this sequence to safely remove a failed OSD, replace the physical disk, a
 
 If the new disk contains old metadata or partitions, wipe it fully:
 
+{% raw %}
 ```bash
 # Zap partitions and signatures (CAUTION: destructive)
 sgdisk --zap-all /dev/sdb
 wipefs -a /dev/sdb
 partprobe /dev/sdb
 ```
+{% endraw %}
 
 ---
 
@@ -86,10 +88,12 @@ partprobe /dev/sdb
 
 You’ve been using Proxmox’s pveceph tooling. Create the OSD with the same method:
 
+{% raw %}
 ```bash
 # On the node hosting the new disk
 pveceph osd create /dev/sdb
 ```
+{% endraw %}
 
 This handles preparing the disk (ceph-volume), creating the OSD ID, keyrings, and registering it in CRUSH.
 

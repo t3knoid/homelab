@@ -12,9 +12,11 @@ This guide provides **documentation on using Azure PowerShell (Az module)** in y
 
 The Az module can be installed using an Ansible playbook:
 
+{% raw %}
 ```shell
 ansible-playbook -i inventory/ansible/inventory.ini -k playbooks/azure/deploy_azure_ps.yml
 ```
+{% endraw %}
 
 **Notes:**
 
@@ -22,9 +24,11 @@ ansible-playbook -i inventory/ansible/inventory.ini -k playbooks/azure/deploy_az
 * Installation is **user-specific**: each user gets their own PowerShell environment.
 * After installation, launch PowerShell using:
 
+{% raw %}
 ```shell
 pwsh
 ```
+{% endraw %}
 
 ---
 
@@ -32,9 +36,11 @@ pwsh
 
 Interactive login is **not supported**. Device authentication must be used:
 
+{% raw %}
 ```powershell
 Connect-AzAccount -UseDeviceAuthentication
 ```
+{% endraw %}
 
 **Instructions:**
 
@@ -65,15 +71,18 @@ To remove the Az module and all dependencies:
 
 1. Enumerate installed Az modules:
 
+{% raw %}
 ```powershell
 ($AzVersions |
   ForEach-Object {
     Import-Clixml -Path (Join-Path -Path $_.InstalledLocation -ChildPath PSGetModuleInfo.xml)
   }).Dependencies.Name | Sort-Object -Descending -Unique -OutVariable AzModules
 ```
+{% endraw %}
 
 2. Uninstall all modules:
 
+{% raw %}
 ```powershell
 $AzModules |
   ForEach-Object {
@@ -82,13 +91,16 @@ $AzModules |
     Uninstall-Module -Name $_ -AllVersions
   }
 ```
+{% endraw %}
 
 3. Remove the Az module itself:
 
+{% raw %}
 ```powershell
 Remove-Module -Name Az -ErrorAction SilentlyContinue
 Uninstall-Module -Name Az -AllVersions
 ```
+{% endraw %}
 
 > ⚡ Caution: Only uninstall if no scripts rely on Az modules.
 

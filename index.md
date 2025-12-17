@@ -1,5 +1,5 @@
 ---
-title: "🏠 Home Lab Overview"
+title: "Home Lab Overview"
 ---
 
 # 🏠 Home Lab Overview
@@ -116,6 +116,4 @@ The home lab is more than an experiment—it’s a platform for continuous learn
 * Reverse proxying and certificate management
 * DNS and network services
 
-
 It enables prototyping, troubleshooting, and staying current with modern infrastructure technologies.
-

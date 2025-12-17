@@ -1,5 +1,5 @@
 ---
-title: "🏃 Deploy Sabnzbd Runbook"
+title: "Deploy Sabnzbd Runbook"
 ---
 
 # 🏃 Deploy Sabnzbd Runbook
@@ -12,11 +12,13 @@ This runbook provides **step‑by‑step instructions to deploy or update Sabnzb
 
 Start by logging into a control node that has Ansible installed and prepare the environment:
 
+{% raw %}
 ```shell
 cd ~/ansible
 source /opt/python_3.12/bin/activate
 INV=inventory/services/inventory.ini
 ```
+{% endraw %}
 
 > ⚡ Important: Always begin on the control node so all subsequent commands run in the correct environment.
 
@@ -26,9 +28,11 @@ INV=inventory/services/inventory.ini
 
 Ensure your local Ansible repository is up to date:
 
+{% raw %}
 ```shell
 git pull origin main
 ```
+{% endraw %}
 
 > ⚡ Important: Pulling the latest code first prevents conflicts and ensures you’re working with the most recent configuration.
 
@@ -38,15 +42,19 @@ git pull origin main
 
 Edit the file:
 
+{% raw %}
 ```
 inventory/services/group_vars/sabnzbd/main.yml
 ```
+{% endraw %}
 
 Locate and update the version variable:
 
+{% raw %}
 ```yaml
 sabnzbd_setup_version: <desired_version>
 ```
+{% endraw %}
 
 ### Where to Find the Latest Version
 
@@ -58,11 +66,13 @@ sabnzbd_setup_version: <desired_version>
 
 After updating the version, commit the change:
 
+{% raw %}
 ```shell
 git add inventory/services/group_vars/sabnzbd/main.yml
 git commit -m "Update Sabnzbd version to <version_number>"
 git push origin main
 ```
+{% endraw %}
 
 > ⚡ Important: Replace `<version_number>` with the actual version you want to deploy.
 
@@ -72,9 +82,11 @@ git push origin main
 
 Run the Ansible playbook to deploy the specified version:
 
+{% raw %}
 ```shell
 ansible-playbook -i $INV -k playbooks/services/deploy_sabnzbd.yml
 ```
+{% endraw %}
 
 > ⚡ Note: The `-k` option will prompt for SSH password if required.
 

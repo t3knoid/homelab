@@ -1,5 +1,5 @@
 ---
-title: "📦 Ceph Distributed Storage"
+title: "Ceph Distributed Storage"
 ---
 
 # 📦 Ceph Distributed Storage
@@ -19,6 +19,7 @@ Reference: [Proxmox Admin Guide – Network Configuration](https://pve.proxmox.c
 Edit `/etc/network/interfaces` on each node to create a dedicated bridge (`vmbr1`):
 
 **pve‑0**
+{% raw %}
 ```bash
 auto vmbr1
 iface vmbr1 inet static
@@ -27,8 +28,10 @@ iface vmbr1 inet static
     bridge_stp off
     bridge_fd 0
 ```
+{% endraw %}
 
 **pve‑1**
+{% raw %}
 ```bash
 auto vmbr1
 iface vmbr1 inet static
@@ -37,8 +40,10 @@ iface vmbr1 inet static
     bridge_stp off
     bridge_fd 0
 ```
+{% endraw %}
 
 **pve‑2**
+{% raw %}
 ```bash
 auto vmbr1
 iface vmbr1 inet static
@@ -47,6 +52,7 @@ iface vmbr1 inet static
     bridge_stp off
     bridge_fd 0
 ```
+{% endraw %}
 
 This isolates Ceph traffic on the `10.0.2.0/24` network, ensuring performance and reliability.
 
@@ -61,10 +67,12 @@ Additional reading: [5 Proxmox Pooled Storage Options – Virtualization Howto](
 
 SSH into each node and run:
 
+{% raw %}
 ```bash
 sudo -i
 yes | pveceph install --repository no-subscription
 ```
+{% endraw %}
 
 - The `yes |` pipe avoids interactive prompts.  
 - Installs **Ceph 17.2 Quincy**.  
@@ -116,9 +124,11 @@ yes | pveceph install --repository no-subscription
 
 Check cluster status:
 
+{% raw %}
 ```bash
 ceph -s
 ```
+{% endraw %}
 
 Useful commands:
 - `ceph osd tree` → shows OSD layout across nodes  

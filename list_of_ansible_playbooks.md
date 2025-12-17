@@ -8,12 +8,14 @@ title: "List of Ansible Playbooks"
 
 It is important to highlight provisioning a new virtual machine because it is core to deploying services. Running the [playbooks/provision_vm.yml](https://homelab.refol.us/projects/home-lab/repository/ansible/revisions/main/entry/playbooks/ansible/deploy_ansible.yml) playbook is unique in that it requires using the *ansible* become user.
 
+{% raw %}
 ``` shell
 cd /ansible/dev/ansible
 git pull
 INV=inventory/ansible/inventory.ini
 ansible-playbook -k -i $INV playbooks/provision_vm.yml
 ```
+{% endraw %}
 
 When prompted for the become user password, make sure to enter the password for the *ansible* user.
 

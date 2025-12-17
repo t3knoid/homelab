@@ -31,11 +31,13 @@ A host directory is mounted inside the container to hold:
 
 Example variables from the role:
 
+{% raw %}
 ```yaml
 calibreweb_setup_config_dir: "/config/calibreweb"
 calibreweb_setup_backups_dir: "/nfs/backups/calibre"
 calibreweb_setup_backup_filename: "{{ calibreweb_setup_backup_prefix }}{{ ansible_date_time.date }}.sqlc"
 ```
+{% endraw %}
 
 * Directories are **created and owned** by a dedicated system user
 * Ensures the container can read/write configuration and backup files
@@ -47,10 +49,12 @@ calibreweb_setup_backup_filename: "{{ calibreweb_setup_backup_prefix }}{{ ansibl
 
 The deployment uses a **specific Docker image version**, avoiding automatic `latest` pulls:
 
+{% raw %}
 ```yaml
 calibreweb_setup_version: 0.6.25
 calibreweb_setup_docker_image_name: "calibre-web:{{ calibreweb_setup_version }}"
 ```
+{% endraw %}
 
 > This ensures reproducible deployments and prevents unexpected changes from upstream image updates.
 
@@ -98,6 +102,7 @@ The sequence for deploying Calibre-Web is:
 
 ## **5. Architecture Diagram**
 
+{% raw %}
 ```
            ┌───────────────────────────┐
            │ Host / Docker Environment │
@@ -116,6 +121,7 @@ The sequence for deploying Calibre-Web is:
            │ Web Browser / API         │
            └───────────────────────────┘
 ```
+{% endraw %}
 
 * Config directory is mounted as `/config`
 * Backup folder can optionally reside on NFS for centralized storage

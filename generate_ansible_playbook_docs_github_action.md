@@ -1,5 +1,5 @@
 ---
-title: "⚙️ GitHub Action: Generate Playbook Docs"
+title: "️ GitHub Action: Generate Playbook Docs"
 ---
 
 # ⚙️ GitHub Action: Generate Playbook Docs
@@ -11,6 +11,7 @@ This workflow ensures that documentation for all Ansible roles is **automaticall
 ## 🛠 Workflow File
 Located at: `.github/workflows/generate-playbook-docs.yml`
 
+{% raw %}
 ```yaml
 name: Generate Ansible Playbook Docs
 
@@ -60,6 +61,7 @@ jobs:
             echo "No documentation changes to commit."
           fi
 ```
+{% endraw %}
 
 ---
 

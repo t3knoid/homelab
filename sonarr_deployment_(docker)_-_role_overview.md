@@ -31,11 +31,13 @@ Persistent storage ensures application data is preserved across container restar
 
 Example variables from the role:
 
+{% raw %}
 ```yaml
 sonarr_setup_config_dir: "/config"
 sonarr_setup_backups_dir: "/nfs/backups/sonarr"
 sonarr_setup_backup_filename: "{{ sonarr_setup_backup_prefix }}{{ ansible_date_time.date }}.sqlc"
 ```
+{% endraw %}
 
 * Directories are **created and owned** by a dedicated system user
 * Supports NFS-mounted storage for centralized backups
@@ -47,10 +49,12 @@ sonarr_setup_backup_filename: "{{ sonarr_setup_backup_prefix }}{{ ansible_date_t
 
 The role pins a specific Docker image version:
 
+{% raw %}
 ```yaml
 sonarr_setup_version: 4.0.15.2941
 sonarr_setup_docker_image_name: "sonarr:{{ sonarr_setup_version }}"
 ```
+{% endraw %}
 
 * Avoids pulling `latest` automatically
 * Guarantees reproducible deployments
@@ -64,19 +68,23 @@ The sequence for deploying Sonarr is:
 
 1. **Stop and remove existing container**
 
+{% raw %}
 ```bash
 docker stop sonarr
 docker rm sonarr
 docker network prune -f
 ```
+{% endraw %}
 
 2. **Ensure persistent directories exist**
 
+{% raw %}
 ```bash
 mkdir -p {{ sonarr_setup_config_dir }}
 mkdir -p {{ sonarr_setup_backups_dir }}
 chown <user>:<group> {{ sonarr_setup_config_dir }}
 ```
+{% endraw %}
 
 3. **Deploy configuration files and Docker Compose**
 
@@ -85,26 +93,33 @@ chown <user>:<group> {{ sonarr_setup_config_dir }}
 
 4. **Prune unused Docker images** (optional)
 
+{% raw %}
 ```bash
 docker image prune -f
 ```
+{% endraw %}
 
 5. **Pull the pinned Docker image**
 
+{% raw %}
 ```bash
 docker-compose -f {{ sonarr_setup_config_dir }}/docker-compose.yml pull
 ```
+{% endraw %}
 
 6. **Start the container**
 
+{% raw %}
 ```bash
 docker-compose -f {{ sonarr_setup_config_dir }}/docker-compose.yml up -d
 ```
+{% endraw %}
 
 ---
 
 ## **5. Architecture Diagram**
 
+{% raw %}
 ```
                  ┌──────────────────────────────┐
                  │  Host / Docker Environment   │
@@ -130,6 +145,7 @@ docker-compose -f {{ sonarr_setup_config_dir }}/docker-compose.yml up -d
                  │ - Port: 5432                │
                  └─────────────────────────────┘
 ```
+{% endraw %}
 
 * Config directory is mounted inside the container
 * Backups can reside on NFS for centralized storage

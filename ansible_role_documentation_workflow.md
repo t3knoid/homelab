@@ -1,5 +1,5 @@
 ---
-title: "📘 Ansible Role Documentation Workflow"
+title: "Ansible Role Documentation Workflow"
 ---
 
 # 📘 Ansible Role Documentation Workflow
@@ -27,24 +27,30 @@ performs the following steps:
 ### 1. **Iterates through all role folders**
 All directories under:
 
+{% raw %}
 ```
 roles/
 ```
+{% endraw %}
 
 are scanned. A role is processed only if it contains:
 
+{% raw %}
 ```
 roles/<role>/meta/main.yml
 ```
+{% endraw %}
 
 ---
 
 ### 2. **Reads metadata**
 Metadata is loaded from:
 
+{% raw %}
 ```
 roles/<role>/meta/main.yml
 ```
+{% endraw %}
 
 This includes:
 
@@ -88,9 +94,11 @@ Task and handler names are extracted and listed in human‑readable form.
 ### 5. **Generates role documentation**
 Instead of writing documentation inside each role folder, the script now writes:
 
+{% raw %}
 ```
 docs/roles/<role>.md
 ```
+{% endraw %}
 
 Each generated document includes:
 
@@ -111,9 +119,11 @@ This keeps the `roles/` directory clean and makes documentation easier to browse
 ### 6. **Creates a central role index**
 A global index is generated at:
 
+{% raw %}
 ```
 docs/roles/README.md
 ```
+{% endraw %}
 
 This index contains:
 
@@ -123,9 +133,11 @@ This index contains:
 
 Additionally, a simplified index is written to:
 
+{% raw %}
 ```
 roles/README.md
 ```
+{% endraw %}
 
 This version links to the docs under `docs/roles/` for convenience when browsing the repository.
 
@@ -151,6 +163,7 @@ For example, the `global` role documentation includes:
 
 Example `meta/main.yml`:
 
+{% raw %}
 ```yaml
 galaxy_info:
   role_name: global
@@ -168,6 +181,7 @@ galaxy_info:
         - bionic
         - focal
 ```
+{% endraw %}
 
 This metadata is used to populate the **Overview** and **Requirements** sections of the generated documentation.
 
@@ -177,12 +191,15 @@ This metadata is used to populate the **Overview** and **Requirements** sections
 
 The script generates a central index at:
 
+{% raw %}
 ```
 docs/roles/README.md
 ```
+{% endraw %}
 
 Example:
 
+{% raw %}
 ```markdown
 # 📚 Role Index
 
@@ -191,12 +208,15 @@ Example:
 | [`ansible_setup`](ansible_setup.md) | Provides tasks to install and configure Ansible on a control node. |
 | [`another_role`](another_role.md) | Description of another role. |
 ```
+{% endraw %}
 
 A simplified version is also written to:
 
+{% raw %}
 ```
 roles/README.md
 ```
+{% endraw %}
 
 with links pointing to `../docs/roles/<role>.md`.
 

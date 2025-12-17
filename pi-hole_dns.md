@@ -1,5 +1,5 @@
 ---
-title: "🌐 Pi‑hole DNS"
+title: "Pi‑hole DNS"
 ---
 
 # 🌐 Pi‑hole DNS
@@ -13,10 +13,12 @@ title: "🌐 Pi‑hole DNS"
 Installation is straightforward and documented in the [Pi‑hole Basic Install Guide](https://docs.pi-hole.net/main/basic-install/).
 
 ### Manual Installation
+{% raw %}
 ```shell
 wget -O basic-install.sh https://install.pi-hole.net
 sudo bash basic-install.sh
 ```
+{% endraw %}
 
 - Recommended to install on a **minimal VM** or container for efficiency.  
 - Ensure the VM has a static IP address to avoid DNS resolution issues.  

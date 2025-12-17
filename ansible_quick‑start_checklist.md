@@ -11,6 +11,7 @@ This page provides a concise onboarding guide. It complements the *Ansible Overv
 ## Checking Out the Code from GitHub
 Before working with Ansible, clone the repository and keep it up to date:
 
+{% raw %}
 ```shell
 # Clone the repository (first time)
 git clone https://github.com/t3knoid/ansible.git
@@ -19,6 +20,7 @@ cd ansible
 # Update to the latest version (subsequent use)
 git pull
 ```
+{% endraw %}
 
 **Notes:**
 - Always run `git pull` before executing playbooks to ensure you are working with the latest codebase.  
@@ -49,10 +51,12 @@ git pull
 ## Deploy or Update Ansible
 Run the following command to deploy or update Ansible:
 
+{% raw %}
 ```shell
 INV=inventory/ansible/inventory.ini
 ansible-playbook -k -i $INV playbooks/ansible/deploy_ansible.yml
 ```
+{% endraw %}
 
 ---
 
@@ -76,8 +80,10 @@ ansible-playbook -k -i $INV playbooks/ansible/deploy_ansible.yml
 ---
 
 ## Quick Reference Diagram
+{% raw %}
 ```
 Workflow:
 Clone Repo → SSH → Activate Python → Pull Repo → Run Playbook → (Optional) Manage via Semaphore UI
 ```
+{% endraw %}
 

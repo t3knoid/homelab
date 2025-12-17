@@ -1,5 +1,5 @@
 ---
-title: "**iSCSI: High-Performance Network Storage in Your Homelab**"
+title: "iSCSI: High-Performance Network Storage in Your Homelab"
 ---
 
 
@@ -44,9 +44,11 @@ These commands are essential for managing iSCSI sessions on Linux systems.
 
 ### **🔍 View Active Sessions**
 
+{% raw %}
 ```shell
 iscsiadm -m session
 ```
+{% endraw %}
 
 Displays all current initiator → target connections.
 
@@ -54,9 +56,11 @@ Displays all current initiator → target connections.
 
 ### **🚪 Log Out of a Session**
 
+{% raw %}
 ```shell
 iscsiadm -m node --logout -T IQN
 ```
+{% endraw %}
 
 Replace **IQN** with the target’s actual iSCSI Qualified Name.
 
@@ -66,18 +70,22 @@ Replace **IQN** with the target’s actual iSCSI Qualified Name.
 
 > Ensure you log out of the session before deleting the target entry.
 
+{% raw %}
 ```shell
 iscsiadm -m node -o delete -T IQN
 ```
+{% endraw %}
 
 ---
 
 ### **🔌 Enable iSCSI Services**
 
+{% raw %}
 ```shell
 sudo systemctl enable open-iscsi
 sudo systemctl enable iscsid
 ```
+{% endraw %}
 
 Enables the services responsible for discovery and session management.
 
@@ -96,9 +104,11 @@ This often occurs when **the storage array (e.g., Synology)** boots *after* the 
 
 Fix it by clearing all existing connections on the affected PVE node:
 
+{% raw %}
 ```shell
 iscsiadm -m node --logoutall=all
 ```
+{% endraw %}
 
 After this, reattempt the login and the session should establish cleanly.
 

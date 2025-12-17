@@ -1,5 +1,5 @@
 ---
-title: "⚙️ GitHub Action: Generate Ansible Role Docs"
+title: "️ GitHub Action: Generate Ansible Role Docs"
 ---
 
 # ⚙️ GitHub Action: Generate Ansible Role Docs
@@ -13,6 +13,7 @@ Whenever code is pushed or a pull request is opened, the workflow runs the `gene
 ## 🛠 Workflow File
 Located at: `.github/workflows/generate-role-docs.yml`
 
+{% raw %}
 ```yaml
 name: Generate Ansible Role Docs
 
@@ -58,6 +59,7 @@ jobs:
             echo "No documentation changes to commit."
           fi
 ```
+{% endraw %}
 
 ---
 

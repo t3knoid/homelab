@@ -1,5 +1,5 @@
 ---
-title: "🏃 Deploy Minecraft Bedrock Edition Runbook"
+title: "Deploy Minecraft Bedrock Edition Runbook"
 ---
 
 # 🏃 Deploy Minecraft Bedrock Edition Runbook
@@ -12,11 +12,13 @@ This runbook provides **step-by-step instructions to deploy or update a Minecraf
 
 Start by logging into an Ansible control node and prepare the environment:
 
+{% raw %}
 ```shell
 cd ~/ansible
 source /opt/python_3.12/bin/activate
 INV=inventory/minecraft/inventory.ini
 ```
+{% endraw %}
 
 > ⚡ Important: Always begin on the control node so all commands run in the correct environment.
 
@@ -26,9 +28,11 @@ INV=inventory/minecraft/inventory.ini
 
 Ensure your local Ansible repository is up to date:
 
+{% raw %}
 ```shell
 git pull origin main
 ```
+{% endraw %}
 
 > ⚡ Important: Pulling the latest code first prevents conflicts and ensures you’re working with the most recent configuration.
 
@@ -38,15 +42,19 @@ git pull origin main
 
 Edit the following file:
 
+{% raw %}
 ```
 inventory/minecraft/group_vars/all/main.yml
 ```
+{% endraw %}
 
 Locate and update the version variable:
 
+{% raw %}
 ```yaml
 bedrock_setup_version: 1.21.83.1
 ```
+{% endraw %}
 
 ### How to Find the Latest Version
 
@@ -56,15 +64,19 @@ bedrock_setup_version: 1.21.83.1
 
 Example URL:
 
+{% raw %}
 ```
 https://www.minecraft.net/bedrockdedicatedserver/bin-linux/bedrock-server-1.21.83.1.zip
 ```
+{% endraw %}
 
 The version number is the **suffix of the filename**:
 
+{% raw %}
 ```
 1.21.83.1
 ```
+{% endraw %}
 
 ---
 
@@ -72,11 +84,13 @@ The version number is the **suffix of the filename**:
 
 After updating the version, commit the change:
 
+{% raw %}
 ```shell
 git add inventory/minecraft/group_vars/all/main.yml
 git commit -m "Update Minecraft Bedrock version to 1.21.83.1"
 git push origin main
 ```
+{% endraw %}
 
 > ⚡ Important: Always commit version changes before deploying.
 
@@ -86,9 +100,11 @@ git push origin main
 
 Run the Ansible playbook to deploy the new Bedrock version:
 
+{% raw %}
 ```shell
 ansible-playbook -i $INV -k playbooks/minecraft/deploy_bedrock.yml
 ```
+{% endraw %}
 
 > ⚡ Note: The `-k` option will prompt for an SSH password if required.
 
@@ -98,16 +114,20 @@ ansible-playbook -i $INV -k playbooks/minecraft/deploy_bedrock.yml
 
 Connect to the Minecraft Bedrock server host (for example, `minecraft-1`) and inspect the service logs:
 
+{% raw %}
 ```shell
 sudo journalctl -u bedrock -xe
 ```
+{% endraw %}
 
 You should see output similar to the following, confirming the installed version:
 
+{% raw %}
 ```text
 May 27 14:47:16 minecraft-1 bedrock_server[29243]: [2025-05-27 14:47:16:835 INFO] Starting Server
 May 27 14:47:16 minecraft-1 bedrock_server[29243]: [2025-05-27 14:47:16:835 INFO] Version: 1.21.83.1
 ```
+{% endraw %}
 
 ---
 

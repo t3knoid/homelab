@@ -1,5 +1,5 @@
 ---
-title: "🖥️ Domain Controller Overview"
+title: "️ Domain Controller Overview"
 ---
 
 # 🖥️ Domain Controller Overview

@@ -49,9 +49,11 @@ Redmine integrates directly with a **local bare Git mirror** of the GitHub-based
 
 The mirrored repository resides in:
 
+{% raw %}
 ```
 /data/redmine/repos
 ```
+{% endraw %}
 
 This ensures Redmine can render diffs, browse files, and track changesets with minimal latency.
 
@@ -61,16 +63,20 @@ This ensures Redmine can render diffs, browse files, and track changesets with m
 
 Create the directory and set correct ownership:
 
+{% raw %}
 ```bash
 sudo mkdir -p /data/redmine/repos
 sudo chown redmine:redmine /data/redmine/repos
 ```
+{% endraw %}
 
 Switch to the `redmine` user:
 
+{% raw %}
 ```bash
 sudo -u redmine -i
 ```
+{% endraw %}
 
 ---
 
@@ -78,17 +84,21 @@ sudo -u redmine -i
 
 From within the repository folder:
 
+{% raw %}
 ```bash
 cd /data/redmine/repos
 git clone --bare https://github.com/t3knoid/ansible.git
 ```
+{% endraw %}
 
 Once cloned, instruct Redmine to fetch and index the repository’s changesets:
 
+{% raw %}
 ```bash
 cd /data/redmine/redmine-6.0.5/
 ./bin/rails runner "Repository.fetch_changesets" -e production
 ```
+{% endraw %}
 
 ---
 
@@ -96,21 +106,27 @@ cd /data/redmine/redmine-6.0.5/
 
 To sync the bare mirror with GitHub:
 
+{% raw %}
 ```bash
 git fetch origin +refs/heads/*:refs/heads/* && git reset --soft
 ```
+{% endraw %}
 
 Automate this with a cron job that runs every 10 minutes:
 
+{% raw %}
 ```bash
 sudo crontab -u redmine -e
 ```
+{% endraw %}
 
 Add:
 
+{% raw %}
 ```
 */10 * * * * cd /data/redmine/repos/ansible.git && git fetch origin +refs/heads/*:refs/heads/* && git reset --soft
 ```
+{% endraw %}
 
 This ensures Redmine always displays the latest commits, branches, and diffs without manual intervention.
 

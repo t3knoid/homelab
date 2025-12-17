@@ -1,5 +1,5 @@
 ---
-title: "📋 Ceph Operations Checklist"
+title: "Ceph Operations Checklist"
 ---
 
 # 📋 Ceph Operations Checklist

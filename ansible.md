@@ -13,9 +13,11 @@ Ansible is the automation framework used to manage virtual machine operations ac
 By leveraging Ansible, infrastructure tasks become streamlined, repeatable, and highly maintainable.  
 A curated [List of Ansible Playbooks](list_of_ansible_playbooks.md) supports standardized workflows across the environment. 
 
-Each Ansible playbook includes its own `README.md` for documentation. A consolidated [Playbook Index](https://homelab.refol.us/projects/home-lab/repository/ansible/revisions/main/entry/playbooks/README.md) is available in the `playbooks/` root folder. The documentation process is explained in the [Ansible Playbook Documentation Workflow](ansible_playbook_documentation_workflow.md) page.
+Each Ansible playbook includes its own `README.md` for documentation. A consolidated [Playbook Index](https://github.com/t3knoid/ansible/blob/main/playbooks/README.md) is available in the `playbooks/` root folder. The documentation process is explained in the [Ansible Playbook Documentation Workflow](ansible_playbook_documentation_workflow.md) page.
 
-Each Ansible role includes its own `README.md` for documentation. A consolidated [Role Index](https://homelab.refol.us/projects/home-lab/repository/ansible/revisions/main/entry/roles/README.md) is available in the `roles/` root folder. The documentation process is explained in the [Ansible Role Documentation Workflow](ansible_role_documentation_workflow.md) page.
+Each Ansible role includes its own `README.md` for documentation. A consolidated [Role Index](https://github.com/t3knoid/ansible/blob/main/roles/README.md) is available in the `roles/` root folder. The documentation process is explained in the [Ansible Role Documentation Workflow](ansible_role_documentation_workflow.md) page.
+
+Each Ansible inventory includes its own `README.md` for documentation. A consolidated [Inventory Index](https://github.com/t3knoid/ansible/blob/main/inventory/README.md) is available in the `inventory/` root folder. The documentation process is explained in the [Ansible Inventory Documentation Workflow](ansible_inventory_documentation_workflow.md) page.
 
 ---
 
@@ -39,7 +41,7 @@ This model enforces controlled access while maintaining operational flexibility.
 
 ## 🖥 Control Nodes
 
-Two [Ansible control nodes](https://homelab.refol.us/projects/home-lab/repository/ansible/revisions/main/entry/inventory/ansible/inventory.ini) are defined to orchestrate automation tasks.
+Two [Ansible control nodes](https://github.com/t3knoid/ansible/blob/main/inventory/ansible/inventory.ini) are defined to orchestrate automation tasks.
 
 ### Working on a Control Node
 After connecting to a control node (e.g., via SSH), initialize your environment with:

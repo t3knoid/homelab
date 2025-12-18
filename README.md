@@ -11,11 +11,11 @@ ansible-playbook -i inventory/redmine/inventory.ini -k playbooks/redmine/mirror_
 
 - 🌐 This repository is a one-way mirror of the wiki pages from: 📄➡️📄
 
-	https://homelab.refol.us/projects/home-lab/wiki
+	https://lab.refol.us/projects/home-lab/wiki
 - 🔗 Playbook source (generator): https://github.com/t3knoid/ansible/blob/main/playbooks/redmine/mirror_wiki.yml
 
 **GitHub Pages**
-- The repository is published as a static site at: https://t3knoid.github.io/homelab/ 🚀
+- The repository is published as a static site at: https://homelab.refol.us/ 🚀
 
 The GitHub Actions workflow that builds and deploys the site is at
 [.github/workflows/static.yml](.github/workflows/static.yml). In short, the workflow:

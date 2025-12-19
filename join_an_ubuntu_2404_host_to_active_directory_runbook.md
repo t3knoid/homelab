@@ -1,10 +1,10 @@
 ---
-title: "Joining an Ubuntu 24.04 Host to Active Directory"
+title: "Join an Ubuntu 24.04 Host to Active Directory Runbook"
 ---
 
-# 🔗 Joining an Ubuntu 24.04 Host to Active Directory
+# 🔗 Join an Ubuntu 24.04 Host to Active Directory Runbook
 
-This guide details the process of joining an **Ubuntu 24.04** host to the **refol.us Active Directory domain**.  
+This Runbook details the process of joining an **Ubuntu 24.04** host to the **refol.us Active Directory domain**.  
 It assumes an Active Directory Domain Controller is available at **192.168.2.251**.  
 > 💡 Note: In production, this process can be automated using **Ansible** during host provisioning.
 

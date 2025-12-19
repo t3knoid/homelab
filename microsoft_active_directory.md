@@ -1,8 +1,8 @@
 ---
-title: "️ Microsoft Active Directory"
+title: "Microsoft Active Directory"
 ---
 
-# 🗂️ Microsoft Active Directory
+# 🏢 Microsoft Active Directory
 
 **Active Directory (AD)** is hosted on the domain controller and provides centralized authentication, authorization, and directory services.  
 For applications requiring Lightweight Directory Access Protocol (**LDAP**), **Active Directory Lightweight Directory Services (AD LDS)** is installed to expose LDAP endpoints.

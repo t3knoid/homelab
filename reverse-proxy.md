@@ -1,10 +1,10 @@
 ---
-title: "Nginx Reverse Proxy Cluster"
+title: "Reverse-Proxy"
 ---
 
-# Nginx Reverse Proxy Cluster
+# 🌐 Reverse-Proxy
 
-The Nginx Reverse Proxy Cluster serves as the public gateway into the homelab’s internal services. It abstracts internal topology, centralizes TLS termination, enforces security policies, and improves performance through caching and request routing. The cluster is composed of a **frontend Nginx server** and two redundant **backend proxy nodes**, forming a resilient and maintainable ingress layer.
+The Reverse-Proxy serves as the public gateway into the homelab’s internal services. It abstracts internal topology, centralizes TLS termination, enforces security policies, and improves performance through caching and request routing. The Reverse-Proxy is configured as a cluster of Nginx servers composed of a **frontend Nginx server** and two redundant **backend proxy nodes**, forming a resilient and maintainable ingress layer.
 
 ---
 

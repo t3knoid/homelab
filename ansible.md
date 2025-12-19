@@ -4,47 +4,55 @@ title: "️ Ansible"
 
 # ⚙️ Ansible
 
-Ansible is the automation framework used to manage virtual machine operations across the homelab environment. It provides:
+Ansible is the automation framework used to manage virtual machine operations across the homelab environment. It enables:
 
-- **Provisioning** of new virtual machines  
-- **Deployment** of required applications  
-- **Configuration management** of applications whenever possible  
+* **Provisioning** of new virtual machines
+* **Deployment** of required applications
+* **Configuration management** of applications wherever possible
 
-By leveraging Ansible, infrastructure tasks become streamlined, repeatable, and highly maintainable.  
-A curated [List of Ansible Playbooks](list_of_ansible_playbooks.md) supports standardized workflows across the environment. 
-
-Each Ansible playbook includes its own `README.md` for documentation. A consolidated [Playbook Index](https://github.com/t3knoid/ansible/blob/main/playbooks/README.md) is available in the `playbooks/` root folder. The documentation process is explained in the [Ansible Playbook Documentation Workflow](ansible_playbook_documentation_workflow.md) page.
-
-Each Ansible role includes its own `README.md` for documentation. A consolidated [Role Index](https://github.com/t3knoid/ansible/blob/main/roles/README.md) is available in the `roles/` root folder. The documentation process is explained in the [Ansible Role Documentation Workflow](ansible_role_documentation_workflow.md) page.
-
-Each Ansible inventory includes its own `README.md` for documentation. A consolidated [Inventory Index](https://github.com/t3knoid/ansible/blob/main/inventory/README.md) is available in the `inventory/` root folder. The documentation process is explained in the [Ansible Inventory Documentation Workflow](ansible_inventory_documentation_workflow.md) page.
+By leveraging Ansible, infrastructure tasks become **streamlined, repeatable, and maintainable**. A curated [List of Ansible Playbooks](list_of_ansible_playbooks.md) supports standardized workflows across the environment.
 
 ---
 
-## 🗂 Documentation Map
-- [Quick-Start Checklist](ansible_quick‑start_checklist.md)  
-- [Directory Structure & Conventions](ansible_directory_structure_&_conventions.md)  
-- [Semaphore](../Semaphore)  
+## 🗂 Core Concepts
+
+### Playbooks
+
+Each playbook defines a set of automation tasks and includes its own `README.md`.
+A consolidated [Playbook Index](https://github.com/t3knoid/ansible/blob/main/playbooks/README.md) is available in the `playbooks/` folder.
+
+### Roles
+
+Roles modularize playbooks into reusable components and include their own `README.md`.
+A consolidated [Role Index](https://github.com/t3knoid/ansible/blob/main/roles/README.md) is available in the `roles/` folder.
+
+### Inventories
+
+Inventories define the hosts and groups targeted by playbooks and include their own `README.md`.
+A consolidated [Inventory Index](https://github.com/t3knoid/ansible/blob/main/inventory/README.md) is available in the `inventory/` folder.
+
+💡 For **all documentation workflows**, see [Documenting Ansible](documenting_ansible.md).
 
 ---
 
 ## 🔑 Privileged Execution (Become User)
 
-Ansible employs a dedicated account for privilege escalation:
+Ansible uses a controlled privilege model:
 
-- The local account **ansible** is typically used during VM provisioning.  
-- After provisioning, any user in the domain group **ansible** can elevate privileges to run Ansible commands securely.  
+* The local account **ansible** is typically used during VM provisioning.
+* After provisioning, any user in the domain group **ansible** can elevate privileges to run Ansible commands securely.
 
-This model enforces controlled access while maintaining operational flexibility.
+This ensures **controlled access** while maintaining operational flexibility.
 
 ---
 
 ## 🖥 Control Nodes
 
-Two [Ansible control nodes](https://github.com/t3knoid/ansible/blob/main/inventory/ansible/inventory.ini) are defined to orchestrate automation tasks.
+Two [Ansible control nodes](https://github.com/t3knoid/ansible/blob/main/inventory/ansible/inventory.ini) orchestrate automation tasks.
 
 ### Working on a Control Node
-After connecting to a control node (e.g., via SSH), initialize your environment with:
+
+After connecting (e.g., via SSH), initialize your environment:
 
 {% raw %}
 ```shell
@@ -54,13 +62,14 @@ git pull
 ```
 {% endraw %}
 
-This ensures you are operating with the latest codebase and dependencies.  
-For details on repository organization, see [Directory Structure & Conventions](./ansible-directory-structure.md).
+This ensures you are working with the **latest codebase and dependencies**.
+For repository organization, see [Directory Structure & Conventions](./ansible-directory-structure.md).
 
-💡 Playbooks can also be executed through [Semaphore UI](semaphore.md), a web-based interface that provides a dashboard for managing inventories, credentials, and runs—ideal if you prefer not to work directly from the console.
+💡 **Tip:** Playbooks can also be executed through [Semaphore UI](semaphore.md), a web interface for managing inventories, credentials, and runs.
 
 ### Deploying or Updating Ansible
-To deploy or update Ansible on a control node:
+
+To install or update Ansible on a control node:
 
 {% raw %}
 ```shell
@@ -69,24 +78,13 @@ ansible-playbook -k -i $INV playbooks/ansible/deploy_ansible.yml
 ```
 {% endraw %}
 
-This playbook automates installation and configuration, keeping control nodes consistent and up to date.
+This keeps control nodes **consistent and up to date**.
 
 ---
 
-## 📚 Documentation Workflows
+## 🗂 Documentation Map
 
-Automated scripts generate Markdown documentation whenever changes are made, ensuring playbooks and roles remain self‑documenting and contributor‑friendly:
-
-- **[Ansible Role Documentation Workflow](ansible_role_documentation_workflow.md)**  
-  Enforces mandatory metadata in each role and builds role‑level READMEs plus a global index.
-
-- **[Ansible Playbook Documentation Workflow](ansible_playbook_documentation_workflow.md)**  
-  Enforces mandatory `# Purpose:` comments, generates per‑playbook READMEs, builds folder‑level summaries, and maintains the global playbook index.
-
-These workflows provide contributor guidance, examples of generated outputs, and expectations for adding new roles or playbooks.
-
----
-
-## 🚀 Quick-Start Checklist
-
-For a fast onboarding guide with essential commands and common playbooks, see the [Ansible Quick-Start Checklist](ansible_quick‑start_checklist.md).
+* [Ansible Quick‑Start Checklist](ansible_quick‑start_checklist.md) - For onboarding with essential commands and common playbooks
+* [Ansible Directory Structure & Conventions](ansible_directory_structure_&_conventions.md) - provides a detailed reference for the organization of the Ansible repository
+* [Semaphore](semaphore.md) - is a lightweight web interface for managing and executing Ansible playbooks
+* [Documenting Ansible](documenting_ansible.md) – guides for contributing and generating playbook, role, and inventory documentation

@@ -1,8 +1,8 @@
 ---
-title: "Ansible Inventory Documentation Workflow"
+title: "Generate Inventory Documentation Script"
 ---
 
-# Ansible Inventory Documentation Workflow
+# Generate Inventory Documentation Script
 
 This document describes how inventory documentation is automatically generated for Ansible inventories in this repository.
 It explains how the documentation generator works, what conventions contributors must follow, and how the GitHub Action workflow integrates with this system.

@@ -80,7 +80,7 @@ This approach ensures that every configuration change is **trackable, testable, 
 Networking is designed for high availability and resilience:
 
 * **[Nginx reverse proxy cluster](reverse-proxy.md)** for failover load balancing, centralized routing, and automated TLS via Let’s Encrypt
-* Redundant **[Pi-hole](pi-hole.md)** instances for DNS resolution, ad/telemetry filtering, and local service discovery
+* Redundant **[Pi-hole DNS](pi-hole_dns.md)** instances for DNS resolution, ad/telemetry filtering, and local service discovery
 
 This mirrors production-style ingress, routing, and DNS management patterns.
 

@@ -1,8 +1,8 @@
 ---
-title: "Ansible Role Documentation Workflow"
+title: "Generate Role Documentation Script"
 ---
 
-# 📘 Ansible Role Documentation Workflow
+# 📘 Generate Role Documentation Script
 
 ## 🔧 Overview
 This workflow automatically generates documentation for every Ansible role by parsing metadata, variables, tasks, handlers, and dependencies defined inside each role folder.  

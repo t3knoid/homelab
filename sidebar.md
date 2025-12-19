@@ -31,7 +31,7 @@ title: "Home Lab"
 
 <details>
 <summary><b>🌐 Networking & Services</b></summary>
-- Manage [Reverse-Proxy](reverse-proxy.md), [Pi-hole](pi-hole.md)(DNS), and [Certificates](certificates.md)
+- Manage [Reverse-Proxy](reverse-proxy.md), [Pi-hole DNS](pi-hole_dns.md), and [Certificates](certificates.md)
 </details>
 
 <details>

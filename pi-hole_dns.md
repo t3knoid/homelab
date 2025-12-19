@@ -1,111 +1,273 @@
 ---
-title: "Pi‑hole DNS"
+title: "Pi-hole DNS"
 ---
 
-# 🌐 Pi‑hole DNS
+# 🌐 Pi-hole DNS
 
-[Pi‑hole](https://pi-hole.net/) is a lightweight DNS solution that provides **network‑wide ad blocking** and centralized DNS management. It is particularly useful in homelab environments where visibility, filtering, and integration with existing directory services are important.
+[Pi-hole](https://pi-hole.net/) is a lightweight DNS solution that provides **network-wide ad blocking** and centralized DNS management. It is particularly useful in homelab environments where visibility, redundancy, and integration with directory services are important.
+
+In this environment, Pi-hole is deployed with [**multiple instances**](https://github.com/t3knoid/ansible/blob/main/inventory/dns/inventory.ini) to provide resilient DNS resolution and consistent filtering across the network.
 
 ---
 
-## ⚙️ Installation
+## 🧠 Architecture Overview
 
-Installation is straightforward and documented in the [Pi‑hole Basic Install Guide](https://docs.pi-hole.net/main/basic-install/).
+* Pi-hole operates as the **primary DNS resolver** for LAN clients
+* Multiple Pi-hole instances are deployed for **high availability**
+* Configuration is synchronized automatically using **Nebula Sync**
+* Windows Active Directory remains authoritative for AD-specific DNS records
 
-### Manual Installation
 {% raw %}
-```shell
-wget -O basic-install.sh https://install.pi-hole.net
-sudo bash basic-install.sh
+```plaintext
+           +------------------+
+           |   LAN Client     |---------Failover----------+
+           +------------------+                           |
+                     |                                    |
+                     | DNS Query                          |
+                     v                                    v
+           +------------------+                 +------------------+
+           | Primary Pi-hole  | <-------------> | Secondary Pi-hole|
+           |  (Filtering +    |   Nebula-sync   |  (HA Node)       |
+           |   Gravity)       |                 +------------------+
+           +------------------+
+                    |
+                    |
+               AD-specific?
+                |      |
+               Yes     No
+       +-------------+-------------+
+       |                           |
+       v                           v
++--------------------+   +-----------------+
+|  AD DNS Server     |   | Upstream DNS    |
+| (Domain Controller)|   | (e.g., 8.8.8.8) |
++--------------------+   +-----------------+
+       |
+       v
++------------------+
+| Pi-hole Logs / UI|
++------------------+
 ```
 {% endraw %}
 
-- Recommended to install on a **minimal VM** or container for efficiency.  
-- Ensure the VM has a static IP address to avoid DNS resolution issues.  
+This design provides:
+
+* DNS redundancy and failover
+* Centralized filtering policy
+* Minimal manual configuration
+* Predictable rebuild and recovery behavior
+
+---
+
+## ⚙️ Installation & Deployment
+
+Pi-hole is **installed and configured exclusively using Ansible**.
+
+### Ansible Deployment
+
+* **Playbook:**
+  [playbooks/dns/deploy_pihole.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/dns/deploy_pihole.yml)
+ 
+
+* **Deployment responsibilities include:**
+
+  * Pi-hole installation
+  * Base configuration and networking
+  * Gravity and blocklist initialization
+  * Environment-specific DNS configuration
+  * Idempotent rebuild support
+
+> ⚠️ **Do not install or reconfigure Pi-hole manually**
+> All Pi-hole nodes must be deployed or rebuilt through Ansible to avoid configuration drift.
 
 ---
 
 ## 🏢 Integration with Active Directory
 
-When Pi‑hole is used as the **primary DNS server** in an environment with **Windows Active Directory (AD)**, it must be configured to forward AD‑specific queries to the domain controller. This is achieved using **Conditional Forwarding**.
+Pi-hole must forward AD-specific queries to the domain controller.  
+Detailed configuration, validation, and AD server steps are documented on a separate page:
 
-### Steps
-1. Open the **Pi‑hole Admin UI**.  
-2. Navigate to **Settings → DNS**.  
-3. Scroll to **Conditional Forwarding** and enable the checkbox.  
-4. Configure the following:  
-   - **Local network field:** `192.168.2.0/24`  
-   - **IP address of DHCP server:** `192.168.2.253`  
-   - **Local domain name:** `refol.us`  
+👉 See: **[Pi-hole – Active Directory Integration](pi-hole_–_active_directory_integration.md)**
 
-> ✅ This ensures Pi‑hole forwards AD domain queries (e.g., `_ldap._tcp.refol.us`) to the domain controller at `192.168.2.251`, while continuing to filter external queries.
+Here’s a clear explanation of **how DNS failover works in a multi-Pi-hole setup** and how clients handle the primary Pi-hole being down:
+
+---
+
+## DNS Failover in Multi-Pi-hole Setup
+
+### 1️⃣ Client Configuration
+
+Clients on the LAN are typically configured with **two DNS servers** in order of preference:
+
+{% raw %}
+```
+Primary DNS:   192.168.2.253  (Primary Pi-hole)
+Secondary DNS: 192.168.2.254  (Secondary Pi-hole)
+```
+{% endraw %}
+
+* The **primary Pi-hole** handles most queries.
+* The **secondary Pi-hole** acts as a **backup** if the primary becomes unreachable.
+
+---
+
+### 2️⃣ Failover Behavior
+
+1. A client sends a DNS query to the **primary Pi-hole**.
+2. If the primary responds normally, the query is resolved and logged.
+3. If the primary **fails to respond** (offline, network issue, service crash):
+
+   * The client automatically retries the query using the **secondary Pi-hole**.
+   * This is controlled by the client’s OS DNS resolver (Windows, Linux, macOS, etc.).
+4. The secondary Pi-hole resolves the query, applies the same blocklists and rules (thanks to **Nebula Sync**), and returns the result to the client.
+
+> ⚠️ There may be a small delay (typically milliseconds) while the client switches to the secondary server.
+
+---
+
+### 3️⃣ Considerations
+
+* **Nebula Sync** ensures both Pi-hole nodes have identical configurations, so blocking and local DNS resolution remain consistent during failover.
+* Clients do **not automatically fail back** to the primary until the next DNS query is sent to it; most OS resolvers try the primary again periodically.
+* Logging on the secondary Pi-hole captures queries that occurred during the primary outage, preserving visibility.
 
 ---
 
 ## 🖥️ Admin Web Interface
 
-The Pi‑hole admin dashboard provides query logs, statistics, and configuration options.  
-Access it via:
+The Pi-hole Admin UI provides visibility into DNS queries, filtering statistics, and configuration state.
 
-- `http://pi.hole/admin`  
-- `http://192.168.2.253/admin`  
+**Access URLs**
 
-> 🔒 Consider enabling HTTPS or restricting access to trusted subnets for security.
+* `http://pi.hole/admin`
+* `http://192.168.2.253/admin`
 
----
-
-## 📡 Usage with TP‑Link Omada
-
-To integrate Pi‑hole with TP‑Link Omada for centralized DNS management:
-
-1. Log in to the [Omada Cloud Controller](https://omada.tplinkcloud.com/).  
-2. Navigate to **Settings → Wired Networks → LAN**.  
-3. Edit the **Default network**.  
-4. Set **DNS Server** to **Manual**.  
-5. Enter the following DNS servers:  
-   - `192.168.2.253`  
-   - `192.168.2.251`  
-   - `8.8.8.8`  
-
-> 📊 This ensures all LAN clients use Pi‑hole for DNS resolution, with redundancy across multiple Pi‑hole instances.
+> 🔒 Access should be restricted to trusted networks and protected with HTTPS, reverse proxy rules, or IP allow-listing where appropriate.
 
 ---
 
-## 🛠️ Troubleshooting Pi‑hole + AD Integration
+## 📡 Usage with TP-Link Omada
 
-Even with Conditional Forwarding enabled, issues can arise. Here are common pitfalls and resolutions:
+Pi-hole is integrated with **TP-Link Omada** to enforce centralized DNS usage across the LAN.
 
-### 1. Domain Join Failures
-- **Symptom:** Windows clients cannot join the AD domain.  
-- **Cause:** Pi‑hole is not forwarding SRV records correctly.  
-- **Fix:** Verify Conditional Forwarding is set to the AD DNS (`192.168.2.251`).  
-  ```bash
-  nslookup _ldap._tcp.refol.us 192.168.2.253
-  ```
+### Configuration Summary
 
-### 2. Kerberos Authentication Errors
-- **Symptom:** Logon failures or GPOs not applying.  
-- **Cause:** Time skew or blocked SRV records.  
-- **Fix:** Ensure NTP is configured on the domain controller and Pi‑hole forwards AD queries.
+* **DNS Mode:** Manual
+* **Configured DNS servers:**
 
-### 3. DNS Loops
-- **Symptom:** Queries fail or time out.  
-- **Cause:** Pi‑hole forwards to AD, but AD forwards back to Pi‑hole.  
-- **Fix:** Configure AD DNS forwarders to point upstream (e.g., Cloudflare, Google), not back to Pi‑hole.
+  * `192.168.2.253` (Primary Pi-hole)
+  * `192.168.2.251` (Active Directory DNS)
+  * `8.8.8.8` (External fallback)
 
-### 4. Missing Client Hostnames in Pi‑hole Logs
-- **Symptom:** Pi‑hole shows only IPs, not hostnames.  
-- **Cause:** Conditional Forwarding not configured with the DHCP server IP.  
-- **Fix:** Ensure the DHCP server IP (`192.168.2.252`) is entered in Pi‑hole’s Conditional Forwarding settings.
+> 📊 This configuration ensures clients prefer Pi-hole for DNS resolution while maintaining redundancy.
 
-### 5. Pi‑hole Blocking AD Queries
-- **Symptom:** AD services intermittently fail.  
-- **Fix:** Whitelist AD domain (`refol.us`) and controller hostname in Pi‑hole.
+---
+
+## 🔁 Pi-hole Configuration Synchronization
+
+To prevent configuration drift between Pi-hole instances, **Nebula Sync** is used to synchronize Pi-hole configuration automatically.
+
+> ⚠️ **Important**
+>
+> Pi-hole configuration changes **must only be made on the designated primary Pi-hole instance**.
+> Changes made directly on replica nodes may be overwritten during the next synchronization cycle.
+
+---
+
+### 📌 Nebula Sync Documentation
+
+Nebula Sync is **installed, configured, and maintained via Ansible**, not through the Pi-hole UI.
+
+To keep this page focused on **Pi-hole behavior and integration**, Nebula Sync is documented on a **separate dedicated wiki page**, which covers:
+
+* Primary → replica architecture
+* Ansible role and playbook usage
+* Synchronization scope and exclusions
+* Scheduling and execution model
+* Failure handling and recovery procedures
+
+👉 See: **[Nebula Sync – Pi-hole Synchronization](nebula_sync_–_pi-hole_synchronization.md)**
+
+---
+
+## 📦 Synchronization Scope
+
+### Synchronized
+
+* Adlists (gravity)
+* Whitelists and blacklists
+* Regex filtering rules
+* Local DNS records
+* Group and client assignments
+
+### Not Synchronized
+
+* DHCP leases
+* OS-level configuration
+* Network interfaces
+* Pi-hole UI preferences
+
+> 📝 DHCP remains authoritative on the existing DHCP server and is not shared between Pi-hole instances.
+
+---
+
+## 🔄 Updates & Maintenance
+
+Pi-hole updates are **not performed manually or ad hoc** and are **not handled by Nebula Sync**.
+
+All update procedures are documented in the following runbook:
+
+👉 **[Update Pi-hole DNS Servers Runbook](update_pi-hole_dns_servers_runbook.md)**
+
+This runbook defines:
+
+* Update prerequisites
+* Execution order
+* Validation requirements
+* Rollback considerations
+
+All Pi-hole maintenance tasks, including updates, restarts, and configuration changes, are defined in playbooks. See:
+
+👉 **[Ansible Pi-hole and DNS Management Runbook](ansible_pi-hole_and_dns_management_runbook.md)**
+
+---
+
+## 🧪 Validation & Health Checks
+
+Routine validation and health verification are documented separately to keep operational procedures isolated from service design.
+
+👉 See: **[Pi-hole DNS – Validation & Health Checks](pi-hole_dns_–_validation_&_health_checks.md)**
+
+This page covers:
+
+* Post-deployment validation
+* DNS and AD resolution checks
+* Sync verification
+* Ongoing health monitoring
+
+---
+
+## 🛠️ Troubleshooting
+
+Operational issues, failure scenarios, and recovery procedures are documented on a dedicated troubleshooting page.
+
+👉 See: **[Pi‑hole Troubleshooting Runbook](pi‑hole_troubleshooting_runbook.md)**
+
+---
+
+## 🚨 Operational Notes
+
+* **Do not configure Pi-hole or Nebula Sync manually**
+
+  * All configuration is managed via Ansible
+* All rebuilds should be performed using the Ansible deployment playbook
+* Configuration drift should be resolved through automation, not UI changes
+* Always consult the appropriate runbook before making changes
 
 ---
 
 ## 📚 References
 
-- [Pi‑hole FTL DNS Configuration](https://docs.pi-hole.net/ftldns/configfile/)  
-- [Pi‑hole Basic Install Guide](https://docs.pi-hole.net/main/basic-install/)  
-- [Pi‑hole + Active Directory Discussion](https://discourse.pi-hole.net/t/pihole-as-primary-dns-with-active-directory/58800)  
+* [Pi-hole Basic Install Guide](https://docs.pi-hole.net/main/basic-install/)
+* [Pi-hole FTL DNS Configuration](https://docs.pi-hole.net/ftldns/configfile/)
+* [Pi-hole + Active Directory Discussion](https://discourse.pi-hole.net/t/pihole-as-primary-dns-with-active-directory/58800)

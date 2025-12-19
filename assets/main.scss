@@ -8,6 +8,15 @@
    Site Navigation + Tooltips
    ───────────────────────────── */
 
+.site-header {
+  display: flex;
+  align-items: center;
+}
+
+.nav-toggle-label {
+  margin-left: auto;
+}
+
 .site-nav-wrapper {
   padding: 1rem 0;
 }

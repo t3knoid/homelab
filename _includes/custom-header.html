@@ -16,7 +16,10 @@
       .site-header .site-nav a { display: block; padding: 6px 10px; line-height: 1.2; }
       .nav-toggle { display: inline-block; }
       .nav-toggle-label { display: inline-block; float: right; }
-      .nav-toggle:checked + .nav-toggle-label + .site-nav { display: flex; }
+      .nav-toggle:checked + .nav-toggle-label + .site-nav-wrapper .site-nav {
+        display: flex;
+      }
+
     }
   </style>
 

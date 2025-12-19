@@ -1,0 +1,77 @@
+---
+# This front matter is REQUIRED for Jekyll to process SCSS
+---
+
+@import "minima";
+
+/* ─────────────────────────────
+   Site Navigation + Tooltips
+   ───────────────────────────── */
+
+.site-nav-wrapper {
+  padding: 1rem 0;
+}
+
+.site-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.site-nav li {
+  position: relative;
+  margin-bottom: 6px;
+}
+
+.site-nav a {
+  display: block;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.site-nav a:hover {
+  background: rgba(59, 130, 246, 0.18);
+  transform: translateX(4px);
+}
+
+/* Tooltip bubble */
+.site-nav a::after {
+  content: attr(data-summary);
+  position: absolute;
+  left: 110%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 260px;
+  padding: 10px 12px;
+  background: #111827;
+  color: #e5e7eb;
+  font-size: 0.85rem;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+  z-index: 50;
+}
+
+/* Tooltip arrow */
+.site-nav a::before {
+  content: "";
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent #111827 transparent transparent;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.site-nav a:hover::after,
+.site-nav a:hover::before {
+  opacity: 1;
+}

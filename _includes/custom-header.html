@@ -25,11 +25,49 @@
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </label>
 
+<nav class="site-nav-wrapper">
   <ul class="site-nav">
-    <li><a href="/">Home Lab Overview</a></li>
-    <li><a href="/ansible.html">️ Ansible</a></li>
-    <li><a href="/proxmox.html">️ Proxmox Virtual Environment (PVE)</a></li>
-    <li><a href="/reverse-proxy.html">Nginx Reverse Proxy Cluster</a></li>
-    <li><a href="/certificates.html">Certificates</a></li>
+    <li>
+      <a href="{{ '/' | relative_url }}"
+         data-summary="High-level overview of your entire home lab architecture.">
+        🧠 Home Lab
+      </a>
+    </li>
+
+    <li>
+      <a href="{{ '/ansible.html' | relative_url }}"
+         data-summary="Automation, playbooks, roles, inventories, and documentation workflows.">
+        ⚙️ Ansible
+      </a>
+    </li>
+
+    <li>
+      <a href="{{ '/runbooks.html' | relative_url }}"
+         data-summary="Operational runbooks for deploying, updating, and maintaining services.">
+        📘 Runbooks
+      </a>
+    </li>
+
+    <li>
+      <a href="{{ '/proxmox.html' | relative_url }}"
+         data-summary="Virtual machines, containers, storage, backups, and cluster management.">
+        🖥️ Proxmox
+      </a>
+    </li>
+
+    <li>
+      <a href="{{ '/reverse-proxy.html' | relative_url }}"
+         data-summary="Ingress routing, SSL termination, authentication, and service exposure.">
+        🌐 Reverse Proxy
+      </a>
+    </li>
+
+    <li>
+      <a href="{{ '/certificates.html' | relative_url }}"
+         data-summary="TLS certificates, validation, renewal automation, and troubleshooting.">
+        🔐 Certificates
+      </a>
+    </li>
   </ul>
 </nav>
+

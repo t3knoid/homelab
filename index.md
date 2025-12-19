@@ -27,7 +27,7 @@ This foundation enables production-like services and experimentation with new te
 
 Identity and access management is modeled on enterprise practices:
 
-* Windows Server 2022 **Active Directory Domain Controller**
+* Windows Server 2022 Microsoft **Active Directory [Domain Controller](domain_controller.md)**
 * **[LDAP](ldap.md)** integration for compatible services
 * Migration toward unified Single Sign-On using **[Microsoft Entra ID](microsoft_entra_id.md)** as an **[Oauth2 Proxy](oauth2_proxy.md)** identity provider
 

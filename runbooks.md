@@ -2,7 +2,7 @@
 title: "Runbooks"
 ---
 
-## 🔹 Runbooks
+## 📘 Runbooks
 
 ### 🌐 DNS & Networking
 
@@ -12,6 +12,7 @@ title: "Runbooks"
 | **[Update Pi-hole DNS Servers Runbook](update_pi-hole_dns_servers_runbook.md)**       | Step-by-step instructions to deploy or update Pi-hole DNS servers.                                                       |
 | **[Reverse Proxy Setup Runbook](reverse_proxy_setup_runbook.md)**              | Steps to configure or update the reverse proxy for home lab services.                                                    |
 | **[Request TLS Certificates Runbook](request_tls_certificates_runbook.md)**         | Step-by-step instructions to request and manage TLS certificates.                                                        |
+| **[Join an Ubuntu 24.04 Host to Active Directory Runbook](join_an_ubuntu_24.04_host_to_active_directory_runbook.md)** | Step-by-step instructions of joining an Ubuntu 24.04 host to the refol.us Active Directory domain.          |
 
 ---
 
@@ -53,6 +54,3 @@ title: "Runbooks"
 | Runbook                          | Description                                                      |
 | -------------------------------- | ---------------------------------------------------------------- |
 | **[Runbook Ansible Template](runbook_ansible_template.md)** | Template for creating new Ansible runbooks in the home lab wiki. |
-
-
-

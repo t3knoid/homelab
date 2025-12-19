@@ -1,8 +1,8 @@
 ---
-title: "Proxmox Backup Server"
+title: "️ Proxmox Backup Server"
 ---
 
-# Proxmox Backup Server
+# 🖥️ Proxmox Backup Server
 
 The Proxmox Backup Server (i.e. PBS) is installed on the third Proxmox Virtual Environment node, [pve-2](https://pve-2.refol.us:8007/). A local datastore is also available and is used to sync backups from the iscsi target for redundancy. A second installation of PBS is installed on [pve-1](https://pve-1.refol.us:8007/). It is used to sync backups from pve-2 to its local datastore for more redundancy. It uses an iSCSI target located on a [Synology](../synology/README.md) NAS device for its datastore.
 

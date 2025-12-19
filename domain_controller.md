@@ -41,7 +41,7 @@ The domain controller VM is provisioned with the following specifications:
 
 ## 🏢 Active Directory Services
 
-The domain controller hosts **Microsoft Active Directory (AD)**, providing:
+The domain controller hosts **[Microsoft Active Directory](microsoft_active_directory.md) (AD)**, providing:
 
 - **Centralized authentication** for Windows and Linux hosts.  
 - **Directory services** for user, group, and computer accounts.  
@@ -57,6 +57,8 @@ To support applications that rely on **Lightweight Directory Access Protocol (LD
 
 - **Purpose:** Enables non‑Windows applications and services to authenticate against Active Directory.  
 - **Benefit:** Provides interoperability between AD and LDAP‑aware applications, ensuring seamless integration across heterogeneous environments.  
+
+To understand how LDAP is actually implemented — from binding with a service account to testing connectivity and filtering — continue on to the **[LDAP Authentication](ldap_authentication.md)** page.
 
 ---
 

@@ -2,39 +2,57 @@
 title: "Runbooks"
 ---
 
-# Runbooks
+## 🔹 Runbooks
 
-Welcome to the **Home Lab Runbooks**. This page serves as an index for all operational runbooks related to deploying, updating, and managing services in your home lab. Each runbook provides **step-by-step instructions** and references the corresponding Ansible playbooks.
+### 🌐 DNS & Networking
 
-Use these runbooks to ensure consistent deployment, updates, and verification of your services.
-
----
-
-## 🔹 Ansible Runbooks Index
-
-| Runbook                                                                | Description                                                                                                                    |
-| ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| **[Deploy Lidarr Runbook](deploy_lidarr_runbook.md)**                     | Step-by-step instructions to deploy or update Lidarr. |
-| **[Deploy Plex Media Server Runbook](deploy_plex_media_server_runbook.md)**                     | Step-by-step instructions to deploy or update Plex Media Server.                                                |
-| **[Update Pi-hole DNS Servers Runbook](update_pi-hole_dns_servers_runbook.md)**                     | Step-by-step instructions to deploy or update Pi-hole DNS Servers.                                                |
-| **[Deploy Plex Media Server](link-to-deploy-plex-runbook.md)**            | Instructions to update or deploy Plex Media Server in your home lab.                                                           |
-| **[Deploy Pi-hole](link-to-deploy-pihole-runbook.md)**                    | Instructions to update or deploy Pi-hole DNS server.                                                                           |
-| **[Reverse Proxy Setup](link-to-reverse-proxy-runbook.md)**               | Steps to configure or update the reverse proxy for your services.                                                              |
-| **[Increase Ubuntu VM Disk](link-to-increase-ubuntu-vm-disk-runbook.md)** | Instructions to expand disk size for Ubuntu virtual machines.                                                                  |
-| **[Other Runbooks](link-to-other-runbooks.md)**                           | Additional operational runbooks for services in your home lab.                                                                 |
+| Runbook                                          | Description                                                                                                              |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| **[Ansible Pi-hole & DNS Management Runbook](ansible_pi-hole_&_dns_management_runbook.md)** | Central reference for all Ansible playbooks managing Pi-hole and DNS, including installation, updates, and host records. |
+| **[Update Pi-hole DNS Servers Runbook](update_pi-hole_dns_servers_runbook.md)**       | Step-by-step instructions to deploy or update Pi-hole DNS servers.                                                       |
+| **[Reverse Proxy Setup Runbook](reverse_proxy_setup_runbook.md)**              | Steps to configure or update the reverse proxy for home lab services.                                                    |
+| **[Request TLS Certificates Runbook](request_tls_certificates_runbook.md)**         | Step-by-step instructions to request and manage TLS certificates.                                                        |
 
 ---
 
-## ⚡ Tips for Using Runbooks
+### 🎬 Media Services
 
-* Each runbook includes:
-
-  * How to **set version or configuration**
-  * How to **execute the corresponding Ansible playbook**
-  * **Verification steps** to confirm success
-* Follow the steps **in order** to avoid errors.
-* Keep runbooks updated whenever you change a playbook or workflow.
+| Runbook                                  | Description                                                      |
+| ---------------------------------------- | ---------------------------------------------------------------- |
+| **[Deploy Plex Media Server Runbook](deploy_plex_media_server_runbook.md)** | Step-by-step instructions to deploy or update Plex Media Server. |
+| **[Deploy Lidarr Runbook](deploy_lidarr_runbook.md)**            | Step-by-step instructions to deploy or update Lidarr.            |
+| **[Deploy Radarr Runbook](deploy_radarr_runbook.md)**            | Step-by-step instructions to deploy or update Radarr.            |
+| **[Deploy Sonarr Runbook](deploy_sonarr_runbook.md)**            | Step-by-step instructions to deploy or update Sonarr.            |
+| **[Deploy Lazy Librarian Runbook](deploy_lazy_librarian_runbook.md)**    | Step-by-step instructions to deploy or update Lazy Librarian.    |
+| **[Deploy Calibre‑web Runbook](deploy_calibre‑web_runbook.md)**       | Step-by-step instructions to deploy or update Calibre‑web.       |
+| **[Deploy Sabnzbd Runbook](deploy_sabnzbd_runbook.md)**           | Step-by-step instructions to deploy or update Sabnzbd.           |
 
 ---
 
-This page is intended to be the **single entry point** for anyone managing services in your home lab.
+### 💻 Development & Productivity
+
+| Runbook                            | Description                                                |
+| ---------------------------------- | ---------------------------------------------------------- |
+| **[Deploy Code Server Runbook](deploy_code_server_runbook.md)** | Step-by-step instructions to deploy or update Code Server. |
+| **[Deploy SemaphoreUI Runbook](deploy_semaphoreui_runbook.md)** | Instructions to deploy or update SemaphoreUI services.     |
+
+---
+
+### 🖥️ Virtual Machine & System Maintenance
+
+| Runbook                                       | Description                                                                      |
+| --------------------------------------------- | -------------------------------------------------------------------------------- |
+| **[Virtual Machine Snapshot Runbook](virtual_machine_snapshot_runbook.md)**      | Instructions to create and manage snapshots of virtual machines in the home lab. |
+| **[Increase Ubuntu VM Disk Runbook](increase_ubuntu_vm_disk_runbook.md)**       | Instructions to expand disk size for Ubuntu virtual machines.                    |
+| **[Deploy Linux Security Updates Runbook](deploy_linux_security_updates_runbook.md)** | Instructions to apply security updates to Linux hosts in the home lab.           |
+
+---
+
+### 📄 Templates & Miscellaneous
+
+| Runbook                          | Description                                                      |
+| -------------------------------- | ---------------------------------------------------------------- |
+| **[Runbook Ansible Template](runbook_ansible_template.md)** | Template for creating new Ansible runbooks in the home lab wiki. |
+
+
+

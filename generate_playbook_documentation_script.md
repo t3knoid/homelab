@@ -1,8 +1,8 @@
 ---
-title: "Ansible Playbook Documentation Workflow"
+title: "Generate Playbook Documentation Script"
 ---
 
-# Ansible Playbook Documentation Workflow
+# Generate Playbook Documentation Script
 
 This script automates documentation for all Ansible playbooks in the repository. It enforces the presence of a `# Purpose:` comment, generates per‑playbook documentation under `docs/playbooks/`, builds folder‑level summaries inside the `playbooks/` tree, and maintains a global index of all playbooks.  
 It is executed by the **Generate Ansible Playbook Docs** GitHub Action workflow.

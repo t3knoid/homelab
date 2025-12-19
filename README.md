@@ -52,9 +52,6 @@ gem install bundler
 # install gems from Gemfile
 bundle install --jobs 4 --retry 3
 
-# build the site to ./_site
-bundle exec jekyll build --destination ./_site
-
 # serve and preview in the browser (binds to all interfaces)
 bundle exec jekyll serve --host 0.0.0.0 --port 4000
 ```

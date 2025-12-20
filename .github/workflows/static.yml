@@ -3,9 +3,8 @@ name: Build and Deploy Jekyll Site to GitHub Pages
 on:
   push:
     branches: ["main"]
-    paths:
-      - '**/*.md'
-      - '!**/README.md'
+    paths-ignore:
+      - '**/README.md'
   workflow_dispatch:
 
 permissions:
@@ -57,3 +56,8 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Trigger Link Checker
+        uses: peter-evans/workflow-dispatch@v1
+        with:
+          workflow: linkcheck.yml

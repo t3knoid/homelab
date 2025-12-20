@@ -4,7 +4,7 @@ title: "Update Pi-hole DNS Servers Runbook"
 
 # 🏃 Update Pi-hole DNS Servers Runbook
 
-This runbook provides **step-by-step instructions to update Pi-hole DNS Servers** in your Home Lab. It uses the `update_pihole_dns.yml` Ansible playbook. Follow the steps carefully to ensure the update is applied safely and successfully.
+This runbook provides **step-by-step instructions to update Pi-hole DNS Servers** in the Home Lab. It uses the `update_pihole_dns.yml` Ansible playbook. Follow the steps carefully to ensure the update is applied safely and successfully.
 
 ---
 

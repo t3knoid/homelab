@@ -168,8 +168,3 @@ Filesystem                         Size  Used Avail Use% Mounted on
 * Ensure **Proxmox snapshots** are available in case rollback is needed.
 * Commands assume **LVM-managed partitions**. Standard partitions may require different commands.
 * Step order matters: **grow partition → resize PV → extend LV → resize FS**.
-
----
-
-This combined document gives you both a **Quick Reference Table** for fast lookup and a **detailed step-by-step guide** for understanding each command, expected output, and best practices—consistent with your Home Lab documentation style.
-

@@ -2,13 +2,9 @@
 title: "Generate Ansible Inventory Docs GitHub Action"
 ---
 
-Here’s a draft documentation page for your **Generate Ansible Inventory Docs** GitHub Action, styled similarly to the example you provided:
-
----
-
 # Generate Ansible Inventory Docs GitHub Action
 
-This GitHub Action automatically generates documentation for your Ansible inventories whenever changes are pushed to the `main` branch or a pull request is created. It uses a Python script to generate markdown files for each inventory and commits the changes back to the repository.
+This GitHub Action automatically generates documentation for the Ansible inventories whenever changes are pushed to the `main` branch or a pull request is created. It uses a Python script to generate markdown files for each inventory and commits the changes back to the repository.
 
 ---
 

@@ -4,7 +4,7 @@ title: "Deploy Plex Media Server Runbook"
 
 # 🏃 Deploy Plex Media Server Runbook
 
-This runbook provides **step-by-step instructions to deploy or update Plex Media Server** in your Home Lab. It uses the `deploy_plex.yml` Ansible playbook. Follow the steps carefully to ensure the service is updated correctly and the intended version is installed.
+This runbook provides **step-by-step instructions to deploy or update Plex Media Server** in the Home Lab. It uses the `deploy_plex.yml` Ansible playbook. Follow the steps carefully to ensure the service is updated correctly and the intended version is installed.
 
 ---
 

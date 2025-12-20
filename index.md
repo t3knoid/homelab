@@ -124,7 +124,7 @@ This wiki is **mirrored as a static HTML website** at [https://homelab.refol.us]
 
 The static site is automatically generated from this wiki using an **Ansible playbook** with the `redmine_wiki_mirror` module thats part of the **[refol.general](https://github.com/t3knoid/refol.general) Ansible collection**, which converts wiki pages to Markdown, commits them to GitHub, and triggers a GitHub Actions workflow to build the site.
 
-For a detailed description of the mirroring workflow, see the **[Home Lab Wiki Mirroring & Static Website Workflow](home_lab_wiki_mirroring_&_static_website_workflow.md)** page.
+For a detailed description of the mirroring workflow, see the **[Home Lab Wiki Mirror to a Static Website Workflow](home_lab_wiki_mirror_to_a_static_website_workflow.md)** page.
 
 ---
 

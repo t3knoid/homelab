@@ -4,7 +4,7 @@ title: "Deploy Lidarr Runbook"
 
 # 🏃 Deploy Lidarr Runbook
 
-This runbook provides **step-by-step instructions to deploy or update Lidarr** in your Home Lab. It uses the `deploy_lidarr.yml` Ansible playbook. Follow the steps carefully to ensure the service is deployed correctly and the latest version is installed.
+This runbook provides **step-by-step instructions to deploy or update Lidarr** in the Home Lab. It uses the `deploy_lidarr.yml` Ansible playbook. Follow the steps carefully to ensure the service is deployed correctly and the latest version is installed.
 
 ---
 

@@ -1,9 +1,9 @@
 ---
-title: "iSCSI: High-Performance Network Storage in Your Homelab"
+title: "iSCSI: High-Performance Network Storage in the Homelab"
 ---
 
 
-# **iSCSI: High-Performance Network Storage in Your Homelab**
+# **iSCSI: High-Performance Network Storage in the Homelab**
 
 iSCSI (Internet Small Computer System Interface) lets you turn ordinary TCP/IP networks into powerful, flexible Storage Area Networks (SANs). With it, your servers can mount remote disks as if they were physically attached—unlocking advanced storage architectures without dedicated Fibre Channel hardware.
 
@@ -19,7 +19,7 @@ The initiator is the “consumer.” It connects to an iSCSI target and uses the
 
 The target is the “provider.” It exposes block devices—LUNs—to initiators on the network, acting like a network-backed disk array.
 
-Together, they form a virtualized storage pipeline across your LAN.
+Together, they form a virtualized storage pipeline across the LAN.
 
 ---
 
@@ -34,7 +34,7 @@ Together, they form a virtualized storage pipeline across your LAN.
 3. **Data Transfer**
    Reads/writes pass over the network transparently. To the operating system, it looks and behaves like a locally attached disk.
 
-This design allows iSCSI to support virtual machine storage, snapshots, backups, replication, and more—using the same network that supports your regular traffic.
+This design allows iSCSI to support virtual machine storage, snapshots, backups, replication, and more—using the same network that supports regular traffic.
 
 ---
 

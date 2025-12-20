@@ -1,20 +1,16 @@
 ---
-title: "Home Lab Wiki Mirroring & Static Website Workflow"
+title: "Home Lab Wiki Mirror to a Static Website Workflow"
 ---
 
-Here’s the **fully integrated wiki page** with the new section on Jekyll and the Minima theme added, all in one cohesive document:
+# 📚 Home Lab Wiki Mirror to a Static Website Workflow
 
----
-
-# 📚 Home Lab Wiki Mirroring & Static Website Workflow
-
-This page documents the process of **mirroring your home lab Redmine wiki to GitHub as Markdown** and converting it into a **static HTML website** available at [https://homelab.refol.us](https://homelab.refol.us).
+This page documents the process of **mirroring the home lab Redmine wiki to GitHub as Markdown** and converting it into a **static HTML website** available at [https://homelab.refol.us](https://homelab.refol.us).
 
 ---
 
 ## 1. Overview
 
-This workflow automates the lifecycle of your home lab documentation:
+This workflow automates the lifecycle of mirroring the lab wiki to a static website:
 
 1. **Redmine Wiki**: Original source of content.
 2. **Ansible Playbook**: Uses the `redmine_wiki_mirror` module to export pages as Markdown and commit to GitHub.
@@ -109,7 +105,7 @@ The repository includes a GitHub Actions workflow that:
 
 ## 5. Running the Wiki Sync
 
-To mirror your Redmine wiki to GitHub:
+To mirror the Redmine wiki to GitHub:
 
 1. Set the inventory variable:
 

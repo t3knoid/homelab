@@ -4,7 +4,7 @@ title: "[Service Name] Runbook"
 
 # 🏃 [Service Name] Runbook
 
-This runbook provides **step-by-step instructions to deploy or update [Service Name]** in your Home Lab. It references the corresponding Ansible playbook and ensures consistency, verification, and version control.
+This runbook provides **step-by-step instructions to deploy or update [Service Name]** in the Home Lab. It references the corresponding Ansible playbook and ensures consistency, verification, and version control.
 
 ---
 

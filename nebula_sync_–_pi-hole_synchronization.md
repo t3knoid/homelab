@@ -4,7 +4,7 @@ title: "Nebula Sync – Pi‑hole Synchronization"
 
 # 🌐 Nebula Sync – Pi‑hole Synchronization
 
-**Nebula Sync** is used to **synchronize multiple Pi‑hole instances** in your homelab, ensuring consistent blocklists, local DNS records, and configuration settings across all nodes.
+**Nebula Sync** is used to **synchronize multiple Pi‑hole instances** in this homelab, ensuring consistent blocklists, local DNS records, and configuration settings across all nodes.
 
 > ⚠️ This is not a true high-availability cluster — it copies state on a scheduled or manual basis. Changes should always be made on the **primary Pi‑hole**.
 
@@ -29,7 +29,7 @@ Nebula Sync is installed and configured using **Ansible**:
 
 ### 🔹 Steps (Conceptual)
 
-1. Configure **primary and replica Pi‑hole instances** in your inventory.
+1. Configure **primary and replica Pi‑hole instances** in the inventory.
 2. Apply the `nebulasync_setup` role using Ansible.
 3. Verify sync configuration and schedules.
 4. Monitor logs and health checks to ensure successful propagation.
@@ -81,7 +81,7 @@ journalctl -u nebulasync.service
 2. **Enable logging** for sync verification.
 3. **Test sync** after major updates or adding new blocklists.
 4. **Monitor network connectivity** between primary and replicas.
-5. **Schedule regular sync intervals** appropriate for your environment (e.g., hourly, daily).
+5. **Schedule regular sync intervals** appropriate for the environment (e.g., hourly, daily).
 
 ---
 

@@ -3,6 +3,9 @@ name: Build and Deploy Jekyll Site to GitHub Pages
 on:
   push:
     branches: ["main"]
+    paths:
+      - '**/*.md'
+      - '!**/README.md'
   workflow_dispatch:
 
 permissions:

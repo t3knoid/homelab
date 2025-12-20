@@ -1,0 +1,47 @@
+name: Link Checker
+
+on:
+  deployment_status:
+    types: [success]
+
+jobs:
+  linkcheck:
+    if: github.event.deployment.environment == 'github-pages'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Run link checker
+        run: |
+          python3 .github/scripts/linkcheck.py
+
+      - name: Add summary to GitHub UI
+        run: |
+          echo "## Link Checker Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          cat link-summary.md >> $GITHUB_STEP_SUMMARY
+
+      - name: Commit static HTML report to gh-pages
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git fetch origin gh-pages
+          git checkout gh-pages
+
+          mkdir -p reports
+          cp link-report.html reports/link-report.html
+
+          git add reports/link-report.html
+          git commit -m "Update link report [skip ci]" || echo "No changes"
+          git push origin gh-pages

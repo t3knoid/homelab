@@ -1,4 +1,4 @@
-name: Build and Deploy Jekyll Site to GitHub Pages
+name: Build and Deploy Jekyll Site to GitHub Pages and perform Link Checking
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -87,8 +87,21 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          git fetch origin gh-pages
-          git checkout gh-pages
+          # Fetch branches
+          git fetch origin
+
+          # Create gh-pages branch if it doesn't exist
+          if ! git ls-remote --exit-code origin gh-pages; then
+            echo "gh-pages branch does not exist. Creating it."
+            git checkout --orphan gh-pages
+            git rm -rf .
+            echo "<html><body><h1>Reports</h1></body></html>" > index.html
+            git add index.html
+            git commit -m "Initialize gh-pages branch [skip ci]"
+            git push origin gh-pages
+          else
+            git checkout gh-pages
+          fi
 
           mkdir -p reports
           cp link-report.html reports/link-report.html

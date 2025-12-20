@@ -54,9 +54,9 @@ Automation and reproducibility are central to the lab:
 
 * **[Ansible](ansible.md)** for provisioning, configuration, and deployment
 * **[Semaphore](semaphore.md)** as a web interface for playbook execution
-* **Terraform** (driven through Ansible) for declarative infrastructure
-* **Jenkins** for CI/CD pipelines and automation workflows
-* **GitHub Actions** for cloud-based CI/CD and artifact automation
+* Terraform (driven through Ansible) for declarative infrastructure
+* Jenkins for CI/CD pipelines and automation workflows
+* GitHub Actions for cloud-based CI/CD and artifact automation
 
 Together, these tools create a fully Infrastructure-as-Code environment aligned with modern DevOps practices.
 
@@ -88,8 +88,7 @@ This mirrors production-style ingress, routing, and DNS management patterns.
 
 ## 📘 Project Management
 
-Redmine serves as the central platform for organizing and documenting all aspects of the homelab.
-Because this wiki is hosted directly inside **Redmine**, it benefits from:
+Redmine serves as the central platform for organizing and documenting all aspects of the homelab. Because this wiki is hosted directly inside **Redmine**, it benefits from:
 
 * Full project and task tracking across infrastructure components
 * Issue management for lab improvements, troubleshooting, and feature requests
@@ -101,6 +100,31 @@ Explore the details here:
 * **[Redmine Configuration](redmine_configuration.md)** – How authentication, repositories, and system integration are configured within the homelab.
 
 Redmine ties everything together—issues, documentation, and source code—providing a unified project management layer over the entire environment.
+
+---
+
+## 📚 Runbooks & Operational Procedures
+
+Operational runbooks provide step-by-step instructions for managing, troubleshooting, and extending the home lab. They complement the architecture and project management documentation by giving **practical guidance for recurring tasks and workflows**.
+
+Key runbooks include:
+
+* **VM Lifecycle Management** – Provision, clone, snapshot, and retire VMs across the Proxmox cluster
+* **Service Deployment** – Deploy containerized applications and orchestrate infrastructure with Ansible playbooks
+* **Backup & Recovery** – Execute and validate VM, storage, and configuration backups
+* **Authentication & Networking** – Manage LDAP, AD, reverse proxy, and DNS workflows
+
+All runbooks are consolidated in the **[Runbooks](runbooks.md)** page for detailed instructions, ensuring operations are **repeatable, reliable, and auditable**.
+
+---
+
+### 📌 Mirrored Documentation
+
+This wiki is **mirrored as a static HTML website** at [https://homelab.refol.us](https://homelab.refol.us).
+
+The static site is automatically generated from this wiki using an **Ansible playbook** with the `redmine_wiki_mirror` module thats part of the **[refol.general](https://github.com/t3knoid/refol.general) Ansible collection**, which converts wiki pages to Markdown, commits them to GitHub, and triggers a GitHub Actions workflow to build the site.
+
+For a detailed description of the mirroring workflow, see the **[Home Lab Wiki Mirroring & Static Website Workflow](home_lab_wiki_mirroring_&_static_website_workflow.md)** page.
 
 ---
 

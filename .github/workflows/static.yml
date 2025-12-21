@@ -38,9 +38,6 @@ jobs:
       - name: Build Jekyll site
         run: bundle exec jekyll build --destination ./_site
 
-      - name: Debug _site contents
-        run: ls -R ./_site
-
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -81,31 +78,10 @@ jobs:
           echo "## Link Checker Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           cat link-summary.md >> $GITHUB_STEP_SUMMARY
-
-      - name: Commit static HTML report to gh-pages
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-
-          # Fetch branches
-          git fetch origin
-
-          # Create gh-pages branch if it doesn't exist
-          if ! git ls-remote --exit-code origin gh-pages; then
-            echo "gh-pages branch does not exist. Creating it."
-            git checkout --orphan gh-pages
-            git rm -rf .
-            echo "<html><body><h1>Reports</h1></body></html>" > index.html
-            git add index.html
-            git commit -m "Initialize gh-pages branch [skip ci]"
-            git push origin gh-pages
-          else
-            git checkout gh-pages
-          fi
-
-          mkdir -p reports
-          cp link-report.html reports/link-report.html
-
-          git add reports/link-report.html
-          git commit -m "Update link report [skip ci]" || echo "No changes"
-          git push origin gh-pages
+      - name: Upload link check report
+        uses: actions/upload-artifact@v4
+        with:
+          name: link-report
+          path: |
+            link-report.html
+            link-summary.md

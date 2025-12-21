@@ -12,16 +12,22 @@ broken_links = []
 
 # Track all internal links found
 linked_pages = set()
+# Cache fetch results to avoid fetching twice
+fetch_cache = {}
 
 def is_internal(url):
     return urlparse(url).netloc in ("", urlparse(BASE_URL).netloc)
 
 def fetch(url):
+    if url in fetch_cache:
+        return fetch_cache[url]
     try:
         r = requests.get(url, timeout=10)
-        return r.status_code, r.text
+        fetch_cache[url] = (r.status_code, r.text)
+        return fetch_cache[url]
     except Exception as e:
-        return None, str(e)
+        fetch_cache[url] = (None, str(e))
+        return fetch_cache[url]
 
 def crawl(start):
     queue = deque([start])
@@ -49,7 +55,9 @@ def crawl(start):
         for a in anchors:
             raw = a["href"]
             full = urljoin(page, raw)
-            link_status, _ = fetch(full)
+
+            # Use cached fetch result
+            link_status, _ = fetch(full) if is_internal(full) else (None, None)
 
             page_entry["links"].append({
                 "raw": raw,
@@ -57,9 +65,11 @@ def crawl(start):
                 "status": link_status
             })
 
+            # Broken link detection
             if link_status not in (200, 301, 302):
                 broken_links.append((page, full, link_status))
 
+            # Track linked internal pages and queue unvisited ones
             if is_internal(full):
                 linked_pages.add(full)
                 if full not in visited:

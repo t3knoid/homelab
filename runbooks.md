@@ -11,7 +11,7 @@ title: "Runbooks"
 | **[Ansible Pi-hole and DNS Management Runbook](ansible_pi-hole_and_dns_management_runbook.md)** | Central reference for all Ansible playbooks managing Pi-hole and DNS, including installation, updates, and host records. |
 | **[Update Pi-hole DNS Servers Runbook](update_pi-hole_dns_servers_runbook.md)**       | Step-by-step instructions to deploy or update Pi-hole DNS servers.                                                       |
 | **[Request TLS Certificates Runbook](request_tls_certificates_runbook.md)**         | Step-by-step instructions to request and manage TLS certificates.                                                        |
-| **[Join an Ubuntu 24.04 Host to Active Directory Runbook](join_an_ubuntu_24.04_host_to_active_directory_runbook.md)** | Step-by-step instructions of joining an Ubuntu 24.04 host to the refol.us Active Directory domain.          |
+| **[Join an Ubuntu 24 Host to Active Directory Runbook](join_an_ubuntu_24_host_to_active_directory_runbook.md)** | Step-by-step instructions of joining an Ubuntu 24.04 host to the refol.us Active Directory domain.          |
 
 ---
 

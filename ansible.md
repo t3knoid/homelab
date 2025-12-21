@@ -10,7 +10,7 @@ Ansible is the automation framework used to manage virtual machine operations ac
 * **Deployment** of required applications
 * **Configuration management** of applications wherever possible
 
-By leveraging Ansible, infrastructure tasks become **streamlined, repeatable, and maintainable**. A curated [List of Ansible Playbooks](list_of_ansible_playbooks.md) supports standardized workflows across the environment.
+By leveraging Ansible, infrastructure tasks become **streamlined, repeatable, and maintainable**.
 
 ---
 

@@ -186,7 +186,7 @@ To keep this page focused on **Pi-hole behavior and integration**, Nebula Sync i
 * Scheduling and execution model
 * Failure handling and recovery procedures
 
-👉 See: **[Nebula Sync – Pi-hole Synchronization](nebula_sync_–_pi-hole_synchronization.md)**
+👉 See: **[Nebula Sync](nebula_sync.md)**
 
 ---
 

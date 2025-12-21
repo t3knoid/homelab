@@ -154,7 +154,7 @@ On replica Pi-hole instances:
 > 📌 If drift is detected, **do not fix manually**.
 > Refer to the **Nebula Sync** wiki page for validation and resync procedures.
 
-👉 See: **[Nebula Sync – Pi-hole Synchronization](nebula_sync_–_pi-hole_synchronization.md)**
+👉 See: **[Nebula Sync](nebula_sync.md)**
 
 ---
 
@@ -228,5 +228,5 @@ If any validation step fails:
 
 * **[Pi-hole DNS](pi-hole_dns.md)** – Service overview and architecture
 * **[Update Pi-hole DNS Servers Runbook](update_pi-hole_dns_servers_runbook.md)** – Update procedures
-* **[Nebula Sync – Pi-hole Synchronization](nebula_sync_–_pi-hole_synchronization.md)** – Configuration sync
+* **[Nebula Sync](nebula_sync.md)** – Configuration sync
 * **[Pi‑hole Troubleshooting Runbook](pi‑hole_troubleshooting_runbook.md)** – Failure scenarios and remediation

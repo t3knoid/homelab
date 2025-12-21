@@ -105,7 +105,7 @@ The configuration section ensures the domain controller is not just installed, b
 ## 🐧 Authenticate Linux Hosts
 
 Linux systems can be joined to the Active Directory domain for centralized authentication.  
-See: [Join an Ubuntu 24.04 Host to Active Directory Domain](join_an_ubuntu_2404_host_to_active_directory_domain.md).
+See: [Join an Ubuntu 24 Host to Active Directory Runbook](join_an_ubuntu_24_host_to_active_directory_runbook.md).
 
 ---
 
@@ -115,4 +115,4 @@ See: [Join an Ubuntu 24.04 Host to Active Directory Domain](join_an_ubuntu_2404_
 - [Configure the Root PDC with an Authoritative Time Source](https://learn.microsoft.com/en-us/services-hub/unified/health/remediation-steps-ad/configure-the-root-pdc-with-an-authoritative-time-source-and-avoid-widespread-time-skew)  
 - [Pi‑Hole as Primary DNS with Active Directory](https://discourse.pi-hole.net/t/pihole-as-primary-dns-with-active-directory/58800/12)  
 - [Administer a Server Core server](https://learn.microsoft.com/en-us/windows-server/administration/server-core/server-core-administer)  
-- [Manage DNS Zones with PowerShell](https://learn.microsoft.com/en-us/windows-server/networking/dns/manage-dns-zones?tabs=powershell)  
+- [Manage DNS Zones with PowerShell](https://learn.microsoft.com/en-us/windows-server/networking/dns/manage-dns-zones?tabs=powershell)

@@ -6,7 +6,7 @@ title: "Cloud-Init"
 
 The following provides instructions on creating a Cloud-Init ready Ubuntu 24.04 template using Proxmox. These instructions were derived from [Proxmox Cloud-Init Support documentation](https://pve.proxmox.com/wiki/Cloud-Init_Support).
 
-These steps have been automated using the [cloudinit role](https://homelab.refol.us/projects/home-lab/repository/ansible/revisions/main/entry/roles/cloudinit/README.md).
+These steps have been automated using the [cloudinit role](https://github.com/t3knoid/ansible/tree/main/roles/cloudinit).
 
 ## SSH Into A Proxmox Server
 

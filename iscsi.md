@@ -1,9 +1,9 @@
 ---
-title: "iSCSI: High-Performance Network Storage in the Homelab"
+title: "iSCSI"
 ---
 
 
-# **iSCSI: High-Performance Network Storage in the Homelab**
+# **iSCSI**
 
 iSCSI (Internet Small Computer System Interface) lets you turn ordinary TCP/IP networks into powerful, flexible Storage Area Networks (SANs). With it, your servers can mount remote disks as if they were physically attached—unlocking advanced storage architectures without dedicated Fibre Channel hardware.
 

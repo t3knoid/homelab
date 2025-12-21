@@ -123,7 +123,7 @@ New-ADUser -Name "Semaphore" -GivenName "Semaphore" -Surname "User" `
 
 Semaphore UI is accessible at: **https://semaphore.refol.us**  
 - **Reverse proxy:** Nginx  
-- **TLS certificates:** Generated via [Certbot](../certbot/README.md)
+- **TLS [Certificates](certificates.md)** generated via [Certbot](certbot.md)
 
 ---
 
@@ -213,5 +213,4 @@ After deployment:
   - Repository → configured Ansible repo  
   - Variable Group → Empty  
   - CLI args → `-k`  
-  - Vaults → vault password from key store  
-
+  - Vaults → vault password from key store

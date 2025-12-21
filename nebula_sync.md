@@ -1,8 +1,8 @@
 ---
-title: "Nebula Sync – Pi‑hole Synchronization"
+title: "Nebula Sync"
 ---
 
-# 🌐 Nebula Sync – Pi‑hole Synchronization
+# 🌐 Nebula Sync
 
 **Nebula Sync** is used to **synchronize multiple Pi‑hole instances** in this homelab, ensuring consistent blocklists, local DNS records, and configuration settings across all nodes.
 

@@ -41,8 +41,8 @@ Multiple storage backends simulate real-world architectures:
 
 * Local SSDs for performance-critical workloads
 * **[Ceph](ceph.md)** distributed storage cluster
-* **[iSCSI](iscsi.md)** volumes hosted on Synology NAS
-* **NFS/Samba** shares from TrueNAS
+* **[iSCSI](iscsi.md)** volumes hosted on **[Synology NAS](synology_nas.md)**
+* **NFS/Samba** shared from a **[TrueNAS](truenas.md)** server
 
 Backups are handled by **[Proxmox Backup Server](proxmox_backup_server.md)**, providing VM snapshotting, deduplication, and disaster recovery experience.
 

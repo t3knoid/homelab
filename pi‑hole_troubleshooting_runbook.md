@@ -97,5 +97,3 @@ This page provides **common troubleshooting scenarios and resolutions** for Pi�
 * [Pi‑hole Admin Manual](https://docs.pi-hole.net/)
 * [Pi‑hole + Active Directory Discussion](https://discourse.pi-hole.net/t/pihole-as-primary-dns-with-active-directory/58800)
 * [Nebula Sync Wiki Page](nebula_sync.md)
-
-

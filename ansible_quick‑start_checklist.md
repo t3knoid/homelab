@@ -75,7 +75,7 @@ ansible-playbook -k -i $INV playbooks/ansible/deploy_ansible.yml
 ---
 
 ## Alternative Execution via Semaphore UI
-> 💡 As an alternative to running playbooks from the console, you can use [Semaphore UI](./semaphore-ui.md) for a simplified web interface. It provides a dashboard for managing inventories, credentials, and playbook runs.
+> 💡 As an alternative to running playbooks from the console, you can use [Semaphore](semaphore.md) UI for a simplified web interface. It provides a dashboard for managing inventories, credentials, and playbook runs.
 
 ---
 
@@ -86,4 +86,3 @@ Workflow:
 Clone Repo → SSH → Activate Python → Pull Repo → Run Playbook → (Optional) Manage via Semaphore UI
 ```
 {% endraw %}
-

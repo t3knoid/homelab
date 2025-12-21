@@ -10,6 +10,9 @@ visited = set()
 report = {}
 broken_links = []
 
+# Track all internal links found
+linked_pages = set()
+
 def is_internal(url):
     return urlparse(url).netloc in ("", urlparse(BASE_URL).netloc)
 
@@ -57,19 +60,27 @@ def crawl(start):
             if link_status not in (200, 301, 302):
                 broken_links.append((page, full, link_status))
 
-            if is_internal(full) and full not in visited:
-                queue.append(full)
+            if is_internal(full):
+                linked_pages.add(full)
+                if full not in visited:
+                    queue.append(full)
 
         report[page] = page_entry
 
 crawl(BASE_URL)
 
 # -----------------------------
+# Detect orphaned pages
+# -----------------------------
+orphaned_pages = visited - linked_pages
+
+# -----------------------------
 # Generate Markdown summary
 # -----------------------------
 with open("link-summary.md", "w") as f:
     f.write(f"### Pages scanned: {len(report)}\n")
-    f.write(f"### Broken links: {len(broken_links)}\n\n")
+    f.write(f"### Broken links: {len(broken_links)}\n")
+    f.write(f"### Orphaned pages: {len(orphaned_pages)}\n\n")
 
     if broken_links:
         f.write("#### Broken Links\n")
@@ -77,6 +88,13 @@ with open("link-summary.md", "w") as f:
             f.write(f"- **{page}** → {link} (status: {status})\n")
     else:
         f.write("No broken links found.\n")
+
+    if orphaned_pages:
+        f.write("\n#### Orphaned Pages\n")
+        for page in orphaned_pages:
+            f.write(f"- {page}\n")
+    else:
+        f.write("No orphaned pages found.\n")
 
 # -----------------------------
 # Generate HTML report
@@ -87,7 +105,7 @@ html_output = """
 <title>Link Report</title>
 <style>
 body { font-family: sans-serif; padding: 20px; }
-table { border-collapse: collapse; width: 100%; }
+table { border-collapse: collapse; width: 100%; margin-bottom: 30px; }
 th, td { border: 1px solid #ccc; padding: 8px; }
 th { background: #f0f0f0; }
 .bad { color: red; font-weight: bold; }
@@ -116,10 +134,15 @@ for page, data in report.items():
 
     html_output += "</table>"
 
+if orphaned_pages:
+    html_output += "<h2>Orphaned Pages</h2><ul>"
+    for page in orphaned_pages:
+        html_output += f"<li>{page}</li>"
+    html_output += "</ul>"
+
 html_output += "</body></html>"
 
 with open("link-report.html", "w") as f:
     f.write(html_output)
 
-# Always exit 0 (warn-only)
 exit(0)

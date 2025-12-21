@@ -15,6 +15,10 @@ linked_pages = set()
 # Cache fetch results to avoid fetching twice
 fetch_cache = {}
 
+def is_http_scheme(url):
+    scheme = urlparse(url).scheme
+    return scheme in ("http", "https")
+
 def is_internal(url):
     return urlparse(url).netloc in ("", urlparse(BASE_URL).netloc)
 
@@ -56,8 +60,19 @@ def crawl(start):
             raw = a["href"]
             full = urljoin(page, raw)
 
-            # Use cached fetch result
-            link_status, _ = fetch(full) if is_internal(full) else (None, None)
+            # Determine link status safely
+            if is_internal(full) and is_http_scheme(full):
+                # Only fetch internal HTTP/HTTPS links
+                link_status, _ = fetch(full)
+                # Only count broken if status is not 200/301/302
+                if link_status not in (200, 301, 302):
+                    broken_links.append((page, full, link_status))
+            elif not is_http_scheme(full):
+                # Special schemes like mailto:, tel:, javascript:
+                link_status = urlparse(full).scheme
+            else:
+                # External HTTP/HTTPS links (not counted as broken)
+                link_status = "external"
 
             page_entry["links"].append({
                 "raw": raw,
@@ -70,7 +85,7 @@ def crawl(start):
                 broken_links.append((page, full, link_status))
 
             # Track linked internal pages and queue unvisited ones
-            if is_internal(full):
+            if is_internal(full) and is_http_scheme(full):
                 linked_pages.add(full)
                 if full not in visited:
                     queue.append(full)

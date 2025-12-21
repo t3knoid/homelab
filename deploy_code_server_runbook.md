@@ -89,6 +89,8 @@ ansible-playbook -i $INV -k playbooks/deploy_code_server.yml
 
 ## 6️⃣ Verify Update
 
+Code Server is disabled by default when deployed. Enable Code Server by following the [Enable Code Server runbook](enable_code_server_runbook.md).
+
 Verify the update completed successfully:
 
 1. Open a web browser and navigate to:

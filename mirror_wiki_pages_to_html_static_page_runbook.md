@@ -16,7 +16,7 @@ Start by logging into a control node with Ansible installed and prepare the envi
 ```shell
 cd ~/ansible
 source /opt/python_3.12/bin/activate
-INV=inventory/services/inventory.ini
+INV=inventory/redmine/inventory.ini
 ```
 {% endraw %}
 
@@ -44,7 +44,6 @@ Run the corresponding playbook:
 
 {% raw %}
 ```shell
-INV=inventory/redmine/inventory.ini
 ansible-playbook -k -i $INV playbooks/redmine/mirror_wiki.yml 
 ```
 {% endraw %}

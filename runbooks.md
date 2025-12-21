@@ -34,6 +34,8 @@ title: "Runbooks"
 | Runbook                            | Description                                                |
 | ---------------------------------- | ---------------------------------------------------------- |
 | **[Deploy Code Server Runbook](deploy_code_server_runbook.md)** | Step-by-step instructions to deploy or update Code Server. |
+| **[Disable Code Server Runbook](disable_code_server_runbook.md)** | Step-by-step instructions to disable Code Server. |
+| **[Enable Code Server Runbook](enable_code_server_runbook.md)** | Step-by-step instructions to enable Code Server. |
 | **[Deploy SemaphoreUI Runbook](deploy_semaphoreui_runbook.md)** | Instructions to deploy or update SemaphoreUI services.     |
 | **[Mirror wiki pages to HTML static page runbook](mirror_wiki_pages_to_html_static_page_runbook.md)** | Step-by-step instructions on mirroring homelab wiki pages to https://homelab.refol.us |
 

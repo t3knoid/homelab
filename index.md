@@ -81,8 +81,7 @@ Networking is designed for high availability and resilience:
 
 * **[Nginx reverse proxy cluster](reverse-proxy.md)** for failover load balancing, centralized routing, and automated TLS via Let’s Encrypt
 * Redundant **[Pi-hole DNS](pi-hole_dns.md)** instances for DNS resolution, ad/telemetry filtering, and local service discovery
-
-This mirrors production-style ingress, routing, and DNS management patterns.
+* The **[DMZ Network Design and Implementation](dmz_network_design_and_implementation.md)** document details the dedicated DMZ VLAN for the reverse-proxy servers that improves security and isolate public-facing services.
 
 ---
 

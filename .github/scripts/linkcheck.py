@@ -66,7 +66,7 @@ def crawl(start):
             })
 
             # Broken link detection
-            if link_status not in (200, 301, 302):
+            if is_internal(full) and link_status not in (200, 301, 302):
                 broken_links.append((page, full, link_status))
 
             # Track linked internal pages and queue unvisited ones

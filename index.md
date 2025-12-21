@@ -81,25 +81,13 @@ Networking is designed for high availability and resilience:
 
 * **[Nginx reverse proxy cluster](reverse-proxy.md)** for failover load balancing, centralized routing, and automated TLS via Let’s Encrypt
 * Redundant **[Pi-hole DNS](pi-hole_dns.md)** instances for DNS resolution, ad/telemetry filtering, and local service discovery
-
-This mirrors production-style ingress, routing, and DNS management patterns.
+* The **[DMZ Network Design and Implementation](dmz_network_design_and_implementation.md)** document details the dedicated DMZ VLAN for the reverse-proxy servers that improves security and isolate public-facing services.
 
 ---
 
 ## 📘 Project Management
 
-Redmine serves as the central platform for organizing and documenting all aspects of the homelab. Because this wiki is hosted directly inside **Redmine**, it benefits from:
-
-* Full project and task tracking across infrastructure components
-* Issue management for lab improvements, troubleshooting, and feature requests
-* Integrated documentation (this wiki) for architecture, configuration, and procedures
-* A local Git repository mirror for viewing Ansible code changes directly within Redmine
-
-Explore the details here:
-
-* **[Redmine Configuration](redmine_configuration.md)** – How authentication, repositories, and system integration are configured within the homelab.
-
-Redmine ties everything together—issues, documentation, and source code—providing a unified project management layer over the entire environment.
+Redmine serves as the central platform for organizing and documenting all aspects of the homelab. Because this wiki is hosted directly inside **[Redmine](redmine.md)**. It ties everything together—issues, documentation, and source code—providing a unified project management layer over the entire environment.
 
 ---
 
@@ -120,11 +108,7 @@ All runbooks are consolidated in the **[Runbooks](runbooks.md)** page for detail
 
 ### 📌 Mirrored Documentation
 
-This wiki is **mirrored as a static HTML website** at [https://homelab.refol.us](https://homelab.refol.us).
-
-The static site is automatically generated from this wiki using an **Ansible playbook** with the `redmine_wiki_mirror` module thats part of the **[refol.general](https://github.com/t3knoid/refol.general) Ansible collection**, which converts wiki pages to Markdown, commits them to GitHub, and triggers a GitHub Actions workflow to build the site.
-
-For a detailed description of the mirroring workflow, see the **[Home Lab Wiki Mirror to a Static Website Workflow](home_lab_wiki_mirror_to_a_static_website_workflow.md)** page.
+This wiki is **mirrored as a static HTML website** at [https://homelab.refol.us](https://homelab.refol.us). For a detailed description of the mirroring workflow, see the **[Home Lab Wiki Mirror to a Static Website Workflow](home_lab_wiki_mirror_to_a_static_website_workflow.md)** page.
 
 ---
 

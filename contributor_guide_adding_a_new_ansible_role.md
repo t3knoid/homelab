@@ -69,9 +69,6 @@ After adding `roles/my_new_role/` and pushing, you’ll see:
 
 - `roles/my_new_role/README.md` → auto-generated documentation.  
 - `roles/README.md` → updated index entry:  
-  ```
-  - [`my_new_role`](my_new_role/README.md): Short description of what this role does.
-  ```
 
 ---
 
@@ -120,4 +117,4 @@ dependencies: []
 ### 🚀 Contributor Tip
 - Keep descriptions short but meaningful — they show up in the **role index**.  
 - Add dependencies if your role relies on another (e.g., `common`, `firewall`).  
-- Update platforms whenever you test against new OS versions.  
+- Update platforms whenever you test against new OS versions.

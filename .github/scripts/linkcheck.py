@@ -74,15 +74,12 @@ def crawl(start):
                 # External HTTP/HTTPS links (not counted as broken)
                 link_status = "external"
 
+            # Add link info to the page report
             page_entry["links"].append({
                 "raw": raw,
                 "resolved": full,
                 "status": link_status
             })
-
-            # Broken link detection
-            if is_internal(full) and link_status not in (200, 301, 302):
-                broken_links.append((page, full, link_status))
 
             # Track linked internal pages and queue unvisited ones
             if is_internal(full) and is_http_scheme(full):

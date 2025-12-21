@@ -20,15 +20,51 @@ ansible-playbook -i inventory/redmine/inventory.ini -k playbooks/redmine/mirror_
 The GitHub Actions workflow that builds and deploys the site is at
 [.github/workflows/static.yml](.github/workflows/static.yml). In short, the workflow:
 
-- 🔁 Runs on pushes to `main` and via manual dispatch.
-- ✅ Checks out the repository (`actions/checkout`).
-- 💎 Sets up Ruby and installs Jekyll and Bundler-managed dependencies.
-- 🛠️ Builds the Jekyll site into the `./_site` directory using `bundle exec jekyll build`.
-- 📤 Uploads the generated `_site` artifact and deploys it to GitHub Pages.
-- 🔗 Crawls the deployed site, checks all internal/external links, posts a summary in the Actions UI, and uploads the reports (link-summary.md, link-summary.html) as workflow artifacts.
-- 📤uploads the reports (link-summary.md, link-summary.html) as workflow artifacts.
+### Workflow Triggers
+- 🔁 **Run on**:
+  - Pushes to the `main` branch
+  - Manual dispatch (`workflow_dispatch`)
 
-Because the site is rendered from the repository's Markdown, the canonical source of truth for the content is the Ansible playbook that generates the Markdown (see the command above). .
+### Steps
+
+1. ✅ **Checkout Repository**
+   - Uses `actions/checkout` to pull repository code.
+
+2. 💎 **Setup Ruby & Dependencies**
+   - Installs Ruby.
+   - Installs Jekyll and Bundler-managed dependencies (`bundle install`).
+
+3. 🛠️ **Build Site**
+   - Builds the Jekyll site into `./_site` using:
+     ```bash
+     bundle exec jekyll build
+     ```
+
+4. 📤 **Deploy to GitHub Pages**
+   - Deploys `_site` contents to GitHub Pages.
+   - Optionally uploads `_site` as a workflow artifact.
+
+5. 🔗 **Crawl Deployed Site**
+   - Runs the Python crawler **after deployment**.
+   - Crawls **internal HTTP/HTTPS links**.
+   - Marks **external links** as `"external"`.
+   - Marks **special scheme links** (`mailto:`, `tel:`, `javascript:`) with their scheme.
+   - Detects **broken internal links** (status ≠ 200/301/302).
+   - Detects **orphaned pages** not linked from any page.
+   - Prints a summary in the Actions log:
+     - Pages scanned
+     - Broken links
+     - Orphaned pages
+
+6. 📤 **Upload Reports**
+   - Uploads `link-summary.md` and `link-report.html` as workflow artifacts.
+
+### Notes
+- Only **internal HTTP/HTTPS links** are counted as broken.
+- External and special links appear in the reports but **do not affect the broken link count**.
+- Crawling is performed **after the site is live** on GitHub Pages for accurate link checks.
+
+Because the site is rendered from the repository's Markdown, the canonical source of truth for the content is the Ansible playbook that generates the Markdown (see the command above).
 
 ## Minima Configuration
 

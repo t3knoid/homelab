@@ -214,3 +214,29 @@ After deployment:
   - Variable Group → Empty  
   - CLI args → `-k`  
   - Vaults → vault password from key store
+
+---
+
+## 📘 Set Up using Ansible
+
+For detailed instructions on **configuring Semaphore projects, templates, dynamic templates, views, keystores, and schedules using Ansible**, see the dedicated runbook:
+
+**[Configure Semaphore UI Projects Runbook](link-to-semaphore-runbook.md)**
+
+> This runbook provides step-by-step examples, YAML snippets, and guidance for safely managing your Semaphore UI configuration in a fully declarative way.
+
+### Quick Preview: Run the Configuration Playbook
+
+Once your group_vars are updated, configure Semaphore UI projects and templates with:
+
+{% raw %}
+```bash
+ansible-playbook -k -i inventory/semaphore/inventory.ini setup-semaphore.yml
+```
+{% endraw %}
+
+> Notes:
+>
+> * `-k` prompts for SSH password; if using SSH keys, it is not needed.
+> * Idempotent: safe to run multiple times without duplicating templates or schedules.
+> * This playbook **does not install Semaphore UI**; it only configures projects, views, templates, credentials, and schedules using the `semaphoreui_setup` role. See the [Semaphore UI Setup - Role Overview](semaphore_ui_setup_-_role_overview.md) for a detailed analysis of the setup portion in this role.

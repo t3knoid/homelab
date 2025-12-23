@@ -4,16 +4,17 @@ title: "️ Semaphore UI Setup – Role Overview"
 
 # 🛠️ **Semaphore UI Setup – Role Overview**
 
-The `semaphoreui_setup` role configures the [Semaphore UI](https://docs.semaphoreui.com/administration-guide/api/) application on designated hosts.
+The `semaphoreui_setup` role configures the [Semaphore UI](https://docs.semaphoreui.com/administration-guide/api/) application on designated hosts.  
 It automates the creation and management of:
 
-* Projects
-* Repositories
-* Key stores
-* Views
-* Inventories
-* Task templates (static & dynamic)
-* Environments
+* Projects  
+* Repositories  
+* Key stores  
+* Views  
+* Inventories  
+* Task templates (static & dynamic)  
+* Environments  
+* Scheduled tasks
 
 This role assumes Semaphore UI is already installed and reachable on the target host.
 
@@ -21,10 +22,10 @@ This role assumes Semaphore UI is already installed and reachable on the target 
 
 # 💻 **Supported Hosts**
 
-**Host group:** `semaphore`
+**Host group:** `semaphore`  
 The role uses:
 
-* `become: true`
+* `become: true`  
 * fact gathering enabled
 
 ---
@@ -49,21 +50,22 @@ group_vars/semaphore/
   ├── keystores.yml
   ├── views.yml
   ├── templates.yml
-  └── dynamic_templates.yml
+  ├── dynamic_templates.yml
+  └── schedules.yml
 ```
 {% endraw %}
 
-Each file provides one piece of the full project structure.
-`dynamic_templates.yml` contains dynamic template sets assigned **per project**.
+Each file provides one piece of the full project structure.  
+`schedules.yml` defines **cron‑based scheduled tasks per project**.
 
 ---
 
 # 📌 **Variable: `semaphoreui_setup_projects`**
 
-The role assembles this variable dynamically from component files and dynamic template sets.
+The role assembles this variable dynamically from component files, dynamic template sets, and schedules.  
 It becomes the **complete, consolidated list of projects** including everything tied to them.
 
-**Example structure (static + dynamic templates):**
+**Example structure (static + dynamic templates + schedules):**
 
 {% raw %}
 ```yaml
@@ -106,6 +108,12 @@ semaphoreui_setup_projects:
           - "Ansible vault password"
         view: "Linux Checks"
         environment: "Empty"
+
+    schedules:
+      - name: "Nightly Semaphore Backup"
+        cron: "0 3 * * *"
+        enabled: true
+        template: "Backup Semaphore Database"
 ```
 {% endraw %}
 
@@ -113,7 +121,7 @@ semaphoreui_setup_projects:
 
 # 📌 **Variable: `dynamic_template_sets`**
 
-Dynamic templates are now **grouped by project**:
+Dynamic templates are **grouped by project**:
 
 {% raw %}
 ```yaml
@@ -145,8 +153,8 @@ dynamic_template_sets:
 ```
 {% endraw %}
 
-* Each template set applies only to its **specified project**.
-* Templates are expanded across all inventories listed in `inventories`.
+* Each template set applies only to its **specified project**.  
+* Templates are expanded across all inventories listed in `inventories`.  
 * Each template automatically combines `name_prefix + inventory` for the task name.
 
 ---
@@ -179,18 +187,19 @@ roles/semaphoreui_setup/tasks/setup/
 
 ### **Task Files and Their Purpose**
 
-| Task File                | Purpose                                                                             |
-| ------------------------ | ----------------------------------------------------------------------------------- |
-| `create_api_token.yml`   | Logs in as admin, generates API token, logs out.                                    |
-| `enum_users.yml`         | Enumerates existing Semaphore users.                                                |
-| `setup_projects.yml`     | Creates projects from `semaphoreui_setup_projects`.                                 |
-| `setup_project.yml`      | Processes one project and triggers all subcomponents.                               |
-| `setup_views.yml`        | Ensures project views exist.                                                        |
-| `setup_keystores.yml`    | Creates key stores for the project.                                                 |
-| `setup_repositories.yml` | Registers project repositories and attaches keys.                                   |
-| `setup_inventories.yml`  | Registers inventories used in templates.                                            |
-| `setup_templates.yml`    | Iterates over **both static and dynamic templates**.                                |
-| `setup_template.yml`     | Creates a single task template (playbook, inventory, repo, view, env, credentials). |
+| Task File                | Purpose                                                                                 |
+| ------------------------ | --------------------------------------------------------------------------------------- |
+| `create_api_token.yml`   | Logs in as admin, generates API token, logs out.                                        |
+| `enum_users.yml`         | Enumerates existing Semaphore users.                                                    |
+| `setup_projects.yml`     | Creates projects from `semaphoreui_setup_projects`.                                     |
+| `setup_project.yml`      | Processes one project and triggers all subcomponents.                                   |
+| `setup_views.yml`        | Ensures project views exist.                                                            |
+| `setup_keystores.yml`    | Creates key stores for the project.                                                     |
+| `setup_repositories.yml` | Registers project repositories and attaches keys.                                       |
+| `setup_inventories.yml`  | Registers inventories used in templates.                                                |
+| `setup_templates.yml`    | Iterates over **both static and dynamic templates**.                                    |
+| `setup_template.yml`     | Creates a single task template (playbook, inventory, repo, view, env, credentials).     |
+| `setup_schedules.yml`    | Creates scheduled tasks (cron‑based) for the project.                                   |
 
 ---
 
@@ -198,57 +207,60 @@ roles/semaphoreui_setup/tasks/setup/
 
 ### **1. Inventory Discovery**
 
-* Finds available Ansible inventory files
-* Builds `semaphoreui_setup_inventories`
-* Makes this list available for template assignment
+* Finds available Ansible inventory files  
+* Builds `semaphoreui_setup_inventories`  
+* Makes this list available for template assignment  
 
 ### **2. Authentication**
 
-* Reads admin password from disk
-* Creates an API token via the Semaphore API
-* Stores token for subsequent requests
+* Reads admin password from disk  
+* Creates an API token via the Semaphore API  
+* Stores token for subsequent requests  
 
 ### **3. User Enumeration**
 
-* Reads the existing list of users
-* Avoids re-creating users unless explicitly configured
+* Reads the existing list of users  
+* Avoids re-creating users unless explicitly configured  
 
 ### **4. Project Creation**
 
-* Reads metadata from `projects_meta.yml`
-* Compares with existing projects
-* Creates missing projects
-* Passes new project IDs to downstream tasks
+* Reads metadata from `projects_meta.yml`  
+* Compares with existing projects  
+* Creates missing projects  
+* Passes new project IDs to downstream tasks  
 
 ### **5. Component Setup (Per Project)**
 
 Each project is processed using `setup_project.yml`, which calls:
 
-* `setup_views.yml`
-* `setup_keystores.yml`
-* `setup_repositories.yml`
-* `setup_inventories.yml` → `setup_inventory.yml`
-* `setup_templates.yml` → `setup_template.yml` (handles static + dynamic)
+* `setup_views.yml`  
+* `setup_keystores.yml`  
+* `setup_repositories.yml`  
+* `setup_inventories.yml` → `setup_inventory.yml`  
+* `setup_templates.yml` → `setup_template.yml`  
+* **`setup_schedules.yml` → creates scheduled tasks**  
 
 ---
 
 # 📌 **Dynamic Template Handling**
 
-1. Static templates come directly from `semaphoreui_setup_projects_templates`.
-2. Dynamic templates come from `dynamic_template_sets` via the [Ansible_Filter_extract_templates_for_project](ansible_filter_extract_templates_for_project.md).
-3. Both sets are **appended and deduplicated** automatically before creating tasks in Semaphore UI.
+1. Static templates come directly from `semaphoreui_setup_projects_templates`.  
+2. Dynamic templates come from `dynamic_template_sets` via the [Ansible_Filter_extract_templates_for_project](ansible_filter_extract_templates_for_project.md).  
+3. Both sets are **appended and deduplicated** automatically before creating tasks in Semaphore UI.  
+4. Schedules reference templates by name and are resolved to template IDs during setup.
 
 ---
 
 # 🗂️ **Workflow-to-Task Mapping**
 
-| Workflow Action       | Role Task File                                  |
-| --------------------- | ----------------------------------------------- |
-| Create project views  | `setup_views.yml`                               |
-| Add project keystores | `setup_keystores.yml`                           |
-| Add repositories      | `setup_repositories.yml`                        |
-| Register inventories  | `setup_inventories.yml` → `setup_inventory.yml` |
-| Add task templates    | `setup_templates.yml` → `setup_template`        |
+| Workflow Action         | Role Task File                                  |
+| ----------------------- | ----------------------------------------------- |
+| Create project views    | `setup_views.yml`                               |
+| Add project keystores   | `setup_keystores.yml`                           |
+| Add repositories        | `setup_repositories.yml`                        |
+| Register inventories    | `setup_inventories.yml` → `setup_inventory.yml` |
+| Add task templates      | `setup_templates.yml` → `setup_template.yml`    |
+| **Add scheduled tasks** | **`setup_schedules.yml`**                        |
 
 ---
 
@@ -264,6 +276,7 @@ Each project is processed using `setup_project.yml`, which calls:
 │  • views.yml                                 │
 │  • templates.yml                             │
 │  • dynamic_templates.yml                     │
+│  • schedules.yml                             │
 └───────────────────────────────┬──────────────┘
                                 │
                                 ▼
@@ -289,6 +302,7 @@ Each project is processed using `setup_project.yml`, which calls:
 │Consolidation into semaphoreui_setup_projects │
 │  • Static templates                          │
 │  • Dynamic templates                         │
+│  • Scheduled tasks                           │
 └───────────────────────────────┬──────────────┘
                                 │
                                 ▼
@@ -306,6 +320,7 @@ Each project is processed using `setup_project.yml`, which calls:
 │  • Create repositories                       │
 │  • Create inventories                        │
 │  • Create templates (static + dynamic)       │
+│  • Create schedules                          │
 └───────────────────────────────┬──────────────┘
                                 │
                                 ▼
@@ -317,3 +332,4 @@ Each project is processed using `setup_project.yml`, which calls:
 └──────────────────────────────────────────────┘
 ```
 {% endraw %}
+

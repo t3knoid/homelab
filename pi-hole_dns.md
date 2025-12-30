@@ -165,7 +165,7 @@ Pi-hole is integrated with **TP-Link Omada** to enforce centralized DNS usage ac
 
 ## 🔁 Pi-hole Configuration Synchronization
 
-To prevent configuration drift between Pi-hole instances, **Nebula Sync** is used to synchronize Pi-hole configuration automatically.
+To prevent configuration drift between Pi-hole instances, **[Nebula Sync](nebula_sync.md)** is used to synchronize Pi-hole configuration automatically.
 
 > ⚠️ **Important**
 >
@@ -174,7 +174,7 @@ To prevent configuration drift between Pi-hole instances, **Nebula Sync** is use
 
 ---
 
-### 📌 Nebula Sync Documentation
+### 📌 Nebula Sync
 
 Nebula Sync is **installed, configured, and maintained via Ansible**, not through the Pi-hole UI.
 
@@ -190,24 +190,21 @@ To keep this page focused on **Pi-hole behavior and integration**, Nebula Sync i
 
 ---
 
-## 📦 Synchronization Scope
+## 🧠 Unbound Recursive DNS Resolver
 
-### Synchronized
+Unbound provides a local, validating, recursive DNS resolver for Pi-hole. It replaces external upstream DNS providers and keeps all DNS resolution inside the homelab. Pi-hole **must be installed first**, as Unbound is configured to serve as its upstream resolver.
 
-* Adlists (gravity)
-* Whitelists and blacklists
-* Regex filtering rules
-* Local DNS records
-* Group and client assignments
+### Pi-hole Integration
 
-### Not Synchronized
+Each Pi-hole instance is configured to use its local Unbound service:
 
-* DHCP leases
-* OS-level configuration
-* Network interfaces
-* Pi-hole UI preferences
+{% raw %}
+```
+127.0.0.1#5335
+```
+{% endraw %}
 
-> 📝 DHCP remains authoritative on the existing DHCP server and is not shared between Pi-hole instances.
+👉 See: **[Unbound](unbound.md)**
 
 ---
 
@@ -257,9 +254,9 @@ Operational issues, failure scenarios, and recovery procedures are documented on
 
 ## 🚨 Operational Notes
 
-* **Do not configure Pi-hole or Nebula Sync manually**
+* **Do not configure Pi-hole, Nebula Sync, or Unbound manually**
 
-  * All configuration is managed via Ansible
+* All configuration is managed via Ansible
 * All rebuilds should be performed using the Ansible deployment playbook
 * Configuration drift should be resolved through automation, not UI changes
 * Always consult the appropriate runbook before making changes

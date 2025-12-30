@@ -27,6 +27,12 @@ Nebula Sync is installed and configured using **Ansible**:
 * **Role:** [nebulasync_setup](https://github.com/t3knoid/ansible/blob/main/roles/nebulasync_setup/tasks/main.yml)
 * **Deployment Playbook:** [deploy_nebulasync.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/dns/deploy_nebulasync.yml)
 
+{% raw %}
+``` bash
+ansible-playbook -k -i inventory/dns/inventory.ini playbooks/dns/deploy_nebulasync.yml
+```
+{% endraw %}
+
 ### 🔹 Steps (Conceptual)
 
 1. Configure **primary and replica Pi‑hole instances** in the inventory.
@@ -49,14 +55,21 @@ Nebula Sync is installed and configured using **Ansible**:
 
 * Gravity blocklists
 * Whitelists and blacklists
+* Regex filtering rules
 * Local DNS entries
+* Group and client assignments
 * Pi‑hole configuration files
 
 **What is NOT synced:**
 
 * DHCP leases
+* OS-level configuration
+* Network interfaces
 * UI-specific settings (themes, passwords if different)
 * Custom scripts or plugins not installed on replicas
+
+> 📝 DHCP remains authoritative on the existing DHCP server and is not shared between Pi-hole instances.
+
 
 ---
 
@@ -69,7 +82,7 @@ Nebula Sync is installed and configured using **Ansible**:
 {% raw %}
 ```bash
 # Example: check Nebula Sync status
-journalctl -u nebulasync.service
+journalctl -u nebula-sync.service
 ```
 {% endraw %}
 
@@ -91,4 +104,3 @@ journalctl -u nebulasync.service
 * [Pi‑hole Documentation](https://docs.pi-hole.net/)
 * [Ansible Role: nebulasync_setup](https://github.com/t3knoid/ansible/blob/main/roles/nebulasync_setup/tasks/main.yml)
 * [Deployment Playbook: deploy_nebulasync.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/dns/deploy_nebulasync.yml)
-

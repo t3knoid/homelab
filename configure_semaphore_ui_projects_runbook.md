@@ -238,7 +238,7 @@ Each schedule:
 - Defines a **cron expression**
 - Can be enabled/disabled
 
-The role resolves template IDs automatically and creates missing schedules.
+The role resolves template IDs automatically and creates missing schedules. The [Defining When Semaphore Runs a Scheduled Task](defining_when_semaphore_runs_a_scheduled_task.md) runbook provides further details on how to configure the **cron expression**.
 
 ---
 

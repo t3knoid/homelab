@@ -39,6 +39,7 @@ title: "Runbooks"
 | **[Deploy SemaphoreUI Runbook](deploy_semaphoreui_runbook.md)** | Instructions to deploy or update SemaphoreUI services.     |
 | **[Mirror wiki pages to HTML static page runbook](mirror_wiki_pages_to_html_static_page_runbook.md)** | Step-by-step instructions on mirroring homelab wiki pages to https://homelab.refol.us |
 | **[Configure Semaphore UI Projects Runbook](configure_semaphore_ui_projects_runbook.md)** | Instructions on adding or modifying a Semaphore UI project |
+| **[Defining When Semaphore Runs a Scheduled Task](defining_when_semaphore_runs_a_scheduled_task.md)** | Provides details on configuring the **cron** field in a Semaphore UI scheduled task |
 
 ---
 

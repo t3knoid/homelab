@@ -221,7 +221,7 @@ After deployment:
 
 For detailed instructions on **configuring Semaphore projects, templates, dynamic templates, views, keystores, and schedules using Ansible**, see the dedicated runbook:
 
-**[Configure Semaphore UI Projects Runbook](link-to-semaphore-runbook.md)**
+**[Configure Semaphore UI Projects Runbook](configure_semaphore_ui_projects_runbook.md)**
 
 > This runbook provides step-by-step examples, YAML snippets, and guidance for safely managing your Semaphore UI configuration in a fully declarative way.
 

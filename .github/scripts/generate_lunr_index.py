@@ -3,7 +3,7 @@ import json
 from bs4 import BeautifulSoup
 
 CONTENT_DIR = "./_site"  # root directory
-OUTPUT_FILE = "search-index.json"
+OUTPUT_FILE = "./_site/search-index.json" # Jekyll site output directory
 
 EXCLUDE_DIRS = {
     ".git",

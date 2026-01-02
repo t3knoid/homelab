@@ -1,16 +1,37 @@
 ---
-title: "Terraform"
+title: "️ Terraform"
 ---
 
-# Terraform
+# 🛠️ Terraform
 
-HashiCorp [Terraform](https://developer.hashicorp.com/terraform/intro) is an infrastructure as code (IaC) tool similar to Ansible that lets you define network resources in human-readable configuration files. In this home lab, it is used to provision virtual machines from the Proxmox Virtual Environment.
+Terraform is an infrastructure‑as‑code tool used to define and manage resources declaratively.  
+In this homelab, Terraform is used to provision virtual machines on Proxmox as an alternative to the pure‑Ansible workflow.
 
-## Integration with Ansible
+The goal is not to replace Ansible, but to support a second provisioning backend that integrates cleanly with the existing automation.
 
-When I initially started automating my home lab, I used [Ansible to provision virtual machines](https://homelab.refol.us/projects/home-lab/repository/ansible/revisions/main/entry/roles/vms/tasks/provision.yml). In time, I migrated to using Terraform for provisioning virtual machines in order to get exposure to using its technology. I want to have a seamless integration with Ansible since that is the primary interface to provision virtual machines. To achieve this, I've created a separate task file that mirrors what the existing provision.yml task file in the [vm role](https://homelab.refol.us/projects/home-lab/repository/ansible/revisions/main/show/roles/vms) does. This task file dynamically creates the necessary Terraform config files and performs the Terraform command to provision the target host.
+---
 
-## HashiCorp Vault
+## 🔗 Integration with Ansible
 
-Another opportunity to learn a new technology is using [HashiCorp Vault](hashicorp_vault.md) to keep secrets used in deploying virtual machines. The current Ansible tasks use Ansible's vault. In time, I will probably use HashiCorp Vault for all secrets used in Ansible playbooks.
+Ansible remains the primary interface for provisioning VMs. Terraform is invoked only when the provisioning mode is set to use the hybrid workflow.
 
+A dedicated task file mirrors the behavior of the Ansible‑only provisioning path. It generates the required Terraform configuration, runs the Terraform commands, and hands control back to Ansible for the remainder of the lifecycle (cloud‑init, boot sequencing, cleanup, SSH hardening).
+
+This keeps both provisioning modes aligned while allowing Terraform to manage VM creation and hardware configuration.
+
+→ See **[Automated Virtual Machine Provisioning](automated_virtual_machine_provisioning.md)** for the full architecture.
+
+---
+
+## 🔐 HashiCorp Vault
+
+Terraform also provides an opportunity to introduce HashiCorp Vault into the homelab.  
+Vault can store secrets used during VM provisioning, replacing Ansible Vault over time.  
+The long‑term plan is to centralize all sensitive data in Vault and consume it from both Terraform and Ansible.
+
+---
+
+## 📎 Related Documentation
+
+- **[Automated Virtual Machine Provisioning](automated_virtual_machine_provisioning.md)** — Provisioning architecture and workflow  
+- **[Proxmox](proxmox.md)** — Cluster layout, storage, and node topology

@@ -217,6 +217,10 @@ After deployment:
 
 ---
 
+Here’s an updated version of your wiki section that cleanly incorporates the new **GitHub Action trigger workflow**, while preserving the tone, structure, and formatting of your existing documentation.
+
+---
+
 ## 📘 Set Up using Ansible
 
 For detailed instructions on **configuring Semaphore projects, templates, dynamic templates, views, keystores, and schedules using Ansible**,
@@ -225,9 +229,27 @@ For detailed instructions on **configuring Semaphore projects, templates, dynami
 
 > This runbook provides step-by-step examples, YAML snippets, and guidance for safely managing your Semaphore UI configuration in a fully declarative way.
 
-### Quick Preview: Run the Configuration Playbook
+### ⚡ Automatic Configuration via GitHub Actions
 
-Once your group_vars are updated, configure Semaphore UI projects and templates with:
+Semaphore UI configuration is applied **automatically** whenever files under:
+
+{% raw %}
+```
+inventory/semaphore/group_vars/semaphore/
+```
+{% endraw %}
+
+are modified.
+
+A dedicated GitHub Action detects these changes and triggers the **Setup Semaphore** task inside the **Home Lab** project in Semaphore UI.
+
+This ensures that any update to your declarative inventory immediately results in a fresh configuration run—no manual playbook execution required.
+
+👉 See: **[Trigger Semaphore Setup Workflow](trigger_semaphore_setup_workflow.md)** for a full breakdown of how the automation works.
+
+### Quick Preview: Manual Execution (Optional)
+
+If you prefer to run the configuration locally—or need to test changes before pushing—you can still execute the playbook manually:
 
 {% raw %}
 ```bash
@@ -239,4 +261,5 @@ ansible-playbook -k -i inventory/semaphore/inventory.ini setup-semaphore.yml
 >
 > * `-k` prompts for SSH password; if using SSH keys, it is not needed.
 > * Idempotent: safe to run multiple times without duplicating templates or schedules.
-> * This playbook **does not install Semaphore UI**; it only configures projects, views, templates, credentials, and schedules using the `semaphoreui_setup` role. See the [Semaphore UI Setup - Role Overview](semaphore_ui_setup_-_role_overview.md) for a detailed analysis of the setup portion in this role.
+> * This playbook **does not install Semaphore UI**; it only configures projects, views, templates, credentials, and schedules using the `semaphoreui_setup` role.  
+>   See the [Semaphore UI Setup - Role Overview](semaphore_ui_setup_-_role_overview.md) for a detailed analysis of the setup portion in this role.

@@ -15,7 +15,7 @@ Built on a clustered **[Proxmox](proxmox.md)** environment, the lab integrates a
 A multi-node **[Proxmox Virtual Environment](proxmox.md)** cluster hosts both Linux and Windows workloads. Key features include:
 
 * Standardized Ubuntu 24.04 VM templates via **[cloud-init](cloud-init.md)**
-* Automated provisioning with **[Ansible](ansible.md)**
+* [Automated virtual machine provisioning](automated_virtual_machine_provisioning.md) with **[Ansible](ansible.md)**
 * Docker-based application deployment where containerization is appropriate
 * Seamless integration with the home network for reliability
 
@@ -54,7 +54,7 @@ Automation and reproducibility are central to the lab:
 
 * **[Ansible](ansible.md)** for provisioning, configuration, and deployment
 * **[Semaphore](semaphore.md)** as a web interface for playbook execution
-* Terraform (driven through Ansible) for declarative infrastructure
+* **[Terraform](terraform.md)** (driven through Ansible) for declarative infrastructure
 * Jenkins for CI/CD pipelines and automation workflows
 * GitHub Actions for cloud-based CI/CD and artifact automation
 

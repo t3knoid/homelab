@@ -1,0 +1,20 @@
+[
+  {
+    "id": "search.html",
+    "title": "\ud83d\udd0d Search Results",
+    "content": "\ud83d\udd0d Search Results {% include custom-header.html %} \ud83d\udd0d Search Results {% include custom-footer.html %}",
+    "url": "/search.html"
+  },
+  {
+    "id": "_includes/custom-header.html",
+    "title": "custom-header.html",
+    "content": "Home Home \ud83c\udfe0 Home Ansible \u2699\ufe0f Ansible Runbooks \ud83d\udcd8 Runbooks Proxmox \ud83d\udda5\ufe0f Proxmox Reverse Proxy \ud83c\udf10 Reverse Proxy Certificates \ud83d\udd10 Certificates About Me \ud83d\udc64 About Me",
+    "url": "/_includes/custom-header.html"
+  },
+  {
+    "id": "_layouts/default.html",
+    "title": "{{ page.title | default: site.title }}",
+    "content": "{{ page.title | default: site.title }} {% include custom-header.html %} {{ content }}",
+    "url": "/_layouts/default.html"
+  }
+]

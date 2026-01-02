@@ -22,8 +22,14 @@ def extract_text_from_html(path):
     for tag in soup(["script", "style", "noscript"]):
         tag.decompose()
 
+    # Extract only main content
+    main = soup.find("main")
+    if main:
+        text = main.get_text(separator=" ", strip=True)
+    else:
+        text = soup.get_text(separator=" ", strip=True)
+
     title = soup.title.string.strip() if soup.title else os.path.basename(path)
-    text = soup.get_text(separator=" ", strip=True)
 
     return title, text
 

@@ -40,9 +40,10 @@
 
   <div id="header"></div>
   <script>
-    fetch('/_includes/custom-header.html')
+    fetch('/custom-header.html')
       .then(r => r.text())
-      .then(html => document.getElementById('header').innerHTML = html);
+      .then(html => document.getElementById('header').innerHTML = html)
+      .catch(()=> console.warn('custom header not found at /custom-header.html'));
   </script>
 
   <main>

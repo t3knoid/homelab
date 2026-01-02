@@ -74,7 +74,8 @@
 
     /* Larger screens: horizontal menu, hide hamburger */
     @media (min-width: 700px) {
-      .nav-toggle-label { display: none; }
+      /* Keep hamburger visible on larger screens */
+      .nav-toggle-label { display: inline-block; }
       .site-nav { display: flex; flex-direction: row; gap: 0.5rem; }
       .site-nav a { padding: 6px 12px; }
     }

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🔍 Search Results</title>
+
+  <!-- Lunr + your search logic -->
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+  <script src="/search.js" defer></script>
+
+  <style>
+    /* Page layout matches your existing content width */
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      line-height: 1.6;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Search results styling */
+    .search-result {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .search-result a {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #0366d6;
+      text-decoration: none;
+    }
+
+    .search-result a:hover {
+      text-decoration: underline;
+    }
+
+    .search-result p {
+      margin-top: 0.5rem;
+      color: #444;
+    }
+
+    /* Match your mobile spacing */
+    @media (max-width: 700px) {
+      main {
+        margin-top: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Your existing header include -->
+  {% include custom-header.html %}
+
+  <main>
+    <h1>🔍 Search Results</h1>
+    <div id="search-results"></div>
+  </main>
+
+  <!-- Your existing footer include -->
+  {% include custom-footer.html %}
+
+</body>
+</html>

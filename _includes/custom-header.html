@@ -1,5 +1,29 @@
 <nav class="site-header" role="navigation" aria-label="Primary">
   <style>
+    /* --- Search Bar Styling --- */
+    .header-search-form {
+      margin-left: 1rem;
+      flex: 1;
+      max-width: 260px;
+    }
+
+    .header-search-input {
+      width: 100%;
+      padding: 6px 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+
+    /* On small screens, place search inside the dropdown menu */
+    @media (max-width: 700px) {
+      .header-search-form {
+        order: 2;
+        width: 100%;
+        max-width: none;
+        padding: 0.5rem 0;
+      }
+    }
     .site-header {
       padding: 0.6rem 1rem;
       background: #fff;
@@ -96,6 +120,17 @@
   </style>
 
   <a class="site-logo" href="{{ '/' | relative_url }}">Home</a>
+
+  <!-- 🔍 Search bar -->
+  <form action="/search.html" method="GET" class="header-search-form">
+    <input 
+      type="text" 
+      name="q" 
+      placeholder="Search…" 
+      class="header-search-input"
+      aria-label="Search site"
+    >
+  </form>
 
   <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-controls="site-nav" />
   <label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle navigation" aria-expanded="false">

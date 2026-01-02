@@ -1,123 +1,138 @@
 <nav class="site-header" role="navigation" aria-label="Primary">
   <style>
-      .site-header {
-        padding: 0.6rem 1rem;
-        background: #fff;
-        border-bottom: 1px solid #e6e6e6;
+    .site-header {
+      padding: 0.6rem 1rem;
+      background: #fff;
+      border-bottom: 1px solid #e6e6e6;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
+    .site-logo {
+      font-weight: 700;
+      margin-right: 1rem;
+    }
 
-      /* Hide menu by default */
-      .site-nav {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: none;
-        flex-direction: column;
-      }
+    /* Hide menu by default on small screens */
+    .site-nav {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: none;
+      flex-direction: column;
+    }
 
-      /* Show menu when checkbox is checked */
-      .nav-toggle:checked ~ .site-nav-wrapper .site-nav {
-        display: flex;
-      }
+    /* Show menu when checkbox is checked */
+    .nav-toggle:checked ~ .site-nav-wrapper .site-nav {
+      display: flex;
+    }
 
-      .site-nav a {
-        color: inherit;
-        text-decoration: none;
-        font-weight: 600;
-        padding: 6px 10px;
-        display: block;
-      }
+    .site-nav a {
+      color: inherit;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 6px 10px;
+      display: block;
+    }
 
-      /* Hide the checkbox itself */
-      .nav-toggle {
-        display: none;
-      }
+    /* Hide the checkbox itself (still accessible) */
+    .nav-toggle {
+      position: absolute;
+      left: -9999px;
+    }
 
-      /* Hamburger icon always visible */
-      .nav-toggle-label {
-        display: inline-block;
-        cursor: pointer;
-        padding: 8px;
-        border-radius: 4px;
-        margin-left: auto; /* pushes it to the right */
-      }
+    /* Hamburger icon visible on small screens */
+    .nav-toggle-label {
+      display: inline-block;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 4px;
+      margin-left: auto;
+    }
 
-      .nav-toggle-label svg {
-        width: 20px;
-        height: 20px;
-      }  
+    .nav-toggle-label svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Focus styles */
+    .nav-toggle-label:focus,
+    .site-nav a:focus {
+      outline: 3px solid #2b6cb0;
+      outline-offset: 2px;
+    }
+
+    /* Visually hidden (screen-reader only) */
+    .visually-hidden {
+      position: absolute !important;
+      height: 1px; width: 1px;
+      overflow: hidden;
+      clip: rect(1px, 1px, 1px, 1px);
+      white-space: nowrap;
+    }
+
+    /* Larger screens: horizontal menu, hide hamburger */
+    @media (min-width: 700px) {
+      .nav-toggle-label { display: none; }
+      .site-nav { display: flex; flex-direction: row; gap: 0.5rem; }
+      .site-nav a { padding: 6px 12px; }
+    }
   </style>
 
-  <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
+  <a class="site-logo" href="{{ '/' | relative_url }}">Home</a>
+
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-controls="site-nav" />
   <label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle navigation">
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
   </label>
 
-  <nav class="site-header" role="navigation" aria-label="Primary">
-
-  <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
-
-  <nav class="site-nav-wrapper">
-    <ul class="site-nav">
+  <div class="site-nav-wrapper">
+    <ul id="site-nav" class="site-nav">
     <li>
-      <a href="{{ '/' | relative_url }}"
-         data-summary="High-level overview of your entire home lab architecture.">
-        🏠 Home
+      <a href="{{ '/' | relative_url }}" data-summary="High-level overview of your entire home lab architecture.">
+        <span class="visually-hidden">Home</span> 🏠 Home
       </a>
     </li>
 
     <li>
-      <a href="{{ '/ansible.html' | relative_url }}"
-         data-summary="Automation, playbooks, roles, inventories, and documentation workflows.">
-        ⚙️ Ansible
+      <a href="{{ '/ansible.html' | relative_url }}" data-summary="Automation, playbooks, roles, inventories, and documentation workflows.">
+        <span class="visually-hidden">Ansible</span> ⚙️ Ansible
       </a>
     </li>
 
     <li>
-      <a href="{{ '/runbooks.html' | relative_url }}"
-         data-summary="Operational runbooks for deploying, updating, and maintaining services.">
-        📘 Runbooks
+      <a href="{{ '/runbooks.html' | relative_url }}" data-summary="Operational runbooks for deploying, updating, and maintaining services.">
+        <span class="visually-hidden">Runbooks</span> 📘 Runbooks
       </a>
     </li>
 
     <li>
-      <a href="{{ '/proxmox.html' | relative_url }}"
-         data-summary="Virtual machines, containers, storage, backups, and cluster management.">
-        🖥️ Proxmox
+      <a href="{{ '/proxmox.html' | relative_url }}" data-summary="Virtual machines, containers, storage, backups, and cluster management.">
+        <span class="visually-hidden">Proxmox</span> 🖥️ Proxmox
       </a>
     </li>
 
     <li>
-      <a href="{{ '/reverse-proxy.html' | relative_url }}"
-         data-summary="Ingress routing, SSL termination, authentication, and service exposure.">
-        🌐 Reverse Proxy
+      <a href="{{ '/reverse-proxy.html' | relative_url }}" data-summary="Ingress routing, SSL termination, authentication, and service exposure.">
+        <span class="visually-hidden">Reverse Proxy</span> 🌐 Reverse Proxy
       </a>
     </li>
 
     <li>
-      <a href="{{ '/certificates.html' | relative_url }}"
-         data-summary="TLS certificates, validation, renewal automation, and troubleshooting.">
-        🔐 Certificates
+      <a href="{{ '/certificates.html' | relative_url }}" data-summary="TLS certificates, validation, renewal automation, and troubleshooting.">
+        <span class="visually-hidden">Certificates</span> 🔐 Certificates
       </a>
     </li>
     <li>
-      <a href="{{ 'https://portfolio.refol.us' }}"
-        data-summary="Who I am, what I build, and the philosophy behind this homelab.">
-        👤 About Me
+      <a href="https://portfolio.refol.us" data-summary="Who I am, what I build, and the philosophy behind this homelab.">
+        <span class="visually-hidden">About Me</span> 👤 About Me
       </a>
     </li>
     </ul>
-  </nav>
-  <label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle navigation">
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M3 6h18M3 12h18M3 18h18"
-            stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-    </svg>
-  </label>
+  </div>
 
 </nav>
 

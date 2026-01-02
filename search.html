@@ -38,7 +38,12 @@
 
 <body>
 
-  {% include custom-header.html %}
+  <div id="header"></div>
+  <script>
+    fetch('/_includes/custom-header.html')
+      .then(r => r.text())
+      .then(html => document.getElementById('header').innerHTML = html);
+  </script>
 
   <main>
     <h1>🔍 Search Results</h1>

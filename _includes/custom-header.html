@@ -72,11 +72,13 @@
       white-space: nowrap;
     }
 
-    /* Larger screens: horizontal menu, hide hamburger */
+    /* Larger screens: keep hamburger visible but layout menu horizontally when shown */
     @media (min-width: 700px) {
-      /* Keep hamburger visible on larger screens */
       .nav-toggle-label { display: inline-block; }
-      .site-nav { display: flex; flex-direction: row; gap: 0.5rem; }
+      .site-nav { /* remain hidden until toggle, but lay out horizontally when visible */
+        flex-direction: row;
+        gap: 0.5rem;
+      }
       .site-nav a { padding: 6px 12px; }
     }
   </style>

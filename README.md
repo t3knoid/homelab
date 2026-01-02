@@ -14,85 +14,171 @@ ansible-playbook -i inventory/redmine/inventory.ini -k playbooks/redmine/mirror_
 
 	https://lab.refol.us/projects/home-lab/wiki ➡️ https://homelab.refol.us/
 
+---
 
-## GitHub Actions Workflow
+# 🔍 Full‑Text Search (Lunr.js)
 
-The GitHub Actions workflow that builds and deploys the site is at
-[.github/workflows/static.yml](.github/workflows/static.yml). In short, the workflow:
+This site includes a **client‑side full‑text search** powered by **Lunr.js**.  
+The search system is fully static and requires **no backend**, making it ideal for GitHub Pages.
+
+## How Search Works
+
+### 1. **Index Generation (GitHub Actions)**
+During the build workflow:
+
+- After Jekyll finishes rendering the site into `_site/`
+- A Python script (`.github/scripts/generate_lunr_index.py`) scans the **source Markdown‑generated HTML**
+- It extracts:
+  - Page title  
+  - URL  
+  - Main content text (from `<main>`)
+
+The script outputs a JSON index:
+
+```
+search-index.json
+```
+
+This file is then copied into the final site output:
+
+```
+cp search-index.json _site/
+```
+
+GitHub Pages publishes it at:
+
+```
+/search-index.json
+```
+
+### 2. **Search Page (`search.html`)**
+The search UI lives at:
+
+```
+/search.html
+```
+
+This page:
+
+- Uses the site’s default layout (`layout: default`)
+- Loads the global header (including the search bar)
+- Loads Lunr.js and `search.js`
+- Reads the query string (`?q=...`)
+- Fetches `/search-index.json`
+- Performs a Lunr search in the browser
+- Renders results dynamically into:
+
+```html
+<div id="search-results"></div>
+```
+
+### 3. **Search Bar (in the header)**
+The search bar is defined in:
+
+```
+_includes/custom-header.html
+```
+
+It submits queries to `/search.html`:
+
+```html
+<form action="/search.html" method="GET">
+  <input type="text" name="q" placeholder="Search…">
+</form>
+```
+
+This ensures the search bar appears consistently on every page.
+
+---
+
+# ⚙️ GitHub Actions Workflow
+
+The GitHub Actions workflow that builds and deploys the site is at  
+[.github/workflows/static.yml](.github/workflows/static.yml).
 
 ### Workflow Triggers
 - 🔁 **Run on**:
   - Pushes to the `main` branch
   - Manual dispatch (`workflow_dispatch`)
 
-### Steps
+---
 
-1. ✅ **Checkout Repository**
-   - Uses `actions/checkout` to pull repository code.
+## 🧱 Workflow Steps
 
-2. 💎 **Setup Ruby & Dependencies**
-   - Installs Ruby.
-   - Installs Jekyll and Bundler-managed dependencies (`bundle install`).
+### 1. ✅ Checkout Repository
+Pulls the repository contents.
 
-3. 🛠️ **Build Site**
-   - Builds the Jekyll site into `./_site` using:
-     ```bash
-     bundle exec jekyll build
-     ```
+### 2. 💎 Setup Ruby & Dependencies
+- Installs Ruby
+- Installs Jekyll and Bundler dependencies
 
-4. 📤 **Deploy to GitHub Pages**
-   - Deploys `_site` contents to GitHub Pages.
-   - Optionally uploads `_site` as a workflow artifact.
-
-5. 🔗 **Crawl Deployed Site**
-   - Runs the Python crawler **after deployment**.
-   - Crawls **internal HTTP/HTTPS links**.
-   - Marks **external links** as `"external"`.
-   - Marks **special scheme links** (`mailto:`, `tel:`, `javascript:`) with their scheme.
-   - Detects **broken internal links** (status ≠ 200/301/302).
-   - Detects **orphaned pages** not linked from any page.
-   - Prints a summary in the Actions log:
-     - Pages scanned
-     - Broken links
-     - Orphaned pages
-
-6. 📤 **Upload Reports**
-   - Uploads `link-summary.md` and `link-report.html` as workflow artifacts.
-
-### Notes
-- Only **internal HTTP/HTTPS links** are counted as broken.
-- External and special links appear in the reports but **do not affect the broken link count**.
-- Crawling is performed **after the site is live** on GitHub Pages for accurate link checks.
-
-Because the site is rendered from the repository's Markdown, the canonical source of truth for the content is the Ansible playbook that generates the Markdown (see the command above).
-
-## Minima Configuration
-
-- 🎨 **Theme:** set to `minima` in [_config.yml](_config.yml).
-- 📐 **Page layout defaults:** added a `defaults` entry in [_config.yml](_config.yml) to assign `layout: default` to generated pages so the theme wrapper (and header) is applied.
-- 🧩 **Layout include:** added a minimal layout at [_layouts/default.html](_layouts/default.html) which includes a custom header include so pages render the site header consistently.
-- 🍔 **Header/navigation:** created [_includes/custom-header.html](_includes/custom-header.html) with a responsive hamburger menu (CSS-only) and tightened mobile spacing.
-
-
-## 🧪 Testing Locally
-
-To build and preview the site locally (uses the Gemfile versions):
+### 3. 🛠️ Build Site
+Builds the Jekyll site into `./_site`:
 
 ```bash
-# ensure Ruby is available
+bundle exec jekyll build
+```
+
+### 4. 🔍 Generate Lunr Search Index
+- Python script parses generated HTML
+- Produces `search-index.json`
+- Copies it into `_site/` so GitHub Pages publishes it
+
+### 5. 📤 Deploy to GitHub Pages
+Deploys the `_site` directory using `actions/deploy-pages`.
+
+### 6. 🔗 Crawl Deployed Site
+After deployment, a Python crawler:
+
+- Scans all internal links
+- Detects broken links
+- Detects orphaned pages
+- Marks external links as `"external"`
+- Marks special schemes (`mailto:`, `tel:`, `javascript:`)
+
+### 7. 📤 Upload Reports
+Uploads:
+
+- `link-summary.md`
+- `link-report.html`
+
+as workflow artifacts.
+
+---
+
+# 📝 Notes
+
+- Only **internal HTTP/HTTPS links** count as broken.
+- External links and special schemes appear in reports but do not affect the broken link count.
+- Crawling happens **after deployment** for accuracy.
+- The canonical source of truth for content is the **Ansible playbook**, not this repository.
+
+---
+
+# 🎨 Minima Configuration
+
+- **Theme:** `minima` (set in `_config.yml`)
+- **Defaults:** `layout: default` applied to generated pages
+- **Layout:** `_layouts/default.html` includes the custom header
+- **Header:** `_includes/custom-header.html` contains:
+  - Navigation
+  - Responsive hamburger menu
+  - Global search bar
+
+---
+
+# 🧪 Testing Locally
+
+To build and preview the site locally:
+
+```bash
 ruby -v
-
-# install Bundler if missing (system Ruby may require sudo)
 gem install bundler
-
-# install gems from Gemfile
 bundle install --jobs 4 --retry 3
-
-# serve and preview in the browser (binds to all interfaces)
 bundle exec jekyll serve --host 0.0.0.0 --port 4000
 ```
 
-Ruby can be installed using [Ansible](https://github.com/t3knoid/ansible) with the following command:
+To install Ruby using Ansible:
 
 ```bash
 ansible-playbook -i inventory/ansible/inventory.ini -k playbooks/ruby/deploy_ruby.yml -l ansible-0

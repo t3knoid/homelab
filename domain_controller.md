@@ -70,7 +70,3 @@ This domain controller serves as the **authentication backbone** of the refol.us
 - AD LDS ensures LDAP compatibility for cross‑platform applications.  
 
 Together, these components create a robust, scalable, and secure identity infrastructure for the homelab.
-
----
-
-👉 Frank, would you like me to also add a **“Monitoring & Maintenance” section** (covering event logs, replication health checks, and backup strategies) so this page doubles as an operational guide?

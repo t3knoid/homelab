@@ -102,10 +102,6 @@ This is essential for secure, unattended automation.
 
 ## 🔌 Ansible Modules Used to Interface with Proxmox
 
-Here you go, Frank — a clean, contributor‑friendly **table version** of your module overview.  
-It’s compact, scannable, and perfect for a README.
-
----
 
 ## 📦 Proxmox‑Related Ansible Modules
 
@@ -188,4 +184,4 @@ This architecture keeps:
 - Proxmox operations on the Proxmox side  
 - Guest configuration inside cloud‑init  
 - Orchestration logic inside Ansible  
-- Post‑provision automation clean and predictable  
+- Post‑provision automation clean and predictable

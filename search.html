@@ -1,49 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>🔍 Search Results</title>
+---
+layout: none
+---
 
-  <!-- Lunr + your search logic -->
-  <script src="https://unpkg.com/lunr/lunr.js"></script>
-  <script src="/search.js" defer></script>
-  <link rel="stylesheet" href="/assets/main.css">
+{% include custom-header.html %}
 
-  <style>
+<link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}">
+<script src="https://unpkg.com/lunr/lunr.js"></script>
+<script src="{{ '/search.js' | relative_url }}" defer></script>
 
-    /* Search results styling */
-    .search-result {
-      margin-bottom: 2rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid #e0e0e0;
-    }
+<main class="page-content" style="max-width: 900px; margin: 2rem auto; padding: 0 1rem;">
+  <h1>🔍 Search Results</h1>
+  <div id="search-results"></div>
+</main>
 
-    .search-result a {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #0366d6;
-      text-decoration: none;
-    }
+<style>
+  /* Search results styling */
+  .search-result {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e0e0e0;
+  }
 
-    .search-result a:hover {
-      text-decoration: underline;
-    }
+  .search-result a {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #0366d6;
+    text-decoration: none;
+  }
 
-    .search-result p {
-      margin-top: 0.5rem;
-      color: #444;
-    }
-  </style>
-</head>
+  .search-result a:hover {
+    text-decoration: underline;
+  }
 
-<body>
-
-  {% include custom-header.html %}
-
-  <main>
-    <h1>🔍 Search Results</h1>
-    <div id="search-results"></div>
-  </main>
-
-</body>
-</html>
+  .search-result p {
+    margin-top: 0.5rem;
+    color: #444;
+  }
+</style>

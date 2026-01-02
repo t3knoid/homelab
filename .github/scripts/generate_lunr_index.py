@@ -2,7 +2,7 @@ import os
 import json
 from bs4 import BeautifulSoup
 
-CONTENT_DIR = "."  # root directory
+CONTENT_DIR = "./_site"  # root directory
 OUTPUT_FILE = "search-index.json"
 
 EXCLUDE_DIRS = {

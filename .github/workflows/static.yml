@@ -11,6 +11,7 @@ permissions:
   contents: write
   pages: write
   id-token: write
+  actions: read
 
 concurrency:
   group: "pages"
@@ -38,6 +39,19 @@ jobs:
       - name: Build Jekyll site
         run: bundle exec jekyll build --destination ./_site
 
+      - name: Install dependencies
+        run: pip install beautifulsoup4
+
+      - name: Generate Lunr index
+        run: python .github/scripts/generate_lunr_index.py
+
+      - name: Commit index
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add search-index.json
+          git commit -m "Update search index" || echo "No changes to commit"
+          git push
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -53,9 +67,6 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-      - name: Copy search index into site output
-        run: cp search-index.json _site/
-
   linkcheck:
     needs: deploy
     runs-on: ubuntu-latest

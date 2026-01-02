@@ -4,6 +4,7 @@
       padding: 0.6rem 1rem;
       background: #fff;
       border-bottom: 1px solid #e6e6e6;
+      position: relative;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -61,6 +62,11 @@
     .icon-hamburger { display: inline-block; }
     .nav-toggle:checked + .nav-toggle-label .icon-hamburger { display: none; }
     .nav-toggle:checked + .nav-toggle-label .icon-close { display: inline-block; }
+
+    /* Ensure hamburger sits above the open menu so user can always close it */
+    .nav-toggle-label { position: relative; z-index: 1100; }
+    .site-nav-wrapper { position: absolute; top: 100%; left: 0; right: 0; z-index: 1000; }
+    .site-nav { background: #fff; box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
 
     /* Focus styles */
     .nav-toggle-label:focus,

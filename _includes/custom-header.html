@@ -56,6 +56,12 @@
       height: 20px;
     }
 
+    /* Icon swapping: show close icon when nav is open */
+    .icon-close { display: none; }
+    .icon-hamburger { display: inline-block; }
+    .nav-toggle:checked + .nav-toggle-label .icon-hamburger { display: none; }
+    .nav-toggle:checked + .nav-toggle-label .icon-close { display: inline-block; }
+
     /* Focus styles */
     .nav-toggle-label:focus,
     .site-nav a:focus {
@@ -86,9 +92,12 @@
   <a class="site-logo" href="{{ '/' | relative_url }}">Home</a>
 
   <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-controls="site-nav" />
-  <label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle navigation">
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+  <label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle navigation" aria-expanded="false">
+    <svg class="icon-hamburger" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path d="M3 6h18M3 12h18M3 18h18" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+    <svg class="icon-close" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M6 6l12 12M6 18L18 6" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
     </svg>
   </label>
 
@@ -136,6 +145,18 @@
     </li>
     </ul>
   </div>
+
+  <script>
+    (function(){
+      var toggle = document.getElementById('nav-toggle');
+      var label = document.querySelector('.nav-toggle-label');
+      if (!toggle || !label) return;
+      label.setAttribute('aria-expanded', toggle.checked ? 'true' : 'false');
+      toggle.addEventListener('change', function(){
+        label.setAttribute('aria-expanded', this.checked ? 'true' : 'false');
+      });
+    })();
+  </script>
 
 </nav>
 

@@ -38,13 +38,7 @@
 
 <body>
 
-  <div id="header"></div>
-  <script>
-    fetch('/custom-header.html')
-      .then(r => r.text())
-      .then(html => document.getElementById('header').innerHTML = html)
-      .catch(()=> console.warn('custom header not found at /custom-header.html'));
-  </script>
+  {% include custom-header.html %}
 
   <main>
     <h1>🔍 Search Results</h1>

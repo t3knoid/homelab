@@ -1,171 +1,181 @@
 # 🏠 homelab — Wiki Mirror
 
-⚠️ Important: other than this `README.md`, the Markdown files in this repository must NOT be edited by hand.
+⚠️ **Important**
+Other than this `README.md`, the Markdown files in this repository **must NOT be edited by hand**.
 
-## Summary
+---
 
-  ⚙️ These Markdown files are automatically generated from an Ansible playbook. Any manual edits to the generated Markdown will be overwritten the next time the playbook runs.
-  
-  ⤴️ To (re)generate the Markdown files locally, run from a local [Ansible](https://github.com/t3knoid/ansible) source folder:
+## 📡 What This Repository Is
+
+This repository is a **one-way public mirror** of my internal **Redmine wiki**.
+
+* Wiki content is authored and maintained **only** in Redmine
+* Pages are automatically exported and converted to Markdown by the
+  **[redmine wiki mirror Ansible module](https://github.com/t3knoid/refol.general/blob/main/docs/redmine_wiki_mirror.md)**
+* Any manual edits to generated Markdown files are intentionally overwritten
+
+The goal is to provide a **read-only, always-up-to-date public mirror** of an authoritative internal knowledge base.
+
+```
+https://lab.refol.us/projects/home-lab/wiki
+        ⬇
+https://homelab.refol.us/
+```
+
+---
+
+## ⚙️ Source of Truth & Content Generation
+
+### Authoritative Source
+
+* **Redmine Wiki** (internal)
+* Content is written once, in one place
+
+### Markdown Generation
+
+All Markdown files in this repository are generated automatically via Ansible.
+
+To (re)generate the Markdown locally:
 
 ```bash
 ansible-playbook -i inventory/redmine/inventory.ini -k playbooks/redmine/mirror_wiki.yml
 ```
 
----
-
-📡 **This repository serves as a one‑way mirror of my internal Redmine wiki.** All page content is automatically exported and transformed by the **[redmine wiki mirror Ansible module](https://github.com/t3knoid/refol.general/blob/main/docs/redmine_wiki_mirror.md)**, which handles the full conversion pipeline from Redmine wiki syntax to the Markdown files stored here. Manual edits to mirrored content are intentionally overwritten on each sync to ensure the public mirror always reflects the authoritative internal source.
+> Any manual changes to generated Markdown will be overwritten on the next run.
 
 ---
 
-🚀 Finally, GitHub Actions builds the Markdown into static HTML and publishes the site automatically through GitHub Pages.
+## 🔁 End-to-End Publishing Workflow (At a Glance)
 
+The site is produced through a **fully automated pipeline**, from wiki export to validated public deployment:
 
-	 https://lab.refol.us/projects/home-lab/wiki ➡️ https://homelab.refol.us/
+1. **Redmine wiki → Markdown** (Ansible)
+2. **Markdown → HTML** (Jekyll)
+3. **HTML → Search index** (Python + Lunr.js)
+4. **Deploy static site** (GitHub Pages)
+5. **Crawl live site** (post-deploy link checker)
 
----
-
-## 🧱 Tech Stack Overview (Static Site Generation)
-
-This site is built using a **fully automated static‑site toolchain** that combines Jekyll, GitHub Actions, Lunr.js, and a post‑deploy validation pipeline. The result is a reproducible, dependency‑pinned workflow that produces a fast, privacy‑preserving static HTML site with built‑in search and continuous link integrity checks.
-
-### 🔧 Core Components
-
-| Layer | Technology | Purpose |
-|-------|------------|---------|
-| **Static Site Generator** | **Jekyll** | Converts Markdown → HTML, processes Liquid templates, applies layouts, and builds the final `_site/` directory. |
-| **Theme** | **Minima** | Provides base styling, typography, and layout structure. |
-| **Templating** | **Liquid** | Powers includes, layouts, and dynamic path resolution (`relative_url`). |
-| **Search Engine** | **Lunr.js** | Client‑side full‑text search with no backend dependencies. |
-| **Index Builder** | **Python + BeautifulSoup4** | Extracts content from generated HTML and produces `search-index.json`. |
-| **Deployment** | **GitHub Pages** | Hosts the final static site from the `_site/` artifact. |
-| **Automation** | **GitHub Actions** | Orchestrates the entire build → index → deploy → link‑check pipeline. |
-| **Post‑Deploy Validation** | **Python crawler** | Scans the live site for broken links, orphaned pages, and link integrity issues. |
+Everything is reproducible, static, and dependency-pinned.
 
 ---
 
-### 🛠️ Build Pipeline Summary
+## 🧱 Static Site Toolchain Overview
 
-The static HTML is produced and validated through the following automated stages:
+This site uses a **zero-backend static architecture** with client-side search and continuous validation.
 
-1. **Jekyll Build**
-   - Ruby + Bundler install dependencies  
-   - Jekyll renders Markdown and Liquid templates  
-   - Output written to `_site/`
+### Core Components
 
-2. **Search Index Generation**
-   - Python script parses generated HTML  
-   - Extracts `<main>` content, titles, and URLs  
-   - Produces `search-index.json`  
-   - Copied into `_site/` for publishing
-
-3. **Deployment**
-   - `_site/` uploaded as a GitHub Pages artifact  
-   - GitHub Pages serves the static HTML
-
-4. **Post‑Deploy Link Checking**
-   - Python crawler scans the **live deployed site**  
-   - Follows internal HTTP/HTTPS links  
-   - Detects:
-     - Broken internal links  
-     - Orphaned pages  
-     - External links (marked `"external"`)  
-     - Special schemes (`mailto:`, `tel:`, `javascript:`)  
-   - Generates:
-     - `link-summary.md` (human‑readable summary)  
-     - `link-report.html` (full report)  
-   - Uploads both as workflow artifacts  
-   - Adds a summary block to the GitHub Actions UI
+| Layer                 | Technology                  | Purpose                                     |
+| --------------------- | --------------------------- | ------------------------------------------- |
+| Static Site Generator | **Jekyll**                  | Markdown → HTML, layouts, Liquid processing |
+| Theme                 | **Minima**                  | Base styling and layout                     |
+| Templating            | **Liquid**                  | Includes, layouts, relative paths           |
+| Search Engine         | **Lunr.js**                 | Client-side full-text search                |
+| Search Index Builder  | **Python + BeautifulSoup4** | Extracts content from generated HTML        |
+| Automation            | **GitHub Actions**          | Build, index, deploy, validate              |
+| Hosting               | **GitHub Pages**            | Serves the final static site                |
+| Validation            | **Python crawler**          | Post-deploy link integrity checks           |
 
 ---
 
-### 📦 Languages & Tools Used
+## 🚀 Build, Index, Deploy, Validate
 
-- **Ruby 3.3.x** — Jekyll + Bundler  
-- **Python 3.x** — Lunr index generation + link checker  
-- **HTML/CSS/JS** — Final static site  
-- **Liquid** — Template includes, layouts, and path helpers  
-- **GitHub Actions** — CI/CD automation  
-- **GitHub Pages** — Hosting  
+### 1️⃣ Jekyll Build
 
----
+* Ruby + Bundler install dependencies
+* Jekyll renders Markdown + Liquid templates
+* Output written to `_site/`
 
-### 🎯 Why This Stack Works Well
-
-- **Zero backend** — everything is static and CDN‑served  
-- **Deterministic builds** — Jekyll + pinned Ruby gems  
-- **Search without servers** — Lunr.js runs entirely in the browser  
-- **Continuous validation** — link checker ensures site integrity after every deploy  
-- **Contributor‑friendly** — Markdown is generated automatically, HTML is built automatically  
-- **Privacy‑preserving** — no analytics, no external search services  
-- **Fast** — GitHub Pages + static assets = instant load times  
+```bash
+bundle exec jekyll build
+```
 
 ---
 
-## 🔍 Full‑Text Search (Lunr.js)
+### 2️⃣ Search Index Generation (Lunr.js)
 
-This site includes a **client‑side full‑text search** powered by **Lunr.js**.  
-The search system is fully static and requires **no backend**, making it ideal for GitHub Pages.
+After Jekyll finishes rendering:
 
-### How Search Works
+* A Python script scans the generated HTML
+* Extracts:
 
-#### 1. **Index Generation (GitHub Actions)**
-During the build workflow:
-
-- After Jekyll finishes rendering the site into `_site/`
-- A Python script (`.github/scripts/generate_lunr_index.py`) scans the **source Markdown‑generated HTML**
-- It extracts:
-  - Page title  
-  - URL  
-  - Main content text (from `<main>`)
-
-The script outputs a JSON index:
+  * Page title
+  * URL
+  * `<main>` content text
+* Produces:
 
 ```
 search-index.json
 ```
 
-This file is then copied into the final site output:
+The index is copied into the site output:
 
 ```
-cp search-index.json _site/
+_site/search-index.json
 ```
 
-GitHub Pages publishes it at:
+This file is published directly by GitHub Pages and fetched by the browser at runtime.
 
-```
-/search-index.json
-```
+---
 
-#### 2. **Search Page (`search.html`)**
-The search UI lives at:
+### 3️⃣ Deployment (GitHub Pages)
 
-```
-/search.html
-```
+* The `_site/` directory is uploaded as a Pages artifact
+* GitHub Pages serves the static HTML, CSS, JS, and search index
 
-This page:
+---
 
-- Uses the site’s default layout (`layout: default`)
-- Loads the global header (including the search bar)
-- Loads Lunr.js and `search.js`
-- Reads the query string (`?q=...`)
-- Fetches `/search-index.json`
-- Performs a Lunr search in the browser
-- Renders results dynamically into:
+### 4️⃣ Post-Deploy Link Checking (Live Site)
+
+After deployment completes, a **dedicated validation stage** runs against the **live site**, not the build output.
+
+The Python crawler:
+
+* Crawls all internal HTTP/HTTPS links
+* Detects:
+
+  * Broken internal links
+  * Orphaned pages
+* Marks (but does not fail on):
+
+  * External links
+  * `mailto:`, `tel:`, `javascript:` schemes
+
+It generates:
+
+* `link-summary.md` — human-readable overview
+* `link-report.html` — full detailed report
+
+Both are uploaded as workflow artifacts, and a summary appears directly in the GitHub Actions UI.
+
+---
+
+## 🔍 Full-Text Search (Client-Side, No Backend)
+
+Search is powered entirely by **Lunr.js**, running in the browser.
+
+### How It Works
+
+#### Search Page
+
+* `/search.html`
+* Uses the default site layout
+* Loads Lunr.js and `search.js`
+* Reads the query string (`?q=...`)
+* Fetches `/search-index.json`
+* Renders results dynamically into:
 
 ```html
 <div id="search-results"></div>
 ```
 
-#### 3. **Search Bar (in the header)**
-The search bar is defined in:
+#### Global Search Bar
+
+Defined in:
 
 ```
 _includes/custom-header.html
 ```
-
-It submits queries to `/search.html`:
 
 ```html
 <form action="/search.html" method="GET">
@@ -173,137 +183,101 @@ It submits queries to `/search.html`:
 </form>
 ```
 
-This ensures the search bar appears consistently on every page.
+This ensures search is available on every page.
 
 ---
 
 ## ⚙️ GitHub Actions Workflow
 
-The GitHub Actions workflow that builds and deploys the site is at  
-[.github/workflows/static.yml](.github/workflows/static.yml).
+Workflow definition:
 
-### Workflow Triggers
-- 🔁 **Run on**:
-  - Pushes to the `main` branch
-  - Manual dispatch (`workflow_dispatch`)
-
----
-
-### 🧱 Workflow Steps
-
-#### 1. ✅ Checkout Repository
-Pulls the repository contents.
-
-#### 2. 💎 Setup Ruby & Dependencies
-- Installs Ruby
-- Installs Jekyll and Bundler dependencies
-
-#### 3. 🛠️ Build Site
-Builds the Jekyll site into `./_site`:
-
-```bash
-bundle exec jekyll build
+```
+.github/workflows/static.yml
 ```
 
-#### 4. 🔍 Generate Lunr Search Index
-- Python script parses generated HTML
-- Produces `search-index.json` into `_site/` directory
+### Triggers
 
-#### 5. 📤 Deploy to GitHub Pages
-Deploys the `_site` directory using `actions/deploy-pages`.
+* Pushes to `main`
+* Manual runs (`workflow_dispatch`)
 
-#### 6. 🔗 Crawl Deployed Site
-After deployment, a [Python crawler](.github/scripts/linkcheck.py):
+### Job Stages
 
-- Scans all internal links
-- Detects broken links
-- Detects orphaned pages
-- Marks external links as `"external"`
-- Marks special schemes (`mailto:`, `tel:`, `javascript:`)
-
-#### 7. 📤 Upload Reports
-Uploads:
-
-- `link-summary.md`
-- `link-report.html`
-
-as workflow artifacts.
+1. Checkout repository
+2. Setup Ruby & dependencies
+3. Build Jekyll site
+4. Generate Lunr search index
+5. Deploy to GitHub Pages
+6. Crawl live site for link integrity
+7. Upload validation reports
 
 ---
 
-## 🔍 Post‑Deploy Link Checking
+## 🎨 Theme & Layout
 
-After the static site is deployed to GitHub Pages, a dedicated **post‑deploy validation stage** to ensure the published site is structurally sound and free of broken internal links.
+* **Theme:** `minima`
+* **Default layout:** `_layouts/default.html`
+* **Header:** `_includes/custom-header.html`
 
----
-
-### 🔎 What the Link Checker Does
-
-Once GitHub Pages finishes deploying the `_site` artifact, the workflow:
-
-1. Crawls the **live** site (not the build output)
-2. Follows internal HTTP/HTTPS links
-3. Marks:
-   - **Broken internal links** (non‑200/301/302)
-   - **External links** as `"external"`
-   - **Special schemes** (`mailto:`, `tel:`, `javascript:`)
-4. Detects **orphaned pages** not linked from anywhere
-5. Generates:
-   - A human‑readable Markdown summary (`link-summary.md`)
-   - A full HTML report (`link-report.html`)
-6. Uploads both as workflow artifacts
-7. Adds a summary block to the GitHub Actions UI
-
-This ensures the deployed site is always internally consistent and that regressions are caught immediately.
-
----
-
-### 🔗 Viewing Post‑Deploy Link Check Results
-
-To inspect the link checker output after a deployment:
-
-1. Open the repository on GitHub.
-2. Go to **Actions** → select the latest **static site** workflow run.
-3. In the left sidebar, click the **linkcheck** job.
-4. At the top of the job, read the **Link Checker Results** summary.
-5. Scroll to the bottom of the job to download the artifacts:
-   - `link-summary.md` (quick overview)
-   - `link-report.html` (full detailed report)
-
-These results reflect the **live deployed site**, not the build output, ensuring accurate link validation.
-
-## 🎨 Minima Configuration
-
-- **Theme:** `minima` (set in `_config.yml`)
-- **Defaults:** `layout: default` applied to generated pages
-- **Layout:** `_layouts/default.html` includes the custom header
-- **Header:** `_includes/custom-header.html` contains:
-  - Navigation
-  - Responsive hamburger menu
-  - Global search bar
+  * Navigation
+  * Responsive menu
+  * Global search bar
 
 ---
 
 ## 🧪 Testing Locally
 
-To build and preview the site locally:
+To preview the site locally, install **Ruby 3.1+** and **Python 3.8+**. These versions match the GitHub Actions environment and ensure compatibility with Jekyll, Requests, and BeautifulSoup4.
+
+### 🔧 Install Dependencies
 
 ```bash
-ruby -v
+# Ruby dependencies
 gem install bundler
 bundle install --jobs 4 --retry 3
-bundle exec jekyll serve --host 0.0.0.0 --port 4000
+
+# Python dependencies
+python3 -m pip install requests beautifulsoup4
 ```
 
-To install Ruby using Ansible:
+### 🛠️ Build & Serve the Site
 
 ```bash
-ansible-playbook -i inventory/ansible/inventory.ini -k playbooks/ruby/deploy_ruby.yml -l ansible-0
+# build the Jekyll site
+bundle exec jekyll build --destination ./_site
+
+# generate the Lunr search index
+python3 .github/scripts/generate_lunr_index.py
+
+# serve the site locally
+bundle exec jekyll serve --skip-initial-build --host 0.0.0.0 --port 4000
 ```
+
+The site will be available at:
+
+```
+http://localhost:4000
+```
+
+### 🔗 Test the Link Crawler
+
+In a second terminal:
+
+```bash
+python3 .github/scripts/linkcheck.py http://localhost:4000
+```
+
+This runs the same link‑integrity scan used in the post‑deploy GitHub Actions workflow.
+
+---
 
 ## 📝 Notes
 
-- Only **internal HTTP/HTTPS links** count as broken.
-- External links and special schemes appear in reports but do not affect the broken link count.
-- Crawling happens **after deployment** for accuracy.
-- The canonical source of truth for content is the **Ansible playbook**, not this repository.
+- Only **internal HTTP/HTTPS links** count as broken.  
+- External links and special schemes appear in reports but do not affect the broken link count.  
+- Crawling happens **after deployment** for accuracy.  
+- The canonical source of truth for content is the **Ansible playbook**, not this repository.  
+- The search index (`search-index.json`) is generated automatically during the workflow and should **not** be committed to the repository.  
+- The search page (`search.html`) is the only manually maintained HTML file; all other content is generated from Markdown.  
+- Local builds may differ slightly from GitHub Pages due to environment differences; the post‑deploy crawler always reflects the **true deployed state**.  
+- The link checker only analyzes **published** pages — drafts or excluded files are not scanned.  
+- Any manual edits to generated Markdown will be overwritten on the next sync from Redmine.

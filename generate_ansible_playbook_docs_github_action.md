@@ -108,7 +108,7 @@ jobs:
 * **Generated Documentation:** The following markdown files are created by the Python script:
   * `playbooks/README.md`
   * `docs/playbooks/README.md`
-  * `docs/playbooks/*.md`
+  * `docs/playbooks/<playbook name>.md`
 * **Commit Logic:**  
   * Stages only playbook markdowns and the central index.  
   * Commits only if changes exist (`git diff --cached --quiet` prevents empty commits).  

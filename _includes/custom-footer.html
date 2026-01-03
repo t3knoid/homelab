@@ -1,0 +1,31 @@
+<footer class="site-footer" role="contentinfo" aria-label="Site footer">
+  <style>
+    .site-footer { padding: 0.6rem 0; background: #fff; border-top: 1px solid #e6e6e6; }
+    .site-footer-inner {
+      box-sizing: border-box;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .footer-toplink {
+      text-decoration: none;
+      font-weight: 600;
+      color: #0366d6;
+      padding: 6px 8px;
+      border-radius: 6px;
+    }
+    .footer-toplink:hover { text-decoration: underline; }
+    .footer-meta { color: #555; font-size: 0.9rem; }
+  </style>
+
+  <div class="site-footer-inner">
+    <a class="footer-toplink" href="#top" aria-label="Back to top">↑ Back to top</a>
+    <div class="footer-meta">Last published: <time datetime="{{ site.time | date_to_xmlschema }}">{{ site.time | date: "%Y-%m-%d %H:%M %Z" }}</time></div>
+  </div>
+
+</footer>

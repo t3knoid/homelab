@@ -101,9 +101,18 @@
 
 /* Page layout: constrain main content and add horizontal padding */
 .site-main {
-  box-sizing: border-box;
-  max-width: 1024px;
-  margin: 0 20px;
-  padding: 0 .1rem;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
 }
 
+@media (min-width: 1024px) {
+  .site-main {
+    padding: 0 3rem;
+  }
+}
+
+/* Optional fallback for very small screens */
+body {
+  padding: 0 0.5rem;
+}

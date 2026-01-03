@@ -260,7 +260,7 @@ Each project is processed using `setup_project.yml`, which calls:
 | Add repositories        | `setup_repositories.yml`                        |
 | Register inventories    | `setup_inventories.yml` → `setup_inventory.yml` |
 | Add task templates      | `setup_templates.yml` → `setup_template.yml`    |
-| **Add scheduled tasks** | **`setup_schedules.yml`**                        |
+| Add scheduled tasks     | `setup_schedules.yml`                           |
 
 ---
 
@@ -332,4 +332,3 @@ Each project is processed using `setup_project.yml`, which calls:
 └──────────────────────────────────────────────┘
 ```
 {% endraw %}
-

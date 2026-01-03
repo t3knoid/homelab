@@ -4,7 +4,7 @@ title: "Generate Ansible Inventory Docs GitHub Action"
 
 # Generate Ansible Inventory Docs GitHub Action
 
-This GitHub Action automatically generates documentation for the Ansible inventories whenever changes are pushed to the `main` branch or a pull request is created. It uses a Python script to generate markdown files for each inventory and commits the changes back to the repository.
+This GitHub Action automatically generates documentation for the Ansible inventories whenever changes are pushed to the `main` branch or a pull request is created. It uses the [Generate Inventory Documentation Script](generate_inventory_documentation_script.md) Python script to generate markdown files for each inventory, and maintains a global index of inventories, and commits the changes back to the repository.
 
 ---
 
@@ -22,24 +22,31 @@ on:
 
 jobs:
   generate-inventory-docs:
+    # Only run the job logic when the branch is main
+    if: github.ref == 'refs/heads/main'
+    
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the repo
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0  # needed for committing back
 
+      # Set up Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
+      # Install dependencies (if any)
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      # Run the documentation generator
       - name: Generate inventory docs
         run: |
           python ./scripts/generate_inventory_docs.py
@@ -48,13 +55,15 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git pull
+          git pull origin main
           git add inventory/README.md docs/inventories/README.md docs/inventories/*.md
+
           if ! git diff --cached --quiet; then
             git commit -m "chore(docs): auto-generate inventory documentation"
-            git push origin HEAD:${{ github.ref }}
+            git push origin main
           else
             echo "No documentation changes to commit."
+          fi
 ```
 {% endraw %}
 
@@ -87,14 +96,20 @@ jobs:
 
 ---
 
-## ⚡ Notes
+## ⚡ Summary
 
-* The workflow only commits changes if there are actual documentation updates.
-* `fetch-depth: 0` is necessary to ensure git history is available for committing.
-* Python dependencies must be declared in `requirements.txt`.
-* Generated documentation is saved in:
-
+* **Trigger:** Runs on every push to `main` and on pull requests.  
+* **Checkout:** Uses `actions/checkout@v4` with `fetch-depth: 0` so commits can be pushed back.  
+* **Python Setup:** Uses Python 3.11 (adjustable).  
+* **Dependencies:** Installs from `requirements.txt` (currently only `PyYAML`).
+* **Script Execution:** Runs `scripts/generate_inventory_docs.py` to regenerate inventory documentation.
+* **Generated Documentation:** The following markdown files are created by the Python script:
   * `inventory/README.md`
-  * `docs/inventories/README.md`
-  * `docs/inventories/*.md`
+  * `docs/inventory/README.md`
+  * `docs/inventory/*.md`
+* **Commit Logic:**  
+  * Stages only inventory markdowns and the central index.  
+  * Commits only if changes exist (`git diff --cached --quiet` prevents empty commits).  
+  * Pushes back to the branch that triggered the workflow.  
+* **Permissions:** Requires repository **Actions → Workflow permissions** set to **Read and write** so the built‑in `GITHUB_TOKEN` can push commits.
 

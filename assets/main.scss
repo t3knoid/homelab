@@ -98,3 +98,12 @@
 .site-nav a:hover::before {
   opacity: 1;
 }
+
+/* Page layout: constrain main content and add horizontal padding */
+.site-main {
+  box-sizing: border-box;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+

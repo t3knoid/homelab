@@ -238,7 +238,7 @@ Each project is processed using `setup_project.yml`, which calls:
 * `setup_repositories.yml`  
 * `setup_inventories.yml` → `setup_inventory.yml`  
 * `setup_templates.yml` → `setup_template.yml`  
-* `setup_schedules.yml` → creates scheduled tasks
+* `setup_schedules.yml` → `creates scheduled tasks`
 
 ---
 

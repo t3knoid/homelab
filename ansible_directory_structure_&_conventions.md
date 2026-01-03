@@ -12,23 +12,23 @@ This document provides a detailed reference for the organization of the Ansible 
 ## Top-Level Files
 | File | Purpose |
 |------|---------|
-| `README.md` | Project overview and usage instructions |
-| `all.yml` | Global variables applied across inventories and playbooks |
-| `ansible.cfg` | Core Ansible configuration (defaults, paths, privilege escalation) |
-| `dynamic_inventory.py` | Script for generating dynamic inventory data |
-| `generate_role_docs.py` | Utility to auto-generate documentation for roles |
+| README.md | Project overview and usage instructions |
+| all.yml | Global variables applied across inventories and playbooks |
+| ansible.cfg | Core Ansible configuration (defaults, paths, privilege escalation) |
+| dynamic_inventory.py | Script for generating dynamic inventory data |
+| generate_role_docs.py | Utility to auto-generate documentation for roles |
 
 ---
 
 ## Key Directories
 | Directory | Purpose |
 |-----------|---------|
-| `filter_plugins/` | Custom Jinja2 filters for inventory and playbook logic |
-| `inventory/` | Environment- and service-specific inventories (e.g., `dns`, `grafana`, `jenkins`) |
-| `playbooks/` | Task orchestration grouped by service or platform |
-| `roles/` | Modular building blocks for automation (service-specific setups) |
-| `roles/global/` | Shared tasks and variables used across multiple roles |
-| `roles/users/` | User and group management tasks |
+| filter_plugins/ | Custom Jinja2 filters for inventory and playbook logic |
+| inventory/ | Environment- and service-specific inventories (e.g., `dns`, `grafana`, `jenkins`) |
+| playbooks/ | Task orchestration grouped by service or platform |
+| roles/ | Modular building blocks for automation (service-specific setups) |
+| roles/global/ | Shared tasks and variables used across multiple roles |
+| roles/users/ | User and group management tasks |
 
 ---
 
@@ -74,4 +74,3 @@ ansible/
 └── filter_plugins/      # Custom Jinja2 filters
 ```
 {% endraw %}
-

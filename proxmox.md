@@ -21,7 +21,7 @@ Installation follows the official [Proxmox instructions](https://www.proxmox.com
 
 ---
 
-## 🖧 Host Details
+## 🖥️ Host Details
 
 Each node uses the same hardware platform: [ACEMAGIC S1 Mini PC](https://www.amazon.com/ACEMAGIC-S1-Screen-Intel-3-4GHz/dp/B0CJV69QSN).  
 
@@ -102,4 +102,3 @@ By combining **Proxmox clustering** with **Ceph distributed storage**, the lab a
 - Hands‑on experience with production‑grade virtualization and storage technologies  
 
 This makes the homelab not just a sandbox, but a true mirror of modern infrastructure practices.
-

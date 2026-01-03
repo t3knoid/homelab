@@ -166,23 +166,22 @@ All Markdown content in the root folder is processed by Jekyll during the GitHub
            ▼
    ┌───────────────────────────────┐
    │ GitHub Repository (homelab)   │
-   │ Root folder contains Markdown  │
-   │ README.md is protected         │
+   │ Root folder contains Markdown │
+   │ README.md is protected        │
    └───────┬───────────────────────┘
            │ Trigger
            ▼
    ┌───────────────────────────────┐
-   │ GitHub Actions Workflow        │
+   │ GitHub Actions Workflow       │
    │                               │
-   │ - Converts Markdown → HTML     │
-   │ - Pushes HTML to gh-pages      │
+   │ - Converts Markdown → HTML    │
+   │ - Pushes HTML to gh-pages     │
    └───────┬───────────────────────┘
            │ Serve
            ▼
    ┌───────────────────────────────┐
    │ GitHub Pages                  │
-   │ https://homelab.refol.us       │
+   │ https://homelab.refol.us      │
    └───────────────────────────────┘
 ```
 {% endraw %}
-

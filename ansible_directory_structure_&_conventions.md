@@ -10,6 +10,7 @@ This document provides a detailed reference for the organization of the Ansible 
 ---
 
 ## Top-Level Files
+
 | File | Purpose |
 |------|---------|
 | README.md | Project overview and usage instructions |
@@ -21,6 +22,7 @@ This document provides a detailed reference for the organization of the Ansible 
 ---
 
 ## Key Directories
+
 | Directory | Purpose |
 |-----------|---------|
 | filter_plugins/ | Custom Jinja2 filters for inventory and playbook logic |
@@ -33,6 +35,7 @@ This document provides a detailed reference for the organization of the Ansible 
 ---
 
 ## Examples
+
 - **Inventory**: `inventory/dns` → DNS server definitions  
 - **Playbook**: `playbooks/provision_vm.yml` → VM provisioning workflow  
 - **Role**: `roles/nginx_setup/` → Configures Nginx reverse proxy  
@@ -40,6 +43,7 @@ This document provides a detailed reference for the organization of the Ansible 
 ---
 
 ## Naming Conventions
+
 To ensure clarity and maintainability, the following conventions are applied:
 
 - **Inventories**: lowercase, named after service/environment (`dns`, `jenkins`, `truenas`)  
@@ -52,6 +56,7 @@ Each role must include a `README.md` for documentation.
 ---
 
 ## Visual Diagram
+
 Here’s a simplified view of the repository hierarchy:
 
 {% raw %}

@@ -5,7 +5,7 @@ title: "️ Domain Controller Overview"
 # 🖥️ Domain Controller Overview
 
 A **standalone domain controller** provides centralized authentication and directory services for all hosts connected to the **refol.us** domain.  
-This controller is deployed as a **Windows Server 2022 virtual machine** hosted in **Proxmox**, ensuring flexibility, scalability, and ease of management in the homelab environment.
+This controller is deployed as a **Windows Server 2022 virtual machine** hosted in **[Proxmox](proxmox.md)**, ensuring flexibility, scalability, and ease of management in the homelab environment.
 
 ---
 

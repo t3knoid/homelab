@@ -6,7 +6,7 @@ title: "️ GitHub Action: Generate Playbook Docs"
 
 ## 📖 Purpose
 
-This workflow ensures that documentation for all Ansible roles is **automatically generated and kept up to date**. Whenever code is pushed or a pull request is opened, the workflow runs the [Generate Role Documentation Script](generate_role_documentation_script.md) script, which regenerates per‑playbook markdown files, builds folder‑level summaries, maintains a global index of playbooks, and commits the changes back to the repository.
+This workflow ensures that documentation for all Ansible roles is **automatically generated and kept up to date**. Whenever code is pushed or a pull request is opened, the workflow runs the [Generate Playbook Documentation Script](generate_playbook_documentation_script.md) script, which regenerates per‑playbook markdown files, builds folder‑level summaries, maintains a global index of playbooks, and commits the changes back to the repository.
 
 
 ## 🛠 Workflow File

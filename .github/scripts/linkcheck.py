@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
+import argparse
 from collections import deque
 import html
 
@@ -89,7 +90,13 @@ def crawl(start):
 
         report[page] = page_entry
 
-crawl(BASE_URL)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Crawl a site and report broken/internal links")
+    parser.add_argument("base_url", nargs="?", default=BASE_URL,
+                        help=f"Base URL to start crawling (default: {BASE_URL})")
+    args = parser.parse_args()
+
+    crawl(args.base_url)
 
 # -----------------------------
 # Detect orphaned pages

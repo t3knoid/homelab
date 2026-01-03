@@ -25,13 +25,23 @@
       }
     }
     .site-header {
-      padding: 0.6rem 1rem;
+      padding: 0.6rem 0;
       background: #fff;
       border-bottom: 1px solid #e6e6e6;
       position: relative;
+      display: block;
+    }
+
+    /* Constrain header content to match the main content width */
+    .site-header-inner {
+      box-sizing: border-box;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 0.5rem;
     }
 
     /* Hide menu by default on small screens */
@@ -85,7 +95,7 @@
     /* Ensure hamburger sits above the open menu so user can always close it */
     .nav-toggle-label { position: relative; z-index: 1100; }
     .site-nav-wrapper { position: absolute; top: 100%; left: 0; right: 0; z-index: 1000; }
-    .site-nav { background: #fff; box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+    .site-nav { background: #fff; box-shadow: 0 6px 18px rgba(0,0,0,0.08); max-width: 1100px; margin: 0 auto; }
 
     /* Focus styles */
     .nav-toggle-label:focus,
@@ -113,8 +123,8 @@
       .site-nav a { padding: 6px 12px; }
     }
   </style>
-
   <!-- 🔍 Search bar -->
+  <div class="site-header-inner">
   <form action="/search.html" method="GET" class="header-search-form">
     <input 
       type="text" 
@@ -192,6 +202,7 @@
     })();
   </script>
 
+  </div>
 </nav>
 
 

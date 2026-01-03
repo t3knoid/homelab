@@ -87,6 +87,7 @@ This site uses a **zero-backend static architecture** with client-side search an
 * Output written to `_site/`
 
 ```bash
+bundle install
 bundle exec jekyll build
 ```
 

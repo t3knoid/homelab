@@ -196,7 +196,7 @@ After deployment:
 - **Repository:** Add `https://github.com/t3knoid/ansible.git` (main branch, no access key).  
 - **Key Store:** Create two *Login with password* keys:
   - Vault password  
-  - Semaphore user credentials  
+  - Semaphore user credentials
 
 ### Task Templates & Inventory
 - **Inventory:**  
@@ -217,9 +217,6 @@ After deployment:
 
 ---
 
-Here’s an updated version of your wiki section that cleanly incorporates the new **GitHub Action trigger workflow**, while preserving the tone, structure, and formatting of your existing documentation.
-
----
 
 ## 📘 Set Up using Ansible
 

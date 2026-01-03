@@ -106,10 +106,9 @@ jobs:
 * **Generated Documentation:** The following markdown files are created by the Python script:
   * `inventory/README.md`
   * `docs/inventory/README.md`
-  * `docs/inventory/*.md`
+  * `docs/inventory/<inventory folder name>.md`
 * **Commit Logic:**  
   * Stages only inventory markdowns and the central index.  
   * Commits only if changes exist (`git diff --cached --quiet` prevents empty commits).  
   * Pushes back to the branch that triggered the workflow.  
 * **Permissions:** Requires repository **Actions → Workflow permissions** set to **Read and write** so the built‑in `GITHUB_TOKEN` can push commits.
-

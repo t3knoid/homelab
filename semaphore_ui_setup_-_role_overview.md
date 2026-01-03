@@ -227,7 +227,7 @@ roles/semaphoreui_setup/tasks/setup/
 * Reads metadata from `projects_meta.yml`  
 * Compares with existing projects  
 * Creates missing projects  
-* Passes new project IDs to downstream tasks  
+* Passes new project IDs to downstream tasks
 
 ### **5. Component Setup (Per Project)**
 
@@ -238,7 +238,7 @@ Each project is processed using `setup_project.yml`, which calls:
 * `setup_repositories.yml`  
 * `setup_inventories.yml` → `setup_inventory.yml`  
 * `setup_templates.yml` → `setup_template.yml`  
-* **`setup_schedules.yml` → creates scheduled tasks**  
+* `setup_schedules.yml` → `creates scheduled tasks`
 
 ---
 
@@ -260,7 +260,7 @@ Each project is processed using `setup_project.yml`, which calls:
 | Add repositories        | `setup_repositories.yml`                        |
 | Register inventories    | `setup_inventories.yml` → `setup_inventory.yml` |
 | Add task templates      | `setup_templates.yml` → `setup_template.yml`    |
-| **Add scheduled tasks** | **`setup_schedules.yml`**                        |
+| Add scheduled tasks     | `setup_schedules.yml`                           |
 
 ---
 
@@ -332,4 +332,3 @@ Each project is processed using `setup_project.yml`, which calls:
 └──────────────────────────────────────────────┘
 ```
 {% endraw %}
-

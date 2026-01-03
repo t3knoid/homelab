@@ -79,11 +79,11 @@ This approach ensures that every configuration change is **trackable, testable, 
 
 Networking is designed for high availability and resilience:
 
-* **[Nginx reverse proxy cluster](reverse-proxy.md)** for failover load balancing, centralized routing, and automated TLS via Let’s Encrypt
-* Redundant **[Pi-hole DNS](pi-hole_dns.md)** instances for DNS resolution, ad/telemetry filtering, and local service discovery
-* The **[DMZ Network Design and Implementation](dmz_network_design_and_implementation.md)** document details the dedicated DMZ VLAN for the reverse-proxy servers that improves security and isolate public-facing services.
+* **[Nginx reverse proxy cluster](reverse-proxy.md)** for failover load balancing, centralized routing, and automated TLS via Let’s Encrypt  
+* **[Certificates](certificates.md)** issued and managed through [Certbot](certbot.md), providing secure HTTPS for all public‑facing services  
+* Redundant **[Pi-hole DNS](pi-hole_dns.md)** instances for DNS resolution, ad/telemetry filtering, and local service discovery  
+* The **[DMZ Network Design and Implementation](dmz_network_design_and_implementation.md)** document details the dedicated DMZ VLAN for the reverse‑proxy servers that improves security and isolates public‑facing services.
 
----
 
 ## 📘 Project Management
 

@@ -52,8 +52,9 @@ The site is produced through a **fully automated pipeline**, from wiki export to
 1. **Redmine wiki → Markdown** (Ansible)
 2. **Markdown → HTML** (Jekyll)
 3. **HTML → Search index** (Python + Lunr.js)
-4. **Deploy static site** (GitHub Pages)
-5. **Crawl live site** (post-deploy link checker)
+4. **Build site map** (Python)
+5. **Deploy static site** (GitHub Pages)
+6. **Crawl live site** (post-deploy link checker)
 
 Everything is reproducible, static, and dependency-pinned.
 
@@ -72,7 +73,7 @@ This site uses a **zero-backend static architecture** with client-side search an
 | Templating            | **Liquid**                  | Includes, layouts, relative paths           |
 | Search Engine         | **Lunr.js**                 | Client-side full-text search                |
 | Search Index Builder  | **Python + BeautifulSoup4** | Extracts content from generated HTML        |
-| Automation            | **GitHub Actions**          | Build, index, deploy, validate              |
+| Automation            | **GitHub Actions**          | Build, index, site map, deploy, validate              |
 | Hosting               | **GitHub Pages**            | Serves the final static site                |
 | Validation            | **Python crawler**          | Post-deploy link integrity checks           |
 
@@ -116,30 +117,6 @@ _site/search-index.json
 ```
 
 This file is published directly by GitHub Pages and fetched by the browser at runtime.
-
----
-
-### 🔗 Site Map Generation (HTML)
-
-An automated step generates a human-friendly, link-based HTML site map that is included at `/site-map.html` and is useful for discovery and navigation.
-
-Key points:
-
-- The generator script is `.github/scripts/generate_site_map.py`.
-- By default the script writes an include file: `_includes/sitemap-content.html` which is then pulled into the published page `site-map.html`.
-- Because the script writes an include, the site is rebuilt so the updated include is rendered into the final HTML (the CI workflow runs a small rebuild step after sitemap generation).
-
-Quick local usage:
-
-```bash
-# generate the sitemap include (default output: _includes/sitemap-content.html)
-python3 .github/scripts/generate_site_map.py
-
-# rebuild so the generated include is rendered into site-map.html
-bundle exec jekyll build
-```
-
-The generated page is linked from the site footer and is published as `/site-map.html` on GitHub Pages.
 
 ---
 
@@ -209,6 +186,29 @@ _includes/custom-header.html
 ```
 
 This ensures search is available on every page.
+---
+
+### 🔗 Site Map Generation (HTML)
+
+An automated step generates a human-friendly, link-based HTML site map that is included at `/site-map.html` and is useful for discovery and navigation.
+
+Key points:
+
+- The generator script is `.github/scripts/generate_site_map.py`.
+- By default the script writes an include file: `_includes/sitemap-content.html` which is then pulled into the published page `site-map.html`.
+- Because the script writes an include, the site is rebuilt so the updated include is rendered into the final HTML (the CI workflow runs a small rebuild step after sitemap generation).
+
+Quick local usage:
+
+```bash
+# generate the sitemap include (default output: _includes/sitemap-content.html)
+python3 .github/scripts/generate_site_map.py
+
+# rebuild so the generated include is rendered into site-map.html
+bundle exec jekyll build
+```
+
+The generated page is linked from the site footer and is published as `/site-map.html` on GitHub Pages.
 
 ---
 
@@ -231,9 +231,11 @@ Workflow definition:
 2. Setup Ruby & dependencies
 3. Build Jekyll site
 4. Generate Lunr search index
-5. Deploy to GitHub Pages
-6. Crawl live site for link integrity
-7. Upload validation reports
+5. Generate site map
+6. Rebuild Jekyll site (to include site map)
+7. Deploy to GitHub Pages
+8. Crawl live site for link integrity
+9. Upload validation reports
 
 ---
 

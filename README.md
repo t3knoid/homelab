@@ -119,6 +119,30 @@ This file is published directly by GitHub Pages and fetched by the browser at ru
 
 ---
 
+### 🔗 Site Map Generation (HTML)
+
+An automated step generates a human-friendly, link-based HTML site map that is included at `/site-map.html` and is useful for discovery and navigation.
+
+Key points:
+
+- The generator script is `.github/scripts/generate_site_map.py`.
+- By default the script writes an include file: `_includes/sitemap-content.html` which is then pulled into the published page `site-map.html`.
+- Because the script writes an include, the site is rebuilt so the updated include is rendered into the final HTML (the CI workflow runs a small rebuild step after sitemap generation).
+
+Quick local usage:
+
+```bash
+# generate the sitemap include (default output: _includes/sitemap-content.html)
+python3 .github/scripts/generate_site_map.py
+
+# rebuild so the generated include is rendered into site-map.html
+bundle exec jekyll build
+```
+
+The generated page is linked from the site footer and is published as `/site-map.html` on GitHub Pages.
+
+---
+
 ### 3️⃣ Deployment (GitHub Pages)
 
 * The `_site/` directory is uploaded as a Pages artifact

@@ -16,7 +16,7 @@ A multi-node **[Proxmox Virtual Environment](proxmox.md)** cluster hosts both Li
 
 * Standardized Ubuntu 24.04 VM templates via **[cloud-init](cloud-init.md)**
 * [Automated virtual machine provisioning](automated_virtual_machine_provisioning.md) with **[Ansible](ansible.md)**
-* Docker-based application deployment where containerization is appropriate
+* **[Docker](docker.md)**-based application deployment where containerization is appropriate
 * Seamless integration with the home network for reliability
 
 This foundation enables production-like services and experimentation with new technologies.
@@ -55,8 +55,8 @@ Automation and reproducibility are central to the lab:
 * **[Ansible](ansible.md)** for provisioning, configuration, and deployment
 * **[Semaphore](semaphore.md)** as a web interface for playbook execution
 * **[Terraform](terraform.md)** (driven through Ansible) for declarative infrastructure
-* Jenkins for CI/CD pipelines and automation workflows
-* GitHub Actions for cloud-based CI/CD and artifact automation
+* **[Jenkins](jenkins.md)** for CI/CD pipelines and automation workflows
+* **[GitHub](github.md)** Actions for cloud-based CI/CD and artifact automation
 
 Together, these tools create a fully Infrastructure-as-Code environment aligned with modern DevOps practices.
 

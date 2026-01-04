@@ -4,7 +4,7 @@ title: "Certificates"
 
 # 🔒 Certificates
 
-Web certificates are managed using **Certbot**, a widely used tool for obtaining trusted SSL/TLS certificates from **Let’s Encrypt**.  
+Web certificates are managed using **[Certbot](certbot.md)**, a widely used tool for obtaining trusted SSL/TLS certificates from **Let’s Encrypt**.  
 Certificates are staged inside the reverse proxy server under `/data/certs`, with a dedicated folder for each host.  
 Automation is handled via **Ansible playbooks**, ensuring consistency and repeatability across environments.
 

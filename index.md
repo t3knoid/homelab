@@ -16,7 +16,7 @@ A multi-node **[Proxmox Virtual Environment](proxmox.md)** cluster hosts both Li
 
 * Standardized Ubuntu 24.04 VM templates via **[cloud-init](cloud-init.md)**
 * [Automated virtual machine provisioning](automated_virtual_machine_provisioning.md) with **[Ansible](ansible.md)**
-* Docker-based application deployment where containerization is appropriate
+* **[Docker](docker.md)**-based application deployment where containerization is appropriate
 * Seamless integration with the home network for reliability
 
 This foundation enables production-like services and experimentation with new technologies.
@@ -55,8 +55,8 @@ Automation and reproducibility are central to the lab:
 * **[Ansible](ansible.md)** for provisioning, configuration, and deployment
 * **[Semaphore](semaphore.md)** as a web interface for playbook execution
 * **[Terraform](terraform.md)** (driven through Ansible) for declarative infrastructure
-* Jenkins for CI/CD pipelines and automation workflows
-* GitHub Actions for cloud-based CI/CD and artifact automation
+* **[Jenkins](jenkins.md)** for CI/CD pipelines and automation workflows
+* **[GitHub](github.md)** Actions for cloud-based CI/CD and artifact automation
 
 Together, these tools create a fully Infrastructure-as-Code environment aligned with modern DevOps practices.
 
@@ -79,11 +79,11 @@ This approach ensures that every configuration change is **trackable, testable, 
 
 Networking is designed for high availability and resilience:
 
-* **[Nginx reverse proxy cluster](reverse-proxy.md)** for failover load balancing, centralized routing, and automated TLS via Let’s Encrypt
-* Redundant **[Pi-hole DNS](pi-hole_dns.md)** instances for DNS resolution, ad/telemetry filtering, and local service discovery
-* The **[DMZ Network Design and Implementation](dmz_network_design_and_implementation.md)** document details the dedicated DMZ VLAN for the reverse-proxy servers that improves security and isolate public-facing services.
+* **[Nginx reverse proxy cluster](reverse-proxy.md)** for failover load balancing, centralized routing, and automated TLS via Let’s Encrypt  
+* **[Certificates](certificates.md)** issued and managed through [Certbot](certbot.md), providing secure HTTPS for all public‑facing services  
+* Redundant **[Pi-hole DNS](pi-hole_dns.md)** instances for DNS resolution, ad/telemetry filtering, and local service discovery  
+* The **[DMZ Network Design and Implementation](dmz_network_design_and_implementation.md)** document details the dedicated DMZ VLAN for the reverse‑proxy servers that improves security and isolates public‑facing services.
 
----
 
 ## 📘 Project Management
 

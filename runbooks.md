@@ -50,7 +50,8 @@ title: "Runbooks"
 | **[Virtual Machine Snapshot Runbook](virtual_machine_snapshot_runbook.md)**      | Instructions to create and manage snapshots of virtual machines in the home lab. |
 | **[Ubuntu Virtual Machine Disk Expansion Runbook](ubuntu_virtual_machine_disk_expansion_runbook.md)**       | Instructions to expand disk size for Ubuntu virtual machines.                    |
 | **[Deploy Linux Security Updates Runbook](deploy_linux_security_updates_runbook.md)** | Instructions to apply security updates to Linux hosts in the home lab.           |
-
+| **[Proxmox Cluster Update Runbook](proxmox_cluster_update_runbook.md)**        | Step‑by‑step instructions to safely update a three‑node Proxmox cluster.         |
+  
 ---
 
 ### 📄 Templates & Miscellaneous

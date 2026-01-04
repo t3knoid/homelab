@@ -59,15 +59,21 @@ def normalize_link(base, href):
 
 
 def extract_links(html_path, root):
-    """Extract internal .html links from a page."""
+    """Extract internal .html links from the <main> content only."""
     full_path = root / html_path
     if not full_path.exists():
         return []
 
     soup = BeautifulSoup(full_path.read_text(encoding="utf-8"), "html.parser")
+
+    # Only parse inside <main>
+    main = soup.find("main")
+    if not main:
+        return []  # no main content, skip
+
     links = []
 
-    for a in soup.find_all("a", href=True):
+    for a in main.find_all("a", href=True):
         href = a["href"]
         if not is_internal_link(href):
             continue
@@ -78,7 +84,6 @@ def extract_links(html_path, root):
             links.append(normalized)
 
     return sorted(set(links))
-
 
 # ------------------------------------------------------------
 # H1 extraction

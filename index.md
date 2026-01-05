@@ -18,6 +18,7 @@ A multi-node **[Proxmox](proxmox.md) Virtual Environment** cluster hosts both Li
 * **[Automated virtual machine provisioning](automated_virtual_machine_provisioning.md)** with **[Ansible](ansible.md)**
 * **[Docker](docker.md)**-based application deployment where containerization is appropriate
 * Seamless integration with the home network for reliability
+* Use of **[WSL2](wsl2.md)** as an Ansible control node.
 
 This foundation enables production-like services and experimentation with new technologies.
 
@@ -83,6 +84,29 @@ Networking is designed for high availability and resilience:
 * **[Certificates](certificates.md)** issued and managed through [Certbot](certbot.md), providing secure HTTPS for all public‑facing services  
 * Redundant **[Pi-hole DNS](pi-hole_dns.md)** instances for DNS resolution, ad/telemetry filtering, and local service discovery  
 * The **[DMZ Network Design and Implementation](dmz_network_design_and_implementation.md)** document details the dedicated DMZ VLAN for the reverse‑proxy servers that improves security and isolates public‑facing services.
+
+A strong introduction on your main wiki page should do two things at once:
+
+1. **Explain why observability matters in a homelab**  
+2. **Set expectations for the structure of the monitoring documentation that lives deeper in the site**
+
+You don’t need to overwhelm the homepage — just give readers a clear, confident entry point into *why* Prometheus + Grafana exist in your architecture and what problems they solve.
+
+Here’s a structure that fits your clean, engineering‑first style and integrates naturally into your existing homepage.
+
+---
+
+## 📈 Monitoring & Observability
+
+The homelab includes a full monitoring stack built on **[Prometheus](prometheus.md)** and **[Grafana](grafana.md)**, providing a clear, reliable view of system health across compute, storage, networking, and applications. Metrics from every major service feed into Prometheus, while Grafana turns that data into dashboards and alerts for performance tracking and troubleshooting.
+
+👉 For the full architecture and exporter breakdown, see **[Monitoring & Observability](monitoring_&_observability.md)**.
+
+{% raw %}
+```
+Services → Exporters → Prometheus → Grafana → Alerts
+```
+{% endraw %}
 
 
 ## 📘 Project Management

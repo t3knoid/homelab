@@ -102,7 +102,7 @@ Clients on the LAN are typically configured with **two DNS servers** in order of
 {% raw %}
 ```
 Primary DNS:   192.168.2.253  (Primary Pi-hole)
-Secondary DNS: 192.168.2.254  (Secondary Pi-hole)
+Secondary DNS: 192.168.2.252  (Secondary Pi-hole)
 ```
 {% endraw %}
 
@@ -156,8 +156,7 @@ Pi-hole is integrated with **TP-Link Omada** to enforce centralized DNS usage ac
 * **Configured DNS servers:**
 
   * `192.168.2.253` (Primary Pi-hole)
-  * `192.168.2.251` (Active Directory DNS)
-  * `8.8.8.8` (External fallback)
+  * `192.168.2.252` (Secondary Pi-hole)
 
 > 📊 This configuration ensures clients prefer Pi-hole for DNS resolution while maintaining redundancy.
 
@@ -205,6 +204,49 @@ Each Pi-hole instance is configured to use its local Unbound service:
 {% endraw %}
 
 👉 See: **[Unbound](unbound.md)**
+
+---
+
+## 🧭 Making Pi‑hole Authoritative for a Domain
+
+Pi‑hole only applies **Local CNAME Records** to domains it is authoritative for.  If the domain isn’t authoritative, Pi‑hole forwards the query to Unbound, which returns **NXDOMAIN**, and the CNAME never resolves.
+
+### ✔️ Why this is needed
+Local CNAMEs for custom domains (e.g., `homelab.refol.us`) only work when Pi‑hole owns the zone.
+
+### ✔️ How to enable authority
+Add a Local DNS Record for the zone apex:
+
+{% raw %}
+```
+refol.us → 0.0.0.0
+```
+{% endraw %}
+
+This establishes Pi‑hole as authoritative for the domain.  
+After that, CNAMEs resolve normally:
+
+{% raw %}
+```
+homelab.refol.us → t3knoid.github.io
+```
+{% endraw %}
+
+### ✔️ Verify
+{% raw %}
+```
+dig homelab.refol.us
+dig homelab.refol.us CNAME
+```
+{% endraw %}
+
+Expected:
+
+{% raw %}
+```
+homelab.refol.us.  CNAME  t3knoid.github.io.
+```
+{% endraw %}
 
 ---
 

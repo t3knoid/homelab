@@ -6,16 +6,16 @@ title: "Home Lab Overview"
 
 My home lab is a fully featured technical environment designed to sharpen skills in systems engineering, automation, DevOps, and modern infrastructure management. It simulates a production-grade ecosystem using industry-standard tools, allowing me to design, test, and refine solutions across virtualization, orchestration, authentication, and CI/CD.
 
-Built on a clustered **[Proxmox](proxmox.md)** environment, the lab integrates automated provisioning, centralized identity, infrastructure-as-code, high-availability services, and modern authentication. It mirrors enterprise technologies while serving as a personal platform for continuous learning.
+Built on a clustered Proxmox environment, the lab integrates automated provisioning, centralized identity, infrastructure-as-code, high-availability services, and modern authentication. It mirrors enterprise technologies while serving as a personal platform for continuous learning.
 
 ---
 
 ## 🖥 Virtualization & Infrastructure
 
-A multi-node **[Proxmox Virtual Environment](proxmox.md)** cluster hosts both Linux and Windows workloads. Key features include:
+A multi-node **[Proxmox](proxmox.md) Virtual Environment** cluster hosts both Linux and Windows workloads. Key features include:
 
 * Standardized Ubuntu 24.04 VM templates via **[cloud-init](cloud-init.md)**
-* [Automated virtual machine provisioning](automated_virtual_machine_provisioning.md) with **[Ansible](ansible.md)**
+* **[Automated virtual machine provisioning](automated_virtual_machine_provisioning.md)** with **[Ansible](ansible.md)**
 * **[Docker](docker.md)**-based application deployment where containerization is appropriate
 * Seamless integration with the home network for reliability
 
@@ -66,7 +66,7 @@ Together, these tools create a fully Infrastructure-as-Code environment aligned 
 
 The home lab is managed as **Infrastructure-as-Code** to ensure reproducibility, versioning, and maintainability:
 
-* **Source Control:** All [Ansible code](https://github.com/t3knoid/ansible) and configuration templates are stored in **[GitHub](github.md)**, enabling history tracking, code reviews, and collaboration.
+* **Source Control:** All **[Ansible code](https://github.com/t3knoid/ansible)** and configuration templates are stored in **[GitHub](github.md)**, enabling history tracking, code reviews, and collaboration.
 * **Development Best Practices:** Use tools such as **[Visual Studio Code](visual_studio_code.md)** and **[Code Server](code_server.md)** for editing and testing IaC locally or remotely. These tools support syntax highlighting, linting, and integrated terminal workflows.
 * **Automated Provisioning:** Ansible playbooks define VM templates, service deployments, and container orchestration in a consistent, repeatable manner.
 * **Change Management:** Any updates to playbooks or templates are committed to GitHub, providing an audit trail and rollback capability.

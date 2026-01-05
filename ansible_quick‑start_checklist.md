@@ -32,6 +32,7 @@ git pull
 ---
 
 ## Environment Setup
+
 1. **Connect to a control node** (e.g., via SSH).  
 2. **Activate Python environment**:  
    ```shell
@@ -45,6 +46,12 @@ git pull
    ```shell
    git pull
    ```
+5. **Create vault password file (.vault_pass.txt)**
+
+   Create the file ~/.vault_pass.txt. Paste the vault password in this file and save it.
+   ``` text
+   vi ~/.vault_pass.txt
+   ```
 
 ---
 
@@ -55,6 +62,27 @@ Run the following command to deploy or update Ansible:
 ```shell
 INV=inventory/ansible/inventory.ini
 ansible-playbook -k -i $INV playbooks/ansible/deploy_ansible.yml
+```
+{% endraw %}
+
+---
+
+## Test Ansible
+
+{% raw %}
+``` shell
+ ansible -k all -i 127.0.0.1, -m ping
+```
+{% endraw %}
+
+This should get the following response when successful.
+
+{% raw %}
+``` shell
+127.0.0.1 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
 ```
 {% endraw %}
 

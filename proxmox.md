@@ -91,6 +91,8 @@ Container templates are stored here:
 - Use **Proxmox Backup Server** alongside Ceph for snapshotting and deduplication.  
 - Monitor Ceph health with `ceph -s` to ensure replication and recovery are functioning correctly.  
 
+A list of [Proxmox Command-Line Snippets](proxmox_command-line_snippets.md) is also available. This provides a cheat sheet of commonly used Proxmox commands.
+
 ---
 
 ## 🚀 Why This Matters

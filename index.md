@@ -14,11 +14,11 @@ Built on a clustered Proxmox environment, the lab integrates automated provision
 
 A multi‑node [Proxmox](proxmox.md) Virtual Environment cluster hosts both Linux and Windows workloads. Key features include:
 
-• Standardized Ubuntu 24.04 VM templates via **[cloud-init](cloud-init.md)**
-• **[Automated virtual machine provisioning](automated_virtual_machine_provisioning.md)** with **[Ansible](ansible.md)**
-• **[Docker](docker.md)**‑based application deployment where containerization is appropriate
-• Seamless integration with the home network for reliability
-• Use of **[WSL2](wsl2.md)** as an Ansible control node
+* Standardized Ubuntu 24.04 VM templates via **[cloud-init](cloud-init.md)**
+* **[Automated virtual machine provisioning](automated_virtual_machine_provisioning.md)** with **[Ansible](ansible.md)**
+* **[Docker](docker.md)**‑based application deployment where containerization is appropriate
+* Seamless integration with the home network for reliability
+* Use of **[WSL2](wsl2.md)** as an Ansible control node
 
 
 This foundation enables production‑like services and experimentation with new technologies.
@@ -29,9 +29,9 @@ This foundation enables production‑like services and experimentation with new 
 
 Identity and access management is modeled on enterprise practices:
 
-• Windows Server 2022 Microsoft Active Directory **[Domain Controller](domain_controller.md)**
-• **[LDAP](ldap.md)** integration for compatible services
-• Migration toward unified Single Sign‑On using **[Microsoft Azure](microsoft_azure.md)** Entra ID as an **[Oauth2 Proxy](oauth2_proxy.md)** identity provider
+* Windows Server 2022 Microsoft Active Directory **[Domain Controller](domain_controller.md)**
+* **[LDAP](ldap.md)** integration for compatible services
+* Migration toward unified Single Sign‑On using **[Microsoft Azure](microsoft_azure.md)** Entra ID as an **[Oauth2 Proxy](oauth2_proxy.md)** identity provider
 
 
 This supports testing of authentication workflows, identity federation, and authorization patterns.
@@ -42,10 +42,10 @@ This supports testing of authentication workflows, identity federation, and auth
 
 Multiple storage backends simulate real‑world architectures:
 
-• Local SSDs for performance‑critical workloads
-• **[Ceph](ceph.md)** distributed storage cluster
-• **[iSCSI](iscsi.md)** volumes hosted on **[Synology NAS](synology_nas.md)**
-• NFS/Samba shared from a **[TrueNAS](truenas.md)** server
+* Local SSDs for performance‑critical workloads
+* **[Ceph](ceph.md)** distributed storage cluster
+* **[iSCSI](iscsi.md)** volumes hosted on **[Synology NAS](synology_nas.md)**
+* NFS/Samba shared from a **[TrueNAS](truenas.md)** server
 
 
 Backups are handled by **[Proxmox Backup Server](proxmox_backup_server.md)** , providing VM snapshotting, deduplication, and disaster recovery experience.
@@ -56,11 +56,11 @@ Backups are handled by **[Proxmox Backup Server](proxmox_backup_server.md)** , p
 
 Automation and reproducibility are central to the lab:
 
-• **[Ansible](ansible.md)** for provisioning, configuration, and deployment
-• **[Semaphore](semaphore.md)** as a web interface for playbook execution
-• **[Terraform](terraform.md)** (driven through Ansible) for declarative infrastructure
-• **[Jenkins](jenkins.md)** for CI/CD pipelines and automation workflows
-• **[GitHub](github.md)** Actions for cloud‑based CI/CD and artifact automation
+* **[Ansible](ansible.md)** for provisioning, configuration, and deployment
+* **[Semaphore](semaphore.md)** as a web interface for playbook execution
+* **[Terraform](terraform.md)** (driven through Ansible) for declarative infrastructure
+* **[Jenkins](jenkins.md)** for CI/CD pipelines and automation workflows
+* **[GitHub](github.md)** Actions for cloud‑based CI/CD and artifact automation
 
 
 Together, these tools create a fully Infrastructure‑as‑Code environment aligned with modern DevOps practices.
@@ -71,10 +71,10 @@ Together, these tools create a fully Infrastructure‑as‑Code environment alig
 
 The home lab is managed as Infrastructure‑as‑Code to ensure reproducibility, versioning, and maintainability:
 
-• Source Control: All Ansible code and configuration templates are stored in **[GitHub](github.md)**
-• Development Best Practices: Editing and testing via **[Visual Studio Code](visual_studio_code.md)** and **[Code Server](code_server.md)**
-• Automated Provisioning: Ansible defines VM templates, service deployments, and container orchestration
-• Change Management: GitHub commits provide auditability and rollback capability
+* Source Control: All Ansible code and configuration templates are stored in **[GitHub](github.md)**
+* Development Best Practices: Editing and testing via **[Visual Studio Code](visual_studio_code.md)** and **[Code Server](code_server.md)**
+* Automated Provisioning: Ansible defines VM templates, service deployments, and container orchestration
+* Change Management: GitHub commits provide auditability and rollback capability
 
 
 Every configuration change is trackable, testable, and reproducible, mirroring modern DevOps workflows.
@@ -85,10 +85,10 @@ Every configuration change is trackable, testable, and reproducible, mirroring m
 
 Networking is designed for high availability and resilience:
 
-• **[Nginx reverse proxy cluster](nginx_reverse_proxy_cluster.md)** for load balancing, routing, and automated TLS
-• **[Certificates](certificates.md)** issued and managed through **[Certbot](certbot.md)**
-• Redundant **[Pi-hole DNS](pi-hole_dns.md)** instances for DNS resolution and filtering
-• A dedicated DMZ VLAN described in **[DMZ Network Design and Implementation](dmz_network_design_and_implementation.md)**
+* **[Nginx reverse proxy cluster](nginx_reverse_proxy_cluster.md)** for load balancing, routing, and automated TLS
+* **[Certificates](certificates.md)** issued and managed through **[Certbot](certbot.md)**
+* Redundant **[Pi-hole DNS](pi-hole_dns.md)** instances for DNS resolution and filtering
+* A dedicated DMZ VLAN described in **[DMZ Network Design and Implementation](dmz_network_design_and_implementation.md)**
 
 
 ---
@@ -99,20 +99,20 @@ Foundational services that power applications across the homelab:
 
 ## Databases
 
-• **[PostgreSQL](postgresql.md)** — standardized backend database for supported applications (Radarr, Sonarr, Lidarr, etc.)
+* **[PostgreSQL](postgresql.md)** — standardized backend database for supported applications (Radarr, Sonarr, Lidarr, etc.)
 
 
 ## Monitoring Stack
 
-• **[Prometheus](prometheus.md)** — metrics collection
-• **[Grafana](grafana.md)** — dashboards and visualization
-• Exporters integrated across compute, storage, and applications
+* **[Prometheus](prometheus.md)** — metrics collection
+* **[Grafana](grafana.md)** — dashboards and visualization
+* Exporters integrated across compute, storage, and applications
 
 
 ## Application Infrastructure
 
-• **Autofs** for NFS‑based backup and media mounts
-• **PBS (Proxmox Backup Server)** as a service layer for VM and container backups
+* **Autofs** for NFS‑based backup and media mounts
+* **PBS (Proxmox Backup Server)** as a service layer for VM and container backups
 
 
 This section serves as the service catalog for the homelab.
@@ -142,10 +142,10 @@ Operational runbooks provide step‑by‑step instructions for managing, trouble
 
 Key runbooks include:
 
-• VM lifecycle management
-• Service deployment
-• Backup & recovery
-• Authentication & networking workflows
+* VM lifecycle management
+* Service deployment
+* Backup & recovery
+* Authentication & networking workflows
 
 All runbooks are consolidated in the **[Runbooks](runbooks.md)** page to ensure operations are repeatable, reliable, and auditable.
 
@@ -164,13 +164,13 @@ For details on the mirroring workflow, see [Home Lab Wiki Mirror to a Static Web
 
 The home lab is a platform for continuous learning and hands‑on practice with:
 
-• Clustered virtualization and systems administration
-• Identity and access management
-• Automation and Infrastructure‑as‑Code
-• CI/CD pipelines and DevOps tooling
-• Distributed storage and backup
-• Reverse proxying and certificate management
-• DNS and network services
+* Clustered virtualization and systems administration
+* Identity and access management
+* Automation and Infrastructure‑as‑Code
+* CI/CD pipelines and DevOps tooling
+* Distributed storage and backup
+* Reverse proxying and certificate management
+* DNS and network services
 
 
 It enables prototyping, troubleshooting, and staying current with modern infrastructure technologies.

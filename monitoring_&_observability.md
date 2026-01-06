@@ -98,7 +98,8 @@ Each major subsystem in the homelab has its own monitoring page:
 
 - **Compute**
   - [Proxmox Monitoring](proxmox_monitoring.md)
-  - [VM / Node Monitoring](vm_/_node_monitoring.md)
+  - [Node Monitoring](node_monitoring.md)
+  - [Docker Monitoring](docker_monitoring.md)
 
 - **Storage**
   - [Ceph Monitoring](ceph_monitoring.md)
@@ -107,7 +108,7 @@ Each major subsystem in the homelab has its own monitoring page:
 
 - **Applications**
   - [Plex Monitoring](plex_monitoring.md)
-  - [Docker Media Stack Monitoring](docker_media_stack_monitoring.md) (Radarr, Sonarr, Lidarr, Sabnzbd, CalibreWeb, LazyLibrarian)
+  - [Media Stack Monitoring](media_stack_monitoring.md) (Radarr, Sonarr, Lidarr, Sabnzbd, CalibreWeb, LazyLibrarian)
 
 - **Networking**
   - [Pi‑hole Monitoring](pi‑hole_monitoring.md)
@@ -138,5 +139,3 @@ Alerts cover:
 - Reverse proxy errors  
 
 👉 See: **[Alerting](alerting.md)**
-
-

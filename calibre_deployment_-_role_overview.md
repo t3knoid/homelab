@@ -170,12 +170,11 @@ The Calibre deployment role demonstrates a **robust, production-like container w
 
 ## **8. Related Pages**
 
-* [Calibre-Web Deployment (Docker) - Role Overview](calibre-web_deployment_(docker)_-_role_overview.md)
+* [Calibre-Web Deployment - Role Overview](calibre-web_deployment_-_role_overview.md)
 * [Docker Command Cheat Sheet](docker_command_cheat_sheet.md)
 * [Docker Deployment Example Commands vs Ansible Tasks](docker_deployment_example_commands_vs_ansible_tasks.md)
-* [LazyLibrarian Deployment (Docker) - Role Overview](lazylibrarian_deployment_(docker)_-_role_overview.md)
-* [Lidarr Deployment (Docker) - Role Overview](lidarr_deployment_(docker)_-_role_overview.md)
-* [Radarr Deployment (Docker) - Role Overview](radarr_deployment_(docker)_-_role_overview.md)
-* [SABnzbd Deployment (Docker) - Role Overview](sabnzbd_deployment_(docker)_-_role_overview.md)
-* [Sonarr Deployment (Docker) - Role Overview](sonarr_deployment_(docker)_-_role_overview.md)
-
+* [Lazy Librarian Deployment - Role Overview](lazy_librarian_deployment_-_role_overview.md)
+* [Lidarr Deployment - Role Overview](lidarr_deployment_-_role_overview.md)
+* [Radarr Deployment - Role Overview](radarr_deployment_-_role_overview.md)
+* [SABnzbd Deployment - Role Overview](sabnzbd_deployment_-_role_overview.md)
+* [Sonarr Deployment - Role Overview](sonarr_deployment_-_role_overview.md)

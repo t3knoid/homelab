@@ -81,18 +81,9 @@ This approach ensures that every configuration change is **trackable, testable, 
 Networking is designed for high availability and resilience:
 
 * **[Nginx reverse proxy cluster](reverse-proxy.md)** for failover load balancing, centralized routing, and automated TLS via Let’s Encrypt  
-* **[Certificates](certificates.md)** issued and managed through [Certbot](certbot.md), providing secure HTTPS for all public‑facing services  
+* **[Certificates](certificates.md)** issued and managed through **[Certbot](certbot.md)**, providing secure HTTPS for all public‑facing services  
 * Redundant **[Pi-hole DNS](pi-hole_dns.md)** instances for DNS resolution, ad/telemetry filtering, and local service discovery  
 * The **[DMZ Network Design and Implementation](dmz_network_design_and_implementation.md)** document details the dedicated DMZ VLAN for the reverse‑proxy servers that improves security and isolates public‑facing services.
-
-A strong introduction on your main wiki page should do two things at once:
-
-1. **Explain why observability matters in a homelab**  
-2. **Set expectations for the structure of the monitoring documentation that lives deeper in the site**
-
-You don’t need to overwhelm the homepage — just give readers a clear, confident entry point into *why* Prometheus + Grafana exist in your architecture and what problems they solve.
-
-Here’s a structure that fits your clean, engineering‑first style and integrates naturally into your existing homepage.
 
 ---
 

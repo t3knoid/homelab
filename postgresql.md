@@ -6,7 +6,9 @@ title: "PostgreSQL"
 
 PostgreSQL is the standardized database engine used across the homelab whenever an application supports it. Services such as Radarr, Sonarr, and Lidarr all use PostgreSQL for their backend storage. The entire lifecycle—installation, configuration, database creation, access control, and backups—is automated using Ansible.
 
-If you're looking to integrate PostgreSQL into a new service, see the **[Adding PostgreSQL to a Service Contributor Guide](adding_postgresql_to_a_service_contributor_guide.md)** for a step‑by‑step workflow.
+If you're looking to integrate PostgreSQL into a new service,
+
+👉 see the **[Adding PostgreSQL to a Service Contributor Guide](adding_postgresql_to_a_service_contributor_guide.md)** for a step‑by‑step workflow.
 
 ---
 

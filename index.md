@@ -85,7 +85,7 @@ Every configuration change is trackable, testable, and reproducible, mirroring m
 
 Networking is designed for high availability and resilience:
 
-* **[Nginx reverse proxy cluster](nginx_reverse_proxy_cluster.md)** for load balancing, routing, and automated TLS
+* Nginx **[reverse-proxy](reverse-proxy.md)** cluster for load balancing, routing, and automated TLS
 * **[Certificates](certificates.md)** issued and managed through **[Certbot](certbot.md)**
 * Redundant **[Pi-hole DNS](pi-hole_dns.md)** instances for DNS resolution and filtering
 * A dedicated DMZ VLAN described in **[DMZ Network Design and Implementation](dmz_network_design_and_implementation.md)**

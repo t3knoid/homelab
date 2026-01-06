@@ -162,5 +162,4 @@ They then request tokens from Microsoft Entra ID (token endpoint) using the **cl
 
 - **[Application Registration](application_registration.md)** — Defines the blueprint that Service Principals are created from  
 - **[Entra ID OAuth2 Provisioning Ansible Role](entra_id_oauth2_provisioning_ansible_role.md)** — Automates creation of apps, secrets, and Service Principals  
-- **[Reverse Proxy Frontend Server Configuration](reverse_proxy_frontend_server_configuration.md)** — How OAuth2 Proxy integrates with Nginx and Entra ID  
-
+- **[Reverse-Proxy with OAuth2 Integration](reverse-proxy_with_oauth2_integration.md)** — How OAuth2 Proxy integrates with Nginx and Entra ID

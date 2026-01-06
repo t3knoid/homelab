@@ -40,7 +40,7 @@ Because WSL2 uses a real Linux kernel, it supports nearly all Linux software wit
 
 For details on how to use WSL2 as an Ansible Control node,
 
-👉 See: **[Using WSL2 as an Ansible Control Node](using_wsl2_as_an_ansible_control_node.md)**.
+👉 See: **[Configure WSL2 as an Ansible Control Node Runbook](configure_wsl2_as_an_ansible_control_node_runbook.md)**.
 
 ---
 

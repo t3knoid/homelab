@@ -112,7 +112,7 @@ Each major subsystem in the homelab has its own monitoring page:
 
 - **Networking**
   - [Pi‑hole Monitoring](pi‑hole_monitoring.md)
-  - [Network Device Monitoring (SNMP)](network_device_monitoring_(snmp).md)
+  - [Network Device Monitoring](network_device_monitoring.md)
 
 - **Reverse Proxy**
   - [Nginx Monitoring](nginx_monitoring.md)

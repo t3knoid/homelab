@@ -1,8 +1,8 @@
 ---
-title: "Sonarr Deployment (Docker) - Role Overview"
+title: "Sonarr Deployment - Role Overview"
 ---
 
-# Sonarr Deployment (Docker) - Role Overview
+# Sonarr Deployment - Role Overview
 
 This page documents the **Sonarr Docker deployment using Ansible**, illustrating the workflow, architecture, and best practices for deploying this containerized application with version control, persistent storage, and integration with an external PostgreSQL database.
 

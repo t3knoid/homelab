@@ -1,8 +1,8 @@
 ---
-title: "Azure PowerShell (Az) Reference Guide"
+title: "Azure PowerShell Reference Guide"
 ---
 
-# Azure PowerShell (Az) Reference Guide
+# Azure PowerShell Reference Guide
 
 This guide provides **documentation on using Azure PowerShell (Az module)** in the Home Lab. It includes installation, common commands, authentication, and uninstallation procedures.
 

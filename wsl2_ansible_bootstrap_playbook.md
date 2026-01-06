@@ -1,8 +1,8 @@
 ---
-title: "WSL2 Ansible Bootstrap Playbook (Ubuntu 24.04)"
+title: "WSL2 Ansible Bootstrap Playbook"
 ---
 
-# ✅ **WSL2 Ansible Bootstrap Playbook (Ubuntu 24.04)**
+# ✅ **WSL2 Ansible Bootstrap Playbook**
 
 {% raw %}
 ```

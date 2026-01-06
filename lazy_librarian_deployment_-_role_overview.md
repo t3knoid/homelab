@@ -1,8 +1,8 @@
 ---
-title: "Lazy Librarian Deployment (Docker) - Role Overview"
+title: "Lazy Librarian Deployment - Role Overview"
 ---
 
-# Lazy Librarian Deployment (Docker) - Role Overview
+# Lazy Librarian Deployment - Role Overview
 
 This page documents the **Lazy Librarian Docker deployment using Ansible**, illustrating the workflow, architecture, and best practices for deploying this containerized application with version control, persistent storage, and templated configuration.
 

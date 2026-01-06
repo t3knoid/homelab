@@ -1,16 +1,16 @@
 ---
-title: "Lidarr Deployment (Docker) - Role Overview"
+title: "SABnzbd Deployment - Role Overview"
 ---
 
-# Lidarr Deployment (Docker) - Role Overview
+# SABnzbd Deployment - Role Overview
 
-This page documents the **Lidarr Docker deployment using Ansible**, illustrating the workflow, architecture, and best practices for deploying this containerized application with version control, persistent storage, and integration with an external PostgreSQL database.
+This page documents the **SABnzbd Docker deployment using Ansible**, illustrating the workflow, architecture, and best practices for deploying this containerized application with version control, persistent storage, and templated configuration.
 
 ---
 
 ## **1. Overview**
 
-Lidarr is deployed in a Docker container using Ansible. Key steps include:
+SABnzbd is deployed in a Docker container using Ansible. Key steps include:
 
 * **Stop existing container** safely
 * **Prepare persistent configuration and backup directories**
@@ -18,7 +18,7 @@ Lidarr is deployed in a Docker container using Ansible. Key steps include:
 * **Version control the Docker image** to prevent accidental upgrades
 * **Start the container**
 
-Additionally, Lidarr connects to an **external PostgreSQL database**, separating storage from the application for improved reliability and scalability.
+Unlike some other media applications, SABnzbd does **not require an external database**, simplifying deployment while still providing persistent storage for configuration and download management.
 
 ---
 
@@ -27,21 +27,21 @@ Additionally, Lidarr connects to an **external PostgreSQL database**, separating
 Persistent storage ensures application data is preserved across container restarts:
 
 * Configuration directory: `/config`
-* Backup directory: `/nfs/backups/lidarr`
+* Backup directory: `/config/sabnzbd` (or `/nfs/backups/sabnzbd`)
 
 Example variables from the role:
 
 {% raw %}
 ```yaml
-lidarr_setup_config_dir: "/config"
-lidarr_setup_backups_dir: "/nfs/backups/lidarr"
-lidarr_setup_backup_filename: "{{ lidarr_setup_backup_prefix }}{{ ansible_date_time.date }}.sqlc"
+sabnzbd_setup_config_dir: "/config"
+sabnzbd_setup_backups_dir: "{{ sabnzbd_setup_config_dir }}/sabnzbd"
+sabnzbd_setup_backup_filename: "{{ sabnzbd_setup_backup_prefix }}{{ ansible_date_time.date }}.sqlc"
 ```
 {% endraw %}
 
 * Directories are **created and owned** by a dedicated system user
 * Supports NFS-mounted storage for centralized backups
-* Ensures container can read/write configs and backup files
+* Ensures container can read/write configuration and download management files
 
 ---
 
@@ -51,8 +51,8 @@ The role pins a specific Docker image version:
 
 {% raw %}
 ```yaml
-lidarr_setup_version: 2.13.3.4711
-lidarr_setup_docker_image_name: "lidarr:{{ lidarr_setup_version }}"
+sabnzbd_setup_version: 4.5.3
+sabnzbd_setup_docker_image_name: "sabnzbd:{{ sabnzbd_setup_version }}"
 ```
 {% endraw %}
 
@@ -64,14 +64,14 @@ lidarr_setup_docker_image_name: "lidarr:{{ lidarr_setup_version }}"
 
 ## **4. Deployment Workflow**
 
-The sequence for deploying Lidarr is:
+The sequence for deploying SABnzbd is:
 
 1. **Stop and remove existing container**
 
 {% raw %}
 ```bash
-docker stop lidarr
-docker rm lidarr
+docker stop sabnzbd
+docker rm sabnzbd
 docker network prune -f
 ```
 {% endraw %}
@@ -80,16 +80,16 @@ docker network prune -f
 
 {% raw %}
 ```bash
-mkdir -p {{ lidarr_setup_config_dir }}
-mkdir -p {{ lidarr_setup_backups_dir }}
-chown <user>:<group> {{ lidarr_setup_config_dir }}
+mkdir -p {{ sabnzbd_setup_config_dir }}
+mkdir -p {{ sabnzbd_setup_backups_dir }}
+chown <user>:<group> {{ sabnzbd_setup_config_dir }}
 ```
 {% endraw %}
 
 3. **Deploy configuration files and Docker Compose**
 
 * `docker-compose.yml`
-* `config.xml` (application-specific configuration)
+* `sabnzbd.ini` (application-specific configuration)
 
 4. **Prune unused Docker images** (optional)
 
@@ -103,7 +103,7 @@ docker image prune -f
 
 {% raw %}
 ```bash
-docker-compose -f {{ lidarr_setup_config_dir }}/docker-compose.yml pull
+docker-compose -f {{ sabnzbd_setup_config_dir }}/docker-compose.yml pull
 ```
 {% endraw %}
 
@@ -111,7 +111,7 @@ docker-compose -f {{ lidarr_setup_config_dir }}/docker-compose.yml pull
 
 {% raw %}
 ```bash
-docker-compose -f {{ lidarr_setup_config_dir }}/docker-compose.yml up -d
+docker-compose -f {{ sabnzbd_setup_config_dir }}/docker-compose.yml up -d
 ```
 {% endraw %}
 
@@ -125,10 +125,10 @@ docker-compose -f {{ lidarr_setup_config_dir }}/docker-compose.yml up -d
                  │  Host / Docker Environment   │
                  │                              │
                  │ ┌──────────────────────────┐ │
-                 │ │ Lidarr Container         │ │
+                 │ │ SABnzbd Container        │ │
                  │ │ - Pinned Image           │ │
                  │ │ - Config & Backup Volumes│ │
-                 │ │ - Exposed Ports 8686/6868│ │
+                 │ │ - Exposed Port 8080      │ │
                  │ └──────────────────────────┘ │
                  │                              │
                  └────────────────▲─────────────┘
@@ -136,42 +136,34 @@ docker-compose -f {{ lidarr_setup_config_dir }}/docker-compose.yml up -d
                  ┌───────────────┴─────────────┐
                  │ Users / Clients             │
                  │ Web Browser / API           │
-                 └───────────────▲─────────────┘
-                                 │ Database Connection
-                 ┌───────────────┴─────────────┐
-                 │ External PostgreSQL Server  │
-                 │ - Database: lidarr-main     │
-                 │ - User: lidarr              │
-                 │ - Port: 5432                │
                  └─────────────────────────────┘
 ```
 {% endraw %}
 
 * Config directory is mounted inside the container
 * Backups can reside on NFS for centralized storage
-* Container connects to **external PostgreSQL** for data persistence
+* Container manages its own internal database (SABnzbd configuration and queue)
 
 ---
 
 ## **6. Key Features**
 
 * Automated deployment via **Ansible**
-* Persistent configuration and backups
+* Persistent configuration and backup support
 * Pinned Docker image version for reproducibility
 * Optional NFS storage for backups
-* Integration with **external PostgreSQL** for database separation
-* Reusable workflow applicable to other home lab containerized apps
+* Templated configuration file for flexible setup
+* Simple deployment without external database dependencies
 
 ---
 
 ## **7. Summary**
 
-The Lidarr deployment role demonstrates a **robust, production-like container workflow**:
+The SABnzbd deployment role demonstrates a **straightforward, containerized workflow**:
 
 * Safe, repeatable container start/stop sequences
 * Version-controlled Docker images to prevent accidental updates
-* Persistent storage and automated backups for configuration and data
-* Separation of application and database layers using PostgreSQL
+* Persistent storage and automated backups for configuration and download data
 * Template-driven configuration to allow scalable and consistent deployments
 
 > This workflow can be adapted for other containerized applications in the home lab, ensuring maintainability, reliability, and consistent infrastructure-as-code practices.
@@ -185,8 +177,7 @@ The Lidarr deployment role demonstrates a **robust, production-like container wo
 * [Docker Command Cheat Sheet](docker_command_cheat_sheet.md)
 * [Docker Deployment Example Commands vs Ansible Tasks](docker_deployment_example_commands_vs_ansible_tasks.md)
 * [LazyLibrarian Deployment (Docker) - Role Overview](lazylibrarian_deployment_(docker)_-_role_overview.md)
+* [Lidarr Deployment (Docker) - Role Overview](lidarr_deployment_(docker)_-_role_overview.md)
 * [Radarr Deployment (Docker) - Role Overview](radarr_deployment_(docker)_-_role_overview.md)
-* [SABnzbd Deployment (Docker) - Role Overview](sabnzbd_deployment_(docker)_-_role_overview.md)
 * [Sonarr Deployment (Docker) - Role Overview](sonarr_deployment_(docker)_-_role_overview.md)
-
 

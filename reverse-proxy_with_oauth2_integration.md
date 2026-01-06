@@ -4,7 +4,7 @@ title: "️ Reverse-Proxy with OAuth2 Integration"
 
 # 🛡️ Reverse-Proxy with OAuth2 Integration
 
-The reverse-proxy forms the front line of the homelab’s application delivery architecture. It abstracts internal services, offloads TLS/SSL operations, provides intelligent load distribution, and now enforces **centralized authentication via OAuth2 Proxy with Microsoft Entra ID** for services that require identity-aware access. The following details how the Nginx reverse-proxy cluster is extended to use an OAuth2 proxy to provide single-sign on to web services.
+The reverse-proxy forms the front line of the homelab’s application delivery architecture. It abstracts internal services, offloads TLS/SSL operations, provides intelligent load distribution, and now enforces **centralized authentication via [OAuth2 Proxy with Microsoft Entra ID](oauth2_proxy_integration_with_entra_id.md)** for services that require identity-aware access. The following details how the Nginx reverse-proxy cluster is extended to use an OAuth2 proxy to provide single-sign on to web services.
 
 A primary frontend node terminates HTTPS traffic, performs OAuth2 authentication checks when needed, and routes requests to one of two backend Nginx servers. Backend nodes provide redundancy, delivering highly available and fault-tolerant service delivery.
 
@@ -133,7 +133,8 @@ This architecture is intentionally layered to balance security, reliability, and
   * Terminates SSL
   * Performs OAuth2 authentication
   * Controls routing
-* **[OAuth2 Proxy](oauth2_proxy.md)**
+
+* **[OAuth2 Proxy Integration with Entra ID](oauth2_proxy_integration_with_entra_id.md)**
 
   * Handles identity logic
   * Integrates with Microsoft Entra ID
@@ -227,4 +228,3 @@ The frontend injects all required headers:
 * `X-Auth-Request-User`
 * `X-Auth-Request-Email`
 * `Authorization: Bearer <token>`
-

@@ -193,4 +193,4 @@ A typical OAuth2 Proxy registration includes:
 
 - **[Service Principal](service_principal.md)** — Identity instance created from the Application Registration  
 - **[Entra ID OAuth2 Provisioning Ansible Role](entra_id_oauth2_provisioning_ansible_role.md)** — Automates creation of apps, secrets, and permissions  
-- **[OAuth2 Proxy](oauth2_proxy.md)** — How OAuth2 Proxy integrates with Nginx
+- **[OAuth2 Proxy Integration with Entra ID](oauth2_proxy_integration_with_entra_id.md)** — Using Entra ID as the identity provider for OAuth2 Proxy

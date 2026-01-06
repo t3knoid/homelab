@@ -31,7 +31,7 @@ Identity and access management is modeled on enterprise practices:
 
 * Windows Server 2022 Microsoft Active Directory **[Domain Controller](domain_controller.md)**
 * **[LDAP](ldap.md)** integration for compatible services
-* Migration toward unified Single Sign‑On using **[Microsoft Azure](microsoft_azure.md)** Entra ID as an **[Oauth2 Proxy](oauth2_proxy.md)** identity provider
+* Migration toward unified Single Sign‑On using **[Microsoft Azure](microsoft_azure.md)** **[Entra ID as an Oauth2 Proxy identity provider](oauth2_proxy_integration_with_entra_id.md)**
 
 
 This supports testing of authentication workflows, identity federation, and authorization patterns.

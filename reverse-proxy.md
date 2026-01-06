@@ -182,3 +182,51 @@ The design mirrors industry-standard ingress layers used in:
 * Enterprise DMZ architectures
 
 This makes it both educational and practical.
+
+## 🔐 Authentication & OAuth2 Integration
+
+The reverse‑proxy cluster also serves as the enforcement point for user authentication. To protect internal applications, the frontend Nginx server integrates with **OAuth2 Proxy**, which authenticates users against **Microsoft Entra ID** and injects identity headers into upstream requests.
+
+This authentication layer is documented in two dedicated pages:
+
+### **Reverse‑Proxy with OAuth2 Integration**
+
+Explains how the frontend Nginx server uses OAuth2 Proxy to enforce authentication:
+
+- `auth_request` flow  
+- How Nginx delegates authentication  
+- How identity headers are passed to backend services  
+- Request flow diagrams  
+- How protected vs unprotected routes are handled  
+
+👉 *See: [Reverse-Proxy with OAuth2 Integration](reverse-proxy_with_oauth2_integration.md)*
+
+---
+
+### **OAuth2 Proxy: Authentication & Identity Layer**
+
+A deep dive into the OAuth2 Proxy service, including:
+
+- Entra ID application registration  
+- Token validation  
+- Identity headers  
+- `/oauth2/auth` and `/oauth2/callback` endpoints  
+- Per‑domain configuration  
+
+👉 *See: [OAuth2 Proxy Integration with Entra ID](oauth2_proxy_integration_with_entra_id.md)*
+
+---
+
+### **How These Components Work Together**  
+- Nginx receives the request  
+- Nginx calls OAuth2 Proxy’s `/oauth2/auth` endpoint  
+- OAuth2 Proxy validates the session or redirects to Entra ID  
+- On success, OAuth2 Proxy injects identity headers  
+- Nginx forwards the authenticated request to backend services  
+
+This layered design keeps authentication centralized, consistent, and easy to maintain.
+
+
+
+
+

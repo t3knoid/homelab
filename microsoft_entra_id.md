@@ -115,8 +115,9 @@ THe following illustrates the relationship between the afformentioned core conce
 
 - **[Entra ID OAuth2 Provisioning Ansible Role](entra_id_oauth2_provisioning_ansible_role.md)** — Automates the creation and configuration of OAuth2 applications, redirect URIs, secrets, and permissions in Entra ID using Ansible.
 - **[Service Principal](service_principal.md)** — Step‑by‑step instructions for creating a service principal, assigning roles, and preparing credentials for automation tools and OAuth2‑protected services.
-- **[Reverse Proxy Frontend Server Configuration (with OAuth2 Support)](reverse_proxy_frontend_server_configuration_(with_oauth2_support).md)** — Configuration guide for the homelab’s Nginx frontend server, managing TLS, backend routing, and Entra ID OAuth2 authentication for protected sites.
 - **[Application Registration](application_registration.md)** - Step-by-step instructions on configuring an Application Registration.
+- **[Reverse Proxy Frontend Server Configuration (with OAuth2 Support)](reverse_proxy_frontend_server_configuration_(with_oauth2_support).md)** — Configuration guide for the homelab’s Nginx frontend server, managing TLS, backend routing, and Entra ID OAuth2 authentication for protected sites.
+- **[OAuth2 Proxy Integration with Entra_ID](oauth2_proxy_integration_with_entra_id.md)** - Nginx reverse‑proxy architecture with OAuth2 support
 
 ---
 

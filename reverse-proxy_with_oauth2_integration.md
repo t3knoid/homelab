@@ -1,8 +1,8 @@
 ---
-title: "Reverse-Proxy with OAuth2 Integration"
+title: "️ Reverse-Proxy with OAuth2 Integration"
 ---
 
-# Reverse-Proxy with OAuth2 Integration
+# 🛡️ Reverse-Proxy with OAuth2 Integration
 
 The reverse-proxy forms the front line of the homelab’s application delivery architecture. It abstracts internal services, offloads TLS/SSL operations, provides intelligent load distribution, and now enforces **centralized authentication via OAuth2 Proxy with Microsoft Entra ID** for services that require identity-aware access. The following details how the Nginx reverse-proxy cluster is extended to use an OAuth2 proxy to provide single-sign on to web services.
 

@@ -176,7 +176,7 @@ The SABnzbd deployment role demonstrates a **straightforward, containerized work
 * [Docker Deployment Example Commands vs Ansible Tasks](docker_deployment_example_commands_vs_ansible_tasks.md)
 * [Calibre Deployment - Role Overview](calibre_deployment_-_role_overview.md)
 * [Calibre-Web Deployment - Role Overview](calibre-web_deployment_-_role_overview.md)
-* [LazyLibrarian Deployment - Role Overview](lazylibrarian_deployment_-_role_overview.md)
+* [Lazy Librarian Deployment - Role Overview](lazy_librarian_deployment_-_role_overview.md)
 * [Lidarr Deployment - Role Overview](lidarr_deployment_-_role_overview.md)
 * [Radarr Deployment - Role Overview](radarr_deployment_-_role_overview.md)
 * [Sonarr Deployment - Role Overview](sonarr_deployment_-_role_overview.md)

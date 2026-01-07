@@ -296,7 +296,7 @@ This page covers:
 
 Operational issues, failure scenarios, and recovery procedures are documented on a dedicated troubleshooting page.
 
-👉 See: **[Pi‑hole Troubleshooting Runbook](pi‑hole_troubleshooting_runbook.md)**
+👉 See: **[Pi-hole Troubleshooting Runbook](pi-hole_troubleshooting_runbook.md)**
 
 ---
 

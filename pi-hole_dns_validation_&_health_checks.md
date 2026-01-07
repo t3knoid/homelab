@@ -220,7 +220,7 @@ If any validation step fails:
 * Identify which validation stage failed (external, AD, sync, client path)
 * Proceed to the troubleshooting guide
 
-👉 See: **[Pi‑hole Troubleshooting Runbook](pi‑hole_troubleshooting_runbook.md)**
+👉 See: **[Pi-hole Troubleshooting Runbook](pi-hole_troubleshooting_runbook.md)**
 
 ---
 

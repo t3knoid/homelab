@@ -111,7 +111,7 @@ Each major subsystem in the homelab has its own monitoring page:
   - [Media Stack Monitoring](media_stack_monitoring.md) (Radarr, Sonarr, Lidarr, Sabnzbd, CalibreWeb, LazyLibrarian)
 
 - **Networking**
-  - [Pi‑hole Monitoring](pi‑hole_monitoring.md)
+  - [Pi-hole Monitoring](pi-hole_monitoring.md)
   - [Network Device Monitoring](network_device_monitoring.md)
 
 - **Reverse Proxy**

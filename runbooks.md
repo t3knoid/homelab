@@ -24,7 +24,7 @@ title: "Runbooks"
 | **[Deploy Radarr Runbook](deploy_radarr_runbook.md)**            | Step-by-step instructions to deploy or update Radarr.            |
 | **[Deploy Sonarr Runbook](deploy_sonarr_runbook.md)**            | Step-by-step instructions to deploy or update Sonarr.            |
 | **[Deploy Lazy Librarian Runbook](deploy_lazy_librarian_runbook.md)**    | Step-by-step instructions to deploy or update Lazy Librarian.    |
-| **[Deploy Calibre‑web Runbook](deploy_calibre‑web_runbook.md)**       | Step-by-step instructions to deploy or update Calibre‑web.       |
+| **[Deploy Calibre-web Runbook](deploy_calibre-web_runbook.md)**       | Step-by-step instructions to deploy or update Calibre-web.       |
 | **[Deploy Sabnzbd Runbook](deploy_sabnzbd_runbook.md)**           | Step-by-step instructions to deploy or update Sabnzbd.           |
 
 ---

@@ -1,8 +1,8 @@
 ---
-title: "Pi-hole DNS – Validation & Health Checks"
+title: "Pi-hole DNS Validation & Health Checks"
 ---
 
-# 🧪 Pi-hole DNS – Validation & Health Checks
+# 🧪 Pi-hole DNS Validation & Health Checks
 
 This page defines the **standard validation and health check procedures** for Pi-hole DNS servers in this environment.
 It is used after:

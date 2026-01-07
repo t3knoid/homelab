@@ -87,7 +87,7 @@ Pi-hole is **installed and configured exclusively using Ansible**.
 Pi-hole must forward AD-specific queries to the domain controller.  
 Detailed configuration, validation, and AD server steps are documented on a separate page:
 
-👉 See: **[Pi-hole – Active Directory Integration](pi-hole_–_active_directory_integration.md)**
+👉 See: **[Pi-hole Active Directory Integration](pi-hole_active_directory_integration.md)**
 
 Here’s a clear explanation of **how DNS failover works in a multi-Pi-hole setup** and how clients handle the primary Pi-hole being down:
 
@@ -281,7 +281,7 @@ All Pi-hole maintenance tasks, including updates, restarts, and configuration ch
 
 Routine validation and health verification are documented separately to keep operational procedures isolated from service design.
 
-👉 See: **[Pi-hole DNS – Validation & Health Checks](pi-hole_dns_–_validation_&_health_checks.md)**
+👉 See: **[Pi-hole DNS Validation & Health Checks](pi-hole_dns_validation_&_health_checks.md)**
 
 This page covers:
 

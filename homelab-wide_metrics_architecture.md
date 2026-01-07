@@ -1,8 +1,8 @@
 ---
-title: "️ Homelab‑Wide Metrics Architecture"
+title: "️ Homelab-Wide Metrics Architecture"
 ---
 
-# 🛰️ Homelab‑Wide Metrics Architecture
+# 🛰️ Homelab-Wide Metrics Architecture
 
 The homelab uses a unified observability stack built around **[Prometheus](prometheus.md)** and **[Grafana](grafana.md)**. This architecture collects metrics from compute, storage, networking, and application services, providing a consistent, scalable foundation for monitoring, alerting, and long‑term analysis.
 

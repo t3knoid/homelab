@@ -1,8 +1,8 @@
 ---
-title: "️ Pi‑hole Troubleshooting Runbook"
+title: "️ Pi-hole Troubleshooting Runbook"
 ---
 
-# 🛠️ Pi‑hole Troubleshooting Runbook
+# 🛠️ Pi-hole Troubleshooting Runbook
 
 This page provides **common troubleshooting scenarios and resolutions** for Pi‑hole in a homelab environment. For installation and configuration, see the [Pi‑hole DNS Wiki Page](pi-hole_dns.md).
 

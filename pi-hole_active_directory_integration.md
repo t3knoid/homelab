@@ -1,8 +1,8 @@
 ---
-title: "Pi-hole – Active Directory Integration"
+title: "Pi-hole Active Directory Integration"
 ---
 
-# 🌐 Pi-hole – Active Directory Integration
+# 🌐 Pi-hole Active Directory Integration
 
 This guide explains how to integrate **Pi-hole as the primary DNS resolver** with **Windows Active Directory (AD)**. It covers **Pi-hole configuration** and the **AD server-side steps** required for headless Windows environments.
 

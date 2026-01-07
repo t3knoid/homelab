@@ -229,4 +229,4 @@ If any validation step fails:
 * **[Pi-hole DNS](pi-hole_dns.md)** – Service overview and architecture
 * **[Update Pi-hole DNS Servers Runbook](update_pi-hole_dns_servers_runbook.md)** – Update procedures
 * **[Nebula Sync](nebula_sync.md)** – Configuration sync
-* **[Pi‑hole Troubleshooting Runbook](pi‑hole_troubleshooting_runbook.md)** – Failure scenarios and remediation
+* **[Pi-hole Troubleshooting Runbook](pi-hole_troubleshooting_runbook.md)** – Failure scenarios and remediation

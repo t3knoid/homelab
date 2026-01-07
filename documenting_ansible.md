@@ -37,4 +37,4 @@ Following these guides ensures that your contributions **automatically integrate
 For related resources and context:
 
 * [Directory Structure & Conventions](ansible_directory_structure_&_conventions.md)
-* [Quick-Start Checklist](ansible_quick‑start_checklist.md)
+* [Quick-Start Checklist](ansible_quick-start_checklist.md)

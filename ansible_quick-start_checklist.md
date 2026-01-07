@@ -1,8 +1,8 @@
 ---
-title: "Ansible Quick‑Start Checklist"
+title: "Ansible Quick-Start Checklist"
 ---
 
-# Ansible Quick‑Start Checklist
+# Ansible Quick-Start Checklist
 
 This page provides a concise onboarding guide. It complements the *Ansible Overview & Usage* and *[Directory Structure & Conventions](ansible_directory_structure_&_conventions.md)* by serving as a one‑page reference for essential commands.
 

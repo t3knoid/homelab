@@ -84,7 +84,7 @@ This keeps control nodes **consistent and up to date**.
 
 ## 🗂 Documentation Map
 
-* [Ansible Quick‑Start Checklist](ansible_quick‑start_checklist.md) - For onboarding with essential commands and common playbooks
+* [Ansible Quick-Start Checklist](ansible_quick-start_checklist.md) - For onboarding with essential commands and common playbooks
 * [Ansible Directory Structure & Conventions](ansible_directory_structure_&_conventions.md) - provides a detailed reference for the organization of the Ansible repository
 * [Semaphore](semaphore.md) - is a lightweight web interface for managing and executing Ansible playbooks
 * [Documenting Ansible](documenting_ansible.md) – guides for contributing and generating playbook, role, and inventory documentation

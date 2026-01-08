@@ -1,176 +1,211 @@
 ---
-title: "Home Lab Overview"
+title: "Home Lab Platform Overview"
 ---
 
-# 🏠 Home Lab Overview
+# 🏠 Home Lab Platform Overview
 
-My home lab is a fully featured technical environment designed to sharpen skills in systems engineering, automation, DevOps, and modern infrastructure management. It simulates a production‑grade ecosystem using industry‑standard tools, allowing me to design, test, and refine solutions across virtualization, orchestration, authentication, and CI/CD.
+This home lab is a **self-hosted internal platform** designed to model production-grade infrastructure and SRE practices. It provides standardized compute, networking, storage, identity, and automation primitives used to deploy and operate services in a controlled environment.
 
-Built on a clustered Proxmox environment, the lab integrates automated provisioning, centralized identity, infrastructure‑as‑code, high‑availability services, and modern authentication. It mirrors enterprise technologies while serving as a personal platform for continuous learning.
+The platform emphasizes **reproducibility, automation, observability, and operational discipline**, mirroring modern platform engineering principles.
 
 ---
 
-# 🖥 Virtualization & Infrastructure
+## 🎯 Platform Goals
 
-A multi‑node [Proxmox](proxmox.md) Virtual Environment cluster hosts both Linux and Windows workloads. Key features include:
+* Design and operate a production-like infrastructure platform
+* Practice Infrastructure-as-Code and automated change management
+* Implement identity-first, modern authentication workflows
+* Operate observable, recoverable, and well-documented services
+* Provide a safe environment for experimentation and failure analysis
 
+---
+
+## 🧱 Platform Foundation
+
+The **Platform Foundation** defines the lowest architectural layer of the homelab. These components provide the execution environment upon which all platform capabilities and workloads depend.
+
+---
+
+### 🖥 Compute & Virtualization
+
+A clustered **Proxmox Virtual Environment** provides the compute substrate for all workloads.
+
+* Multi-node [Proxmox](proxmox.md) VE cluster
 * Standardized Ubuntu 24.04 VM templates via **[cloud-init](cloud-init.md)**
-* **[Automated virtual machine provisioning](automated_virtual_machine_provisioning.md)** with **[Ansible](ansible.md)**
-* **[Docker](docker.md)**‑based application deployment where containerization is appropriate
-* Seamless integration with the home network for reliability
-* Use of **[WSL2](wsl2.md)** as an Ansible control node
-
-
-This foundation enables production‑like services and experimentation with new technologies.
+* Automated VM provisioning with **[Ansible](ansible.md)**
+* **[Docker](docker.md)**-based container workloads
+* **[WSL2](wsl2.md)** used as an Ansible control node
 
 ---
 
-# 🔐 Identity & Authentication
+### 🌐 Networking
 
-Identity and access management is modeled on enterprise practices:
+Networking is designed for availability, segmentation, and secure ingress.
 
-* Windows Server 2022 Microsoft Active Directory **[Domain Controller](domain_controller.md)**
-* **[LDAP](ldap.md)** integration for compatible services
-* Migration toward unified Single Sign‑On using **[Microsoft Azure](microsoft_azure.md)** **[Entra ID as an Oauth2 Proxy identity provider](oauth2_proxy_integration_with_entra_id.md)**
-
-
-This supports testing of authentication workflows, identity federation, and authorization patterns.
+* Nginx **[reverse-proxy](reverse-proxy.md)** cluster for routing and TLS termination
+* Automated certificate lifecycle via **[Certbot](certbot.md)**
+* Redundant **[Pi-hole DNS](pi-hole_dns.md)** instances
+* Dedicated DMZ VLAN documented in **[DMZ Network Design and Implementation](dmz_network_design_and_implementation.md)**
 
 ---
 
-# 💾 Storage & Backup
+### 💾 Storage & Data Protection
 
-Multiple storage backends simulate real‑world architectures:
+Storage services simulate enterprise data architectures.
 
-* Local SSDs for performance‑critical workloads
 * **[Ceph](ceph.md)** distributed storage cluster
 * **[iSCSI](iscsi.md)** volumes hosted on **[Synology NAS](synology_nas.md)**
-* NFS/Samba shared from a **[TrueNAS](truenas.md)** server
-
-
-Backups are handled by **[Proxmox Backup Server](proxmox_backup_server.md)** , providing VM snapshotting, deduplication, and disaster recovery experience.
+* **[NFS](nfs.md) / Samba** exports from **[TrueNAS](truenas.md)**
+* Centralized backup and recovery via **[Proxmox Backup Server](proxmox_backup_server.md)**
 
 ---
 
-# ⚙️ Automation & Orchestration
+## 🔐 Identity & Access Management
 
-Automation and reproducibility are central to the lab:
+Identity is centralized and treated as a first-class platform service.
 
-* **[Ansible](ansible.md)** for provisioning, configuration, and deployment
-* **[Semaphore](semaphore.md)** as a web interface for playbook execution
-* **[Terraform](terraform.md)** (driven through Ansible) for declarative infrastructure
-* **[Jenkins](jenkins.md)** for CI/CD pipelines and automation workflows
-* **[GitHub](github.md)** Actions for cloud‑based CI/CD and artifact automation
+* Windows Server 2022 **[Domain Controller](domain_controller.md)**
+* **[LDAP](ldap.md)** integration for Linux and compatible services
+* OAuth2-based access via **[Microsoft_Entra_ID](microsoft_entra_id.md)**
 
-
-Together, these tools create a fully Infrastructure‑as‑Code environment aligned with modern DevOps practices.
+This enables testing of federation, authorization, and modern authentication flows.
 
 ---
 
-# 💻 Infrastructure‑as‑Code (IaC)
+## 🧩 Core Platform Services
 
-The home lab is managed as Infrastructure‑as‑Code to ensure reproducibility, versioning, and maintainability:
+Core services are **always-on shared dependencies** consumed by multiple workloads across the platform.
 
-* Source Control: All Ansible code and configuration templates are stored in **[GitHub](github.md)**
-* Development Best Practices: Editing and testing via **[Visual Studio Code](visual_studio_code.md)** and **[Code Server](code_server.md)**
-* Automated Provisioning: Ansible defines VM templates, service deployments, and container orchestration
-* Change Management: GitHub commits provide auditability and rollback capability
+### Databases
 
+* **[PostgreSQL](postgresql.md)** — standardized backend database for supported applications
 
-Every configuration change is trackable, testable, and reproducible, mirroring modern DevOps workflows.
+### Backup Services
 
----
+* **[Proxmox Backup Server](proxmox_backup_server.md) (PBS)** — VM and container backups with deduplication and recovery
 
-# 🌐 Networking
+### Shared Infrastructure Services
 
-Networking is designed for high availability and resilience:
-
-* Nginx **[reverse-proxy](reverse-proxy.md)** cluster for load balancing, routing, and automated TLS
-* **[Certificates](certificates.md)** issued and managed through **[Certbot](certbot.md)**
-* Redundant **[Pi-hole DNS](pi-hole_dns.md)** instances for DNS resolution and filtering
-* A dedicated DMZ VLAN described in **[DMZ Network Design and Implementation](dmz_network_design_and_implementation.md)**
-
+* **[Autofs](autofs.md)** for on-demand NFS mounts
+* Container runtime services supporting application workloads
 
 ---
 
-# 🧱 Core Services
+## 🧩 Application Workloads
 
-Foundational services that power applications across the homelab:
+Application workloads are user-facing services deployed on top of the platform.  
+They consume core services such as identity, storage, networking, and monitoring.
 
-## Databases
+### 🎬 Media Services
 
-* **[PostgreSQL](postgresql.md)** — standardized backend database for supported applications (Radarr, Sonarr, Lidarr, etc.)
+- [Plex](plex.md)
+- [Tautulli](tautulli.md)
+- [Radarr](radarr.md)
+- [Sonarr](sonarr.md)
+- [Lidarr](lidarr.md)
+- [Sabnzbd](sabnzbd.md)
+- [Ombi](ombi.md)
 
+### 📚 Library & Content Management
 
-## Monitoring Stack
+- [Calibre](calibre.md)
+- [Calibre-Web](calibre-web.md)
+- [Lazy Librarian](lazy_librarian.md)
 
-* **[Prometheus](prometheus.md)** — metrics collection
-* **[Grafana](grafana.md)** — dashboards and visualization
-* Exporters integrated across compute, storage, and applications
+### 🎮 Game Servers
 
-
-## Application Infrastructure
-
-* **Autofs** for NFS‑based backup and media mounts
-* **PBS (Proxmox Backup Server)** as a service layer for VM and container backups
-
-
-This section serves as the service catalog for the homelab.
-
----
-
-# 📈 Monitoring & Observability
-
-A full monitoring stack built on **[Prometheus](prometheus.md)** and **[Grafana](grafana.md)** provides visibility into system health across compute, storage, networking, and applications.
-
-👉 For the full architecture and exporter breakdown, see **[Monitoring & Observability](monitoring_&_observability.md)**.
-
-Services → Exporters → Prometheus → Grafana → Alerts
-
+- [Minecraft Server](minecraft_server.md)
 
 ---
 
-# 📘 Project Management
+## 📈 Observability & Monitoring
 
-Redmine serves as the central platform for organizing and documenting all aspects of the homelab. Because this wiki is hosted directly inside **[Redmine](redmine.md)**, it ties together issues, documentation, and source code into a unified project management layer.
+The platform is observable by design.
+
+* **[Prometheus](prometheus.md)** for metrics collection
+* **[Grafana](grafana.md)** for dashboards and visualization
+* Exporters deployed across compute, storage, and services
+
+For detailed architecture, 
+👉 see **[Monitoring & Observability](monitoring_&_observability.md)**.
 
 ---
 
-# 📚 Runbooks & Operational Procedures
+## ⚙️ Automation & Platform Operations
 
-Operational runbooks provide step‑by‑step instructions for managing, troubleshooting, and extending the home lab. They complement the architecture documentation by giving practical guidance for recurring tasks and workflows.
+Platform changes are automated, auditable, and repeatable.
 
-Key runbooks include:
+* **[Ansible](ansible.md)** for provisioning and configuration management
+* **[Semaphore](semaphore.md)** for controlled playbook execution
+* **[Terraform](terraform.md)** (orchestrated via Ansible) for declarative infrastructure
+* **[Jenkins](jenkins.md)** for CI/CD pipelines
+* **[GitHub](github.md) Actions** for cloud-based workflows
+
+---
+
+## 💻 Infrastructure-as-Code
+
+All platform configuration is managed as Infrastructure-as-Code.
+
+* Source-controlled in **[GitHub](github.md)**
+* Developed and tested using **[Visual Studio Code](visual_studio_code.md)** and **[Code Server](code_server.md)**
+* Git-based change history provides auditability and rollback
+* Enforces consistency across environments
+
+---
+
+## 📚 Operational Runbooks
+
+Operational runbooks define **how the platform is operated**.
 
 * VM lifecycle management
-* Service deployment
-* Backup & recovery
-* Authentication & networking workflows
+* Service deployment workflows
+* Backup and recovery procedures
+* Identity and networking operations
 
-All runbooks are consolidated in the **[Runbooks](runbooks.md)** page to ensure operations are repeatable, reliable, and auditable.
-
----
-
-# 📌 Mirrored Documentation
-
-This wiki is mirrored as a static HTML website at
-https://homelab.refol.us
-
-For details on the mirroring workflow, see [Home Lab Wiki Mirror to a Static Website Workflow](home_lab_wiki_mirror_to_a_static_website_workflow.md).
+For all procedures,
+👉 See **[Runbooks](runbooks.md)**.
 
 ---
 
-# 🎯 Why This Lab Matters
+## 🧱 Platform Dependency Model
 
-The home lab is a platform for continuous learning and hands‑on practice with:
+The homelab follows a layered dependency model consistent with platform engineering and SRE practices.
 
-* Clustered virtualization and systems administration
-* Identity and access management
-* Automation and Infrastructure‑as‑Code
-* CI/CD pipelines and DevOps tooling
-* Distributed storage and backup
-* Reverse proxying and certificate management
-* DNS and network services
+{% raw %}
+```text
++--------------------------------------------------+
+|                  Applications                    |
+|   Media services, test workloads, experiments    |
++--------------------------------------------------+
+|           Platform Capabilities & Ops            |
+|   CI/CD, Automation, IaC, Runbooks               |
++--------------------------------------------------+
+|              Core Platform Services              |
+|   Identity, Databases, Backup, Monitoring        |
++--------------------------------------------------+
+|              Platform Foundation                 |
+|   Compute, Networking, Storage                   |
++--------------------------------------------------+
+|               Physical Infrastructure            |
+|   Hosts, disks, network hardware                 |
++--------------------------------------------------+
+```
+{% endraw %}
 
+Each layer depends only on the layer below it. Failures in lower layers propagate upward, informing monitoring priorities, recovery planning, and operational response.
 
-It enables prototyping, troubleshooting, and staying current with modern infrastructure technologies.
+---
+
+## 📘 Platform Governance & Documentation
+
+* **[Redmine](redmine.md)** serves as the system of record for issues and documentation
+* This wiki is mirrored as a static site at
+  [https://homelab.refol.us](https://homelab.refol.us)
+* Mirroring workflow documented in **[Home Lab Wiki Mirror to a Static Website Workflow](home_lab_wiki_mirror_to_a_static_website_workflow.md)**
+
+---
+
+## 📌 Summary
+
+This homelab functions as a **personal internal platform**, enabling standardized service delivery, reliable automation, secure access, and observable operations while supporting continuous learning aligned with real-world SRE and platform engineering practices.

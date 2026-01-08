@@ -4,8 +4,9 @@ title: "Entra ID OAuth2 Provisioning Ansible Role"
 
 # 🔐 **Entra ID OAuth2 Provisioning Ansible Role**
 
-This role automates the creation and management of Microsoft Entra ID (Azure AD) OAuth2 application credentials for sites protected by SSO in the reverse‑proxy environment.  
-It discovers which sites require OAuth2, provisions or updates the necessary identity resources in Entra ID, generates client secrets, and injects those secrets back into the site definitions so that the `oauth2_proxy_setup` downstream role can complete OAuth2 Proxy and Nginx SSO configuration.
+This role automates the creation and management of Microsoft Entra ID (Azure AD) OAuth2 application credentials for sites protected by SSO in the reverse‑proxy environment.
+
+It discovers which sites require OAuth2, provisions or updates the necessary identity resources in Entra ID, generates client secrets, and injects those secrets back into the site definitions so that the [`oauth2_proxy_setup`](https://github.com/t3knoid/ansible/blob/main/roles/oauth2_proxy_setup/README.md) downstream role can complete OAuth2 Proxy and Nginx SSO configuration.
 
 This role acts as the **identity provisioning layer** in the SSO pipeline.
 

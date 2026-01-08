@@ -51,8 +51,8 @@ Prometheus documentation includes:
 - Deployment via Ansible  
 - Integration with Grafana  
 
-👉 **Read more:**  
-**[Prometheus](prometheus.md)**
+To read further details,
+👉 See the **[Prometheus](prometheus.md)** page.
 
 ---
 
@@ -68,8 +68,8 @@ Grafana documentation includes:
 - Authentication and reverse proxy integration  
 - Deployment via Ansible  
 
-👉 **Read more:**  
-**[Grafana](grafana.md)**
+To read further details,
+👉 See the **[Grafana](grafana.md)** page.
 
 ---
 

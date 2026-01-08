@@ -304,7 +304,7 @@ Everything is driven by group_vars.
 
 ---
 
-# 5. 🧑‍💻 Summary for New Developers
+# 5. 🧑‍💻 Summary for Contributors
 
 To configure Semaphore UI:
 

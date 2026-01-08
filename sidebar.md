@@ -1,55 +1,120 @@
 ---
-title: "Home Lab"
+title: "Sidebar"
 ---
 
-# 🗂 Home Lab
+## 🏠 Home Lab Platform Overview
 
 <details>
-<summary><b>🏠 Overview</b></summary>
-- <b><a href="/projects/home-lab/wiki">Home Lab Overview</a></b> – Purpose, design, and lab scope.
+<summary>🎯 Platform Goals</summary>
+
+- Design and operate a production-like infrastructure platform  
+- Practice Infrastructure-as-Code and automated change management  
+- Implement identity-first authentication workflows  
+- Operate observable, recoverable, well-documented services  
+- Provide a safe environment for experimentation  
 </details>
 
 <details>
-<summary><b>🖥 Virtualization & Infrastructure</b></summary>
-- Manage VMs, [Docker](docker.md) containers, and automated provisioning using [Proxmox](proxmox.md) and [Cloud-Init](cloud-init.md).
+<summary>🧱 Platform Foundation</summary>
+
+### 🖥 Compute & Virtualization
+- [Proxmox](Proxmox.md)
+- [cloud-init](cloud-init.md)
+- [Ansible](Ansible.md)
+- [Docker](Docker.md)
+- [WSL2](WSL2.md)
+
+### 🌐 Networking
+- [reverse-proxy](reverse-proxy.md)
+- [Certbot](Certbot.md)
+- [Pi-hole DNS](Pi-hole_DNS.md)
+- [DMZ Network Design and Implementation](DMZ_Network_Design_and_Implementation.md)
+
+### 💾 Storage & Data Protection
+- [Ceph](Ceph.md)
+- [Synology NAS](Synology_NAS.md)
+- [TrueNAS](TrueNAS.md)
+- [Proxmox Backup Server](Proxmox_Backup_Server.md)
 </details>
 
 <details>
-<summary><b>🔐 Identity & Authentication</b></summary>
-- Centralized authentication and SSO using [LDAP](ldap.md), [Microsoft Entra ID](microsoft_entra_id.md), and [OAuth2](oauth2.md).
+<summary>🔐 Identity & Access Management</summary>
+
+- [Domain Controller](Domain_Controller.md)  
+- [LDAP](LDAP.md)  
+- [Microsoft Entra ID](Microsoft_Entra_ID.md)
 </details>
 
 <details>
-<summary><b>💾 Storage & Backup</b></summary>
-- Manage distributed, networked, and file storage plus VM backups using [Ceph](ceph.md), [iSCSI](iscsi.md), [NFS](nfs.md), and [Proxmox Backup Server](proxmox_backup_server.md).
+<summary>🧩 Core Platform Services</summary>
+
+### Databases
+- [PostgreSQL](PostgreSQL.md)
+
+### Backup Services
+- [Proxmox Backup Server](Proxmox_Backup_Server.md)
+
+### Shared Infrastructure Services
+- [Autofs](Autofs.md)
 </details>
 
 <details>
-<summary><b>⚙️ Automation & Orchestration</b></summary>
-- Automate provisioning, deployment, and CI/CD workflows using [Ansible](ansible.md), [Semaphore](semaphore.md), [Terraform](terraform.md), [Jenkins](jenkins.md), and [GitHub Actions](github_actions.md).
+<summary>🧩 Application Workloads</summary>
+
+### 🎬 Media Services
+- [Plex](Plex.md)
+- [Tautulli](Tautulli.md)
+- [Radarr](Radarr.md)
+- [Sonarr](Sonarr.md)
+- [Lidarr](Lidarr.md)
+- [Sabnzbd](Sabnzbd.md)
+- [Ombi](Ombi.md)
+
+### 📚 Library & Content Management
+- [Calibre](Calibre.md)
+- [Calibre-Web](Calibre-Web.md)
+- [Lazy Librarian](Lazy_Librarian.md)
+
+### 🎮 Game Servers
+- [Minecraft Server](Minecraft_Server.md)
 </details>
 
 <details>
-<summary><b>🌐 Networking & Services</b></summary>
-- Manage [Reverse-Proxy](reverse-proxy.md), [Pi-hole DNS](pi-hole_dns.md), and [Certificates](certificates.md)
+<summary>📈 Observability & Monitoring</summary>
+
+- [Prometheus](Prometheus.md)  
+- [Grafana](Grafana.md)  
+- [Monitoring & Observability](Monitoring_&_Observability.md)
 </details>
 
 <details>
-<summary><b>📘 Project Management</b></summary>
-- Organize issues, track projects, and host documentation using [Redmine Configuration](redmine_configuration.md).
+<summary>⚙️ Automation & Platform Operations</summary>
+
+- [Ansible](Ansible.md)  
+- [Semaphore](Semaphore.md)  
+- [Terraform](Terraform.md)  
+- [Jenkins](Jenkins.md)  
+- [GitHub Actions](GitHub_Actions.md)
 </details>
 
 <details>
-<summary><b>💻 Infrastructure-as-Code</b></summary>
-- Automate provisioning, configuration, and deployment using [Ansible](ansible.md), [Terraform](terraform.md), and [GitHub](github.md) workflows.
+<summary>💻 Infrastructure-as-Code</summary>
+
+- [GitHub](GitHub.md)  
+- [Visual Studio Code](Visual_Studio_Code.md)  
+- [Code Server](Code_Server.md)
 </details>
 
 <details>
-<summary><b>🎯 Learning & Experimentation</b></summary>
-- Sandbox for testing infrastructure, DevOps, and security workflows.
+<summary>📚 Operational Runbooks</summary>
+
+- [Runbooks](Runbooks.md)
 </details>
 
 <details>
-<summary><b>Future Expansions</b></summary>
-- Track metrics, monitoring, and experimental tools such as Prometheus, Grafana, and other proof-of-concepts.
+<summary>📘 Platform Governance & Documentation</summary>
+
+- [Redmine](Redmine.md)  
+- [Home Lab Wiki Mirror to a Static Website Workflow](Home_Lab_Wiki_Mirror_to_a_Static_Website_Workflow.md)
 </details>
+

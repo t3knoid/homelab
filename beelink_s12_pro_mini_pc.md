@@ -66,7 +66,7 @@ For Plex-specific deployment, configuration, and operational details,
 
 * Hosts **[Plex](plex.md)** for media streaming (see Plex page for details)
 * NFS shares mounted via [Autofs](autofs.md) from [TrueNAS](truenas.md)
-* SSH/system login authenticated via [LDAP](ldap.md) / [Active Directory](active_directory.md)
+* SSH/system login authenticated via [LDAP](ldap.md) / [Microsoft Active Directory](microsoft_active_directory.md)
 * Fully monitored through [Prometheus](prometheus.md) and [Grafana](grafana.md) dashboards
 
 ---
@@ -86,4 +86,3 @@ For Plex-specific deployment, configuration, and operational details,
 * [Autofs](autofs.md) – NFS mount automation
 * [Prometheus](prometheus.md) / [Grafana](grafana.md) – Monitoring stack
 * [Ansible](ansible.md) – Deployment automation
-

@@ -110,8 +110,6 @@ backups -> /nfs/backups_ex
 
 ## 🔗 Related Pages
 
-* [Core Platform Services](core_platform_services.md)
-* [Platform Foundation](platform_foundation.md)
 * [Runbooks](runbooks.md)
 * [Tautulli](tautulli.md) (for monitoring Plex usage)
 

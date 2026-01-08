@@ -66,7 +66,7 @@ Identity is centralized and treated as a first-class platform service.
 
 * Windows Server 2022 **[Domain Controller](domain_controller.md)**
 * **[LDAP](ldap.md)** integration for Linux and compatible services
-* OAuth2-based access via **[Microsoft_Entra_ID](microsoft_entra_id.md)**
+* OAuth2-based access via **[Microsoft Entra ID](microsoft_entra_id.md)**
 
 This enables testing of federation, authorization, and modern authentication flows.
 

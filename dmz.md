@@ -8,7 +8,9 @@ A **DMZ (Demilitarized Zone)** is a network segment that sits between the intern
 
 In the home lab, the DMZ is used to host **NGINX reverse proxy VMs**. These proxies handle all external traffic and forward requests to backend servers on the LAN in a controlled, secure way.
 
-For full details, configurations, and implementation steps, see the detailed page: [DMZ Network Design and Implementation](dmz_network_design_and_implementation.md).
+For full details, configurations, and implementation steps,
+
+👉 see the detailed page: [DMZ Network Design and Implementation](dmz_network_design_and_implementation.md).
 
 ---
 

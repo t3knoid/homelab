@@ -62,8 +62,9 @@ git pull
 ```
 {% endraw %}
 
-This ensures you are working with the **latest codebase and dependencies**.
-For repository organization, see [Ansible Directory Structure & Conventions](ansible_directory_structure_&_conventions.md).
+This ensures you are working with the **latest codebase and dependencies**. For repository organization, 
+
+👉 see [Ansible Directory Structure & Conventions](ansible_directory_structure_&_conventions.md).
 
 💡 **Tip:** Playbooks can also be executed through [Semaphore UI](semaphore.md), a web interface for managing inventories, credentials, and runs.
 

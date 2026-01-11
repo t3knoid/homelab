@@ -19,7 +19,7 @@ A dedicated task file mirrors the behavior of the Ansible‑only provisioning pa
 
 This keeps both provisioning modes aligned while allowing Terraform to manage VM creation and hardware configuration.
 
-→ See **[Automated Virtual Machine Provisioning](automated_virtual_machine_provisioning.md)** for the full architecture.
+👉 See **[Automated Virtual Machine Provisioning](automated_virtual_machine_provisioning.md)** for the full architecture.
 
 ---
 

@@ -34,8 +34,7 @@ Prometheus and Grafana are both deployed and managed using **Ansible**, ensuring
 
 A complete breakdown of how metrics flow across the environment, including exporters, storage systems, Proxmox, Docker media stack, Plex, Pi‑hole, and network devices.
 
-👉 **See the full architecture:**  
-**[Homelab-Wide Metrics Architecture](homelab-wide_metrics_architecture.md)**
+👉 **See the full architecture:**  **[Homelab-Wide Metrics Architecture](homelab-wide_metrics_architecture.md)**
 
 ---
 

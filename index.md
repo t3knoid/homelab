@@ -30,7 +30,7 @@ The **Platform Foundation** defines the lowest architectural layer of the homela
 
 A clustered **Proxmox Virtual Environment** provides the compute substrate for all workloads.
 
-* Multi-node [Proxmox](proxmox.md) VE cluster
+* Multi-node **[Proxmox](proxmox.md)** VE cluster
 * Standardized Ubuntu 24.04 VM templates via **[cloud-init](cloud-init.md)**
 * Automated VM provisioning with **[Ansible](ansible.md)**
 * **[Docker](docker.md)**-based container workloads
@@ -115,6 +115,10 @@ They consume core services such as identity, storage, networking, and monitoring
 ### 🎮 Game Servers
 
 - [Minecraft Server](minecraft_server.md)
+
+### 🤖 Home Automation
+
+- [Home Assistant](home_assistant.md) 
 
 ---
 

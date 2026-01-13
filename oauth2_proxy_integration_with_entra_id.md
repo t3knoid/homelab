@@ -8,6 +8,10 @@ This environment uses **OAuth2 Proxy** in combination with **Nginx** to enforce 
 
 Nginx delegates authentication to OAuth2 Proxy via `auth_request`, while OAuth2 Proxy validates tokens issued by Entra ID and injects identity headers—such as `X-Auth-Request-User`, `X-Auth-Request-Email`, and `Authorization: Bearer <token>`—into upstream requests. Backend applications receive verified identity information without implementing OAuth2/OIDC logic.
 
+For Step-by-step instructions on configuring a web service to use Entra ID as an Oauth2 identity provider using Ansible,
+
+👉 See: **[Contributor Guide Adding Entra ID OAuth2 Support for a Web Service](contributor_guide_adding_entra_id_oauth2_support_for_a_web_service.md)**
+
 ---
 
 ## ⚙️ Nginx Configuration Example (`code.refol.us`)
@@ -108,6 +112,10 @@ metrics_address = "127.0.0.1:9100"
 
 ```
 {% endraw %}
+
+For more details on OAuth2 Proxy Configuration file properties,
+
+👉 See: **[OAuth2 Proxy Configuration File Documentation](oauth2_proxy_configuration_file_documentation.md)**
 
 ---
 

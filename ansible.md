@@ -6,7 +6,7 @@ title: "️ Ansible"
 
 Ansible is the automation framework used to manage virtual machine operations across the homelab environment. It enables:
 
-* **Provisioning** of new virtual machines
+* **[Provisioning](automated_virtual_machine_provisioning.md)** of new virtual machines
 * **Deployment** of required applications
 * **Configuration management** of applications wherever possible
 
@@ -50,6 +50,9 @@ This ensures **controlled access** while maintaining operational flexibility.
 
 Two [Ansible control nodes](https://github.com/t3knoid/ansible/blob/main/inventory/ansible/inventory.ini) orchestrate automation tasks.
 
+For a complete guide on configuring an Ansible node, 
+👉 see [Configuring an Ansible Control Node](configuring_an_ansible_control_node.md)
+ 
 ### Working on a Control Node
 
 After connecting (e.g., via SSH), initialize your environment:

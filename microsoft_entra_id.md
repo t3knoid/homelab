@@ -117,6 +117,7 @@ THe following illustrates the relationship between the afformentioned core conce
 - **[Service Principal](service_principal.md)** — Step‑by‑step instructions for creating a service principal, assigning roles, and preparing credentials for automation tools and OAuth2‑protected services.
 - **[Application Registration](application_registration.md)** - Step-by-step instructions on configuring an Application Registration.
 - **[OAuth2 Proxy Integration with Entra ID](oauth2_proxy_integration_with_entra_id.md)** — Configuration guide for the homelab’s Nginx frontend server, managing TLS, backend routing, and Entra ID OAuth2 authentication for protected sites.
+- **[Contributor Guide Adding Entra ID OAuth2 Support for a Web Service](contributor_guide_adding_entra_id_oauth2_support_for_a_web_service.md)** - Provides a step-by-step instructions on configuring a web service to use Entra ID as an Oauth2 identity provider using Ansible.
 
 ---
 

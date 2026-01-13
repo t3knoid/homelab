@@ -13,6 +13,10 @@ Both workflows produce the same final VM state. The difference is in *how the VM
 
 This page documents the architecture, workflow, and module/tooling used by each approach.
 
+> [!IMPORTANT] Virtual Machine Templates
+> Provisioning a virtual machine relies on using a virtual machine template that is cloned during provisioning. For more information on how virtual machine templates are generated,
+> 👉 see the **[Contributor Guide for Adding New Cloud-Init VM Templates](contributor_guide_for_adding_new_cloud-init_vm_templates.md)**.
+
 ---
 
 ## 🔧 Provisioning Modes

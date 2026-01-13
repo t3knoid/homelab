@@ -1,34 +1,41 @@
 ---
-title: "Configuring an Ansible Control Node"
+title: "️ Configuring an Ansible Control Node"
 ---
 
-# Configuring an Ansible Control Node
+# 🖥️ Configuring an Ansible Control Node
 
-The following are steps in configuring an Ansible control node. These steps have been automated using an [Ansible playbook](https://homelab.refol.us/projects/home-lab/repository/ansible/revisions/main/entry/playbooks/ansible/deploy_ansible.yml).
+The following steps describe how to configure an Ansible control node. These steps have been automated using the [Ansible deployment playbook](https://github.com/t3knoid/ansible/blob/main/docs/playbooks/deploy_ansible.md).
 
-### Adding Second Drive
+---
 
-1. Add a new disk from the Proxmox web GUI.
-2. Boot the VM.
-3. Enumerate the new disk device using fdisk -l.
-4. Use fdisk to create a new partition.
-5. Format the new disk using mkfs (e.g., sudo mkfs -t ext4 /dev/vdb1)
-6. Create mounpoint /ansible (e.g. sudo mkdir /ansible).
-7. Configure /etc/fstab with new mountpoint (e.g., add the line `/dev/vdb1       /ansible        ext4    defaults        0       2`)
-8. Mount the disk to mountpoint (e.g., sudo mount /ansible).
-9. Execute the following chmod command to allow full group access `sudo chmod -R g+rwx /ansible`.
+# 💽 Adding a Second Drive
 
-### Join Machine to Active Directory
+1. Add a new disk from the Proxmox web GUI.  
+2. Boot the VM.  
+3. Enumerate the new disk using `fdisk -l`.  
+4. Use `fdisk` to create a new partition.  
+5. Format the new partition (e.g., `sudo mkfs -t ext4 /dev/vdb1`).  
+6. Create the mount point `/ansible` (e.g., `sudo mkdir /ansible`).  
+7. Add the new mount point to `/etc/fstab` (e.g.,  
+   `/dev/vdb1  /ansible  ext4  defaults  0  2`).  
+8. Mount the disk (e.g., `sudo mount /ansible`).  
+9. Grant full group access:  
+   `sudo chmod -R g+rwx /ansible`.
 
-The [Join an Ubuntu 24.04 VM to Active Directory Domain](../activedirectory/join_an_ubuntu_24.04_to_active_directory_domain.md) document provides instructions on how to join the machine to active directory.
+---
 
-### Configure Ansible Become User
+# 🏢 Joining the Machine to Active Directory
 
-To provide some semblance of security, use a non-root user as the become_user. The Active Directory user ansible@refol.us will be used. 
+See the guide:  
+**`[Looks like the result wasn't safe to show. Let's switch things up and try something else!]`**
 
-#### Create Ansible Active Directory User
+---
 
-Create an active directory user that will be used as the Ansible privileged user.
+# 🔐 Configure the Ansible Become User
+
+Use a non‑root user for privilege escalation. The Active Directory user `ansible@refol.us` will serve as the Ansible become user.
+
+## Create the Ansible Active Directory User
 
 {% raw %}
 ```powershell
@@ -38,274 +45,256 @@ New-ADUser -Name "Ansible" -GivenName "Ansible" -Surname "User" -SamAccountName 
 
 Enter a password when prompted.
 
-#### Give the **ansible** domain user permission in the Proxmox cluster.
+## Grant Proxmox Permissions to the ansible User
 
-From the Proxmox select **Datacenter > Permissions > Users**. Click **Add**. Add *ansible* in the User name field.
+In Proxmox:
 
-> [!IMPORTANT] 
-> The active directory, refol.us, must be added as a Realm in Proxmox before the ansible user can be added. Open **Datacenter > Permissions > Realms > Add > Active Directory Server** to add an active directory realm.
+**Datacenter → Permissions → Users → Add**  
+Add the user **ansible**.
 
-#### Create a Proxmox API Token
+> [!IMPORTANT]  
+> The Active Directory domain `refol.us` must be added as a Realm before adding the user.  
+> Navigate to **Datacenter → Permissions → Realms → Add → Active Directory Server**.
 
-The API token will be used by Ansible when performing API calls on the Proxmox server. Select **Datacenter > Permissions > API Tokens > Add**. Enter 
+## Create a Proxmox API Token
 
-User: ansible@refol.us
-Token ID: ansible_become_user
+This token will be used by Ansible for API calls.
 
-Click **Add** when done. The Token Secret will be shown. Copy the Token ID and Secret values.
+**Datacenter → Permissions → API Tokens → Add**
 
-#### Create the ansible group.
+- **User:** `ansible@refol.us`  
+- **Token ID:** `ansible_become_user`
 
-Execute the following from the ansible control node.
+Click **Add**, then copy the Token ID and Secret.
+
+## Create the ansible Group
 
 {% raw %}
-``` shell
+```shell
 sudo addgroup ansible
 ```
 {% endraw %}
 
-#### Add the ansible@refol.us to the ansible group.
-
-Execute the following from the ansible control node.
+## Add ansible@refol.us to the ansible Group
 
 {% raw %}
-``` shell
+```shell
 sudo usermod -a -G ansible ansible@refol.us
-```
-{% endraw %}
-
-{% raw %}
-``` shell
 sudo usermod -a -G ansible ansible
 ```
 {% endraw %}
 
-Add ansible@refol.us to the sudo group.
+## Add ansible@refol.us to the sudo Group
 
 {% raw %}
-``` shell
+```shell
 sudo usermod -a -G sudo ansible@refol.us
-```
-{% endraw %}
-
-{% raw %}
-``` shell
 sudo usermod -a -G sudo ansible
 ```
 {% endraw %}
 
-The following must be configured in Ansible when elevating Ansible to use root access.
+## Configure Ansible Become Settings
 
 {% raw %}
-``` shell
+```yaml
 become: true
 become_user: ansible
 become_method: sudo
 ```
 {% endraw %}
 
-## Ansible Installation
+---
 
-As of this writing, the latest version of Ansible is version [10.4.0](https://github.com/ansible-community/ansible-build-data/blob/main/10/CHANGELOG-v10.md#ansible-core) which contains ansible-core 2.17.4.
+# 📦 Ansible Installation
 
-### Install Python
+As of this writing, the latest version is **Ansible 10.4.0**, which includes **ansible-core 2.17.4**.
 
-Install Python3 from Ubuntu repository.
+## Install Python
 
 {% raw %}
-``` shell
+```shell
 sudo apt-get update
 sudo apt-get install python3
 ```
 {% endraw %}
 
-#### Create a Python Virtual Environment
+## Create a Python Virtual Environment
 
-A Python virtual environment will be created to run Ansible. This will allow for side-by-side installations of different versions of Ansible.
+A virtual environment allows multiple Ansible versions to coexist.
 
-#### Download the Python venv module
+### Install the venv Module
 
 {% raw %}
-``` shell
+```shell
 sudo apt-get update
 sudo apt-get install python3.12-venv
 ```
 {% endraw %}
 
-#### Create and activate the virtual environment
-
-Create a specific Python virtual environment allows the use of different versions of Ansible and Python combination in parallel. This is especially useful when testing new versions.
-
-Notice the use of version numbers in the environment name for transparency.
+### Create and Activate the Virtual Environment
 
 {% raw %}
-``` shell
+```shell
 cd /ansible
 python3 -m venv python3.12.3_ansible10.4.0
-```
-{% endraw %}
-
-Activate the environment with the following command.
-
-{% raw %}
-``` shell
 source python3.12.3_ansible10.4.0/bin/activate
 ```
 {% endraw %}
 
-To deactivate this environment, simply run **deactivate**.
-
-#### Make sure the latest version of pip is installed
+Deactivate with:
 
 {% raw %}
-``` shell
+```shell
+deactivate
+```
+{% endraw %}
+
+### Upgrade pip
+
+{% raw %}
+```shell
 pip install --upgrade pip setuptools
 ```
 {% endraw %}
 
-#### Use pip to install Ansible
+### Install Ansible
 
 {% raw %}
-``` shell
+```shell
 pip install ansible
 ```
 {% endraw %}
 
+Verify installation:
+
 {% raw %}
-``` shell
+```shell
 ansible --version
-ansible [core 2.17.4]
-  config file = None
-  configured module search path = ['/home/frank@refol.us/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
-  ansible python module location = /ansible/python3.12.3_ansible10.4.0/lib/python3.12/site-packages/ansible
-  ansible collection location = /home/frank@refol.us/.ansible/collections:/usr/share/ansible/collections
-  executable location = /ansible/python3.12.3_ansible10.4.0/bin/ansible
-  python version = 3.12.3 (main, Sep 11 2024, 14:17:37) [GCC 13.2.0] (/ansible/python3.12.3_ansible10.4.0/bin/python3)
-  jinja version = 3.1.4
-  libyaml = True
 ```
 {% endraw %}
 
-### Install Python Modules
+(Version output omitted for brevity.)
 
-#### proxmoxer
+---
+
+# 📚 Install Python Modules
+
+## proxmoxer
 
 {% raw %}
-``` shell
+```shell
 python -m pip install proxmoxer
 ```
 {% endraw %}
 
-#### requests
+## requests
 
 {% raw %}
-``` shell
+```shell
 python -m pip install requests
 ```
 {% endraw %}
 
-#### pycdlib
+## pycdlib
 
 {% raw %}
-``` shell
+```shell
 python -m pip install pycdlib
 ```
 {% endraw %}
 
-### Other Installations
+## Other Required Packages
 
 {% raw %}
-``` shell
+```shell
 sudo apt install sshpass acl
 ```
 {% endraw %}
 
-## Ansible Getting Started
+---
 
-### Activate Working Environment
+# 🚀 Getting Started with Ansible
 
-Change to the Ansible working folder.
+## Activate the Working Environment
 
 {% raw %}
-``` shell
+```shell
 cd /ansible/dev
-```
-{% endraw %}
-
-Activate the environment with the following command.
-
-{% raw %}
-``` shell
 source ../python3.12.3_ansible10.4.0/bin/activate
 ```
 {% endraw %}
 
-### Create Ansible.cfg
-
-Initialize a new ansible.cfg
+## Create ansible.cfg
 
 {% raw %}
-``` shell
+```shell
 ansible-config init --disabled -t all > ansible.cfg
 ```
 {% endraw %}
 
-### Set the Vault Password File 
+## Configure the Vault Password File
 
-Create a ~/.vault_pass.txt file. Add vault passwords in this file. Edit ansible.cfg to set the **vault_password_file** setting to the path to this file.
+Create `~/.vault_pass.txt` and add your vault password.
+
+In `ansible.cfg`:
 
 {% raw %}
-``` shell
+```ini
 vault_password_file=~/.vault_pass.txt
 ```
 {% endraw %}
 
-## Configure SSH Access to Proxmox Servers
+---
 
-Since we are using Proxmox as the VM provider, the Ansible account used to execute playbooks must be configured to access each Proxmox node via SSH.
+# 🔑 Configure SSH Access to Proxmox Servers
+
+Ensure the Ansible account can SSH into each Proxmox node:
 
 {% raw %}
-``` shell
+```shell
 ssh pve-0
 ssh pve-1
 ssh pve-2
 ```
 {% endraw %}
 
-Similarly, ensure that the become_root user (i.e., ansible@refol.us) has access as well.
+Ensure the become user can also connect:
 
 {% raw %}
-``` shell
+```shell
 ssh ansible@pve-0
 ssh ansible@pve-1
 ssh ansible@pve-2
 ```
 {% endraw %}
 
-Test the become user setting using the following command. Note this command assumes that the specified inventory is available where the ansible host has been defined.
+Test connectivity:
 
 {% raw %}
-``` shell
+```shell
 ansible pvenodes -i inventory/pve/inventory.ini -m ping --user=ansible -k
 ```
 {% endraw %}
 
-Enter the ansible user password when prompted.
+Enter the password when prompted.
 
+---
 
-## Ansible Lint
+# 🧹 Ansible Lint
 
 {% raw %}
-``` shell
+```shell
 pip3 install ansible-lint
 ```
 {% endraw %}
 
-## References
+---
 
-- https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installation-guide
-- https://docs.ansible.com/ansible/latest/cli/ansible-config.html#ansible-config
-- https://docs.ansible.com/ansible/latest/reference_appendices/config.html
-- https://ansible.readthedocs.io/projects/lint/installing/
-- https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
+# 📖 References
+
+- [https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)  
+- `https://docs.ansible.com/ansible/latest/cli/ansible-config.html` [(docs.ansible.com in Bing)](https://www.bing.com/search?q="https%3A%2F%2Fdocs.ansible.com%2Fansible%2Flatest%2Fcli%2Fansible-config.html")  
+- [https://docs.ansible.com/ansible/latest/reference_appendices/config.html](https://docs.ansible.com/ansible/latest/reference_appendices/config.html)  
+- [https://ansible.readthedocs.io/projects/lint/installing/](https://ansible.readthedocs.io/projects/lint/installing/)  
+- [https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 

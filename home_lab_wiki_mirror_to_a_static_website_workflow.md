@@ -30,6 +30,8 @@ This workflow automates the lifecycle of mirroring the lab wiki to a static webs
 
 ### Ansible Module: `redmine_wiki_mirror`
 
+The **`redmine_wiki_mirror`** Ansible module is part of my personal [refol.general Ansible collection](https://github.com/t3knoid/refol.general). This module does the heavy-lifting of converting the Redmine wiki pages into markdown documents.
+
 * Located in: [refol.general/plugins/modules/redmine_wiki_mirror.py](https://github.com/t3knoid/refol.general/blob/main/plugins/modules/redmine_wiki_mirror.py)
 * Documentation: [redmine_wiki_mirror.md](https://github.com/t3knoid/refol.general/blob/main/docs/redmine_wiki_mirror.md)
 * Purpose:
@@ -42,18 +44,23 @@ This workflow automates the lifecycle of mirroring the lab wiki to a static webs
 
 {% raw %}
 ```yaml
-- name: Mirror Redmine Wiki to GitHub
-  hosts: localhost
-  connection: local
-  gather_facts: no
+- hosts: localhost
+  gather_facts: false
   tasks:
-    - name: Export Redmine wiki and commit to GitHub
+    - name: Mirror Redmine wiki into docs
       refol.general.redmine_wiki_mirror:
         redmine_url: "https://redmine.example.com"
-        project: "homelab"
-        github_repo: "t3knoid/homelab"
-        github_branch: "main"
-        github_token: "{{ lookup('env', 'GITHUB_TOKEN') }}"
+        project: myproject
+        api_key: "{{ lookup('env','REDMINE_API_KEY') }}"
+        output_dir: "{{ playbook_dir }}/docs/redmine"
+        delete_stale: true
+        filename_extension: "md"
+        debug: true
+      register: redmine_mirror
+
+    - name: Show mirror details
+      debug:
+        var: redmine_mirror
 ```
 {% endraw %}
 

@@ -67,16 +67,17 @@ Below is the end‑to‑end flow of the role, from site discovery to generating 
                  +---------------------+----------------------+
                                        |
                                        v
-         +------------------------------+-------------------------------+
-         | Append generated secrets into site definitions               |
-         | Produces: entra_id_oauth2_updated_sites                      |
-         +------------------------------+-------------------------------+
+         +------------------------------+-----------------------------------------+
+         | Append generated secrets and client id (app id)  into site definitions |
+         | Produces: entra_id_oauth2_updated_sites                                |
+         | Updates: rproxy_setup_sites with entra_id_oauth2_updated_sites         |
+         +------------------------------+-----------------------------------------+
                                        |
                                        v
-           +---------------------------+-----------------------------+
+           +---------------------------+------------------------------+
            | Downstream role: oauth2_proxy_setup                      |
            | Uses updated site list to configure OAuth2 Proxy + Nginx |
-           +---------------------------------------------------------+
+           +----------------------------------------------------------+
 ```
 {% endraw %}
 
@@ -110,7 +111,7 @@ rproxy_setup_sites:
     oauth2_provider: "entra-id"
     oauth2_scope: "openid profile email"
     oauth2_cookie_secret: "base64-random-32-bytes"
-    oauth2_client_id: "uuid-for-site"
+    oauth2_client_id: ""
     oauth2_callback_url: "https://code.refol.us/oauth2/callback"
     oauth2_client_secret: ""
     oauth2_email_domains: "*"
@@ -122,7 +123,7 @@ rproxy_setup_sites:
 | Field                  | Purpose                                                    |
 | ---------------------- | ---------------------------------------------------------- |
 | `use_oauth2`           | Marks the site as requiring OAuth2 SSO                     |
-| `oauth2_client_id`     | Pre‑created application ID (e.g., via `uuidgen`)           |
+| `oauth2_client_id`     | **Left blank** → filled in by this role           |
 | `oauth2_callback_url`  | Must match Entra ID’s redirect URI                         |
 | `oauth2_scope`         | Requested scopes                                           |
 | `oauth2_email_domains` | Allowed login domains                                      |
@@ -130,6 +131,10 @@ rproxy_setup_sites:
 | `oauth2_client_secret` | **Left blank** → filled in by this role                    |
 
 Only sites with `use_oauth2: true` are processed.
+
+> [!TIP] Cookie Secret
+> A cookie secret can be [generated using Python](https://oauth2-proxy.github.io/oauth2-proxy/configuration/overview/#generating-a-cookie-secret)
+> `python -c 'import os,base64; print(base64.urlsafe_b64encode(os.urandom(32)).decode())'`
 
 ---
 
@@ -217,14 +222,14 @@ This ensures dependency isolation.
 
 ## 📤 **Output of the Role**
 
-### 🔄 **`entra_id_oauth2_updated_sites`**
+### 🔄 Updated **`rproxy_setup_sites`** 
 
 This is the **final updated version of `rproxy_setup_sites`**, containing newly generated client secrets for each OAuth2‑enabled site.
 
 Each entry includes:
 
-* Client ID  
-* Client secret  
+* Client ID (injected)
+* Client secret (injected)
 * Scopes  
 * Cookie secret  
 * Callback URL  
@@ -235,7 +240,7 @@ This list is the **primary output** of the role.
 
 ## 🔗 **Downstream Integration (OAuth2 Proxy Setup)**
 
-The output variable `entra_id_oauth2_updated_sites` is consumed by the  
+The updated variable `rproxy_setup_sites` is consumed by the  
 **`oauth2_proxy_setup` role**, which uses it to:
 
 * Render OAuth2 Proxy configuration  
@@ -245,3 +250,9 @@ The output variable `entra_id_oauth2_updated_sites` is consumed by the
 
 ➡️ **This role provisions identity; the next role activates it.**  
 Together, they form a fully automated, consistent, and secure OAuth2 SSO deployment pipeline across the homelab reverse‑proxy cluster.
+
+## 🔗 **Reference**
+
+- **[azure.azcollection.azure_rm_adapplication Ansible module](https://docs.ansible.com/projects/ansible/latest/collections/azure/azcollection/azure_rm_adapplication_module.html#parameters)** - Ansible module to manage Entra ID applications.
+- **[Application types for the Microsoft identity platform](https://learn.microsoft.com/en-us/entra/identity-platform/)** - Microsoft documentation on its identity platform.
+- **[Azure CLI](https://learn.microsoft.com/en-us/cli/azure/?view=azure-cli-latest)** - Official product documentation for Azure command-line interface (Azure CLI).

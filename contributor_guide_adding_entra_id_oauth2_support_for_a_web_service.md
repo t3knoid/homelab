@@ -80,7 +80,7 @@ rproxy_setup_sites:
     oauth2_provider: "entra-id"
     oauth2_scope: "openid profile email"
     oauth2_cookie_secret: "base64-random-32-bytes"
-    oauth2_client_id: "uuid-for-site"
+    oauth2_client_id: ""
     oauth2_callback_url: "https://code.refol.us/oauth2/callback"
     oauth2_client_secret: ""
     oauth2_email_domains: "*"
@@ -90,13 +90,12 @@ rproxy_setup_sites:
 **Notes**
 
 - Unless explicitly required, **do not modify**:  
-  `oauth2_provider`, `oauth2_scope`, `oauth2_cookie_secret`, `oauth2_email_domains`
+  `oauth2_provider`, `oauth2_scope`, `oauth2_email_domains`
 - `use_oauth2: true` enables OAuth2 for the site.
-- `oauth2_client_id` can be generated using:
-  - Linux: `uuidgen`
-  - Python: `python3 -c "import uuid; print(uuid.uuid4())"`
+- `oauth2_cookie_secret` can be generated using the following Python snippet, `python -c 'import os,base64; print(base64.urlsafe_b64encode(os.urandom(32)).decode())'`
+- `oauth2_client_id` cannot be set and is generated whenever the application client is created.
 - `oauth2_callback_url` must match the redirect URI in the Entra App Registration.
-- `oauth2_client_secret` is automatically injected when the `entra_id_oauth2` role runs (see `generate_secret.yml`).
+- `oauth2_client_id` and `oauth2_client_secret` are automatically injected when the `entra_id_oauth2` role runs (see [`register_app.yml`](https://github.com/t3knoid/ansible/blob/main/roles/entra_id_oauth2/tasks/register_app.yml)).
 
 ---
 
@@ -113,7 +112,7 @@ ansible-playbook -k -i inventory/ansible/inventory.ini playbooks/oauth2_proxy/de
 This playbook:
 
 - Loads the `global` role (Azure service‑principal secrets)
-- Loads the `entra_id_oauth2` role (generates and injects the client secret)
+- Loads the `entra_id_oauth2` role (generates and injects the app id and client secret)
 - Loads the `redis_setup` role (Redis stores large Azure session data)  
   Reference: https://oauth2-proxy.github.io/oauth2-proxy/7.3.x/configuration/oauth_provider/
 - Loads the `oauth2_proxy_setup` role (configures OAuth2 Proxy and service)
@@ -144,4 +143,5 @@ az login --service-principal \
 ## 📝 Processing Notes
 
 - Only entries in `rproxy_setup_sites` with `use_oauth2: true` are processed.
+- Entries in `rproxy_setup_sites` with `use_oauth2: false` or not defined are skipped. OAuth2 configuration and service for these sites are removed.
 - The role filters the list and creates/updates Azure applications only for those sites.

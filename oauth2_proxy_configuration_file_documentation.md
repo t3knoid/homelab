@@ -47,10 +47,10 @@ The following sections describe the common configuration properties used in an *
 ## 🍪 Cookie Settings
 
 * **`cookie_secret = "SHARED_RANDOM_32_BYTE_STRING_BASE64"`**
-  A base64-encoded random 32-byte value used for encrypting and signing session cookies.
+  A base64-encoded random 32-byte value used for encrypting and signing session cookies. 
 
   * Shared across instances if load balanced.
-  * Generate with: `openssl rand -base64 32`.
+  * Generate with: `python -c 'import os,base64; print(base64.urlsafe_b64encode(os.urandom(32)).decode())'`.
 
 * **`cookie_secure = false`**
   Enables the Secure flag on cookies.

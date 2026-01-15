@@ -10,8 +10,8 @@ This page documents how NFS works in the context of Ubuntu, how it is mounted, a
 It also explains the strengths and weaknesses of each approach, including real‑world behavior observed in the homelab (e.g., Plex not consistently seeing an Autofs‑mounted photos directory).
 
 For implementation details, see:  
-- **[Contributor Guide to Mounting Disks in Linux Using Ansible](contributor_guide_to_mounting_disks_in_linux_using_ansible.md)**  
-- **[Contributor Guide on Creating Autofs Mounts Using Ansible](contributor_guide_on_creating_autofs_mounts_using_ansible.md)**
+- **[Contributor Guide Mounting Disks Using fstab Using Ansible](contributor_guide_mounting_disks_using_fstab_using_ansible.md)**  
+- **[Contributor Guide Creating Autofs Mounts Using Ansible](contributor_guide_creating_autofs_mounts_using_ansible.md)**
 
 ---
 
@@ -154,8 +154,8 @@ A simple decision guide:
 ## 🛠 Ansible Integration  
 The platform provides two contributor‑ready roles:
 
-- **[Contributor Guide to Mounting Disks in Linux Using Ansible](contributor_guide_to_mounting_disks_in_linux_using_ansible.md)** - Covers the fstab‑based static mount role.
-- **[Contributor Guide on Creating Autofs Mounts Using Ansible](contributor_guide_on_creating_autofs_mounts_using_ansible.md)** -Covers the Autofs role and map file generation.
+- **[Contributor Guide Mounting Disks Using fstab Using Ansible](contributor_guide_mounting_disks_using_fstab_using_ansible.md)** - Covers the fstab‑based static mount role.
+- **[Contributor Guide Creating Autofs Mounts Using Ansible](contributor_guide_creating_autofs_mounts_using_ansible.md)** -Covers the Autofs role and map file generation.
 
 ## 🩺 Troubleshooting (autofs & fstab)
 

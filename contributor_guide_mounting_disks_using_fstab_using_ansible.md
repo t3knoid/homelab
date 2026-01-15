@@ -1,8 +1,8 @@
 ---
-title: "Contributor Guide to Mounting Disks in Linux Using Ansible"
+title: "Contributor Guide: Mounting Disks Using fstab Using Ansible"
 ---
 
-# 🧩 **Contributor Guide to Mounting Disks in Linux Using Ansible**
+# 🧩 **Contributor Guide: Mounting Disks Using fstab Using Ansible**
 
 The `fstab` role provides a **declarative**, **idempotent**, and **state‑aware** way to manage filesystem mounts via `/etc/fstab`. Unlike traditional approaches that only append entries, this role ensures the system’s mount configuration matches your desired state exactly—adding new mounts and removing those no longer defined.
 

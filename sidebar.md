@@ -2,20 +2,11 @@
 title: "Sidebar"
 ---
 
-<!-- 🏠 Overview -->
-<details open>
-  <summary>🏠 Overview</summary>
-  <ul>
-    <li>[Home Lab Platform Overview](home_lab_platform_overview.md)</li>
-  </ul>
-</details>
-
 <!-- 🧱 Platform Foundation -->
 <details open>
-  <summary>🧱 Platform Foundation</summary>
-
+    <summary>Platform Foundation</summary>
   <details>
-    <summary>Compute & Virtualization</summary>
+    <summary>🖥 Compute & Virtualization</summary>
     <ul>
       <li>[Proxmox](proxmox.md)</li>
       <li>[cloud-init](cloud-init.md)</li>
@@ -26,9 +17,9 @@ title: "Sidebar"
   </details>
 
   <details>
-    <summary>Networking</summary>
+    <summary>🌐 Networking</summary>
     <ul>
-      <li>[reverse-proxy](reverse-proxy.md)</li>
+      <li>[Reverse-proxy](reverse-proxy.md)</li>
       <li>[Certbot](certbot.md)</li>
       <li>[Pi-hole DNS](pi-hole_dns.md)</li>
       <li>[DMZ Network Design and Implementation](dmz_network_design_and_implementation.md)</li>
@@ -36,7 +27,7 @@ title: "Sidebar"
   </details>
 
   <details>
-    <summary>Storage & Data Protection</summary>
+    <summary>💾 Storage & Data Protection</summary>
     <ul>
       <li>[Ceph](ceph.md)</li>
       <li>[Synology NAS](synology_nas.md)</li>
@@ -47,7 +38,7 @@ title: "Sidebar"
 </details>
 
 <!-- 🔐 Identity & Access -->
-<details open>
+<details>
   <summary>🔐 Identity & Access</summary>
   <ul>
     <li>[Domain Controller](domain_controller.md)</li>
@@ -57,7 +48,7 @@ title: "Sidebar"
 </details>
 
 <!-- 🧩 Core Platform Services -->
-<details open>
+<details>
   <summary>🧩 Core Platform Services</summary>
   <ul>
     <li>[PostgreSQL](postgresql.md)</li>
@@ -67,7 +58,7 @@ title: "Sidebar"
 </details>
 
 <!-- 🧩 Application Workloads -->
-<details open>
+<details>
   <summary>🧩 Application Workloads</summary>
 
   <details>
@@ -108,7 +99,7 @@ title: "Sidebar"
 </details>
 
 <!-- 📈 Observability & Monitoring -->
-<details open>
+<details>
   <summary>📈 Observability & Monitoring</summary>
   <ul>
     <li>[Prometheus](prometheus.md)</li>
@@ -118,7 +109,7 @@ title: "Sidebar"
 </details>
 
 <!-- ⚙️ Automation & Ops -->
-<details open>
+<details>
   <summary>⚙️ Automation & Ops</summary>
   <ul>
     <li>[Ansible](ansible.md)</li>
@@ -130,17 +121,19 @@ title: "Sidebar"
 </details>
 
 <!-- 💻 Infrastructure-as-Code -->
-<details open>
+<details>
   <summary>💻 Infrastructure-as-Code</summary>
   <ul>
     <li>[GitHub](github.md)</li>
     <li>[Visual Studio Code](visual_studio_code.md)</li>
     <li>[Code Server](code_server.md)</li>
+    <li>[Ansible](ansible.md)</li>
+    <li>[Terraform](terraform.md)</li>
   </ul>
 </details>
 
 <!-- 📚 Operational Runbooks -->
-<details open>
+<details>
   <summary>📚 Operational Runbooks</summary>
   <ul>
     <li>[Runbooks](runbooks.md)</li>
@@ -148,7 +141,7 @@ title: "Sidebar"
 </details>
 
 <!-- 📘 Governance & Documentation -->
-<details open>
+<details>
   <summary>📘 Governance & Documentation</summary>
   <ul>
     <li>[Redmine](redmine.md)</li>

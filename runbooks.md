@@ -53,7 +53,7 @@ title: "Runbooks"
 | **[Deploy Linux Security Updates Runbook](deploy_linux_security_updates_runbook.md)** | Instructions to apply security updates to Linux hosts in the home lab.           |
 | **[Proxmox Cluster Update Runbook](proxmox_cluster_update_runbook.md)**        | Step‑by‑step instructions to safely update a three‑node Proxmox cluster.         |
 | **[Provision a Virtual Machine Runbook](provision_a_virtual_machine_runbook.md)**   | Use an Ansible playbook to deploy a new virtual machine.                         |
-  
+| **[NFS Mount Troubleshooting Runbook](nfs_mount_troubleshooting_runbook.md)**     | Troubleshoot NFS issues (autofs and stab.                                        | 
 ---
 
 ### 📄 Templates & Miscellaneous

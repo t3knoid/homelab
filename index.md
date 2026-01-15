@@ -56,6 +56,7 @@ Storage services simulate enterprise data architectures.
 * **[Ceph](ceph.md)** distributed storage cluster
 * **[iSCSI](iscsi.md)** volumes hosted on **[Synology NAS](synology_nas.md)**
 * **[NFS](nfs.md) / Samba** exports from **[TrueNAS](truenas.md)**
+* **[PostgreSQL](postgresql.md)** — standardized backend database for supported applications
 * Centralized backup and recovery via **[Proxmox Backup Server](proxmox_backup_server.md)**
 
 ---
@@ -69,25 +70,6 @@ Identity is centralized and treated as a first-class platform service.
 * OAuth2-based access via **[Microsoft Entra ID](microsoft_entra_id.md)**
 
 This enables testing of federation, authorization, and modern authentication flows.
-
----
-
-## 🧩 Core Platform Services
-
-Core services are **always-on shared dependencies** consumed by multiple workloads across the platform.
-
-### Databases
-
-* **[PostgreSQL](postgresql.md)** — standardized backend database for supported applications
-
-### Backup Services
-
-* **[Proxmox Backup Server](proxmox_backup_server.md) (PBS)** — VM and container backups with deduplication and recovery
-
-### Shared Infrastructure Services
-
-* **[Autofs](autofs.md)** for on-demand NFS mounts
-* Container runtime services supporting application workloads
 
 ---
 

@@ -8,6 +8,10 @@ This page documents **containerized application deployment using Docker and Ansi
 
 Think of this as a **generic framework** for all containerized services in the homelab.
 
+To understand how Docker service deployment evolved in this homelab — including the challenges, patterns, and decisions that led to the creation of the shared docker_service_deploy role,
+
+👉 see the **[Evolution of Docker Service Deployment](evolution_of_docker_service_deployment.md)** page.
+
 ---
 
 ## 🏗 Architecture Overview
@@ -185,12 +189,15 @@ app_setup_pg_port: 5432
 
 ## 📚 Related Pages
 
-* [Docker Deployment Example Commands vs Ansible Tasks](docker_deployment_example_commands_vs_ansible_tasks.md)
-* [Docker Command Cheat Sheet](docker_command_cheat_sheet.md)
-* [Calibre Deployment - Role Overview](calibre_deployment_-_role_overview.md)
-* [Calibre-Web Deployment - Role Overview](calibre-web_deployment_-_role_overview.md)
-* [Lazy Librarian Deployment - Role Overview](lazy_librarian_deployment_-_role_overview.md)
-* [Lidarr Deployment - Role Overview](lidarr_deployment_-_role_overview.md)
-* [Radarr Deployment - Role Overview](radarr_deployment_-_role_overview.md)
-* [SABnzbd Deployment - Role Overview](sabnzbd_deployment_-_role_overview.md)
-* [Sonarr Deployment - Role Overview](sonarr_deployment_-_role_overview.md)
+* [Docker Deployment Example Commands vs Ansible Tasks](docker_deployment_example_commands_vs_ansible_tasks.md) - Illustrates the equivalence between manual Docker commands and the automated Ansible tasks
+* [Docker Command Cheat Sheet](docker_command_cheat_sheet.md) - A list of commonly used Docker commands
+* [Calibre Deployment - Role Overview](calibre_deployment_-_role_overview.md) - An overview of the Calibre role
+* [Calibre-Web Deployment - Role Overview](calibre-web_deployment_-_role_overview.md) - An overview of the Calibre-Web role
+* [Lazy Librarian Deployment - Role Overview](lazy_librarian_deployment_-_role_overview.md) - An overview of the Lazy Librarian roe
+* [Lidarr Deployment - Role Overview](lidarr_deployment_-_role_overview.md) - An overview of the Lidarr role
+* [Radarr Deployment - Role Overview](radarr_deployment_-_role_overview.md) - An overview of the Radarr role
+* [SABnzbd Deployment - Role Overview](sabnzbd_deployment_-_role_overview.md) - An overview of the SaBnzbd role
+* [Sonarr Deployment - Role Overview](sonarr_deployment_-_role_overview.md) - An overview of the Sonarr role
+* [Template New Docker Service Role](template_new_docker_service_role.md) — Starter template for new service roles
+* [Contributor Guide Adding a Docker Service Role](contributor_guide_adding_a_docker_service_role.md) — Contributor Guide: Adding a Docker Service Role
+* [Evolution of Docker Service Deployment](evolution_of_docker_service_deployment.md) — Historical context and reasoning behind the shared role

@@ -44,7 +44,7 @@ network:
           nameservers:
             addresses:
             - 192.168.2.253
-            - 192.168.2.251
+            - 192.168.2.252
             search:
             - refol.us
           routes:
@@ -219,5 +219,4 @@ sudo usermod -a -G sudo frank@refol.us
 ## 📚 References
 
 - [Server‑World: Ubuntu 24.04 + Active Directory Integration](https://www.server-world.info/en/note?os=Ubuntu_24.04&p=realmd)  
-- [Ubuntu Docs: SSSD with Active Directory](https://ubuntu.com/server/docs/how-to-set-up-sssd-with-active-directory)  
-
+- [Ubuntu Docs: SSSD with Active Directory](https://ubuntu.com/server/docs/how-to-set-up-sssd-with-active-directory)

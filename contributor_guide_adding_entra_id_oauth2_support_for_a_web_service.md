@@ -1,8 +1,8 @@
 ---
-title: "Contributor Guide Adding Entra ID OAuth2 Support for a Web Service"
+title: "Contributor Guide: Adding Entra ID OAuth2 Support for a Web Service"
 ---
 
-# 🔐 Contributor Guide Adding Entra ID OAuth2 Support for a Web Service
+# 🔐 Contributor Guide: Adding Entra ID OAuth2 Support for a Web Service
 
 This guide explains how a contributor can add Entra ID OAuth2 authentication to an existing web service that sits behind the repository’s reverse‑proxy setup.
 

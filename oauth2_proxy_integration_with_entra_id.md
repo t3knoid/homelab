@@ -4,7 +4,7 @@ title: "OAuth2 Proxy Integration with Entra ID"
 
 # 🛂 OAuth2 Proxy Integration with Entra ID
 
-This environment uses **OAuth2 Proxy** in combination with **Nginx** to enforce authentication across selected domains, with **[Microsoft Entra ID](microsoft_entra_id.md) (Azure Active Directory)** serving as the centralized identity provider. Authentication is handled through dedicated OAuth2 Proxy instances, each associated with its own domain and configuration file under `/etc/oauth2-proxy/`. This approach ensures clean separation of concerns, predictable automation, and domain-specific access control.
+This environment uses **[OAuth2 Proxy](oauth2_proxy.md)** in combination with **Nginx** to enforce authentication across selected domains, with **[Microsoft Entra ID](microsoft_entra_id.md) (Azure Active Directory)** serving as the centralized identity provider. Authentication is handled through dedicated OAuth2 Proxy instances, each associated with its own domain and configuration file under `/etc/oauth2-proxy/`. This approach ensures clean separation of concerns, predictable automation, and domain-specific access control.
 
 Nginx delegates authentication to OAuth2 Proxy via `auth_request`, while OAuth2 Proxy validates tokens issued by Entra ID and injects identity headers—such as `X-Auth-Request-User`, `X-Auth-Request-Email`, and `Authorization: Bearer <token>`—into upstream requests. Backend applications receive verified identity information without implementing OAuth2/OIDC logic.
 

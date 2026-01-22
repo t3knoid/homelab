@@ -65,6 +65,25 @@ The following sections describe the common configuration properties used in an *
 
 ---
 
+## 🗄️ Session Storage Settings
+
+OAuth2 Proxy supports two mechanisms for persisting session data: encrypted browser cookies or a centralized Redis backend.  
+Using Redis is recommended for high‑availability deployments, multi‑instance scaling, or when you want to minimize cookie size.
+
+### Session data storage backend  
+
+* **`session_store_type = "redis"`**
+  Selects Redis as the session storage backend instead of client‑side cookies.  
+
+### Redis connection URL  
+
+* **`redis_connection_url = "REDIS_SERVER_URL"`**
+  Defines the Redis server used for session storage.
+
+This value is templated from the `oauth2_proxy_setup_redis_connection` variable, ensuring consistent configuration across all OAuth2 Proxy instances.
+
+---
+
 ## 🔐 Access Control
 
 * **`email_domains = ["*"]`**

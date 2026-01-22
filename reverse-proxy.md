@@ -185,7 +185,7 @@ This makes it both educational and practical.
 
 ## 🔐 Authentication & OAuth2 Integration
 
-The reverse‑proxy cluster also serves as the enforcement point for user authentication. To protect internal applications, the frontend Nginx server integrates with **OAuth2 Proxy**, which authenticates users against **Microsoft Entra ID** and injects identity headers into upstream requests.
+The reverse‑proxy cluster also serves as the enforcement point for user authentication. To protect internal applications, the frontend Nginx server integrates with **[OAuth2 Proxy](oauth2_proxy.md)**, which authenticates users against **Microsoft Entra ID** and injects identity headers into upstream requests.
 
 This authentication layer is documented in two dedicated pages:
 
@@ -225,8 +225,3 @@ A deep dive into the OAuth2 Proxy service, including:
 - Nginx forwards the authenticated request to backend services  
 
 This layered design keeps authentication centralized, consistent, and easy to maintain.
-
-
-
-
-

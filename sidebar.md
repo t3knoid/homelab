@@ -41,6 +41,7 @@ title: "Sidebar"
 <details>
   <summary>🔐 Identity & Access</summary>
   <ul>
+    <li>[OAuth2 Proxy](oauth2_proxy.md)</li>
     <li>[Domain Controller](domain_controller.md)</li>
     <li>[LDAP](ldap.md)</li>
     <li>[Microsoft Entra ID](microsoft_entra_id.md)</li>

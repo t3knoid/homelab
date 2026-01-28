@@ -61,6 +61,10 @@ def crawl(start):
             raw = a["href"]
             full = urljoin(page, raw)
 
+            # Ignore Cloudflare email protection links
+            if "/cdn-cgi/l/email-protection" in full:
+                continue
+
             # Determine link status safely
             if is_internal(full) and is_http_scheme(full):
                 # Only fetch internal HTTP/HTTPS links

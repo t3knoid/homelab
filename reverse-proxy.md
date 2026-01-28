@@ -18,8 +18,16 @@ The Reverse-Proxy serves as the public gateway into the homelab’s internal ser
                                          │
                                          ▼
                           ┌───────────────────────────┐
+                          │     Cloudflare Proxy      │
+                          │ (DNS + WAF + TLS Edge)    │
+                          └──────────────┬────────────┘
+                                         │
+                                 Encrypted HTTPS
+                                         │
+                                         ▼
+                          ┌───────────────────────────┐
                           │    Frontend Nginx Proxy   │
-                          │ (TLS termination, routing)│
+                          │ (Internal TLS termination)│
                           └──────────────┬────────────┘
                                          │
                                  Upstream "backend"
@@ -39,10 +47,39 @@ The Reverse-Proxy serves as the public gateway into the homelab’s internal ser
                   │  Internal Web Services   │
                   │ (No SSL – Trust Boundary)│
                   └──────────────────────────┘
+
 ```
 {% endraw %}
 
 ---
+
+## 🌐 Public Frontend & IP Obfuscation Layer
+
+To prevent the homelab’s residential WAN IP from ever being exposed publicly, all external traffic is routed through Cloudflare’s reverse‑proxy network. Cloudflare becomes the public edge of the homelab, providing TLS termination, DDoS protection, and complete IP obfuscation before requests reach the frontend Nginx server.
+
+Cloudflare’s orange‑cloud proxy mode ensures that DNS records for public services resolve to Cloudflare Anycast IPs rather than the homelab’s WAN address. The true origin IP is never visible to clients, scanners, or crawlers.
+
+**Benefits:**
+
+- Works for any protocol (not just HTTP/HTTPS)  
+- Fully isolates the homelab from direct exposure  
+- Integrates cleanly with the existing frontend Nginx server  
+
+---
+
+### **Why This Layer Exists**
+
+- Prevents WAN IP leakage through DNS, logs, or direct scans  
+- Adds a cloud‑grade buffer between the internet and the homelab  
+- Enables future expansion (multi‑region ingress, geo‑routing, etc.)  
+- Mirrors real‑world DMZ and edge‑proxy patterns  
+
+This public‑frontend layer now represents the **first hop** in the homelab’s ingress architecture, with the Reverse‑Proxy cluster continuing to serve as the internal routing and authentication gateway.
+
+👉 See: **[Cloudflare Public Frontend and IP Obfuscation](cloudflare_public_frontend_and_ip_obfuscation.md)**
+
+---
+
 
 ## 🖥️ Frontend Server Configuration
 

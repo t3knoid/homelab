@@ -46,7 +46,7 @@ title: "Runbooks"
 
 ### 🖥️ Virtual Machine & System Maintenance
 
-| Runbook              | Description                          |
+| Runbook           | Description                |
 | ----------------- | -------------------------- |
 | **[Virtual Machine Snapshot Runbook](virtual_machine_snapshot_runbook.md)**      | Instructions to create and manage snapshots of virtual machines in the home lab. |
 | **[Ubuntu Virtual Machine Disk Expansion Runbook](ubuntu_virtual_machine_disk_expansion_runbook.md)**       | Instructions to expand disk size for Ubuntu virtual machines.                    |
@@ -54,6 +54,7 @@ title: "Runbooks"
 | **[Proxmox Cluster Update Runbook](proxmox_cluster_update_runbook.md)**        | Step‑by‑step instructions to safely update a three‑node Proxmox cluster.         |
 | **[Provision a Virtual Machine Runbook](provision_a_virtual_machine_runbook.md)**   | Use an Ansible playbook to deploy a new virtual machine.                         |
 | **[NFS Mount Troubleshooting Runbook](nfs_mount_troubleshooting_runbook.md)**     | Troubleshoot NFS issues (autofs and stab.                                        | 
+
 ---
 
 ### 📄 Templates & Miscellaneous

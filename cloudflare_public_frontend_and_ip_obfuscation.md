@@ -4,7 +4,7 @@ title: "Cloudflare Public Frontend and IP Obfuscation"
 
 # 🌐 Cloudflare Public Frontend and IP Obfuscation
 
-Cloudflare serves as the **public-facing ingress layer** for the homelab, acting as a secure, globally distributed reverse‑proxy that fully obfuscates the homelab’s residential WAN IP. All external traffic terminates at Cloudflare’s edge network before being forwarded to the homelab’s frontend Nginx server.
+[Cloudflare](https://www.cloudflare.com/) serves as the **public-facing ingress layer** for the homelab, acting as a secure, globally distributed reverse‑proxy that fully obfuscates the homelab’s residential WAN IP. All external traffic terminates at Cloudflare’s edge network before being forwarded to the homelab’s frontend Nginx server.
 
 This design ensures that the homelab is never directly exposed to the internet, significantly reducing the attack surface while providing enterprise‑grade performance and security at zero cost. Cloudflare becomes **Layer 0** of the ingress path, with the existing [reverse‑proxy](reverse-proxy.md) cluster continuing to handle routing, authentication, and backend failover.
 
@@ -104,7 +104,27 @@ This ensures:
 
 On your router/firewall:
 
-- Allow inbound traffic **only** from Cloudflare IP ranges  
+- Allow inbound traffic **only** from Cloudflare IP ranges 
+{% raw %}
+```text
+173.245.48.0/20
+103.21.244.0/22
+103.22.200.0/22
+103.31.4.0/22
+141.101.64.0/18
+108.162.192.0/18
+190.93.240.0/20
+188.114.96.0/20
+197.234.240.0/22
+198.41.128.0/17
+162.158.0.0/15
+104.16.0.0/13
+104.24.0.0/14
+172.64.0.0/13
+131.0.72.0/22
+```
+{% endraw %}
+Cloudflare maintains an updated list here, https://www.cloudflare.com/ips/.
 - Block all other inbound traffic  
 - Prevent direct access to the frontend Nginx server  
 

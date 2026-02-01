@@ -52,7 +52,7 @@ In Proxmox:
 **Datacenter → Permissions → Users → Add**  
 Add the user **ansible**.
 
-> [!IMPORTANT]  
+> ❗**IMPORTANT**
 > The Active Directory domain `refol.us` must be added as a Realm before adding the user.  
 > Navigate to **Datacenter → Permissions → Realms → Add → Active Directory Server**.
 
@@ -297,4 +297,3 @@ pip3 install ansible-lint
 - [https://docs.ansible.com/ansible/latest/reference_appendices/config.html](https://docs.ansible.com/ansible/latest/reference_appendices/config.html)  
 - [https://ansible.readthedocs.io/projects/lint/installing/](https://ansible.readthedocs.io/projects/lint/installing/)  
 - [https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
-

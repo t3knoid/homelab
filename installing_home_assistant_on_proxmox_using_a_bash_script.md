@@ -28,8 +28,8 @@ Before proceeding, ensure the following requirements are met:
 - **Required tools** installed on the Proxmox host: `curl`, `unxz`, `awk`, `grep`, and `sed`
 - **Internet access** from the Proxmox host to download the Home Assistant OS image
 
-> [!TIP] Enable QEMU Guest Agent
-> Enabling the QEMU guest agent is essential for detecting the VM's IP address automatically.
+> 💡**TIP: Enable QEMU Guest Agent**
+> Enabling the QEMU guest agent is essential for > detecting the VM's IP address automatically.
 
 ---
 
@@ -46,7 +46,7 @@ Create a new virtual machine with the following configuration:
 - **SCSI Controller**: VirtIO SCSI single
 - **Network**: 1 VirtIO NIC bridged to `vmbr0`
 
-> [!IMPORTANT]
+> ❗**IMPORTANT**
 > Do **not** create or attach any disks at this stage.
 > Do **not** start the VM after creation.
 
@@ -73,7 +73,7 @@ qm set "$VMID" \
 ```
 {% endraw %}
 
-> [!NOTE]
+> ℹ️ **NOTE**
 > The VMID is dynamically assigned by querying the next available ID from the Proxmox cluster.
 
 ---
@@ -115,7 +115,7 @@ unxz /tmp/haos_ova-16.3.qcow2.xz
 ```
 {% endraw %}
 
-> [!TIP]
+>💡**TIP**
 > The extracted disk image will be located at `/tmp/haos_ova-16.3.qcow2`.
 
 ---
@@ -128,7 +128,7 @@ qm importdisk "$VMID" /tmp/haos_ova-16.3.qcow2 local --format qcow2
 ```
 {% endraw %}
 
-> [!TIP] Disk Volume ID
+> 💡**TIP: Disk Volume ID**
 > This command typically reports the disk volume ID as `local:VMID/vm-VMID-disk-0.qcow2`.
 > You will need this identifier in the next step.
 
@@ -196,7 +196,7 @@ qm guest cmd <VMID> network-get-interfaces
 - Check your router or DHCP server for a lease named `homeassistant`.
 - Alternatively, match the VM’s MAC address (visible in Proxmox) to the DHCP lease.
 
-> [!TIP]
+> 💡**TIP**
 > Avoid using IP addresses inside Home Assistant containers (e.g., `172.x.x.x`), as those are internal Docker addresses.
 
 ---

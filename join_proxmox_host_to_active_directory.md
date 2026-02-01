@@ -239,7 +239,7 @@ sudo service sssd restart
 ```
 {% endraw %}
 
-> [!IMPORTANT] 
+> ❗**IMPORTANT**
 > Something very important to remember is that this file must have permissions 0600 and ownership root:root, or else SSSD won’t start!
 
 From the configurations file, we can observe a few things:

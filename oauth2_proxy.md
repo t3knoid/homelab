@@ -78,7 +78,7 @@ While OAuth2 Proxy supports encrypted cookie‑based sessions, Redis is preferre
 - Survives restarts
 - Eliminates the “multiple cookies required” warning from Entra ID sessions
 
-> [!NOTE]
+> ℹ️ **NOTE**
 > While using OAuth2 with EntraID, a warning in the OAuth2 logs stating, `Multiple 
 > cookies are required for this session as it exceeds the 4kb cookie limit. Please use
 > server side session storage (eg. Redis) instead` was shown. Using Redis with OAuth2

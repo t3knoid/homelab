@@ -33,7 +33,7 @@ Provision **WSL2 (Ubuntu 24.04)** on a Windows workstation and configure it as a
   - Set default user to **ansible**
   - Set password
 
-> [!IMPORTANT]  
+> ❗**IMPORTANT**
 > The `ansible` user is required for automated configuration.
 
 - Reboot if prompted
@@ -138,7 +138,7 @@ netsh interface portproxy add v4tov4 listenport=22 listenaddress=0.0.0.0 connect
 ```
 {% endraw %}
 
-> [!IMPORTANT]  
+> ❗**IMPORTANT**
 > SSH should now be reachable using the **Windows host IP**.
 
 ---
@@ -187,7 +187,7 @@ dev-0
 
 ## 🛠️ Configure WSL Host Using Ansible
 
-> [!IMPORTANT]  
+> ❗**IMPORTANT**
 > Confirm SSH access to the WSL host using the Windows host IP.
 
 ### Bootstrap Python 3
@@ -204,11 +204,11 @@ ansible-playbook -k -i inventory/ansible/inventory.ini playbooks/ad/join_domain.
 ```
 {% endraw %}
 
-> [!WARNING]  
+> ⚠️ **WARNING**
 > This playbook reboots WSL.  
 > After reboot:  
 > - Start WSL manually  
-> - Reconfigure Windows port forwarding  
+> - Reconfigure Windows port forwarding
 
 ### Prep Ansible Node
 {% raw %}
@@ -290,5 +290,4 @@ VS Code now uses:
 
 - WSL Python interpreter  
 - WSL Ansible extension  
-- WSL linting and execution  
-
+- WSL linting and execution

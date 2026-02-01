@@ -194,8 +194,7 @@ docker_service_deploy_owner: "media"
 ```
 {% endraw %}
 
-> [!TIP]
-> `users_list` is typically defined in the inventory vault.
+💡 **Tip: `users_list` is typically defined in the inventory vault.**
 
 ---
 

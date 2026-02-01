@@ -248,7 +248,7 @@ homelab.refol.us.  CNAME  t3knoid.github.io.
 ```
 {% endraw %}
 
-> [!TIP]
+> 💡**TIP**
 > If CNAMEs that are pointing to external domains continue to fail to resolve,
 > add an A record for the domain that is pointed by the CNAME entry in Pi-hole.
 >

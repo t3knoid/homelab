@@ -26,7 +26,7 @@ Documentation for the Java Edition role, versioning model, manual version checks
 
 Minecraft does not provide a public API for server version discovery. To automate version tracking, the homelab uses **Playwright** to scrape the official download pages for both editions.
 
-> [!NOTE]
+> ℹ️ **NOTE**
 > The **[Playwright role](https://github.com/t3knoid/ansible/tree/main/roles/playwright)** which installs and configures Playwright is included in the version check playbooks.
 
 ### 🟩 Bedrock Edition Version Scraping

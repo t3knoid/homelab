@@ -286,7 +286,7 @@ New-NetFirewallRule -DisplayName "WSL SSH" -Direction Inbound -Protocol TCP -Loc
 
 You can then SSH from another machine using the **Windows host’s LAN IP**.
 
-> [!NOTE]
+> ℹ️ **NOTE**
 > The IP address of the WSL host changes whenever it restarts, which requires configuring Windows port forwarding.
 
 ---

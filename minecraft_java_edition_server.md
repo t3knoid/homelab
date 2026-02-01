@@ -69,7 +69,7 @@ minecraft_setup_java_xms: 256
 ```
 {% endraw %}
 
-> [!Important]
+> ❗**IMPORTANT**
 > `minecraft_setup_version` is **metadata only**.  
 > The **actual server version** is determined by the `minecraft_setup_download_url`.
 

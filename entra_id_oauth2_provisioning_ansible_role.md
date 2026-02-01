@@ -132,7 +132,7 @@ rproxy_setup_sites:
 
 Only sites with `use_oauth2: true` are processed.
 
-> [!TIP] Cookie Secret
+> 💡**TIP: Cookie Secret**
 > A cookie secret can be [generated using Python](https://oauth2-proxy.github.io/oauth2-proxy/configuration/overview/#generating-a-cookie-secret)
 > `python -c 'import os,base64; print(base64.urlsafe_b64encode(os.urandom(32)).decode())'`
 

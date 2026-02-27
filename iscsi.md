@@ -2,7 +2,6 @@
 title: "iSCSI"
 ---
 
-
 # **iSCSI**
 
 iSCSI (Internet Small Computer System Interface) lets you turn ordinary TCP/IP networks into powerful, flexible Storage Area Networks (SANs). With it, your servers can mount remote disks as if they were physically attached—unlocking advanced storage architectures without dedicated Fibre Channel hardware.
@@ -106,10 +105,58 @@ Fix it by clearing all existing connections on the affected PVE node:
 
 {% raw %}
 ```shell
-iscsiadm -m node --logoutall=all
+sudo iscsiadm -m node --logoutall=all
 ```
 {% endraw %}
 
 After this, reattempt the login and the session should establish cleanly.
+
+### 🔁 Restoring iSCSI Sessions After Updates
+
+If a Proxmox node reboots before the Synology NAS or after a system update, the iSCSI session may not automatically reconnect. Restore the session manually:
+
+{% raw %}
+```bash
+sudo iscsiadm -m node --targetname iqn.2000-01.com.synology:synology-0.Target-1.76fd697e949 --portal 192.168.2.240 --login
+```
+{% endraw %}
+
+---
+
+### ✅ Verifying iSCSI Session Status
+
+Check that the session is active:
+
+{% raw %}
+```bash
+sudo iscsiadm --mode session --print=1
+```
+{% endraw %}
+
+Expected output includes:
+
+{% raw %}
+```
+iSCSI Connection State: LOGGED IN
+iSCSI Session State: LOGGED_IN
+```
+{% endraw %}
+
+---
+
+### 📂 Mounting the iSCSI Drive
+
+If the iSCSI LUN is used as a filesystem rather than a Proxmox storage backend, mount it:
+
+{% raw %}
+```bash
+sudo mount /mnt/datastore/backups/
+```
+{% endraw %}
+
+## References
+
+
+- [How to Configure an iSCSI Target on Synology](synology_nas#how-to-configure-an-iscsi-target-on-synology.md)
 
 

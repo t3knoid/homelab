@@ -23,7 +23,7 @@ Below are the validated LDAP settings used in the environment:
 | Setting                      | Value                                                     |
 | ---------------------------- | --------------------------------------------------------- |
 | **Name**                     | refol.us                                                  |
-| **Host**                     | 192.168.2.251                                             |
+| **Host**                     | 192.168.20.251                                             |
 | **Port**                     | 389                                                       |
 | **Account**                  | [ldap_bind_user@refol.us](mailto:ldap_bind_user@refol.us) |
 | **Base DN**                  | CN=Users,DC=refol,DC=us                                   |
@@ -35,6 +35,11 @@ Below are the validated LDAP settings used in the environment:
 
 These values follow Redmine’s recommended LDAP guidelines and are aligned with the homelab’s AD structure.
 *Reference:* Redmine LDAP Configuration — [https://www.redmine.org/projects/redmine/wiki/RedmineLDAP](https://www.redmine.org/projects/redmine/wiki/RedmineLDAP)
+
+> 💡 **Tip: The LDAP settings are saved in the Redmine database. To modify directly, connect to the 
+> database and update the `public.auth_sources` table. For example, use the following update command, 
+> `UPDATE public.auth_sources SET host = 'new_ldap_server_ip' WHERE name = 'refol.us';`**
+
 
 ---
 
@@ -129,6 +134,3 @@ Add:
 {% endraw %}
 
 This ensures Redmine always displays the latest commits, branches, and diffs without manual intervention.
-
-
-

@@ -19,9 +19,9 @@ It serves as the authoritative reference for contributors, troubleshooting, and 
 
 ---
 
-# 📡 **1. Physical Network Topology (TP‑Link Omada)**
+# 📡 **1. Physical Network Topology**
 
-This ASCII diagram recreates the physical topology exported from the Omada controller. It shows how the modem, router, switches, APs, cameras, and client/server devices are interconnected.
+This ASCII diagram recreates the physical topology in the homelab network as defined in the [TP-Link Omada Ecosystem](tp-link_omada_ecosystem.md). It shows how the modem, router, switches, APs, cameras, and client/server devices are interconnected.
 
 {% raw %}
 ```text

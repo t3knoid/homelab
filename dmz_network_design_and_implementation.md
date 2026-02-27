@@ -45,26 +45,26 @@ DHCP and firewalling are handled by the Omada router.
                      |   Omada Router   |
                      |  Firewall + DHCP |
                      +------------------+
-                        |           |
-                        |           |
-           VLAN 10 (DMZ)|           | VLAN 1 (LAN)
-         192.168.10.0/24|           |192.168.2.0/24
-                        |           |
-                        |           |
-               +----------------+   |
-               |  NGINX Reverse |   |
-               |     Proxy VM   |   |
-               |  192.168.10.10 |   |
-               +----------------+   |
-                        |           |
-    Explicitly allowed  |           |
-    DMZ → LAN traffic   |           |
-                        v           v
-             +----------------+  +----------------+
-             |  Backend VM A  |  |  Backend VM B  |
-             | 192.168.2.211  |  | 192.168.2.212  |
-             | HTTPS / 443    |  | App / 8080     |
-             +----------------+  +----------------+
+                              |           
+                              |          
+                 VLAN 10 (DMZ)|
+               192.168.10.0/24|
+                              |
+                              | 
+                      +----------------+ 
+                      |  NGINX Reverse |
+                      |     Proxy VM   |
+                      |  192.168.10.10 |
+                      +----------------+ 
+                              |
+          Explicitly allowed  | 
+          DMZ → LAN traffic   | 
+                              v 
+                      +----------------+
+                      |  Backend VM A  |
+                      | 192.168.20.211 |
+                      | HTTPS / 443    |
+                      +----------------+
 ```
 {% endraw %}
 
@@ -90,8 +90,12 @@ DHCP and firewalling are handled by the Omada router.
 ## VLAN & IP Design
 
 | Network | VLAN | Subnet | Gateway |
-|------|------|--------|--------|
-| LAN | 1 | 192.168.2.0/24 | 192.168.2.1 |
+|--------|------|--------|--------|
+| VLAN1 | 1 | 192.168.2.0/24 | 192.168.2.1 |
+| VLAN20 | 20 | 192.168.20.0/24 | 192.168.20.1 |
+| VLAN30 | 30 | 192.168.30.0/24 | 192.168.30.1 |
+| VLAN40 | 40 | 192.168.40.0/24 | 192.168.40.1 |
+| VLAN50 | 50 | 192.168.50.0/24 | 192.168.50.1 |
 | DMZ | 10 | 192.168.10.0/24 | 192.168.10.1 |
 
 - DHCP enabled on both networks
@@ -133,7 +137,7 @@ vmbr0
 | VM Type | VLAN | NIC Count |
 |------|------|----------|
 | NGINX Reverse Proxy | 10 (DMZ) | 1 |
-| Backend Services | 1 (LAN) | 1 |
+| Backend Services | 20 (LAN) | 1 |
 
 > VMs must not be dual-homed across LAN and DMZ.
 
@@ -143,17 +147,17 @@ vmbr0
 
 {% raw %}
 ```text
-             Omada Switch (Trunk Port)
-           VLAN 1 (LAN) | VLAN 10 (DMZ)
-                         |
-                  +----------------+
-                  |  Proxmox Host  |
-                  |  vmbr0 (VLAN)  |
-                  +----------------+
-                   |            |
-           VLAN 1  |            | VLAN 10
-                   |            |
-          Backend Service VMs   NGINX Proxy VM
+                Omada Switch (Trunk Port)
+ VLAN50 (Physical Control Plane) | VLAN 10 (DMZ)
+                                 |
+                        +----------------+
+                        | Proxmox Host   |
+                        | vmbr0 (VLAN50) |
+                        +----------------+
+                          |            |
+                  VLAN 20 |            | VLAN 10
+                          |            |
+              Backend Service VMs   NGINX Proxy VM
 ```
 {% endraw %}
 
@@ -280,16 +284,4 @@ No port forwarding to LAN networks is permitted.
 * VLAN tagging must be validated end-to-end
 * Avoid temporary “any/any” rules during testing
 * Document each DMZ → LAN rule with justification
-
----
-
-## Validation Checklist
-
-* [ ] Public services reachable only via NGINX
-* [ ] Backend services unreachable from WAN
-* [ ] DMZ hosts blocked from unrestricted LAN access
-* [ ] Router enforces all routing and firewall policy
-* [ ] Logs confirm denied DMZ → LAN traffic
-
-
 

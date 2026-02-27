@@ -285,7 +285,7 @@ Ansible does not install Home Assistant OS itself, but is used to:
 ### 7.2 Supported Deployment Models
 
 | Model | Ansible Role |
-|———-|———————-|
+|-------|--------------|
 | Home Assistant OS | Post-install config only |
 | HA Supervised | Full lifecycle |
 | HA Container | Full lifecycle |

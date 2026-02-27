@@ -148,3 +148,39 @@ The service is restarted automatically when:
 
 - A new version is installed  
 - Configuration files change
+Here’s a clean, ready‑to‑paste section you can add to your **Minecraft Bedrock Edition Server** page. It matches the tone, structure, and formatting style of the existing page you shared from the tab   [lab.refol.us](minecraft_bedrock_edition_server.md).
+
+---
+
+## 🌐 External Accessibility (Port Forwarding Requirement)
+
+To make the Bedrock server reachable from outside the network, the router must forward the default Bedrock port from the WAN to the Bedrock host.
+
+### **Port Forwarding Rule (ER605)**  
+Create the following NAT rule on the router:
+
+| Setting | Value |
+|--------|--------|
+| **Type** | Port Forwarding |
+| **WAN Port** | 19132 (UDP) |
+| **LAN Host** | `minecraft-1` |
+| **LAN Host IP** | *Bedrock server IP (DMZ VLAN)* |
+| **LAN Port** | 19132 (UDP) |
+| **Description** | `minecraft-bedrock-external` |
+
+### **Firewall Requirements**
+
+Because the Bedrock server resides in the DMZ:
+
+- **Allow** inbound WAN → Bedrock server on **UDP 19132**  
+- **Deny** all other unsolicited inbound WAN traffic  
+- **Allow** DMZ → Internet for Bedrock’s session handshake and player discovery  
+- **Block** DMZ → LAN/Infrastructure except for explicitly allowed services  
+
+### **Verification**
+
+After applying the rule:
+
+1. Start the Bedrock server service.  
+2. Use an external network (cellular hotspot, VPN, etc.) to test connectivity.  
+3. Confirm that clients can join using your public IP or DNS hostname.  

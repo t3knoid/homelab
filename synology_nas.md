@@ -21,81 +21,84 @@ Synology devices are updated through the **web GUI**:
 
 ---
 
-## 🛑 Logging Out of iSCSI Sessions
+## 🔐 Secure File Transfer (SFTP) on Synology NAS
 
-From the `pve-2` terminal, log out of the active iSCSI session:
+SFTP provides a secure, encrypted method for transferring files to and from the Synology NAS. This is especially useful for configuration backups, log collection, and secure automation workflows.
 
-{% raw %}
-```bash
-sudo iscsiadm -m node --logout -T iqn.2000-01.com.synology:synology-0.Target-1.76fd697e949
-```
-{% endraw %}
+Synology implements SFTP through the **SSH service**, so enabling SFTP is simply a matter of enabling SSH and restricting access appropriately. To safely expose the Synology SFTP service externally, a **bastion (jump) host** is used to proxy the connection to Synology. For more details on how this is done, see:
+
+👉 [Secure SFTP Publishing via Bastion to Synology](secure_sftp_publishing_via_bastion_to_synology.md)
 
 ---
 
-## 🔁 Restoring iSCSI Sessions After Update
+### ⚙️ Enabling SFTP on Synology (Concise Setup Steps)
 
-Once the update is complete, restore the iSCSI session:
+Follow these steps in the Synology web interface:
 
-{% raw %}
-```bash
-sudo iscsiadm -m node --targetname iqn.2000-01.com.synology:synology-0.Target-1.76fd697e949 --portal 192.168.2.240 --login
-```
-{% endraw %}
+1. **Open Control Panel**  
+2. Navigate to **Terminal & SNMP**  
+3. Enable **SSH Service**  
+4. Set the SSH port (default: 22)  
+5. Click **Apply**  
+6. Create or select a user who will access SFTP  
+7. Ensure the user has **read/write permissions** to the shared folders they need  
+8. (Optional but recommended) Restrict SSH/SFTP access to specific IPs using **Firewall → Create Rule**
 
----
-
-## ✅ Verifying iSCSI Session Status
-
-Confirm that the iSCSI session is active:
-
-{% raw %}
-```bash
-sudo iscsiadm --mode session --print=1
-```
-{% endraw %}
-
-Expected output:
-
-{% raw %}
-```text
-Target: iqn.2000-01.com.synology:synology-0.Target-1.76fd697e949 (non-flash)
-        Current Portal: 192.168.2.240:3260,1
-        Persistent Portal: 192.168.2.240:3260,1
-                **********
-                Interface:
-                **********
-                Iface Name: default
-                Iface Transport: tcp
-                Iface Initiatorname: iqn.1993-08.org.debian:01:6865e8684bf6
-                Iface IPaddress: 192.168.2.202
-                Iface HWaddress: default
-                Iface Netdev: default
-                SID: 2
-                iSCSI Connection State: LOGGED IN
-                iSCSI Session State: LOGGED_IN
-                Internal iscsid Session State: NO CHANGE
-```
-{% endraw %}
+Once SSH is enabled, SFTP is automatically available.
 
 ---
 
-## 📂 Mounting the iSCSI Drive
+### 📂 Connecting to the SFTP Server
 
-Finally, mount the iSCSI drive to make the backup datastore available:
+Use any SFTP client (FileZilla, WinSCP, Cyberduck, or CLI):
 
 {% raw %}
-```bash
-sudo mount /mnt/datastore/backups/
+```
+sftp username@sftp.refol.us
 ```
 {% endraw %}
 
+Or with a custom port:
+
+{% raw %}
+```
+sftp -P 22 username@sftp.refol.us
+```
+{% endraw %}
+
+You will be placed in the user’s home directory and can navigate to shared folders based on permissions.
+
 ---
 
-## ✅ Summary
+## 🗄️ iSCSI Storage on Synology NAS
 
-This workflow ensures safe updates to the Synology NAS while maintaining reliable iSCSI connectivity for the Proxmox Backup Server:
+iSCSI allows the Synology NAS to present block‑level storage to external systems such as hypervisors.  
+In this homelab, **Proxmox uses an iSCSI LUN hosted on the Synology NAS** to provide shared or dedicated VM storage.
 
-- **Pre‑update:** Log out of iSCSI sessions.  
-- **Post‑update:** Restore sessions and verify connectivity.  
-- **Final step:** Mount the datastore for backup operations.  
+iSCSI is ideal when you need:
+
+- Block‑level storage instead of file‑level  
+- High‑performance VM disks  
+- Centralized storage managed from Synology  
+- A simple way to attach storage to Proxmox nodes
+
+---
+
+### How to Configure an iSCSI Target on Synology
+
+1. **Open Synology DSM**  
+2. Go to **Storage Manager → iSCSI Manager**  
+3. Click **Create**  
+4. Choose **Create iSCSI Target + LUN**  
+5. Assign a **Target Name** (e.g., `proxmox-iscsi`)  
+6. Set **IQN** automatically or customize it  
+7. Create a **LUN**:  
+   - Type: **Advanced LUN** (recommended for VM workloads)  
+   - Size: choose based on Proxmox needs  
+   - Thin provisioning: optional  
+8. Confirm and finish the wizard  
+9. On Proxmox, add the iSCSI target under:  
+   **Datacenter → Storage → Add → iSCSI**  
+10. Select the Synology target and enable it for the desired nodes
+
+Once added, Proxmox will see the LUN as a block device and can use it for VM disks, templates, or ISO storage depending on your configuration.

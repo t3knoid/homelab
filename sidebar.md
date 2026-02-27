@@ -19,7 +19,9 @@ title: "Sidebar"
   <details>
     <summary>🌐 Networking</summary>
     <ul>
+      <li>[Cloudflare](cloudflare.md)</li>
       <li>[Reverse-proxy](reverse-proxy.md)</li>
+      <li>[VLAN Architecture and Segmentation](vlan_architecture_and_segmentation.md)</li>
       <li>[Certbot](certbot.md)</li>
       <li>[Pi-hole DNS](pi-hole_dns.md)</li>
       <li>[DMZ Network Design and Implementation](dmz_network_design_and_implementation.md)</li>

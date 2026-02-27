@@ -60,6 +60,49 @@ ansible-playbook -k -i inventory/plex/inventory.ini playbooks/plex/deploy_plex.y
 
 ---
 
+Here’s a clean, ready‑to‑paste update you can add to your **Plex** wiki page to document the required **router port‑forwarding rule** for Remote Access. I’ve matched the tone, structure, and formatting style of the existing page you shared (  [lab.refol.us](plex.md)).
+
+---
+
+## 🌐 Remote Access Configuration
+
+To enable Plex Remote Access, the router must forward external traffic on Plex’s default port to the Plex server inside the DMZ.
+
+### **Port Forwarding Rule (ER605)**  
+Create the following NAT rule on the router:
+
+| Setting | Value |
+|--------|--------|
+| **Type** | Port Forwarding |
+| **WAN Port** | 32400 (TCP) |
+| **LAN Host** | `plex-0` |
+| **LAN Host IP** | `192.168.30.x` (Plex server in VLAN 30 / DMZ) |
+| **LAN Port** | 32400 (TCP) |
+| **Description** | `plex-remote-access` |
+
+### **Firewall Requirements**
+
+Because Plex resides in the **DMZ (VLAN 30)**, ensure the following:
+
+- **Allow** inbound WAN → `plex-0` on TCP **32400**  
+- **Deny** all other unsolicited inbound WAN traffic  
+- **Allow** DMZ → Internet (metadata, authentication, remote access handshake)  
+- **Block** DMZ → LAN/Infrastructure except for any explicit storage pinholes (NFS/SMB)  
+
+### **Verification**
+
+After applying the rule:
+
+1. Open **Plex Web → Settings → Remote Access**  
+2. Confirm that Plex reports:  
+   **“Fully accessible outside your network”**  
+3. If not, verify:  
+   - The NAT rule is active  
+   - No upstream ISP CGNAT is interfering  
+   - The Plex server is listening on TCP 32400  
+
+---
+
 ## 💾 Storage & Data Management
 
 * Media libraries mounted via [Autofs](autofs.md) from NFS shares on [TrueNAS](truenas.md)

@@ -1,12 +1,12 @@
 ---
-title: "Cloudflare Public Frontend and IP Obfuscation"
+title: "Cloudflare"
 ---
 
-# 🌐 Cloudflare Public Frontend and IP Obfuscation
+# 🌐 Cloudflare
 
 [Cloudflare](https://www.cloudflare.com/) serves as the **public-facing ingress layer** for the homelab, acting as a secure, globally distributed reverse‑proxy that fully obfuscates the homelab’s residential WAN IP. All external traffic terminates at Cloudflare’s edge network before being forwarded to the homelab’s frontend Nginx server.
 
-This design ensures that the homelab is never directly exposed to the internet, significantly reducing the attack surface while providing enterprise‑grade performance and security at zero cost. Cloudflare becomes **Layer 0** of the ingress path, with the existing [reverse‑proxy](reverse-proxy.md) cluster continuing to handle routing, authentication, and backend failover.
+This design ensures that the homelab is never directly exposed to the internet, significantly reducing the attack surface while providing enterprise‑grade performance and security at zero cost. Cloudflare becomes **Layer 0** of the ingress path, with the existing [Reverse-Proxy](reverse-proxy.md)  cluster continuing to handle routing, authentication, and backend failover.
 
 ---
 
@@ -23,6 +23,7 @@ Your home IP is never exposed in:
 - Security crawlers  
 
 ### **2. Free TLS, WAF, and DDoS Protection**
+
 Cloudflare provides:
 
 - Automatic TLS certificates  
@@ -34,6 +35,7 @@ Cloudflare provides:
 All at zero cost.
 
 ### **3. Reduced Attack Surface**
+
 Only Cloudflare is reachable from the internet.  
 Your router/firewall can safely block:
 
@@ -41,8 +43,8 @@ Your router/firewall can safely block:
 - All direct access to the frontend Nginx server  
 
 ### **4. Seamless Integration With Existing Architecture**
-Cloudflare simply becomes the new public edge.  
-Your Nginx frontend continues to handle:
+
+Cloudflare simply becomes the new public edge.  The Nginx [Reverse-Proxy](reverse-proxy.md) continues to handle:
 
 - Internal TLS termination  
 - OAuth2 Proxy integration  
@@ -52,9 +54,9 @@ No architectural changes required.
 
 ---
 
-# 🛠️ Cloudflare Configuration Guide (Concise & Practical)
+# 🛠️ Cloudflare Configuration Guide
 
-This section provides a step‑by‑step guide for someone who wants to replicate your setup.
+This section provides a step‑by‑step guide on how Cloudflare was set up.
 
 ---
 
@@ -90,6 +92,7 @@ Navigate to:
 Set to:
 
 ### **Full (Strict)**  
+
 Cloudflare validates the certificate presented by your frontend Nginx server.
 
 This ensures:
@@ -102,9 +105,10 @@ This ensures:
 
 ## 4. Configure Firewall Rules (Highly Recommended)
 
-On your router/firewall:
+Configure the following inbound rules on the router,:
 
 - Allow inbound traffic **only** from Cloudflare IP ranges 
+
 {% raw %}
 ```text
 173.245.48.0/20
@@ -124,7 +128,9 @@ On your router/firewall:
 131.0.72.0/22
 ```
 {% endraw %}
+
 Cloudflare maintains an updated list here, https://www.cloudflare.com/ips/.
+
 - Block all other inbound traffic  
 - Prevent direct access to the frontend Nginx server  
 
@@ -135,6 +141,7 @@ This ensures the homelab is reachable *only* through Cloudflare.
 ## 5. Optional Enhancements
 
 ### **WAF Rules**
+
 Enable:
 
 - “Managed Rules”  
@@ -142,6 +149,7 @@ Enable:
 - “Browser Integrity Check”  
 
 ### **Rate Limiting**
+
 Protect sensitive endpoints:
 
 - `/login`  
@@ -149,6 +157,7 @@ Protect sensitive endpoints:
 - `/admin`  
 
 ### **Caching**
+
 Enable caching for static assets or entire sites if appropriate.
 
 ---
@@ -156,6 +165,7 @@ Enable caching for static assets or entire sites if appropriate.
 # 🧩 Troubleshooting & Best Practices
 
 ### **Avoid IP Leaks**
+
 - Never expose gray‑cloud DNS records  
 - Never publish your WAN IP in logs or documentation  
 - Avoid direct port forwarding except for Cloudflare‑validated traffic  
@@ -179,21 +189,9 @@ cf-ray: ...
 {% endraw %}
 
 ### **Check Origin Reachability**
-Ensure your frontend Nginx server:
+
+Ensure the Reverse-Proxy Nginx server:
 
 - Responds on port 443  
 - Presents a valid certificate  
 - Is reachable from Cloudflare IPs  
-
----
-
-# 🎯 Summary
-
-Cloudflare acts as a **free, secure, globally distributed ingress layer** that:
-
-- Obfuscates your home WAN IP  
-- Provides TLS, WAF, and DDoS protection  
-- Integrates seamlessly with your existing reverse‑proxy cluster  
-- Requires no architectural changes to your backend  
-
-This page documents the complete configuration and rationale for using Cloudflare as the public frontend for the homelab.

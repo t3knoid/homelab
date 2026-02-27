@@ -40,12 +40,13 @@ A clustered **Proxmox Virtual Environment** provides the compute substrate for a
 
 ### 🌐 Networking
 
-Networking is designed for availability, segmentation, and secure ingress.
+Networking is designed for availability, segmentation, and secure ingress. The **[Homelab Network Architecture and Traffic Flows](homelab_network_architecture_and_traffic_flows.md)** provides a clear, end‑to‑end view of how traffic moves through the homelab—from physical topology to VLAN boundaries and service‑level flows.
 
+* **[Cloudflare](cloudflare.md)** provides the homelab’s public‑facing edge, delivering DNS, reverse‑proxy protection, and secure IP‑obfuscated access to internal services.
+* **[VLAN Architecture and Segmentation](vlan_architecture_and_segmentation.md)** summarizes the design and usage of network segmentation
 * Nginx **[reverse-proxy](reverse-proxy.md)** cluster for routing and TLS termination
 * Automated certificate lifecycle via **[Certbot](certbot.md)**
 * Redundant **[Pi-hole DNS](pi-hole_dns.md)** instances
-* Dedicated DMZ VLAN documented in **[DMZ Network Design and Implementation](dmz_network_design_and_implementation.md)**
 
 ---
 

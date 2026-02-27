@@ -6,13 +6,14 @@ title: "Cloudflare"
 
 [Cloudflare](https://www.cloudflare.com/) serves as the **public-facing ingress layer** for the homelab, acting as a secure, globally distributed reverse‑proxy that fully obfuscates the homelab’s residential WAN IP. All external traffic terminates at Cloudflare’s edge network before being forwarded to the homelab’s frontend Nginx server.
 
-This design ensures that the homelab is never directly exposed to the internet, significantly reducing the attack surface while providing enterprise‑grade performance and security at zero cost. Cloudflare becomes **Layer 0** of the ingress path, with the existing [Reverse-Proxy](reverse-proxy.md)  cluster continuing to handle routing, authentication, and backend failover.
+This design ensures that the homelab is never directly exposed to the internet, significantly reducing the attack surface while providing enterprise‑grade performance and security at zero cost. Cloudflare becomes **Layer 0** of the ingress path, with the existing **[Reverse-Proxy](reverse-proxy.md)**  cluster continuing to handle routing, authentication, and backend failover.
 
 ---
 
 ## 🔒 Why Cloudflare?
 
 ### **1. Complete WAN IP Obfuscation**
+
 Cloudflare’s Anycast IPs become the only publicly visible addresses.  
 Your home IP is never exposed in:
 
@@ -44,7 +45,7 @@ Your router/firewall can safely block:
 
 ### **4. Seamless Integration With Existing Architecture**
 
-Cloudflare simply becomes the new public edge.  The Nginx [Reverse-Proxy](reverse-proxy.md) continues to handle:
+Cloudflare simply becomes the new public edge.  The Nginx **[Reverse-Proxy](reverse-proxy.md)** continues to handle:
 
 - Internal TLS termination  
 - OAuth2 Proxy integration  
@@ -159,6 +160,10 @@ Protect sensitive endpoints:
 ### **Caching**
 
 Enable caching for static assets or entire sites if appropriate.
+
+## 6. Automation & Ops
+
+Cloudflare provides an API to update the DNS A record with the current WAN IP address. The **[Automated Cloudflare DNS Updates](automated_cloudflare_dns_updates.md)** details the use of a simple batch script that can be used to automatically keep the network WAN IP address up to date.
 
 ---
 

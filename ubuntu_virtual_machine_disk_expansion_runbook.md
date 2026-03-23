@@ -2,45 +2,19 @@
 title: "️ Ubuntu Virtual Machine Disk Expansion Runbook"
 ---
 
-# 🖥️ Ubuntu Virtual Machine Disk Expansion Runbook
+# 🖥️ Ubuntu Virtual Machine Disk Expansion Runbook 
 
-This guide provides **documentation for increasing the disk size of an Ubuntu virtual machine** hosted in a Proxmox Virtual Environment. It covers both the **virtual disk resize in Proxmox** and the **steps inside Ubuntu to use the additional space**.
+This guide documents how to **increase the disk size of an Ubuntu virtual machine** hosted in Proxmox.  It covers:
+
+- Expanding the virtual disk in Proxmox  
+- Expanding partitions and filesystems inside Ubuntu  
+- Separate procedures for **LVM** and **Non‑LVM** systems  
 
 ---
 
 ## ⚡ Quick Guide
 
-| Step                          | Command                                                        | Purpose                                         | Expected Output / Notes                                                     |
-| ----------------------------- | -------------------------------------------------------------- | ----------------------------------------------- | --------------------------------------------------------------------------- |
-| **1. Verify Disk Layout**     | `sudo lsblk`                                                   | Check current disk and partition sizes          | Shows all disks, partitions, and LVMs. `SIZE` should reflect new disk size. |
-| **2. Grow Partition**         | `sudo growpart /dev/sda 3`                                     | Expand partition 3 to use added space           | `CHANGED: partition=3 ...` confirms the partition was resized               |
-| **3. Resize Physical Volume** | `sudo pvresize /dev/sda3`                                      | Resize LVM physical volume to use new partition | `Physical volume "/dev/sda3" changed`                                       |
-| **4. Extend Logical Volume**  | `sudo lvextend -l +100%FREE /dev/mapper/ubuntu--vg-ubuntu--lv` | Expand logical volume to consume all free space | `Size of logical volume ... changed ... successfully resized`               |
-| **5. Resize File System**     | `sudo resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv`             | Apply changes to filesystem                     | `The filesystem ... is now ... blocks long`                                 |
-| **6. Verify New Size**        | `df -h`                                                        | Confirm filesystem uses expanded disk           | Output shows increased size for `/` filesystem                              |
-
----
-
-## 1️⃣ Increase the Virtual Machine Disk in Proxmox
-
-To increase the VM disk size:
-
-| Step | Action                                               | Notes                                                         |
-| ---- | ---------------------------------------------------- | ------------------------------------------------------------- |
-| 1    | Shut down the virtual machine                        | ⚡ Ensure the VM is powered off before modifying disk settings |
-| 2    | Open the VM’s **Hardware** settings in Proxmox       | Navigate to the VM → Hardware tab                             |
-| 3    | Select the hard disk, click **Disk Action → Resize** | Enter the size increment in GiB                               |
-| 4    | Click **Resize Disk**                                | Proxmox will adjust the virtual disk size                     |
-
-> ⚡ Tip: Do not boot the VM until the disk resize operation is complete.
-
----
-
-## 2️⃣ Increase the Disk Partition in Ubuntu
-
-After booting the VM, follow these steps to make the extra space available inside Ubuntu.
-
-### 2.1 Verify the New Disk Size
+Before choosing a workflow, identify your disk layout:
 
 {% raw %}
 ```shell
@@ -48,123 +22,166 @@ sudo lsblk
 ```
 {% endraw %}
 
-> ✅ Example output:
-
-{% raw %}
-```
-NAME                      MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
-sda                         8:0    0   15G  0 disk
-├─sda1                      8:1    0    1M  0 part
-├─sda2                      8:2    0  1.8G  0 part /boot
-└─sda3                      8:3    0 13.2G  0 part
-  └─ubuntu--vg-ubuntu--lv 252:0    0 13.2G  0 lvm  /
-```
-{% endraw %}
-
-> ⚡ The `SIZE` column should reflect the new disk size.
+| If you see… | Example | Use… |
+|-------------|---------|------|
+| LVM volumes (`ubuntu--vg-ubuntu--lv`, `/dev/mapper/...`) | `/dev/sda3` → PV → VG → LV | **Path A: LVM Expansion** |
+| A single root partition (`/dev/sda1`, `/dev/vda1`) with no LVM | `/dev/vda1` mounted on `/` | **Path B: Non‑LVM Expansion** |
 
 ---
 
-### 2.2 Grow the Partition
+# 1️⃣ Increase the Virtual Machine Disk in Proxmox
 
+| Step | Action | Notes |
+|------|--------|-------|
+| 1 | Shut down the VM | Ensure the VM is powered off |
+| 2 | Go to **Hardware** tab | Select the VM in Proxmox |
+| 3 | Select the disk → **Disk Action → Resize** | Enter the size increment in GiB |
+| 4 | Click **Resize Disk** | Wait for the operation to complete |
+
+> ⚡ Do not boot the VM until the resize is finished.
+
+---
+
+# 2️⃣ Expand the Disk Inside Ubuntu  
+After booting the VM, follow **either Path A (LVM)** or **Path B (Non‑LVM)**.
+
+---
+
+# 🟩 **Path A — LVM-Based Root Filesystem Expansion**  
+*(Use this if your root filesystem is on LVM.)*
+
+### A.1 Verify Disk Layout
+{% raw %}
+```shell
+sudo lsblk
+```
+{% endraw %}
+
+Example:
+{% raw %}
+```
+sda
+├─sda1
+├─sda2
+└─sda3  → LVM PV
+   └─ubuntu--vg-ubuntu--lv  → root filesystem
+```
+{% endraw %}
+
+---
+
+### A.2 Grow the Partition
 {% raw %}
 ```shell
 sudo growpart /dev/sda 3
 ```
 {% endraw %}
 
-> ✅ Example output:
-
-{% raw %}
-```
-CHANGED: partition=3 start=3674112 old: size=17297408 end=20971519 new: size=27787231 end=31461342
-```
-{% endraw %}
-
 ---
 
-### 2.3 Resize the Physical Volume
-
+### A.3 Resize the Physical Volume
 {% raw %}
 ```shell
 sudo pvresize /dev/sda3
 ```
 {% endraw %}
 
-> ✅ Example output:
-
-{% raw %}
-```
-Physical volume "/dev/sda3" changed
-1 physical volume(s) resized or updated / 0 physical volume(s) not resized
-```
-{% endraw %}
-
 ---
 
-### 2.4 Extend the Logical Volume
-
+### A.4 Extend the Logical Volume
 {% raw %}
 ```shell
 sudo lvextend -l +100%FREE /dev/mapper/ubuntu--vg-ubuntu--lv
 ```
 {% endraw %}
 
-> ✅ Example output:
-
-{% raw %}
-```
-Size of logical volume ubuntu-vg/ubuntu-lv changed from <8.25 GiB (2111 extents) to <13.25 GiB (3391 extents).
-Logical volume ubuntu-vg/ubuntu-lv successfully resized.
-```
-{% endraw %}
-
 ---
 
-### 2.5 Resize the File System
-
+### A.5 Resize the Filesystem
 {% raw %}
 ```shell
 sudo resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv
 ```
 {% endraw %}
 
-> ✅ Example output:
-
-{% raw %}
-```
-resize2fs 1.47.0 (5-Feb-2023)
-Filesystem at /dev/mapper/ubuntu--vg-ubuntu--lv is mounted on /; on-line resizing required
-old_desc_blocks = 2, new_desc_blocks = 2
-The filesystem on /dev/mapper/ubuntu--vg-ubuntu--lv is now 3472384 (4k) blocks long.
-```
-{% endraw %}
-
 ---
 
-### 2.6 Verify the New Size
-
+### A.6 Verify the New Size
 {% raw %}
 ```shell
 df -h
 ```
 {% endraw %}
 
-> ✅ Example output:
+---
 
+# 🟦 **Path B — Non‑LVM Root Filesystem Expansion**  
+*(Use this if your root filesystem is a normal partition like `/dev/vda1` or `/dev/sda1`.)*
+
+### B.1 Verify Disk Layout
+{% raw %}
+```shell
+sudo lsblk
+```
+{% endraw %}
+
+Example:
 {% raw %}
 ```
-Filesystem                         Size  Used Avail Use% Mounted on
-/dev/mapper/ubuntu--vg-ubuntu--lv   13G  6.9G  5.5G  56% /
-/dev/sda2                          1.7G  191M  1.4G  12% /boot
+vda
+├─vda1   /        ← root filesystem (non‑LVM)
+├─vda14
+├─vda15  /boot/efi
+└─vda16  /boot
 ```
 {% endraw %}
 
 ---
 
-### ✅ Notes
+### B.2 Grow the Root Partition
+Replace `1` with your actual partition number.
 
-* Always **backup important data** before resizing disks or partitions.
-* Ensure **Proxmox snapshots** are available in case rollback is needed.
-* Commands assume **LVM-managed partitions**. Standard partitions may require different commands.
-* Step order matters: **grow partition → resize PV → extend LV → resize FS**.
+{% raw %}
+```shell
+sudo growpart /dev/vda 1
+```
+{% endraw %}
+
+---
+
+### B.3 Resize the Filesystem  
+For ext4 (Ubuntu default):
+
+{% raw %}
+```shell
+sudo resize2fs /dev/vda1
+```
+{% endraw %}
+
+For XFS:
+
+{% raw %}
+```shell
+sudo xfs_growfs /
+```
+{% endraw %}
+
+---
+
+### B.4 Verify the New Size
+{% raw %}
+```shell
+df -h
+```
+{% endraw %}
+
+---
+
+# ✅ Notes
+
+- Always back up important data before resizing disks.  
+- LVM and non‑LVM workflows are **not interchangeable**.  
+- The correct path depends entirely on what `lsblk` shows.  
+- Step order matters:  
+  - **LVM:** grow partition → pvresize → lvextend → resize filesystem  
+  - **Non‑LVM:** grow partition → resize filesystem

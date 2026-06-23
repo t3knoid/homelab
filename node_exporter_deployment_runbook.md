@@ -62,6 +62,6 @@ curl http://localhost:9100/metrics
 
 ## Troubleshooting
 
-- If Prometheus does not show the host, confirm it is in the `node_exporter` group for the inventory you passed to `deploy_prometheus.yml`.
+- If Prometheus does not show the host, confirm it is in the `node_exporter` group for the inventory you passed to `deploy_prometheus_exporters.yml`.
 - If the exporter is running locally but not visible from Prometheus, verify the host IP in `global_ip_addresses` and any firewall rules.
 - If the service is missing, re-run the exporter playbook and inspect the systemd unit on the host.

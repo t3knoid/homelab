@@ -40,7 +40,7 @@ Example:
 {% raw %}
 ```bash
 ansible-playbook -k -i inventory/rproxy/inventory.ini playbooks/rproxy/deploy_rproxy.yml
-ansible-playbook -k -i inventory/rproxy/inventory.ini playbooks/prometheus/deploy_prometheus.yml
+ansible-playbook -k -i inventory/rproxy/inventory.ini playbooks/prometheus/deploy_prometheus_exporters.yml
 ```
 {% endraw %}
 

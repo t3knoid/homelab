@@ -101,13 +101,13 @@ title: "Sidebar"
   </details>
 </details>
 
-<!-- 📈 Observability & Monitoring -->
+<!-- 📈 Monitoring & Observability -->
 <details>
-  <summary>📈 Observability & Monitoring</summary>
+  <summary>📈 Monitoring & Observability</summary>
   <ul>
+    <li>[Monitoring & Observability](monitoring_&_observability.md)</li>
     <li>[Prometheus](prometheus.md)</li>
     <li>[Grafana](grafana.md)</li>
-    <li>[Monitoring & Observability](monitoring_&_observability.md)</li>
   </ul>
 </details>
 

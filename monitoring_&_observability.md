@@ -114,7 +114,7 @@ Each major subsystem in the homelab has its own monitoring page:
   - [Network Device Monitoring](network_device_monitoring.md)
 
 - **Reverse Proxy**
-  - [Nginx Monitoring](nginx_monitoring.md)
+  - [Nginx Reverse Proxy Monitoring](nginx_reverse_proxy_monitoring.md) 
 
 These pages document exporters, dashboards, alerts, and troubleshooting workflows.
 

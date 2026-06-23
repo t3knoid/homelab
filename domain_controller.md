@@ -30,9 +30,9 @@ The domain controller VM is provisioned with the following specifications:
 - **Memory:** 4 GB  
 - **CPU Allocation:** 3 sockets, 1 core  
 - **Hostname:** `ad0`  
-- **IP Address:** `192.168.2.252`  
+- **IP Address:** `192.168.20.251`  
 - **DNS Servers:**  
-  - Primary: `192.168.2.253`  
+  - Primary: `192.168.20.253`  
   - Secondary: `8.8.8.8`  
 
 > 📝 These resources are optimized for a lightweight but reliable domain controller in a homelab setting. For production, scaling memory and CPU would be recommended.
@@ -62,11 +62,14 @@ To understand how LDAP is actually implemented — from binding with a service a
 
 ---
 
-## ✅ Summary
+## 🧩 Windows DNS
 
-This domain controller serves as the **authentication backbone** of the refol.us domain.  
-- Proxmox provides a flexible virtualization platform.  
-- Windows Server 2022 delivers enterprise‑grade Active Directory services.  
-- AD LDS ensures LDAP compatibility for cross‑platform applications.  
+Windows DNS runs on the domain controller and provides all internal name resolution for the `refol.us` domain. It hosts the AD‑integrated zones (`refol.us` and `_msdcs.refol.us`) along with reverse lookup zones for internal subnets. These zones enable domain‑joined systems to locate controllers, authenticate via Kerberos, apply Group Policy, and register their own records dynamically.
 
-Together, these components create a robust, scalable, and secure identity infrastructure for the homelab.
+Because Windows DNS is authoritative for the internal domain, other DNS services in the homelab (such as Pi‑hole) must forward internal queries to the domain controller. This ensures that all hosts resolve AD records correctly while still benefiting from network‑wide DNS filtering.
+
+For full details on zone management, PTR records, and DNS configuration, see:
+
+👉 See: [Windows DNS](windows_dns.md) 
+
+

@@ -105,7 +105,7 @@ They consume core services such as identity, storage, networking, and monitoring
 
 ---
 
-## 📈 Observability & Monitoring
+## 📈 Monitoring & Observability 
 
 The platform is observable by design.
 

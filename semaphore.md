@@ -66,10 +66,10 @@ Example configuration highlights:
 - **Mappings:** Maps AD attributes to Semaphore fields (e.g., `mail → userPrincipalName`).
 
 ### OAuth2 (Entra ID)
-Semaphore also supports OAuth2 authentication. In this setup, **[Microsoft Entra ID](microsoft_entra_id.md)** (formerly Azure AD) acts as the Identity Provider (IdP).  
+Semaphore supports OAuth2 authentication through **[Microsoft Entra ID](microsoft_entra_id.md)** (formerly Azure AD) as the Identity Provider (IdP).  
 - Provides single sign‑on (SSO) with Microsoft accounts.  
 - Users are redirected to Entra ID for login, and Semaphore grants access based on identity claims.  
-- Requires registering Semaphore as an application in Entra ID, configuring redirect URIs, and creating client credentials.
+- The Semaphore application is automatically registered in Entra ID with redirect URIs and client credentials configured during deployment.
 
 ---
 

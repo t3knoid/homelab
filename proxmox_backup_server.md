@@ -148,7 +148,7 @@ Replace the IP with your Synology NAS address:
 
 {% raw %}
 ```shell
-sudo iscsiadm -m discovery -t st -p 192.168.2.240
+sudo iscsiadm -m discovery -t st -p 192.168.20.240
 ```
 {% endraw %}
 
@@ -156,7 +156,7 @@ Expected output resembles:
 
 {% raw %}
 ```
-192.168.2.240:3260,1 iqn.2000-01.com.synology:synology-0.Target-1.76fd697e949
+192.168.20.240:3260,1 iqn.2000-01.com.synology:synology-0.Target-1.76fd697e949
 ```
 {% endraw %}
 
@@ -191,11 +191,35 @@ If successful, the disk is now visible to PBS.
 
 ### Format the Disk
 
-A new device (e.g., `/dev/sda`) should be present.
+Identify the iSCSI disk by listing all iSCSI sessions.
 
 {% raw %}
 ```shell
-sudo mkfs.ext4 /dev/sda
+iscsiadm -m session -P 3
+```
+{% endraw %}
+
+This should display something like the following:
+
+{% raw %}
+```shell
+                ************************
+                Attached SCSI devices:
+                ************************
+                Host Number: 2  State: running
+                scsi2 Channel 00 Id 0 Lun: 1
+                        Attached scsi disk sdb          State: running
+
+```
+{% endraw %}
+
+The above example shows that the iSCSI device is attached `/dev/sdb`.
+
+Format the disk using `ext4`. Skip this step if the disk has been previously formatted and you just want to reuse the disk.
+
+{% raw %}
+```shell
+sudo mkfs.ext4 /dev/sdb
 ```
 {% endraw %}
 
@@ -229,15 +253,32 @@ Discover targets again to identify paths:
 
 {% raw %}
 ```shell
-sudo iscsiadm -m discovery -t st -p 192.168.2.240
+sudo iscsiadm -m discovery -t st -p 192.168.20.240
 ```
 {% endraw %}
+This outputs something like the following,
 
+{% raw %}
+```shell
+192.168.20.240:3260,1 iqn.2000-01.com.synology:synology-0.Target-1.76fd697e949
+[fe80::211:32ff:fe8a:51d9]:3260,1 iqn.2000-01.com.synology:synology-0.Target-1.76fd697e949
+192.168.20.2:3260,1 iqn.2000-01.com.synology:synology-0.Target-1.76fd697e949
+[fe80::211:32ff:fe8a:51da]:3260,1 iqn.2000-01.com.synology:synology-0.Target-1.76fd697e949
+```
+{% endraw %}
 Edit each `default` file under:
 
 {% raw %}
 ```
 /etc/iscsi/nodes/<IQN>/<IP,PORT>/default
+```
+{% endraw %}
+
+Using the discovery example values,
+
+{% raw %}
+```shell
+/etc/iscsi/nodes/iqn.2000-01.com.synology\:synology-0.Target-1.76fd697e949/192.168.20.240\,3260\,1/default
 ```
 {% endraw %}
 
@@ -257,7 +298,7 @@ Label the disk:
 
 {% raw %}
 ```shell
-sudo e2label /dev/sda backups
+sudo e2label /dev/sdb backups
 ```
 {% endraw %}
 

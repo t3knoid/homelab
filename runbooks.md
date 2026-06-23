@@ -41,6 +41,9 @@ title: "Runbooks"
 | **[Configure Semaphore UI Projects Runbook](configure_semaphore_ui_projects_runbook.md)** | Instructions on adding or modifying a Semaphore UI project |
 | **[Defining When Semaphore Runs a Scheduled Task](defining_when_semaphore_runs_a_scheduled_task.md)** | Provides details on configuring the **cron** field in a Semaphore UI scheduled task |
 | **[Configure WSL2 as an Ansible Control Node Runbook](configure_wsl2_as_an_ansible_control_node_runbook.md)** | Step-by-step instructions on how to use WSL2 as an Ansible control node |
+| **[Add a New Grafana Dashboard Runbook](add_a_new_grafana_dashboard_runbook.md)** | Step-by-step instructions to add, provision, and deploy a new Grafana dashboard through Ansible. |
+| **[NGINX Exporter Deployment Runbook](nginx_exporter_deployment_runbook.md)** | Step-by-step instructions to deploy the NGINX Prometheus Exporter. |
+| **[Node Exporter Deployment Runbook](node_exporter_deployment_runbook.md)** | Step-by-step instructions to deploy the Prometheus Node Exporter. |
 
 ---
 

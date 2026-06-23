@@ -84,7 +84,7 @@ Pi-hole is **installed and configured exclusively using Ansible**.
 
 ## 🏢 Integration with Active Directory
 
-Pi-hole must forward AD-specific queries to the domain controller.  
+Pi-hole must forward AD-specific queries to the **[Windows DNS](windows_dns.md)** in the domain controller.  
 Detailed configuration, validation, and AD server steps are documented on a separate page:
 
 👉 See: **[Pi-hole Active Directory Integration](pi-hole_active_directory_integration.md)**

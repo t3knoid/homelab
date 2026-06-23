@@ -117,7 +117,7 @@ If a Proxmox node reboots before the Synology NAS or after a system update, the 
 
 {% raw %}
 ```bash
-sudo iscsiadm -m node --targetname iqn.2000-01.com.synology:synology-0.Target-1.76fd697e949 --portal 192.168.2.240 --login
+sudo iscsiadm -m node --targetname iqn.2000-01.com.synology:synology-0.Target-1.76fd697e949 --portal 192.168.20.240 --login
 ```
 {% endraw %}
 
@@ -158,5 +158,3 @@ sudo mount /mnt/datastore/backups/
 
 
 - [How to Configure an iSCSI Target on Synology](synology_nas#how-to-configure-an-iscsi-target-on-synology.md)
-
-

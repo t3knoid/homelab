@@ -12,11 +12,11 @@ This guide explains how to integrate **Pi-hole as the primary DNS resolver** wit
 
 | Setting           | Value            |
 | ----------------- | ---------------- |
-| Local network     | `192.168.2.0/24` |
-| DHCP server IP    | `192.168.2.253`  |
+| Local network     | `192.168.20.0/24` |
+| DHCP server IP    | `192.168.20.253`  |
 | Local domain name | `refol.us`       |
 
-> ✅ Ensures queries like `_ldap._tcp.refol.us` are resolved by the domain controller at `192.168.2.251`.
+> ✅ Ensures queries like `_ldap._tcp.refol.us` are resolved by the domain controller at `192.168.20.251`.
 
 ---
 
@@ -27,7 +27,7 @@ This guide explains how to integrate **Pi-hole as the primary DNS resolver** wit
 {% raw %}
 ```powershell
 Add-DnsServerPrimaryZone -Name "refol.us" -ZoneFile "refol.us.dns"
-Add-DnsServerPrimaryZone -NetworkId "192.168.2.0/24" -ZoneFile "2.168.192.in-addr.arpa.dns" -ZoneType Primary
+Add-DnsServerPrimaryZone -NetworkId "192.168.20.0/24" -ZoneFile "20.168.192.in-addr.arpa.dns" -ZoneType Primary
 ```
 {% endraw %}
 
@@ -97,7 +97,7 @@ New-NetFirewallRule -DisplayName "Allow DNS UDP" -Direction Inbound -Protocol UD
 {% raw %}
 ```bash
 nslookup _ldap._tcp.refol.us 192.168.2.253
-dig @192.168.2.253 _kerberos._tcp.refol.us SRV
+dig @192.168.20.253 _kerberos._tcp.refol.us SRV
 ```
 {% endraw %}
 
@@ -110,3 +110,4 @@ dig @192.168.2.253 _kerberos._tcp.refol.us SRV
 
 * [Pi-hole + Active Directory Discussion](https://discourse.pi-hole.net/t/pihole-as-primary-dns-with-active-directory/58800)
 * [Active Directory DNS PowerShell Reference](https://learn.microsoft.com/en-us/powershell/module/dnsserver/)
+* [Windows AD DNS Quick Reference Commands](windows_ad_dns_quick_reference_commands.md) 

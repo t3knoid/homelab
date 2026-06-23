@@ -4,17 +4,17 @@ title: "Configure Semaphore UI Projects Runbook"
 
 # 📘 Configure Semaphore UI Projects Runbook
 
-This section explains how inventory maintainers configure Semaphore UI using the [setup_semaphoreui.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/semaphoreui/setup_semaphoreui.yml) playbook. 
+This section explains how inventory maintainers configure Semaphore UI using the [deploy_semaphoreui.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/semaphoreui/deploy_semaphoreui.yml) playbook.
 
 All configuration lives inside the **inventory**, specifically:
 
 {% raw %}
 ```
-inventory/semaphore/group_vars/semaphore/
+inventory/semaphore/group_vars/all/
 ```
 {% endraw %}
 
-A user does **not** modify the role itself.  
+A user does **not** modify the role itself.
 They only update the group_vars files to define:
 
 - Projects  
@@ -38,7 +38,7 @@ Inside your inventory:
 inventory/
   semaphore/
     group_vars/
-      semaphore/
+      all/
         projects.yml
         repositories.yml
         views.yml
@@ -60,7 +60,6 @@ Each file controls one part of the Semaphore configuration.
 | `templates.yml`         | Define static task templates                       |
 | `dynamic_templates.yml` | Define dynamic template patterns that auto-expand  |
 | `schedules.yml`         | Define cron-based scheduled tasks                  |
-
 
 This structure makes the role **declarative**, **safe**, and **easy to extend**.
 
@@ -89,7 +88,7 @@ semaphoreui_setup_projects_meta:
 
 Each entry defines a **Semaphore project**.
 
-This is the minimal metadata.  
+This is the minimal metadata.
 Everything else (views, templates, repos, inventories, schedules) is added automatically by the role.
 
 ---
@@ -238,9 +237,7 @@ Each schedule:
 - Defines a **cron expression**
 - Can be enabled/disabled
 
-For a list of tasks scheduled to run in Semaphore,
-
-👉 see: [Semaphore Scheduled Tasks](semaphore_scheduled_tasks.md) 
+For a list of tasks scheduled to run in Semaphore, see: [Semaphore Scheduled Tasks](semaphore_scheduled_tasks.md)
 
 The role resolves template IDs automatically and creates missing schedules. The [Defining When Semaphore Runs a Scheduled Task](defining_when_semaphore_runs_a_scheduled_task.md) runbook provides further details on how to configure the **cron expression**.
 
@@ -252,7 +249,7 @@ Once the user updates the group_vars, they run:
 
 {% raw %}
 ```bash
-ansible-playbook -k -i inventory/semaphore/inventory.ini playbooks/semaphore/setup-semaphore.yml
+ansible-playbook -k -i inventory/semaphore/inventory.ini playbooks/semaphoreui/deploy_semaphoreui.yml
 ```
 {% endraw %}
 
@@ -260,36 +257,42 @@ The playbook:
 
 {% raw %}
 ```yaml
-- name: Setup Semaphore UI
+- name: Deploy Semaphore UI
   hosts: semaphore
   gather_facts: true
   become: true
-  tasks:
-    - name: Import semaphoreui_setup role setup tasks
-      ansible.builtin.import_role:
-        name: semaphoreui_setup
-        tasks_from: setup/main.yml
+  roles:
+    - global
+    - sshpass
+    - autofs
+    - azure_cli_setup
+    - entra_id_oauth2
+    - semaphoreui_setup
 ```
 {% endraw %}
 
 This triggers the entire automation pipeline:
 
-1. Discover inventories  
-2. Authenticate to Semaphore  
-3. Build the project model  
-4. Create/update:
+1. Set up global environment  
+2. Install prerequisite tools  
+3. Register or update Entra ID application (if OIDC enabled)  
+4. Deploy Semaphore UI  
+5. Discover inventories  
+6. Authenticate to Semaphore  
+7. Build the project model  
+8. Create/update:
    - Projects  
    - Views  
    - Keystores  
    - Repositories  
    - Inventories  
    - Templates (static + dynamic)  
-   - Scheduled tasks 
-5. Clean up the admin token  
+   - Scheduled tasks  
+9. Clean up temporary credentials  
 
 ---
 
-# 4. 🧠 What Users Don’t Need to Touch
+# 4. 🧠 What Users Don't Need to Touch
 
 Users **do not** modify:
 
@@ -311,7 +314,7 @@ To configure Semaphore UI:
 1. Edit the group_vars under:
 
    ```
-   inventory/semaphore/group_vars/semaphore/
+   inventory/semaphore/group_vars/all/
    ```
 
 2. Define:
@@ -323,7 +326,7 @@ To configure Semaphore UI:
    - `dynamic_templates.yml` → auto‑generated templates  
    - `schedules.yml` → scheduled tasks
 
-3. Run the playbook.  
+3. Run the playbook.
 4. Log into Semaphore UI and verify the results.
 
 This gives contributors a **single, declarative, safe place** to configure everything.

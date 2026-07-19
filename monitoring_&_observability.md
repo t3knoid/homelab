@@ -72,25 +72,6 @@ To read further details,
 
 ---
 
-## 🧰 Exporters
-
-Exporters expose metrics from services that do not natively support Prometheus format. The homelab uses a wide range of exporters, including:
-
-- `node_exporter` — Linux hosts, Proxmox nodes  
-- `pve_exporter` — Proxmox API metrics  
-- `nginx-prometheus-exporter` — reverse proxy  
-- `ceph-mgr` Prometheus module — Ceph cluster  
-- `synology_exporter` — Synology NAS  
-- `truenas_exporter` — TrueNAS  
-- `docker_exporter` / `cAdvisor` — Docker containers  
-- `pihole_exporter` — Pi‑hole DNS  
-- `snmp_exporter` — network switches and routers  
-- `blackbox_exporter` — HTTP/ICMP/TCP checks  
-
-👉 **See exporter details inside each service’s monitoring page.**
-
----
-
 ## 🖥️ Per‑Service Monitoring
 
 Each major subsystem in the homelab has its own monitoring page:

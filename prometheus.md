@@ -49,23 +49,23 @@ This architecture ensures reliability, simplicity, and clear data flow.
 - Scrapes metrics from exporters  
 - Stores time‑series data  
 - Exposes a query interface (PromQL)  
-- Provides service discovery and scrape scheduling  
+- Provides service discovery and scrape scheduling
 
 ### 📦 **2. Exporters**
 Prometheus relies on exporters to expose metrics from services that do not natively support Prometheus format.
 
 Common exporters in this homelab include:
 
-- **nginx-prometheus-exporter** (reverse proxy)  
-- **node_exporter** (Linux hosts, Proxmox nodes)  
-- **pve_exporter** (Proxmox API metrics)  
-- **ceph-mgr Prometheus module** (Ceph cluster)  
-- **synology_exporter** (Synology NAS)  
-- **truenas_exporter** (TrueNAS)  
-- **docker/cAdvisor exporters** (media stack containers)  
-- **pihole_exporter** (Pi‑hole DNS)  
-- **snmp_exporter** (network gear)  
-- **blackbox_exporter** (HTTP/ICMP/TCP checks)  
+- **[nginx-prometheus-exporter](nginx-prometheus-exporter.md)** (reverse proxy)  
+- **[node_exporter](node_exporter.md)** (Linux hosts, Proxmox nodes)  
+- **[pve_exporter](pve_exporter.md)** (Proxmox API metrics)  
+- **[ceph-mgr Prometheus module](ceph-mgr_prometheus_module.md)** (Ceph cluster)  
+- **[synology_exporter](synology_exporter.md)** (Synology NAS)  
+- **[truenas_exporter](truenas_exporter.md)** (TrueNAS)  
+- **[docker/cAdvisor exporters](docker/cadvisor_exporters.md)** (media stack containers)  
+- **[pihole_exporter](pihole_exporter.md)** (Pi‑hole DNS)  
+- **[snmp_exporter](snmp_exporter.md)** (network gear)  
+- **[blackbox_exporter](blackbox_exporter.md)** (HTTP/ICMP/TCP checks)
 
 ### 📐 **3. PromQL**
 Prometheus Query Language (PromQL) is used to build dashboards, alerts, and diagnostic queries.
@@ -131,4 +131,4 @@ Each job defines targets, labels, and scrape intervals.
 - Configure Grafana dashboards for each major service  
 - Add alerting rules for disk health, container failures, and cluster issues  
 - Document per‑service monitoring pages (Proxmox, Ceph, Docker, Reverse Proxy, etc.)  
-- Add a homelab‑wide metrics architecture diagram  
+- Add a homelab‑wide metrics architecture diagram

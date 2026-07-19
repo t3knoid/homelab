@@ -9,6 +9,9 @@ Grafana is the visualization and dashboarding layer of the homelab’s observabi
 Grafana is deployed and managed using **[Ansible](ansible.md)**, ensuring consistent configuration, reproducible provisioning, and version-controlled infrastructure changes.
 
 > [!TIP]
+> For a detailed look on how Ansible is used to manage the Grafana deployment, see **[Grafana Ansible Role](grafana_ansible_role.md)**.
+
+> [!TIP]
 > For the dashboard-as-code workflow used in this repository, see **[Configure Grafana Dashboards Process](configure_grafana_dashboards_process.md)**.
 > This process page covers how to add JSON dashboards, update role defaults, align provisioning tasks, and deploy safely.
 

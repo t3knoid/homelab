@@ -59,6 +59,7 @@ title: "Runbooks"
 | **[Deploy Blackbox Exporter to Prometheus host](deploy_blackbox_exporter_to_prometheus_host.md)** | Step-by-Step instructions on deploying blackbox-exporter to the Prometheus host. |
 | **[Deploy Node Exporter to a Specific Inventory Target](deploy_node_exporter_to_a_specific_inventory_target.md)** | Step-by-Step instructions on deploying node exporter to a specific inventory. |
 | **[Deploy PostgreSQL Exporter to the PostgreSQL Inventory](deploy_postgresql_exporter_to_the_postgresql_inventory.md)** | Step-by-Step instructions on deploying postgresql exporter to PostgreSQL inventories. |
+
 ---
 
 ### 🖥️ Virtual Machine & System Maintenance

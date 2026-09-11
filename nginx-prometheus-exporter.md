@@ -50,7 +50,7 @@ Refresh Prometheus exporter targets:
 {% raw %}
 ```bash
 source /opt/python_3.12/bin/activate
-ansible-playbook -i inventory/rproxy/inventory.ini playbooks/prometheus/deploy_prometheus_exporters.yml
+ansible-playbook -i inventory/rproxy/inventory.ini playbooks/prometheus/deploy_nginx_prometheus_exporter.yml
 ```
 {% endraw %}
 

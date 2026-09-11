@@ -166,7 +166,7 @@ Example:
 
     ---
     - name: Deploy Blackbox Exporter
-      hosts: blackbox
+      hosts: blackbox_exporter
       become: true
       roles:
         - global

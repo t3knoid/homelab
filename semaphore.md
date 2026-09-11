@@ -142,7 +142,7 @@ sudo journalctl -u semaphore -f
 
 ## 📦 Deployment with Ansible
 
-Semaphore UI can be provisioned and deployed using Ansible playbooks.
+Semaphore UI can be provisioned and deployed using Ansible playbooks. The playbook calls the **[entra_id_oauth2](https://github.com/t3knoid/ansible/tree/main/roles/entra_id_oauth2)** role which registers the Semaphore application to EntraID and generates credentials. The Semaphore role writes those credentials into config.json as an OIDC provider named azure.
 
 ### 1. Provision Ubuntu VM
 {% raw %}

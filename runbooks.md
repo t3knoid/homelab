@@ -13,6 +13,7 @@ title: "Runbooks"
 | **[Request TLS Certificates Runbook](request_tls_certificates_runbook.md)**         | Step-by-step instructions to request and manage TLS certificates.                                                        |
 | **[Join an Ubuntu 24 Host to Active Directory Runbook](join_an_ubuntu_24_host_to_active_directory_runbook.md)** | Step-by-step instructions of joining an Ubuntu 24.04 host to the refol.us Active Directory domain.          |
 | **[Configure An Inventory For Entra ID OAuth2](configure_an_inventory_for_entra_id_oauth2.md)** | Step-by-step instructions on how to update an inventory so a site behind rproxy uses oauth2-proxy with Microsoft Entra ID. |
+| **[Rotate Azure Entra ID OAuth2 Client Secret Runbook](rotate_azure_entra_id_oauth2_client_secret_runbook.md)** | Follow these steps when Azure Entra ID App Registration secret expires. |
 
 ---
 
@@ -54,7 +55,10 @@ title: "Runbooks"
 | **[Adding Node Exporter to an Inventory](adding_node_exporter_to_an_inventory.md)** | Step-by-step instructions on adding Prometheus Node Exporter to an inventory. |
 | **[Adding Blackbox Exporter Targets](adding_blackbox_exporter_targets.md)** | Step-by-step instructions on adding web probe targets for the Prometheus Blackbox Exporter. |
 | **[Adding Postgres Exporter to an Inventory](adding_postgres_exporter_to_an_inventory.md)** | Step-by-Step instructions on adding Prometheus Postgres Exporter to an inventory. |
-  
+| **[Deploy nginx-prometheus-exporter to Reverse Proxy hosts](deploy_nginx-prometheus-exporter_to_reverse_proxy_hosts.md)** | Step-by-Step instructions on deploying nginx-prometheus-exporter to the reverse proxy hosts. |
+| **[Deploy Blackbox Exporter to Prometheus host](deploy_blackbox_exporter_to_prometheus_host.md)** | Step-by-Step instructions on deploying blackbox-exporter to the Prometheus host. |
+| **[Deploy Node Exporter to a Specific Inventory Target](deploy_node_exporter_to_a_specific_inventory_target.md)** | Step-by-Step instructions on deploying node exporter to a specific inventory. |
+| **[Deploy PostgreSQL Exporter to the PostgreSQL Inventory](deploy_postgresql_exporter_to_the_postgresql_inventory.md)** | Step-by-Step instructions on deploying postgresql exporter to PostgreSQL inventories. |
 ---
 
 ### 🖥️ Virtual Machine & System Maintenance

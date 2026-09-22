@@ -58,6 +58,8 @@ rproxy_setup_sites:
     oauth2_callback_url: "https://prometheus.refol.us/oauth2/callback"
     oauth2_client_secret: ""
     oauth2_email_domains: "*"
+    oauth2_proxy_port: 4187
+    oauth2_proxy_metrics_port: 9107
 ```
 {% endraw %}
 
@@ -74,44 +76,22 @@ python -c 'import os,base64; print(base64.urlsafe_b64encode(os.urandom(32)).deco
 {% endraw %}
 
 - oauth2_client_id and oauth2_client_secret are automatically injected when the entra_id_oauth2 role runs.
+- ensure to use ports that are available for oauth2_proxy_port and oauth2_proxy_metrics_port values.
 
-## 3) Update Global OAuth2 Port Maps
-
-Edit roles/global/vars/main.yml and add the domain to both maps:
-
-- global_oauth2_proxy_ports
-- global_oauth2_proxy_metrics_ports
-
-Example:
-
-{% raw %}
-```yaml
-global_oauth2_proxy_ports:
-  prometheus.refol.us: 4187
-
-global_oauth2_proxy_metrics_ports:
-  prometheus.refol.us: 9107
-```
-{% endraw %}
-
-Rules:
-
-- Keys must match server_name exactly.
-- Ports must be unique across all entries in each map.
-- Keep proxy and metrics ports aligned with local conventions.
-
-## 4) Deploy Changes
+## 3) Deploy Changes
 
 Run the reverse proxy and oauth2-proxy playbooks with the target inventory:
 
 {% raw %}
 ```bash
-ansible-playbook -i inventory/<inventory_name>/inventory.ini playbooks/rproxy/deploy_rproxy.yml
-ansible-playbook -i inventory/<inventory_name>/inventory.ini playbooks/oauth2_proxy/deploy_oauth2_proxy.yml
+ansible-playbook -i inventory/<inventory_name>/inventory.ini playbooks/rproxy/deploy_rproxy.yml -u ansible
+ansible-playbook -i inventory/<inventory_name>/inventory.ini playbooks/oauth2_proxy/deploy_oauth2_proxy.yml -u ansible
 ```
 {% endraw %}
 
-## 5) Validate
+The deploy_oauth2_proxy.yml calls the entra_id_oauth2 role which will create the Entra ID app registration.
+
+## 4) Validate
 
 Inventory and group checks:
 

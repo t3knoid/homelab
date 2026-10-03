@@ -34,6 +34,15 @@ rproxy-0
 ```
 {% endraw %}
 
+Also in the inventory/<inventory_name>/inventory.ini file, add the entra_id group. This is used as a selector for the application hosts whose OAuth site configuration should be registered with Entra ID and deployed to oauth2-proxy. This typically contains the hostnames within the inventory.
+
+{% raw %}
+```ini
+[entra_id]
+radarr-0
+```
+{% endraw %}
+
 ## 2) Update The Inventory Main Vars File
 
 Edit inventory/<inventory_name>/group_vars/all/main.yml in rproxy_setup_sites for the domain you want to protect.
@@ -51,6 +60,7 @@ rproxy_setup_sites:
       - 192.168.2.0/24
     restricted: false
     use_oauth2: true
+    use_entra_id_oidc: true
     oauth2_provider: "entra-id"
     oauth2_scope: "openid profile email"
     oauth2_cookie_secret: ""
@@ -60,6 +70,7 @@ rproxy_setup_sites:
     oauth2_email_domains: "*"
     oauth2_proxy_port: 4187
     oauth2_proxy_metrics_port: 9107
+    enable: true
 ```
 {% endraw %}
 

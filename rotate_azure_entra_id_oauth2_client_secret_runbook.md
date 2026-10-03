@@ -54,6 +54,7 @@ This playbook:
 - Calls the entra_id_oauth2 role to generate a new Azure client secret
 - Passes the newly generated secret into oauth2_proxy_setup
 - Updates and restarts OAuth2‑Proxy with the new credentials
+- To force creating a new secret use the command-line option "-e entra_id_oauth2_force_secret_rotation=true"
 
 Refer to the **[Configure An Inventory For Entra ID OAuth2](configure_an_inventory_for_entra_id_oauth2.md)** runbook for inventory structure and variable definitions.
 

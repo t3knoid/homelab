@@ -9,7 +9,7 @@ The following provides instructions on creating a Cloud‑Init–ready Ubuntu 24
 These steps have been automated using the [`cloudinit` Ansible role](https://github.com/t3knoid/ansible/tree/main/roles/cloudinit).
 
 If you are a contributor looking to **extend the system or add support for new templates**, see the  
-👉 **[Contributor Guide for Adding New Cloud-Init VM Templates](contributor_guide_for_adding_new_cloud-init_vm_templates.md)**  
+👉 **[Proxmox VM Template Runbook](proxmox_vm_template_runbook.md)**  
 for details on `global_os`, template inventory, and how the automation works behind the scenes.
 
 ---

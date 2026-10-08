@@ -10,7 +10,8 @@ title: "Runbooks"
 | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
 | **[Ansible Pi-hole and DNS Management Runbook](ansible_pi-hole_and_dns_management_runbook.md)** | Central reference for all Ansible playbooks managing Pi-hole and DNS, including installation, updates, and host records. |
 | **[Update Pi-hole DNS Servers Runbook](update_pi-hole_dns_servers_runbook.md)**       | Step-by-step instructions to deploy or update Pi-hole DNS servers.                                                       |
-| **[Request TLS Certificates Runbook](request_tls_certificates_runbook.md)**         | Step-by-step instructions to request and manage TLS certificates.                                                        |
+| **[Request Web Certificates Runbook](request_web_certificates_runbook.md)**         | Step-by-step instructions to request and manage TLS certificates for all hosted websites in the homelab.                 |
+| **[Request Web Certificates for a Specific Domain Runbook](request_web_certificates_for_a_specific_domain_runbook.md)**         | Step-by-step instructions to request and manage TLS certificates for a specific website.           |
 | **[Join an Ubuntu 24 Host to Active Directory Runbook](join_an_ubuntu_24_host_to_active_directory_runbook.md)** | Step-by-step instructions of joining an Ubuntu 24.04 host to the refol.us Active Directory domain.          |
 | **[Configure An Inventory For Entra ID OAuth2](configure_an_inventory_for_entra_id_oauth2.md)** | Step-by-step instructions on how to update an inventory so a site behind rproxy uses oauth2-proxy with Microsoft Entra ID. |
 | **[Rotate Azure Entra ID OAuth2 Client Secret Runbook](rotate_azure_entra_id_oauth2_client_secret_runbook.md)** | Follow these steps when Azure Entra ID App Registration secret expires. |
@@ -67,6 +68,7 @@ title: "Runbooks"
 
 | Runbook           | Description                |
 | ----------------- | -------------------------- |
+| **[Proxmox VM Template Runbook](proxmox_vm_template_runbook.md)** | Step-by-step instructions to create a cloud-init VM template. |
 | **[Virtual Machine Snapshot Runbook](virtual_machine_snapshot_runbook.md)**      | Instructions to create and manage snapshots of virtual machines in the home lab. |
 | **[Ubuntu Virtual Machine Disk Expansion Runbook](ubuntu_virtual_machine_disk_expansion_runbook.md)**       | Instructions to expand disk size for Ubuntu virtual machines.                    |
 | **[Deploy Linux Security Updates Runbook](deploy_linux_security_updates_runbook.md)** | Instructions to apply security updates to Linux hosts in the home lab.           |
@@ -74,6 +76,7 @@ title: "Runbooks"
 | **[Provision a Virtual Machine Runbook](provision_a_virtual_machine_runbook.md)**   | Use an Ansible playbook to deploy a new virtual machine.                         |
 | **[NFS Mount Troubleshooting Runbook](nfs_mount_troubleshooting_runbook.md)**     | Troubleshoot NFS issues (autofs and fstab).                                        | 
 | **[Web Service Outage Troubleshooting Runbook](web_service_outage_troubleshooting_runbook.md)** | Troubleshoot a web service outage. |
+| **[Ubuntu 26.04 LTS Release Upgrade Runbook](ubuntu_26.04_lts_release_upgrade_runbook.md)** | Step-by-step instructions to upgrade one Ubuntu 24.04 LTS VM to Ubuntu 26.04 LTS. |
 
 ---
 

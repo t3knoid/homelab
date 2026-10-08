@@ -56,7 +56,8 @@ Prometheus relies on exporters to expose metrics from services that do not nativ
 
 Common exporters in this homelab include:
 
-- **[nginx-prometheus-exporter](nginx-prometheus-exporter.md)** (reverse proxy)  
+- **[nginx-prometheus-exporter](nginx-prometheus-exporter.md)** (reverse proxy)
+- **[nginx-log-exporter](nginx-log-exporter.md)** (Per-domain traffic analysis)
 - **[node_exporter](node_exporter.md)** (Linux hosts, Proxmox nodes)  
 - **[pve_exporter](pve_exporter.md)** (Proxmox API metrics)  
 - **[ceph-mgr Prometheus module](ceph-mgr_prometheus_module.md)** (Ceph cluster)  

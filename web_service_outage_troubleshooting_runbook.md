@@ -18,8 +18,8 @@ This runbook provides **step-by-step instructions to diagnose and resolve web se
           | HTTPS (443)                           | HTTPS (443)
           v                                       v
   [ Cloudflare ]                          [ Pi-hole DNS ]
-  WAF · DDoS · TLS Edge · CDN             Upstream: 192.168.20.211 (primary)
-  Anycast → Nearest PoP                            192.168.20.212 (secondary)
+  WAF · DDoS · TLS Edge · CDN             192.168.20.253 (primary)
+  Anycast → Nearest PoP                           |
           |                                       |
           | Origin Pull (Proxied HTTPS)           | Resolved A record → rproxy-0
           |                                       |
@@ -311,7 +311,7 @@ sudo tail -20 /var/log/nginx/access.log
 * Work **outside-in on each path**: Cloudflare → rproxy-0 for external; Pi-hole → rproxy-0 for internal.
 * Both paths share the rproxy-0 → rproxy-1/2 → backend tier — a failure there affects all clients regardless of entry path.
 * OAuth2 / Entra ID authentication is **optional per service** and runs at rproxy-0. Confirm whether it is enabled before investigating auth issues.
-* Pi-hole upstream IPs **192.168.20.211** and **192.168.20.212** must both be reachable — test each individually.
+* Pi-hole IP **192.168.20.253** must be reachable.
 * Always run `sudo nginx -t` before any `systemctl reload nginx` — a bad config will take the proxy down.
 * Use `--check --diff` on any Ansible playbook before applying changes during a live incident.
 * Log every action and timestamp in the incident ticket as you go — the post-mortem depends on it.

@@ -2,492 +2,325 @@
 title: "Provision a Virtual Machine Runbook"
 ---
 
-# Provision a Virtual Machine Runbook
+# 🏃 Provision a Virtual Machine Runbook
 
-This runbook explains how to provision a new virtual machine with `playbooks/provision_vm.yml` and what minimum inventory data must exist for the workflow to succeed.
+This runbook describes provisioning a new Ubuntu 24.04 virtual machine using [playbooks/provision_vm.yml](../playbooks/provision_vm.yml), or preparing an already installed baremetal host using the corresponding post-install stages.
 
-The provisioning workflow creates a new virtual machine, installs Python so Ansible can manage it, joins the VM to Active Directory, applies the baseline configuration for Ansible nodes, provisions users, and prepares any additional disks for use. The result is a fully initialized, domain-joined, Ansible-ready VM with the expected hardware, networking, users, and storage.
+VM provisioning clones an existing Proxmox cloud-init template, migrates it to the requested node, applies hardware and network settings, starts the guest, waits for cloud-init, removes the cloud-init drive, and reboots. The remaining stages bootstrap Python, join Active Directory, apply the Ansible node baseline, provision users, and prepare disks.
 
-For baremetal hosts, this playbook does not create the machine. It only runs the post-creation stages such as Python bootstrap, domain join, node preparation, user management, and disk preparation.
+**Important: The full playbook includes potentially destructive disk preparation. It is not a general-purpose hardware-update playbook. Do not run it blindly against existing machines.**
 
-To install an operating system onto a baremetal machine in this repository, use the PXE workflow first, then run `playbooks/provision_vm.yml` after the operating system has been installed.
-
-## 1. Login to an Ansible Control Node
-
-Start on a control node with Ansible installed and activate the expected Python environment.
+## 💻 1. Login to an Ansible Control Node
 
 {% raw %}
 ```shell
 cd ~/ansible
 source /opt/python_3.12/bin/activate
 INV=inventory/test/inventory.ini
+HOST=test-01
 ```
 {% endraw %}
 
-Important:
+Replace the inventory and hostname with the intended values. Run commands from the control node, which must reach Proxmox, Pi-hole, Active Directory, and the target host/network. Confirm Ansible, the required collections, and their Python dependencies are installed in the activated environment.
 
-- Run this workflow from an Ansible control node.
-- Make sure the control node can reach both Proxmox and the target network.
-
-## 2. Pull the Latest Code
-
-Update the local repository before making or deploying changes.
+## 📥 2. Pull the Latest Code
 
 {% raw %}
 ```shell
-git pull origin main
+git status --short
+git pull --ff-only origin main
 ```
 {% endraw %}
 
-Important:
+Preserve or resolve local changes before pulling. Use the repository's branch and review process where applicable.
 
-- Pull first so inventory and role changes are based on the latest repository state.
+## 🛡️ 3. Confirm Prerequisites and Recovery Options
 
-## 2A. Baremetal OS Provisioning Uses PXE First
+Before creating a VM, confirm:
 
-Baremetal operating system installation is not handled directly by `playbooks/provision_vm.yml`.
+- An existing, tested Proxmox cloud-init template matches `global_os[vms_os].template`. For `ubuntu_24_server`, the configured name is `ubuntu-server-24.04-cloudinit`. See the [template creation runbook](create_proxmox_vm_template.md).
+- The source template and target node support the required clone/migration operations. The Ansible-native clone requests a full clone with `qcow2` format on `vms_config.storage`; use storage that supports this.
+- The target node's `local` storage supports snippets. The role writes user/network data into `/var/lib/vz/snippets` and references it as `local:snippets/...`.
+- The control node has SSH and privilege escalation access to the Proxmox target node. Its hostname must resolve.
+- Runtime or vault configuration supplies the required Proxmox API password/token settings, Pi-hole API authentication, cloud-init user/password settings, and `ad_administrator_password`. Do not commit secrets in plaintext.
+- Domain DNS is reachable and configured appropriately for domain discovery and joining. Hostnames must resolve from the control node and managed hosts.
+- SSH access to the guest uses the intended account. Cloud-init adds the control node's generated RSA public key to `global_vm_template_user`; do not assume the control node's current username is that account.
+- There are no conflicting hostnames or IPs. Preserve existing entries when editing the global address map.
+- You have backups and a recovery plan for any existing machine or disk that might be affected.
 
-The actual OS provisioning path for baremetal is:
+This workflow is currently Ubuntu-specific: the Python bootstrap hardcodes the Ubuntu `noble` repository. Selecting another `vms_os` does not make the full provisioning process compatible with arbitrary operating systems.
 
-1. Deploy the PXE server with `playbooks/pxe/deploy_pxe.yml`.
-2. Configure a specific baremetal client for netboot with `playbooks/pxe/configure_pxe.yml`.
-3. Boot the physical host from the network so Ubuntu autoinstall runs.
-4. After the OS installation completes, run `playbooks/provision_vm.yml` to perform the post-install configuration steps.
+## ⚙️ 4. Define the Host and VM Configuration
 
-Repository behavior:
+### Inventory Groups
 
-- `playbooks/pxe/deploy_pxe.yml` installs and configures the PXE server on hosts in the `pxe` group.
-- `playbooks/pxe/configure_pxe.yml` renders client-specific DHCP, PXE, and autoinstall configuration for hosts in the `pxe_client` group.
-- `playbooks/provision_vm.yml` then handles Python bootstrap, domain join, baseline node prep, users, and disks after the OS already exists on the host.
-
-## 3. Define the Host and Related Properties
-
-Provisioning a new VM requires updates in three places.
-
-### A. Define the host in the inventory
-
-Edit the target inventory file, for example:
-
-{% raw %}
-```text
-inventory/test/inventory.ini
-```
-{% endraw %}
-
-At minimum, define the host in these groups:
-
-- `vms`
-- `python`
-
-Recommended:
-
-- `linux`
-
-Example:
+Add the new host to the intended [inventory](../inventory/test/inventory.ini):
 
 {% raw %}
 ```ini
 [vms]
-test-01 vms_proxmox_node=pve-1 vms_clone=false
-
-[linux]
-test-01
+test-01 vms_proxmox_node=pve-1
 
 [python]
 test-01
+
+[linux]
+test-01
 ```
 {% endraw %}
 
-Pay special attention to these `[vms]` host variables:
+`vms` selects VM creation and the later configuration stages. `python` selects Python bootstrap. `linux` follows the repository's normal inventory pattern but is not itself required by the top-level provisioning playbook. `vms_clone` is deprecated and ignored; omit it.
 
-- `vms_proxmox_node`: controls which Proxmox node will host the VM and where the provisioning tasks will target VM operations such as creation, cloud-init updates, start, stop, and reboot.
-- `vms_clone`: deprecated and currently ignored by the `vms` role.
+### Global IP Mapping
 
-Why these groups matter:
+Add the hostname and a unique address under the existing `global_ip_addresses` mapping in [roles/global/vars/main.yml](../roles/global/vars/main.yml). Do not replace the whole mapping. Select a free address in the intended subnet and check it against the existing map and network reservations.
 
-- `vms` makes the VM creation stage run.
-- `python` makes the Python bootstrap stage run.
-- `linux` is not required by `playbooks/provision_vm.yml` itself, but it matches the normal inventory pattern used in this repository.
+`global_ip_address` is derived from this map. The current VM network template uses interface `ens18`, a `/24` prefix, and `global_gateway` (which defaults to the subnet's `.1` address). Confirm these assumptions fit the selected template, bridge, and VLAN before deployment.
 
-### B. Define the host IP address in global vars
+### Host or Group Variables
 
-Edit:
-
-{% raw %}
-```text
-roles/global/vars/main.yml
-```
-{% endraw %}
-
-Add the host to `global_ip_addresses`:
-
-{% raw %}
-```yaml
-global_ip_addresses:
-  test-01: 192.168.2.210
-```
-{% endraw %}
-
-This is a critical prerequisite.
-
-The provisioning workflow derives `global_ip_address` from that mapping, and the VM provisioning role uses it for cloud-init networking, DNS updates, and related host setup. If the hostname is missing from `global_ip_addresses`, the machine will not be provisioned correctly.
-
-### C. Define VM hardware and OS configuration
-
-Create or edit a host-specific vars file, for example:
-
-{% raw %}
-```text
-inventory/test/host_vars/test-01.yml
-```
-{% endraw %}
-
-The minimum required variables for a VM are:
-
-- `vms_config`
-- `vms_os`
-- `python3_version`
-
-Example:
+Create a host-specific variables file under the selected inventory, or use shared variables like [inventory/test/group_vars/all/main.yml](../inventory/test/group_vars/all/main.yml). A minimal example for the Ansible-native path is:
 
 {% raw %}
 ```yaml
 vms_config:
-  agent: "1"
   cores: "2"
+  sockets: "1"
   cpu: host
   memory: 1024
   ostype: l26
-  scsihw: virtio-scsi-single
-  sockets: 1
   storage: local
   disk_os:
     disk: virtio0
-    backup: true
     size: 20
-    storage: local
-    format: qcow2
   nic0:
     model: virtio
     bridge: vmbr0
-    tag: 20
-  boot_order: "order=virtio0"
-  disk2:
-    disk: virtio1
-    storage: local-lvm
-    size: 20
 
 vms_os: ubuntu_24_server
-vms_autoinstall: true
-vms_enable_serial_terminal: false
+vms_use_terraform: false
 vms_additional_packages: []
-python3_version: 3.12
+python3_version: "3.12"
 ```
 {% endraw %}
 
-If you prefer to share values across all hosts in an inventory, you can place them in `group_vars/all/main.yml` instead of `host_vars/<host>.yml`. The key requirement is that the host resolves these variables at runtime.
+`disk_os` is optional when no boot-disk resize is needed. A requested size must not shrink the existing disk. `python3_version` defaults to `3.12`; defining it explicitly documents intent but is not mandatory.
 
-### C2. Define baremetal PXE configuration
+### Active Parameter Reference
 
-To provision an operating system onto a baremetal host, define the host in an inventory that includes these groups at minimum:
+These descriptions apply to the Ansible-native provisioning path:
 
-- `baremetal`
-- `python`
-- `pxe_client`
+| Setting                                                           | Current behavior                                                                        |
+| ----------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `vms_proxmox_node`                                                | Destination node for migration, snippet creation, and later VM operations.              |
+| `vms_os`                                                          | Selects the template name from `global_os`.                                             |
+| `vms_config.storage`                                              | Clone storage; cloning requests `qcow2`.                                                |
+| `cores`, `sockets`, `cpu`, `memory`, `ostype` within `vms_config` | Applied during cloud-init VM configuration. Memory is in MB.                            |
+| `vms_config.disk_os.disk`, `.size`                                | Device and requested total size in GB for boot-disk expansion.                          |
+| `vms_config.nic0` or `.network.nic0`                              | NIC model, bridge, and optional VLAN `tag`. The nested form takes precedence.           |
+| `vms_config.net0`                                                 | Raw Proxmox network string overriding the structured NIC settings.                      |
+| `vms_config.disk2`                                                | Optional additional disk; define `storage`, with optional `disk`, `size`, and `backup`. |
+| `vms_additional_packages`                                         | Packages added to the global package list for first-boot cloud-init.                    |
 
-You also need at least one host in the `pxe` group, because `pxeserver_setup` defaults to using `groups['pxe'][0]` as the PXE server.
+The current path does **not** apply `vms_autoinstall`, `vms_enable_serial_terminal`, `vms_config.boot_order`, `vms_config.scsihw`, or `vms_config.disk_os.storage`, `.format`, and `.backup` as requested configuration. It clones an already installed image, enables the guest-agent option when cloning, configures serial console unconditionally, and sets `bootdisk` to `virtio0`. Verify inherited template settings rather than assuming every inventory field is applied.
 
-A real example exists in `inventory/dns/inventory.ini`:
+Terraform-backed provisioning is selected by `vms_use_terraform: true`. Its hardware handling differs; the table above is not a Terraform parameter guarantee. This runbook's example explicitly uses the Ansible-native path.
+
+## 💾 5. Review Disk Preparation Before Execution
+
+The final [disk stage](../playbooks/vms/prep_disk.yml) applies the [disks role](../roles/disks/tasks/main.yml) to both VMs and baremetal hosts.
+
+Its discovery is not limited to `vms_config.disk2`. It selects disks without child partitions, attempts to create GPT/ext4 partitions, discovers unmounted ext4 partitions, and may rewrite `/etc/fstab`. A disk without partitions is not necessarily empty: it may contain a whole-disk filesystem or valuable data.
+
+`disks_disk_mounts` defaults to an empty list. This does **not** disable partitioning/formatting. Declaring `disk2` creates the virtual disk but does not by itself supply a mount configuration.
+
+For an existing reachable host, inspect disks before proceeding:
+
+{% raw %}
+```shell
+ansible "$HOST" -i "$INV" -b -m ansible.builtin.command \
+  -a 'lsblk -o NAME,TYPE,SIZE,FSTYPE,MOUNTPOINT,UUID'
+```
+{% endraw %}
+
+Review intended mount definitions, owners, and groups. The role uses a nested combination of configured mounts and discovered unmounted ext4 partitions, not explicit per-device assignments. Do not assume it safely maps several mountpoints to several disks.
+
+Use the full playbook only when all attached disks are understood and this behavior is acceptable. For existing hosts, baremetal, or uncertain storage, use the staged procedure in step 7 and review disk preparation separately. If you need selective or non-destructive disk handling, change and validate the role before running it; there is no documented safe skip flag in this workflow.
+
+## 📝 6. Commit and Validate Configuration
+
+Commit only your intended inventory and address changes:
+
+{% raw %}
+```shell
+git add inventory/test/
+git add roles/global/vars/main.yml
+git commit -m "Configure provisioning for test-01"
+git push origin main
+```
+{% endraw %}
+
+Replace paths and names as appropriate. Check the staged diff before committing, especially if there are unrelated local changes.
+
+{% raw %}
+```shell
+ansible-inventory -i "$INV" --graph
+ansible-playbook -i "$INV" playbooks/provision_vm.yml --limit "$HOST" --list-hosts
+ansible-playbook -i "$INV" playbooks/provision_vm.yml --limit "$HOST" --syntax-check
+```
+{% endraw %}
+
+Syntax checks do not establish storage safety or prove runtime credentials and connectivity. Confirm the selected host is present in every required stage's group.
+
+## 🚀 7. Provision the VM or Run Selected Stages
+
+### Full New-VM Workflow
+
+Only after accepting the disk-stage behavior and completing the prerequisite checks:
+
+{% raw %}
+```shell
+ansible-playbook -i "$INV" playbooks/provision_vm.yml --limit "$HOST"
+```
+{% endraw %}
+
+Add `-k` for SSH password prompting, `-K` for become password prompting, and the repository's required vault options when applicable. Set the intended SSH user through the existing connection configuration or `-u`.
+
+Do not reuse the full workflow as a routine hardware-update command. It performs DNS changes, VM configuration, domain configuration, reboots, and disk preparation. An existing VM is not cloned again, but other stages still run, and the original provisioning run removes its cloud-init drive.
+
+### Staged Workflow Without Automatic Disk Preparation
+
+For a new VM, run the creation stage first; skip this command for baremetal:
+
+{% raw %}
+```shell
+ansible-playbook -i "$INV" playbooks/vms/provision_vm.yml --limit "$HOST"
+```
+{% endraw %}
+
+After the OS is installed and SSH is reachable, run the post-install stages explicitly:
+
+{% raw %}
+```shell
+ansible-playbook -i "$INV" playbooks/python/bootstrap_python3.yml --limit "$HOST"
+ansible-playbook -i "$INV" playbooks/ad/join_domain.yml --limit "$HOST"
+ansible-playbook -i "$INV" playbooks/ansible/prep_ansible_node.yml --limit "$HOST"
+ansible-playbook -i "$INV" playbooks/vms/add_users.yml --limit "$HOST"
+```
+{% endraw %}
+
+Inspect disks using step 5. Run the following only after deliberately approving the disk role's scope and mount behavior:
+
+{% raw %}
+```shell
+ansible-playbook -i "$INV" playbooks/vms/prep_disk.yml --limit "$HOST"
+```
+{% endraw %}
+
+## 🌐 8. Baremetal OS Installation Uses PXE First
+
+The top-level provisioning playbook does not create a physical machine or install its OS. If an OS already exists, use the staged post-install workflow above. Otherwise, install Ubuntu using PXE first.
+
+### Inventory and Variables
+
+Follow the group pattern in [inventory/dns/inventory.ini](../inventory/dns/inventory.ini):
 
 {% raw %}
 ```ini
 [baremetal]
-dns-1
+new-physical-host
 
 [python]
-dns-1
+new-physical-host
 
 [pxe_client]
-dns-1
+new-physical-host
 
 [pxe]
 pxe-0
 ```
 {% endraw %}
 
-Minimum baremetal PXE variables:
-
-- `vms_os`
-- `python3_version`
-- `pxeserver_setup_client_nic`
-- `pxeserver_setup_dhcp_range`
-- `pxeserver_setup_ip_reservations`
-- a `global_ip_addresses` entry for both the PXE server host and the baremetal client
-
-Example client-specific configuration:
+Add unique global IP mappings for the client and PXE server. Define client variables using the intended interface, MAC address, and IP:
 
 {% raw %}
 ```yaml
 vms_os: ubuntu_24_server
-python3_version: 3.12
+python3_version: "3.12"
 pxeserver_setup_client_nic: "enp2s0"
-pxeserver_setup_dhcp_range: "192.168.2.253,192.168.2.253,255.255.255.0"
+pxeserver_setup_dhcp_range: "<client-ip>,<client-ip>,255.255.255.0"
 pxeserver_setup_ip_reservations:
-  - { mac_address: '0C:C4:7A:E2:83:5A', ip_address: '192.168.2.253' }
+  - mac_address: "<client-mac>"
+    ip_address: "<client-ip>"
 ```
 {% endraw %}
 
-What these variables control:
+Replace all placeholders with real values. The installed client's static address comes from `global_ip_address`, not from the DHCP reservation alone; keep them consistent.
 
-- `vms_os`: selects the Ubuntu release artifacts used by the PXE role, including the ISO URL and autoinstall source content.
-- `pxeserver_setup_client_nic`: selects the interface name that the installed operating system should configure.
-- `pxeserver_setup_dhcp_range`: defines the DHCP lease range that dnsmasq will hand out during PXE boot. In the current repo pattern this is usually a single IP.
-- `pxeserver_setup_ip_reservations`: binds the target machine's MAC address to the intended installation IP.
+The PXE server also needs `vms_os: ubuntu_24_server` in its own resolved variables, because deployment downloads `global_os[vms_os]` artifacts in the server's context. Client and server must select matching installation artifacts. Configure the server's listening interface and HTTP/storage settings for its actual environment. `pxeserver_setup_host` defaults to the first member of `pxe`.
 
-Operational note:
+### Installation Sequence and Safety
 
-- The PXE role metadata explicitly notes that under TP-Link Omada, the "Legal DHCP Servers" setting must allow the PXE server IP.
+Back up the physical host before netbooting it. The autoinstall configuration uses an LVM storage layout with all sizing; treat installation as destructive. Confirm the intended installation disk and do not leave valuable disks exposed to an unattended installer.
 
-### D. `vms_config` parameter reference
-
-| Parameter                      | Description                                                                               |
-| ------------------------------ | ----------------------------------------------------------------------------------------- |
-| `agent`                      | Enables the QEMU guest agent.                                                             |
-| `cores`                      | Number of CPU cores.                                                                      |
-| `sockets`                    | Number of CPU sockets.                                                                    |
-| `cpu`                        | CPU type passed to Proxmox, such as`host`.                                              |
-| `memory`                     | RAM in MB.                                                                                |
-| `ostype`                     | Proxmox OS type identifier. This should match the operating system selected by`vms_os`. |
-| `scsihw`                     | SCSI controller type.                                                                     |
-| `storage`                    | Default Proxmox storage pool used by the VM definition.                                   |
-| `disk_os.disk`               | Device name for the OS disk, such as`virtio0`.                                          |
-| `disk_os.size`               | OS disk size in GB.                                                                       |
-| `disk_os.storage`            | Physical Proxmox storage target for the OS disk.                                          |
-| `disk_os.backup`             | Whether the OS disk is included in backups.                                               |
-| `disk_os.format`             | Disk format such as`qcow2` or `raw`.                                                  |
-| `nic0.model`                 | NIC model, usually`virtio`.                                                             |
-| `nic0.bridge`                | Proxmox bridge, such as`vmbr0`.                                                         |
-| `network.nic0.tag`           | VLAN tag for the primary interface. This determines network placement.                    |
-| `boot_order`                 | Boot device order.                                                                        |
-| `disk2.*`                    | Optional second disk configuration.                                                       |
-| `vms_os`                     | OS template or installer identifier.                                                      |
-| `vms_autoinstall`            | Enables unattended installation.                                                          |
-| `vms_enable_serial_terminal` | Enables serial console configuration.                                                     |
-| `vms_additional_packages`    | Extra packages installed during autoinstall.                                              |
-| `python3_version`            | Python version used by the bootstrap stage.                                               |
-
-Pay special attention to these settings:
-
-- `vms_config.ostype` controls the Proxmox OS type and should align with `vms_os` so the VM definition matches the operating system being installed.
-- `vms_config.disk_os.storage` controls the physical storage location of the boot disk.
-- `vms_config.network.nic0.tag` controls the VLAN placement of the VM's primary network interface.
-
-## 4. Commit Configuration Changes
-
-After editing the inventory and global vars, commit the changes.
+Configure and install **one client at a time**. Client configuration replaces shared server files, including `user-data`, `meta-data`, `pxelinux.cfg/default`, and dnsmasq configuration; it is not an isolated per-client boot profile. Do not reconfigure the server for another client while an installation is in progress.
 
 {% raw %}
 ```shell
-git add inventory/test/
-git add roles/global/vars/main.yml
-git commit -m "Provision new VM test-01 with defined hardware and IP"
-git push origin main
+BAREMETAL_HOST=new-physical-host
+ansible-playbook -i "$INV" playbooks/pxe/deploy_pxe.yml
+ansible-playbook -i "$INV" playbooks/pxe/configure_pxe.yml --limit "$BAREMETAL_HOST"
 ```
 {% endraw %}
 
-Important:
+The deploy play targets the PXE server; the configure play targets the client and delegates server configuration. Add authentication/vault options as required. Confirm network boot firmware compatibility with the provided PXELINUX configuration; do not assume all UEFI hosts can use it unchanged. Under TP-Link Omada, allow the PXE server IP in the "Legal DHCP Servers" setting.
 
-- Replace `test-01` with the real VM name.
-- Commit inventory and IP mapping changes together so the repository history reflects the full provisioning request.
+Network-boot the physical host and let autoinstall finish. The boot parameters direct it to download the ISO and NoCloud autoinstall data over HTTP from the PXE server. Verify SSH access, disable or deprioritize network boot to avoid accidental reinstall, then set `HOST` to the baremetal hostname and run step 7's staged post-install commands. Review disk preparation separately.
 
-## 5. Deploy Using the Provisioning Playbook
+## ✅ 9. Verify Provisioning
 
-Run the provisioning workflow:
+For a VM, confirm the requested hostname, destination node, running state, CPU, memory, storage, NIC bridge/VLAN, and boot disk size in Proxmox. Verify actual guest-agent availability, not just the enabled Proxmox option.
+
+For both VM and baremetal hosts:
+
+1. Confirm the OS release, IP address, routes, and DNS match the intended configuration.
+2. Check cloud-init completion for cloud-init guests, or autoinstall completion for PXE installations.
+3. Confirm SSH and privilege escalation work using the intended management account.
+4. Confirm Python is available at the configured interpreter path and the virtual environment exists.
+5. Check domain membership with `realm list` and verify the intended domain account can authenticate.
+6. Verify standard users and baseline node configuration.
+7. If disk preparation was approved and run, inspect filesystems, mountpoints, ownership, and `/etc/fstab` against the intended layout.
+
+Test normal Ansible connectivity using the repository's configured interpreter and connection settings:
 
 {% raw %}
 ```shell
-ansible-playbook -i $INV playbooks/provision_vm.yml -k
+ansible "$HOST" -i "$INV" -m ansible.builtin.ping
 ```
 {% endraw %}
 
-Notes:
+A successful ping alone does not verify domain membership, storage safety, or application health. If any stage fails, inspect its output and the machine's current state before retrying.
 
-- Use `-k` if SSH password prompting is required.
-- Use `--limit <hostname>` if you only want to act on a single host in a larger inventory.
+## 🔗 What the Top-Level Playbook Calls
 
-Example:
+| Stage                                                          | Targets                   | Purpose                                                                                                |
+| -------------------------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------ |
+| [VM creation](../playbooks/vms/provision_vm.yml)               | `vms`                     | Pi-hole DNS updates followed by Ansible-native or Terraform-backed clone/cloud-init provisioning.      |
+| [Python bootstrap](../playbooks/python/bootstrap_python3.yml)  | `python`                  | Installs Python and prepares a virtual environment.                                                    |
+| [Domain join](../playbooks/ad/join_domain.yml)                 | `vms`, `baremetal`, `wsl` | Applies domain configuration and joins Active Directory.                                               |
+| [Node preparation](../playbooks/ansible/prep_ansible_node.yml) | `vms`, `baremetal`, `wsl` | Applies the managed-node baseline.                                                                     |
+| [User provisioning](../playbooks/vms/add_users.yml)            | `vms`, `baremetal`        | Provisions standard users.                                                                             |
+| [Disk preparation](../playbooks/vms/prep_disk.yml)             | `vms`, `baremetal`        | Discovers disks, partitions/formats candidates, and applies mounts; requires explicit operator review. |
 
-{% raw %}
-```shell
-ansible-playbook -i inventory/loki/inventory.ini playbooks/provision_vm.yml --limit loki-0 -k
-```
-{% endraw %}
+## 📋 Minimum Inventory Contract
 
-### Baremetal PXE install sequence
+- **New VM:** Membership in `vms` and `python`, a unique global IP entry, required hardware settings in `vms_config`, and `vms_os` selecting an existing compatible template. Shared defaults may supply Python and optional settings. Operational credentials, DNS, SSH, snippets, and storage prerequisites remain mandatory.
+- **Existing baremetal host:** Membership in `baremetal` and `python`, a unique global IP entry, an installed supported OS, working SSH/become access, and resolved domain/user/baseline variables. Do not add it to `vms` merely to enable post-install stages.
+- **Baremetal PXE installation:** Add `pxe_client` membership and a reachable `pxe` server; define matching OS selections for server and client, real client NIC/MAC/IP values, and appropriate DHCP configuration. Install the OS before running the post-install stages.
 
-For baremetal, the command sequence is different because the OS must be installed before `playbooks/provision_vm.yml` can do the post-install work.
+## 📌 Notes
 
-1. Deploy or refresh the PXE server:
-
-{% raw %}
-```shell
-ansible-playbook -i $INV playbooks/pxe/deploy_pxe.yml -k
-```
-{% endraw %}
-
-1. Configure the target baremetal client for PXE boot:
-
-{% raw %}
-```shell
-ansible-playbook -i $INV playbooks/pxe/configure_pxe.yml --limit <baremetal-host> -k
-```
-{% endraw %}
-
-1. Boot the physical machine from the network and let Ubuntu autoinstall complete.
-2. After the machine finishes installing and is reachable by SSH, run the post-install workflow:
-
-{% raw %}
-```shell
-ansible-playbook -i $INV playbooks/provision_vm.yml --limit <baremetal-host> -k
-```
-{% endraw %}
-
-## 6. Verify Deployment
-
-After the playbook completes:
-
-1. Log into Proxmox.
-2. Confirm the VM exists.
-3. Confirm the VM is powered on.
-4. Confirm the CPU, memory, disks, and NIC configuration match the requested values.
-5. Confirm the assigned IP matches the entry in `global_ip_addresses`.
-6. If autoinstall is enabled, confirm the operating system installation completes successfully.
-7. Confirm the machine is joined to the domain and is reachable for follow-up Ansible runs.
-
-## What `playbooks/provision_vm.yml` Calls
-
-The top-level playbook is an orchestration wrapper around six imported playbooks.
-
-### 1. `playbooks/vms/provision_vm.yml`
-
-This stage creates the virtual machine.
-
-What it does:
-
-- targets the `vms` group
-- applies the `global` role
-- refreshes local DNS entries through Pi-hole tasks
-- provisions through either Terraform-backed or Ansible-native VM tasks depending on `vms_use_terraform`
-
-### 2. `playbooks/python/bootstrap_python3.yml`
-
-This stage installs Python so Ansible can manage the host with normal modules.
-
-What it does:
-
-- targets the `python` group
-- runs the `python3` role bootstrap tasks
-
-### 3. `playbooks/ad/join_domain.yml`
-
-This stage joins the host to Active Directory.
-
-What it does:
-
-- targets `vms`, `baremetal`, and `wsl`
-- applies the `global` role
-- imports the `ad` role
-
-### 4. `playbooks/ansible/prep_ansible_node.yml`
-
-This stage applies the repository baseline for managed nodes.
-
-What it does:
-
-- targets `vms`, `baremetal`, and `wsl`
-- applies the `global` role
-- applies the `ansible_node` role
-
-### 5. `playbooks/vms/add_users.yml`
-
-This stage provisions the standard users.
-
-What it does:
-
-- targets `vms` and `baremetal`
-- applies the `global` role
-- applies the `users` role
-
-### 6. `playbooks/vms/prep_disk.yml`
-
-This stage prepares additional local disks.
-
-What it does:
-
-- targets `vms` and `baremetal`
-- applies the `disks` role
-- formats and mounts extra disks declared through inventory variables such as `disk2` and `disks_disk_mounts`
-
-## PXE Playbooks for Baremetal OS Installation
-
-### `playbooks/pxe/deploy_pxe.yml`
-
-This playbook deploys the PXE server on hosts in the `pxe` group.
-
-What it does:
-
-- applies the `global` role
-- applies `nginx_setup`
-- applies `pxeserver_setup`
-- installs dnsmasq, syslinux, and supporting files
-- downloads the Ubuntu netboot tarball and live server ISO into the PXE server's TFTP/HTTP root
-
-### `playbooks/pxe/configure_pxe.yml`
-
-This playbook configures a specific PXE client host in the `pxe_client` group.
-
-What it does:
-
-- imports `pxeserver_setup` tasks from `configure.yml`
-- rewrites dnsmasq configuration for the PXE server
-- adds or updates DHCP MAC reservations for the target client
-- renders `user-data` and `meta-data` for Ubuntu autoinstall
-- renders `pxelinux.cfg/default` with the PXE boot parameters
-
-The PXE boot configuration ultimately passes these important kernel parameters:
-
-- `iso-url={{ pxeserver_setup_iso_url }}`
-- `autoinstall`
-- `ds=nocloud-net;s=http://{{ pxeserver_setup_ip }}`
-
-That means the installer boots over PXE, downloads the Ubuntu ISO from the PXE server over HTTP, and pulls its autoinstall configuration from the same PXE server.
-
-## Minimum Requirements Summary
-
-For a new VM, the minimum repository changes are:
-
-1. Add the host to `inventory/<name>/inventory.ini` under `vms` and `python`.
-2. Add the host IP to `roles/global/vars/main.yml` under `global_ip_addresses`.
-3. Define `vms_config`, `vms_os`, and `python3_version` for the host.
-
-For baremetal preparation with the same playbook, the machine must already exist and the minimum inventory contract is:
-
-1. Add the host to `inventory/<name>/inventory.ini` under `baremetal` and `python`.
-2. Add the host IP to `roles/global/vars/main.yml` under `global_ip_addresses`.
-3. Define `python3_version` and any role-specific variables needed by `ad`, `ansible_node`, `users`, or `disks`.
-
-For baremetal OS installation via PXE, the minimum repository changes are:
-
-1. Add the target host to `inventory/<name>/inventory.ini` under `baremetal`, `python`, and `pxe_client`.
-2. Ensure a PXE server host exists in the same inventory under `pxe`.
-3. Add the host IP to `roles/global/vars/main.yml` under `global_ip_addresses`.
-4. Define `vms_os`, `python3_version`, `pxeserver_setup_client_nic`, `pxeserver_setup_dhcp_range`, and `pxeserver_setup_ip_reservations` for the baremetal client.
-5. Run `playbooks/pxe/deploy_pxe.yml`, then `playbooks/pxe/configure_pxe.yml`, then network-boot the host, and finally run `playbooks/provision_vm.yml`.
-
-## Notes
-
-- Always double-check the hostname, IP address, storage target, VLAN tag, and requested hardware before deploying.
-- Use the same workflow for both new VM provisioning and later hardware updates.
-- Pulling first, committing the inventory change, and then deploying keeps the repository state consistent.
-- The control node must have network access to the Proxmox cluster and to the target environment.
-- For baremetal PXE installs, verify the target machine firmware is configured for PXE/network boot and that its MAC address matches the reservation configured in `pxeserver_setup_ip_reservations`.
+- Commit inventory and IP mapping changes together, but never commit plaintext secrets.
+- Limit each provisioning run to the intended host and verify all imported stages' targets.
+- Keep backups; provisioning, PXE installation, and disk preparation are not substitutes for a recovery plan.
+- Use dedicated maintenance tasks for later hardware or software updates rather than assuming this creation workflow is safe to rerun.

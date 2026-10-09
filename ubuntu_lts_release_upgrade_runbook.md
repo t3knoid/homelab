@@ -1,8 +1,8 @@
 ---
-title: "Ubuntu 26.04 LTS Release Upgrade Runbook"
+title: "Ubuntu LTS Release Upgrade Runbook"
 ---
 
-# 🏃 Ubuntu 26.04 LTS Release Upgrade Runbook
+# 🏃 Ubuntu LTS Release Upgrade Runbook
 
 This runbook provides **step-by-step instructions to upgrade one Ubuntu 24.04 LTS VM to Ubuntu 26.04 LTS** using the existing Ansible VM role and release-upgrade playbook.
 
@@ -71,7 +71,7 @@ Run the dedicated playbook, explicitly limiting it to the selected VM and confir
 ```shell
 ansible-playbook -i "$INV" playbooks/vms/release_upgrade_ubuntu.yml \
   --limit "$HOST" \
-  -e vms_ubuntu_release_upgrade_confirm=true
+  -e linux_release_upgrade_confirm=true
 ```
 {% endraw %}
 

@@ -76,7 +76,7 @@ title: "Runbooks"
 | **[Provision a Virtual Machine Runbook](provision_a_virtual_machine_runbook.md)**   | Use an Ansible playbook to deploy a new virtual machine.                         |
 | **[NFS Mount Troubleshooting Runbook](nfs_mount_troubleshooting_runbook.md)**     | Troubleshoot NFS issues (autofs and fstab).                                        | 
 | **[Web Service Outage Troubleshooting Runbook](web_service_outage_troubleshooting_runbook.md)** | Troubleshoot a web service outage. |
-| **[Ubuntu 26.04 LTS Release Upgrade Runbook](ubuntu_26.04_lts_release_upgrade_runbook.md)** | Step-by-step instructions to upgrade one Ubuntu 24.04 LTS VM to Ubuntu 26.04 LTS. |
+| **[Ubuntu LTS Release Upgrade Runbook](ubuntu_lts_release_upgrade_runbook.md)** | Step-by-step instructions to upgrade Ubuntu from one LTS upgrade to another. Currently configured to upgrade Ubuntu 24.04 LTS VM to Ubuntu 26.04 LTS|
 
 ---
 

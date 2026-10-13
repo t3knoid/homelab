@@ -69,7 +69,7 @@ Run the dedicated playbook, explicitly limiting it to the selected VM and confir
 
 {% raw %}
 ```shell
-ansible-playbook -i "$INV" playbooks/vms/release_upgrade_ubuntu.yml \
+ansible-playbook -i "$INV" playbooks/linux/release_upgrade_ubuntu.yml \
   --limit "$HOST" \
   -e linux_release_upgrade_confirm=true
 ```
@@ -81,9 +81,41 @@ The playbook updates installed packages first, installs/configures Ubuntu's rele
 
 ---
 
-## 6️⃣ Verify the Upgrade
+## 6️⃣ Update Python to 3.14
 
-Wait for the playbook to finish successfully, then confirm the reported OS version:
+After the release upgrade succeeds, ensure the selected host's inventory config in `inventory/services/group_vars/all/main.yml` sets all three values as shown:
+
+{% raw %}
+```yaml
+python3_version: 3.14
+python3_venv_folder: "/opt/python_{{ python3_version }}"
+ansible_python_interpreter: "{{ python3_venv_folder }}/bin/python3"
+```
+{% endraw %}
+
+The `ansible_python_interpreter` inventory variable intentionally overrides the `/opt/python_3.12/bin/python3` default in `ansible.cfg` for services hosts; do not change the global default just for this upgrade. Deploy Python 3.14 to only the upgraded VM:
+
+{% raw %}
+```shell
+ansible-playbook -i "$INV" playbooks/python/deploy_python3.yml \
+  --limit "$HOST"
+```
+{% endraw %}
+
+The deployment playbook recreates the configured Python virtual environment if it does not match the requested version. Verify the virtual environment reports Python 3.14:
+
+{% raw %}
+```shell
+ansible "$HOST" -i "$INV" -m ansible.builtin.command \
+  -a '/opt/python_3.14/bin/python3 --version'
+```
+{% endraw %}
+
+---
+
+## 7️⃣ Verify the Upgrade
+
+Confirm the reported OS version:
 
 {% raw %}
 ```shell
@@ -100,7 +132,7 @@ If the playbook fails after the release-upgrade command starts, inspect the VM's
 ### ✅ Notes
 
 - This workflow supports Ubuntu 24.04 LTS to Ubuntu 26.04 LTS only.
-- No inventory version change is needed; the target release is fixed in the playbook.
+- No inventory OS version change is needed; the target release is fixed in the playbook.
 - Use this playbook for one VM per run, then verify it before upgrading another VM.
 - Do not add `-d`; the playbook is for the stable LTS release path.
 - Keep a separate backup; a VM snapshot is not a substitute for your backup policy.

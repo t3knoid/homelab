@@ -4,7 +4,7 @@ title: "Configure Semaphore UI Projects Runbook"
 
 # 📘 Configure Semaphore UI Projects Runbook
 
-This section explains how inventory maintainers configure Semaphore UI using the [deploy_semaphoreui.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/semaphoreui/deploy_semaphoreui.yml) playbook.
+This section explains how inventory maintainers configure Semaphore UI using the [setup_semaphoreui.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/semaphoreui/setup_semaphoreui.yml) playbook.
 
 All configuration lives inside the **inventory**, specifically:
 

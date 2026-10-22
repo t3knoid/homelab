@@ -61,6 +61,7 @@ title: "Runbooks"
 | **[Deploy Node Exporter to a Specific Inventory Target](deploy_node_exporter_to_a_specific_inventory_target.md)** | Step-by-Step instructions on deploying node exporter to a specific inventory. |
 | **[Deploy PostgreSQL Exporter to the PostgreSQL Inventory](deploy_postgresql_exporter_to_the_postgresql_inventory.md)** | Step-by-Step instructions on deploying postgresql exporter to PostgreSQL inventories. |
 | **[Deploy PVE Exporter to Proxmox Nodes](deploy_pve_exporter_to_proxmox_nodes.md)** | Step-by-Step instructions on deploying PVE exporter to Proxmox inventories. |
+| **[Deploy Grafana Dashboards](deploy_grafana_dashboards.md)** | Use an Ansible playbook to update provisioned dashboard files on an existing Grafana installation. |
 
 ---
 
@@ -77,8 +78,26 @@ title: "Runbooks"
 | **[NFS Mount Troubleshooting Runbook](nfs_mount_troubleshooting_runbook.md)**     | Troubleshoot NFS issues (autofs and fstab).                                        | 
 | **[Web Service Outage Troubleshooting Runbook](web_service_outage_troubleshooting_runbook.md)** | Troubleshoot a web service outage. |
 | **[Ubuntu LTS Release Upgrade Runbook](ubuntu_lts_release_upgrade_runbook.md)** | Step-by-step instructions to upgrade Ubuntu from one LTS upgrade to another. Currently configured to upgrade Ubuntu 24.04 LTS VM to Ubuntu 26.04 LTS|
-
+| **[Migrate PostgreSQL 14 to PostgreSQL 18](migrate_postgresql_14_to_postgresql_18.md)** | Manual migration of PostgreSQL 14 to 18. |
+| **[Migrate PostgreSQL 17 to PostgreSQL 18](migrate_postgresql_17_to_postgresql_18.md)** | Manual migration of PostgreSQL 17 to 18. |
+| **[Migrate a PostgreSQL Instance Between Hosts](migrate_a_postgresql_instance_between_hosts.md)** | Migrate a PostgreSQL instance's logical databases and approved roles from one host to another. |
+| **[Decommission a Virtual Machine](decommission_a_virtual_machine.md)** | Instructions on how to properly decommission a virtual machine. |
 ---
+
+### 💾 TrueNAS Management
+| Runbook           | Description                |
+| ----------------- | -------------------------- |
+| **[Join or Reconfigure TrueNAS Active Directory](join_or_reconfigure_truenas_active_directory.md)** | Manage TrueNAS network configuration and AD integration. |
+| **[Add TrueNAS Shares](add_truenas_shares.md)** | Create TrueNAS datasets and SMB or NFS shares. |
+| **[Add TrueNAS Local Users](add_truenas_local_users.md)** | Add TrueNAS local users and groups. | 
+| **[Bootstrap TrueNAS for Ansible](bootstrap_truenas_for_ansible.md)** | Prepare TrueNAS to use with Ansible. |
+| **[Manage TrueNAS Applications](manage_truenas_applications.md)** | Manage TrueNAS applications. |
+| **[Create and Modify TrueNAS Datasets](create_and_modify_truenas_datasets.md)** | Manage TrueNAS filesystem datasets. |
+| **[Manage TrueNAS Dataset Permissions and ACLs](manage_truenas_dataset_permissions_and_acls.md)** | Define ownership, POSIX permissions, SMB ACLs, and multiprotocol access for TrueNAS datasets. | 
+| **[Manage TrueNAS Users and Credentials](manage_truenas_users_and_credentials.md)** | Maintain existing TrueNAS local accounts, supplementary memberships, and credentials. | 
+| **[Modify or Retire TrueNAS Shares](modify_or_retire_truenas_shares.md)** | Change or retire TrueNAS SMB/NFS exports. |
+| **[Troubleshoot TrueNAS Configuration Runs](troubleshoot_truenas_configuration_runs.md)** | Diagnose TrueNAS configuration failures. | 
+| **[Update TrueNAS Safely](update_truenas_safely.md)** | Install an approved TrueNAS release, optionally reboot, and verify service health. |
 
 ### 📄 Templates & Miscellaneous
 

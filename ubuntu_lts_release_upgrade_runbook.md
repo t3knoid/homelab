@@ -6,8 +6,6 @@ title: "Ubuntu LTS Release Upgrade Runbook"
 
 This runbook provides **step-by-step instructions to upgrade one Ubuntu 24.04 LTS VM to Ubuntu 26.04 LTS** using the existing Ansible VM role and release-upgrade playbook.
 
----
-
 ## 1️⃣ Login to an Ansible Control Node
 
 Start on a control node with Ansible and the repository environment available:
@@ -22,8 +20,6 @@ INV=inventory/services/inventory.ini
 
 > ⚡ Important: Run the playbook from the Ansible control node, not from the VM being upgraded.
 
----
-
 ## 2️⃣ Pull the Latest Code
 
 Check for local changes, then update the repository:
@@ -36,8 +32,6 @@ git pull --ff-only origin main
 {% endraw %}
 
 If you have uncommitted changes, resolve or preserve them before pulling.
-
----
 
 ## 3️⃣ Select and Verify the VM
 
@@ -53,15 +47,11 @@ ansible "$HOST" -i "$INV" -m ansible.builtin.setup -a 'filter=ansible_distributi
 
 Proceed only if the host list contains exactly one VM and its facts report Ubuntu 24.04. The playbook rejects other source releases and upgrades only to 26.04.
 
----
-
 ## 4️⃣ Confirm the Rollback Plan
 
 Schedule a maintenance window and confirm you have a usable backup. The playbook creates a uniquely named Proxmox snapshot before package changes, using the existing `vms` role. Confirm Proxmox snapshot storage has sufficient space and the control node can access the configured Proxmox API.
 
 The snapshot does not include VM memory state. Keep it until the application and host have been verified; follow your normal retention process before removing it.
-
----
 
 ## 5️⃣ Run the Release Upgrade
 
@@ -79,9 +69,25 @@ The playbook updates installed packages first, installs/configures Ubuntu's rele
 
 > ⚡ Important: Do not omit `--limit` or the explicit confirmation. The playbook is intentionally guarded to run against exactly one host.
 
----
+## 6️⃣ Redeploy Python 3.12
 
-## 6️⃣ Update Python to 3.14
+After the release-upgrade playbook confirms the VM is on Ubuntu 26.04, repair Python 3.12 on VM to fix mismatched Ubuntu and PPA packages. Review APT's removal plan before confirming, and do not run `apt autoremove` as part of this repair:
+
+{% raw %}
+```shell
+sudo apt remove python3.12 libpython3.12-minimal libpython3.12-stdlib
+```
+{% endraw %}
+
+Redeploy Python 3.12:
+
+{% raw %}
+```shell
+ansible-playbook -i "$INV" playbooks/python/deploy_python3.yml
+```
+{% endraw %}
+
+## 7️⃣ Update Python to 3.14
 
 After the release upgrade succeeds, ensure the selected host's inventory config in `inventory/services/group_vars/all/main.yml` sets all three values as shown:
 
@@ -111,9 +117,7 @@ ansible "$HOST" -i "$INV" -m ansible.builtin.command \
 ```
 {% endraw %}
 
----
-
-## 7️⃣ Verify the Upgrade
+## 8️⃣ Verify the Upgrade
 
 Confirm the reported OS version:
 
@@ -126,8 +130,6 @@ ansible "$HOST" -i "$INV" -m ansible.builtin.setup -a 'filter=ansible_distributi
 Confirm the facts report `26.04`, then check the service is healthy. For the Lidarr example, open `https://lidarr.refol.us` and verify the application loads and is operational.
 
 If the playbook fails after the release-upgrade command starts, inspect the VM's current state and Ansible output before retrying. Do not rerun blindly; use the Proxmox snapshot only through your normal recovery procedure.
-
----
 
 ### ✅ Notes
 

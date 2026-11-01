@@ -30,10 +30,10 @@ This workflow automates the lifecycle of mirroring the lab wiki to a static webs
 
 ### Ansible Module: `redmine_wiki_mirror`
 
-The **`redmine_wiki_mirror`** Ansible module is part of my personal [refol.general Ansible collection](https://github.com/t3knoid/refol.general). This module does the heavy-lifting of converting the Redmine wiki pages into markdown documents.
+The **`redmine_wiki_mirror`** Ansible module does the heavy-lifting of converting the Redmine wiki pages into markdown documents.
 
-* Located in: [refol.general/plugins/modules/redmine_wiki_mirror.py](https://github.com/t3knoid/refol.general/blob/main/plugins/modules/redmine_wiki_mirror.py)
-* Documentation: [redmine_wiki_mirror.md](https://github.com/t3knoid/refol.general/blob/main/docs/redmine_wiki_mirror.md)
+* Located in: [roles/redmine_setup/library/redmine_wiki_mirror.py](https://github.com/t3knoid/ansible/blob/main/roles/redmine_setup/library/redmine_wiki_mirror.py)
+* Documentation: [redmine_wiki_mirror.md](https://github.com/t3knoid/ansible/blob/main/docs/modules/redmine_wiki_mirror.md)
 * Purpose:
 
   * Fetch wiki pages from Redmine.

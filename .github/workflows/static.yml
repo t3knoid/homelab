@@ -28,7 +28,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           # Match local Ruby (3.3.7) to avoid version incompatibilities
-          ruby-version: '3.3.7'
+          ruby-version: '3.3.12'
           bundler-cache: true
 
       - name: Install Jekyll and dependencies

@@ -82,6 +82,8 @@ For each public service:
 
 Cloudflare now becomes the public endpoint.
 
+👉 In order for the Omada router to keep Cloudflare current with the homelab’s dynamic residential WAN IP, a custom DDNS proxy Worker is deployed within Cloudflare, serving as the intermediary between the router and the Cloudflare API. This allows the router to update the domain’s DNS record automatically whenever the home IP changes, ensuring that public traffic continues to reach the homelab without manual intervention. The [TP-Link Omada to Cloudflare DDNS Proxy Worker](https://github.com/t3knoid/cloudflare_ddns_worker) project provides everything needed to build and configure this component.
+
 ---
 
 ## 3. Set SSL/TLS Mode
@@ -199,4 +201,4 @@ Ensure the Reverse-Proxy Nginx server:
 
 - Responds on port 443  
 - Presents a valid certificate  
-- Is reachable from Cloudflare IPs  
+- Is reachable from Cloudflare IPs

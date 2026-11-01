@@ -82,6 +82,7 @@ title: "Runbooks"
 | **[Migrate PostgreSQL 17 to PostgreSQL 18](migrate_postgresql_17_to_postgresql_18.md)** | Manual migration of PostgreSQL 17 to 18. |
 | **[Migrate a PostgreSQL Instance Between Hosts](migrate_a_postgresql_instance_between_hosts.md)** | Migrate a PostgreSQL instance's logical databases and approved roles from one host to another. |
 | **[Decommission a Virtual Machine](decommission_a_virtual_machine.md)** | Instructions on how to properly decommission a virtual machine. |
+
 ---
 
 ### 💾 TrueNAS Management
@@ -98,6 +99,8 @@ title: "Runbooks"
 | **[Modify or Retire TrueNAS Shares](modify_or_retire_truenas_shares.md)** | Change or retire TrueNAS SMB/NFS exports. |
 | **[Troubleshoot TrueNAS Configuration Runs](troubleshoot_truenas_configuration_runs.md)** | Diagnose TrueNAS configuration failures. | 
 | **[Update TrueNAS Safely](update_truenas_safely.md)** | Install an approved TrueNAS release, optionally reboot, and verify service health. |
+
+---
 
 ### 📄 Templates & Miscellaneous
 

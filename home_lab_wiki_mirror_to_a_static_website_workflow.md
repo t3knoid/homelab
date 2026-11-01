@@ -48,19 +48,23 @@ The **`redmine_wiki_mirror`** Ansible module does the heavy-lifting of convertin
   gather_facts: false
   tasks:
     - name: Mirror Redmine wiki into docs
-      refol.general.redmine_wiki_mirror:
+      redmine_wiki_mirror:
         redmine_url: "https://redmine.example.com"
         project: myproject
         api_key: "{{ lookup('env','REDMINE_API_KEY') }}"
         output_dir: "{{ playbook_dir }}/docs/redmine"
+        rewrite_links: true
         delete_stale: true
         filename_extension: "md"
-        debug: true
-      register: redmine_mirror
+        debug: false
+      register: redmine_setup_wiki_mirror
 
-    - name: Show mirror details
-      debug:
-        var: redmine_mirror
+    - name: Report Redmine wiki mirror result
+      ansible.builtin.debug:
+        msg:
+          - "Wiki pages found: {{ redmine_setup_wiki_mirror.wiki_pages_found }}"
+          - "Pages synced: {{ redmine_setup_wiki_mirror.synced_pages | length }}"
+          - "Pages deleted: {{ redmine_setup_wiki_mirror.deleted_pages | length }}"
 ```
 {% endraw %}
 

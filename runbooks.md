@@ -86,6 +86,7 @@ title: "Runbooks"
 ---
 
 ### 💾 TrueNAS Management
+
 | Runbook           | Description                |
 | ----------------- | -------------------------- |
 | **[Join or Reconfigure TrueNAS Active Directory](join_or_reconfigure_truenas_active_directory.md)** | Manage TrueNAS network configuration and AD integration. |

@@ -4,6 +4,8 @@ title: "Runbooks"
 
 ## 📘 Runbooks
 
+The following is a list of Runbooks grouped by category.
+
 ### 🌐 DNS & Networking
 
 | Runbook                                          | Description                                                                                                              |

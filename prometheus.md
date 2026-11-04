@@ -41,6 +41,8 @@ Services → Exporters → Prometheus → Grafana → Alerts
 
 This architecture ensures reliability, simplicity, and clear data flow.
 
+👉 See: **[Prometheus Exporter Network Map](prometheus_exporter_network_map.md)**
+
 ---
 
 ## 🧩 **Key Components**
@@ -123,5 +125,4 @@ Each job defines targets, labels, and scrape intervals.
 
 ### 🌐 **Ecosystem**
 - Grafana: https://grafana.com  
-- Alertmanager: https://prometheus.io/docs/alerting/latest/alertmanager  
-
+- Alertmanager: https://prometheus.io/docs/alerting/latest/alertmanager

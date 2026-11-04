@@ -54,7 +54,7 @@ This architecture ensures reliability, simplicity, and clear data flow.
 ### 📦 **2. Exporters**
 Prometheus relies on exporters to expose metrics from services that do not natively support Prometheus format.
 
-Common exporters in this homelab include:
+The following is a list of common exporters deployed in this homelab:
 
 - **[nginx-prometheus-exporter](nginx-prometheus-exporter.md)** (reverse proxy)
 - **[nginx-log-exporter](nginx-log-exporter.md)** (Per-domain traffic analysis)
@@ -125,11 +125,3 @@ Each job defines targets, labels, and scrape intervals.
 - Grafana: https://grafana.com  
 - Alertmanager: https://prometheus.io/docs/alerting/latest/alertmanager  
 
----
-
-## 🚀 **Next Steps**
-
-- Configure Grafana dashboards for each major service  
-- Add alerting rules for disk health, container failures, and cluster issues  
-- Document per‑service monitoring pages (Proxmox, Ceph, Docker, Reverse Proxy, etc.)  
-- Add a homelab‑wide metrics architecture diagram

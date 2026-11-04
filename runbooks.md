@@ -31,6 +31,7 @@ The following is a list of Runbooks grouped by category.
 | **[Deploy Sonarr Runbook](deploy_sonarr_runbook.md)**            | Step-by-step instructions to deploy or update Sonarr.            |
 | **[Deploy Lazy Librarian Runbook](deploy_lazy_librarian_runbook.md)**    | Step-by-step instructions to deploy or update Lazy Librarian.    |
 | **[Deploy Calibre-web Runbook](deploy_calibre-web_runbook.md)**       | Step-by-step instructions to deploy or update Calibre-web.       |
+| **[Deploy Calibre Runbook](deploy_calibre_runbook.md)**           | Step-by-step instructions to deploy or update Calibre.           |
 | **[Deploy Sabnzbd Runbook](deploy_sabnzbd_runbook.md)**           | Step-by-step instructions to deploy or update Sabnzbd.           |
 
 ---
@@ -54,6 +55,7 @@ The following is a list of Runbooks grouped by category.
 
 | Runbook           | Description                |
 | ----------------- | -------------------------- |
+| **[Adding Prometheus Support to a VM or Service](adding_prometheus_support_to_a_vm_or_service.md)** | Choose the monitoring level you need. |
 | **[Adding a Grafana Dashboard](adding_a_grafana_dashboard.md)** | Step-by-step instructions to add, provision, and deploy a new Grafana dashboard through Ansible. |
 | **[Adding NGINX Exporter to an Inventory](adding_nginx_exporter_to_an_inventory.md)** | Step-by-step instructions on adding Prometheus NGINX Exporter to an inventory. |
 | **[Adding Node Exporter to an Inventory](adding_node_exporter_to_an_inventory.md)** | Step-by-step instructions on adding Prometheus Node Exporter to an inventory. |

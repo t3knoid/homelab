@@ -88,6 +88,9 @@ They consume core services such as identity, storage, networking, and monitoring
 - [Lidarr](lidarr.md)
 - [Sabnzbd](sabnzbd.md)
 - [Ombi](ombi.md)
+- [Calibre-Web](calibre-web.md) 
+- [Calibre](calibre.md)
+- [Lazy Librarian](lazy_librarian.md)
 
 ### 📚 Library & Content Management
 
@@ -112,7 +115,7 @@ The platform is observable by design.
 * **[Prometheus](prometheus.md)** for metrics collection
 * **[Grafana](grafana.md)** for dashboards and visualization
 * **[Loki](loki.md)** complements Prometheus to aggregate logs
-* Exporters deployed across compute, storage, and services
+* **[Prometheus Exporters](prometheus#-2-exporters.md)** deployed across compute, storage, and services
 
 For detailed architecture, 
 👉 see **[Monitoring & Observability](monitoring_&_observability.md)**.

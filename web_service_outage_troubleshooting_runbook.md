@@ -6,6 +6,8 @@ title: "Web Service Outage Troubleshooting Runbook"
 
 This runbook provides **step-by-step instructions to diagnose and resolve web service outages** in the Home Lab. Traffic reaches the stack via one of two entry paths — **External** through Cloudflare, or **Internal** through Pi-hole DNS — and both paths converge at rproxy-0. OAuth2 identity verification via Azure Entra ID is handled at rproxy-0 and may or may not be enabled depending on the service.
 
+> ⚡ Important: Start with **0️⃣ Quick Triage**. A stopped backend service or a powered-off VM is the most common cause of an outage, and it shows up as a **502 Bad Gateway** from Cloudflare or nginx — which looks like a proxy or Cloudflare problem but isn't.
+
 ---
 
 ## 🗺️ End-to-End Traffic Flow
@@ -50,11 +52,73 @@ This runbook provides **step-by-step instructions to diagnose and resolve web se
 
 ---
 
+## 0️⃣ Quick Triage — Is the Backend VM and Service Up?
+
+> Do this first, regardless of entry path. If the backend is down, every proxy tier in front of it will return **502 Bad Gateway** (or Cloudflare **502 / 521**), and the Cloudflare, Pi-hole, and rproxy checks below will all look healthy.
+
+Run from the Ansible control node, using the inventory the service is deployed from (example: Lidarr on `lidarr-0`).
+
+### Step 1 — Is the VM up?
+
+{% raw %}
+```shell
+ansible -i inventory/services/inventory.ini lidarr -m ping
+```
+{% endraw %}
+
+* **SUCCESS / pong** → VM is up and reachable. Go to Step 2.
+* **UNREACHABLE** → The VM is down, hung, or has lost networking. Check it in Proxmox:
+
+{% raw %}
+```shell
+ssh <pve-node>
+sudo qm list | grep -i lidarr
+# or across the whole cluster:
+sudo pvesh get /cluster/resources --type vm --output-format text | grep -i lidarr
+```
+{% endraw %}
+
+* **stopped** → Start it (`sudo qm start <vmid>`), wait for it to boot, then repeat Step 1.
+* **running but unreachable** → Open the VM console in the Proxmox UI and check for a hung boot, a full disk, or a lost network config.
+
+### Step 2 — Is the service running on the VM?
+
+Docker-based service:
+
+{% raw %}
+```shell
+ansible -i inventory/services/inventory.ini lidarr -b -a "docker ps -a"
+```
+{% endraw %}
+
+* Container **Exited** or **Restarting** → Check logs with `docker logs --tail 100 <container>`, then restart the container or re-run the service's deploy playbook.
+
+Native (systemd) service:
+
+{% raw %}
+```shell
+ansible -i inventory/services/inventory.ini lidarr -b -a "systemctl status <service> --no-pager"
+```
+{% endraw %}
+
+### Step 3 — Does the service answer locally?
+
+{% raw %}
+```shell
+ansible -i inventory/services/inventory.ini lidarr -a "curl -Is http://localhost:8686"
+```
+{% endraw %}
+
+* **Any HTTP response** → The backend is serving. Continue with the entry-path sections below.
+* **Connection refused / timeout** → The process is up but not listening. Check the application logs and resource usage (see 5️⃣).
+
+> ⚡ Note: If the VM and service are both healthy, move on to **1️⃣ External** or **2️⃣ Internal** based on where the client is coming from.
+
+---
+
 ## 1️⃣ External Path — Check Cloudflare
 
 > Follow this section if the client is coming from the **internet** and traffic enters via Cloudflare.
-
-> ⚡ Note: An application service failure can also cause an error 502 (Bad Gateway) in Cloudflare. Check to ensure the application service is up and running first before checking Cloudflare settings if an error 502 is shown in the browser.
 
 Confirm the site is reachable from the public internet:
 
@@ -65,6 +129,7 @@ curl -Isk https://your-domain.example.com | head -5
 {% endraw %}
 
 * **HTTP 200 / 301 / 302** → Edge is responding. Skip to step 5.
+* **HTTP 502** → Usually the backend service or its VM is down. Re-check **0️⃣ Quick Triage**, then rproxy-0 (3️⃣) and rproxy-1/2 (4️⃣).
 * **HTTP 521 / 522 / 523 / 524** → Cloudflare cannot reach the origin. Work through this section.
 * **Timeout or DNS NXDOMAIN** → Likely a Cloudflare DNS misconfiguration.
 
@@ -235,19 +300,22 @@ curl -Isk http://192.168.20.151:8686
 ```
 {% endraw %}
 
+> ⚡ Note: `connect() failed (111: Connection refused)` or `upstream timed out` in the error log means the backend is down or unreachable — go back to **0️⃣ Quick Triage**.
+
 > ⚡ Important: If one proxy node is healthy and the other is not, rproxy-0's upstream block may still be sending traffic to the failed node. Check that nginx upstream health checks are active and that the failed node's weight has not been manually set to 0.
 
 ---
 
 ## 5️⃣ Shared Path — Backend Services
 
-Verify that the application service is running on both backend nodes:
+> The basic VM and service checks are in **0️⃣ Quick Triage**. Use this section for deeper investigation on the backend host.
 
 If the application is deployed using Docker, check if the container is running:
 
 {% raw %}
 ```shell
 sudo docker ps -a
+sudo docker logs --tail 100 <container>
 ```
 {% endraw %}
 
@@ -255,7 +323,8 @@ If the application is deployed using a native service, check if the service is r
 
 {% raw %}
 ```shell
-  ssh $host "sudo systemctl status prometheus; \
+sudo systemctl status <service> --no-pager
+sudo journalctl -u <service> -n 100 --no-pager
 ```
 {% endraw %}
 
@@ -307,8 +376,9 @@ sudo tail -20 /var/log/nginx/access.log
 ### ✅ Notes
 
 * Always start on the Ansible control node so remediation commands run in the correct environment.
+* **Run 0️⃣ Quick Triage first** — confirm the backend VM is up and the service is running before investigating Cloudflare, Pi-hole, or the proxies. A down backend is the most common cause of a 502.
 * Use the traffic flow diagram at the top of this page to identify which path is affected before starting.
-* Work **outside-in on each path**: Cloudflare → rproxy-0 for external; Pi-hole → rproxy-0 for internal.
+* After triage, work **outside-in on each path**: Cloudflare → rproxy-0 for external; Pi-hole → rproxy-0 for internal.
 * Both paths share the rproxy-0 → rproxy-1/2 → backend tier — a failure there affects all clients regardless of entry path.
 * OAuth2 / Entra ID authentication is **optional per service** and runs at rproxy-0. Confirm whether it is enabled before investigating auth issues.
 * Pi-hole IP **192.168.20.253** must be reachable.

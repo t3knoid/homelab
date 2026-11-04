@@ -38,24 +38,18 @@ Dataset definitions, share definitions, and client mounts are separate configura
 
 ## ⚙️ How Configuration Is Managed
 
-[configure_truenas.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/truenas/configure_truenas.yml) applies the `global` and `truenas` roles to the `truenas` inventory group. It configures an already-installed appliance through local middleware over SSH; it does not install TrueNAS, provision the boot device, or create the initial storage pool.
+[configure_truenas.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/truenas/configure_truenas.yml) applies the `global` and `truenas` roles to the `truenas` inventory group. Ansible connects to the NAS over SSH and configures it through the TrueNAS middleware API, the same API the web UI uses. It configures an already-installed system. It does not install TrueNAS, set up the boot device, or create the first storage pool.
 
-The role performs preflight checks, then enabled stages for updates, groups, administrator settings, users, network/AD, datasets, shares/resources, and services. Most stages have tags for targeted work. A selected tag usually processes the complete configured list, not just one new object; raw post-configuration calls require particular care because they are not generally idempotent.
+After its preflight checks, the role runs each enabled stage in order: updates, network interfaces, groups, administrator settings, users, Active Directory, datasets, shares, and services. Each stage has a tag for targeted runs. A tag processes the stage's whole configured list, not just the item you added. Raw post-configuration calls need extra care because they are not idempotent. Apps and virtual machines are managed separately, with `deploy_truenas_apps.yml` and `deploy_truenas_vms.yml`.
 
-The [TrueNAS Role Contributor Guide](truenas_role_contributor_guide.md) explains variables, tags, API behavior, and safety limits. Environment-specific changes belong in inventory host variables, with secrets in encrypted vault files. 
+Environment-specific settings belong in the inventory host variables, and secrets go in the encrypted vault files.
+
+[truenas_api](truenas_api.md) is the custom Ansible module behind the role. It compares each object on the NAS with the inventory and changes only what differs, so you can review the plan in check mode before applying it.
+
+For hands-on work, `midclt` is the command-line client for the same middleware API. Run it from the TrueNAS shell to inspect live settings or troubleshoot a failed job. See the [midclt Cheat Sheet](midclt_cheat_sheet.md) for common commands.
+
+For variables, tags, API behavior, and safety limits, see the [TrueNAS Role Contributor Guide](truenas_role_contributor_guide.md).
 
 ## 📚 Administrator Runbooks
 
-| Task                                | Runbook                                                                      | Status                                                     |
-| ----------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| Add local accounts/groups           | [Add Local Users](runbooks/truenas_add_users.md)                             | Written procedure; validate against the target environment |
-| Add SMB/NFS exports                 | [Add Shares](runbooks/truenas_add_shares.md)                                 | Written procedure; validate permissions and clients        |
-| Prepare SSH and automation access   | [Bootstrap for Ansible](runbooks/truenas_bootstrap_ansible.md)               | Scaffold                                                   |
-| Design or change access permissions | [Dataset Permissions and ACLs](runbooks/truenas_manage_permissions.md)       | Scaffold                                                   |
-| Rename or retire exports            | [Modify or Retire Shares](runbooks/truenas_modify_retire_shares.md)          | Scaffold                                                   |
-| Change credentials and memberships  | [Manage Users and Credentials](runbooks/truenas_manage_users_credentials.md) | Scaffold                                                   |
-| Configure domain integration        | [Active Directory](runbooks/truenas_active_directory.md)                     | Scaffold                                                   |
-| Manage dataset properties           | [Create and Modify Datasets](runbooks/truenas_manage_datasets.md)            | Scaffold                                                   |
-| Plan an upgrade                     | [Update TrueNAS Safely](runbooks/truenas_update_safely.md)                   | Scaffold                                                   |
-| Diagnose failed configuration runs  | [Troubleshoot Configuration](runbooks/truenas_troubleshoot_configuration.md) | Scaffold                                                   |
-
+See [Runbooks#-TrueNAS-Management](runbooks#-truenas-management.md) for a list of TrueNAS management runbooks.

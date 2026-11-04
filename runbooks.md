@@ -14,6 +14,7 @@ title: "Runbooks"
 | **[Request Web Certificates for a Specific Domain Runbook](request_web_certificates_for_a_specific_domain_runbook.md)**         | Step-by-step instructions to request and manage TLS certificates for a specific website.           |
 | **[Join an Ubuntu 24 Host to Active Directory Runbook](join_an_ubuntu_24_host_to_active_directory_runbook.md)** | Step-by-step instructions of joining an Ubuntu 24.04 host to the refol.us Active Directory domain.          |
 | **[Configure An Inventory For Entra ID OAuth2](configure_an_inventory_for_entra_id_oauth2.md)** | Step-by-step instructions on how to update an inventory so a site behind rproxy uses oauth2-proxy with Microsoft Entra ID. |
+| **[Configure An Inventory Host Web Service For A Reverse Proxy](configure_an_inventory_host_web_service_for_a_reverse_proxy.md)** | This runbook explains how to update an inventory so a host web service is available through the repository's reverse proxy setup. |
 | **[Rotate Azure Entra ID OAuth2 Client Secret Runbook](rotate_azure_entra_id_oauth2_client_secret_runbook.md)** | Follow these steps when Azure Entra ID App Registration secret expires. |
 
 ---
@@ -100,6 +101,8 @@ title: "Runbooks"
 | **[Modify or Retire TrueNAS Shares](modify_or_retire_truenas_shares.md)** | Change or retire TrueNAS SMB/NFS exports. |
 | **[Troubleshoot TrueNAS Configuration Runs](troubleshoot_truenas_configuration_runs.md)** | Diagnose TrueNAS configuration failures. | 
 | **[Update TrueNAS Safely](update_truenas_safely.md)** | Install an approved TrueNAS release, optionally reboot, and verify service health. |
+| **[Creating TrueNAS VMs with Ansible](creating_truenas_vms_with_ansible.md)** | Provision a VM in TrueNAS using Ansible. |
+| **[Creating TrueNAS Apps with Ansible](creating_truenas_apps_with_ansible.md)** | Create an app in TrueNAS using Ansible. |
 
 ---
 

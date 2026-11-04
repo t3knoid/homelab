@@ -88,15 +88,12 @@ They consume core services such as identity, storage, networking, and monitoring
 - [Lidarr](lidarr.md)
 - [Sabnzbd](sabnzbd.md)
 - [Ombi](ombi.md)
-- [Calibre-Web](calibre-web.md) 
-- [Calibre](calibre.md)
-- [Lazy Librarian](lazy_librarian.md)
 
 ### 📚 Library & Content Management
 
 - [Calibre](calibre.md)
 - [Calibre-Web](calibre-web.md)
-- [Lazy Librarian](lazy_librarian.md)
+- [LazyLibrarian](lazylibrarian.md)
 
 ### 🎮 Game Servers
 

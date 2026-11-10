@@ -110,6 +110,16 @@ The following is a list of Runbooks grouped by category.
 
 ---
 
+### 🗄️ Ceph Management
+
+| Runbook | Description |
+|---|---|
+| **[Replace a Failed Ceph OSD Disk Runbook](replace_a_failed_ceph_osd_disk_runbook.md)** | Step-by-step instructions to replace a failed OSD disk and recreate the OSD on the Proxmox Ceph cluster. |
+| **[Ceph Troubleshooting Runbook](ceph_troubleshooting_runbook.md)** | Diagnose OSDs down/out, stuck PGs, slow requests, near-full OSDs, and MON quorum loss. |
+| **[Ceph Routine Health Checks Runbook](ceph_routine_health_checks_runbook.md)** | Daily and weekly checks to keep the Ceph cluster healthy. |
+
+---
+
 ### 📄 Templates & Miscellaneous
 
 | Runbook                          | Description                                                      |

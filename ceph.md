@@ -139,47 +139,9 @@ Useful commands:
 
 ## 🧰 Troubleshooting Ceph
 
-The [Ceph Operations Cheat Sheet](ceph_cheat_sheet.md) page provides a quick reference to commands and practices for monitoring, troubleshooting, and maintaining your Ceph cluster in the homelab. [Performing regular maintenance operations](ceph_operations_checklist.md) can go a long way to ensuring a healthy system.
+The [Ceph Operations Cheat Sheet](ceph_cheat_sheet.md) page provides a quick reference to commands and practices for monitoring, troubleshooting, and maintaining your Ceph cluster in the homelab. Using the [Ceph Routine Health Checks Runbook](ceph_routine_health_checks_runbook.md) can go a long way to ensuring a healthy system.
 
-Even in a homelab, Ceph can encounter issues. Here are common problems and fixes:
-
-### 1. OSD Down / Out
-- **Symptom:** `ceph -s` shows OSDs marked `down` or `out`.  
-- **Fix:** Restart the OSD service:
-  ```bash
-  systemctl restart ceph-osd@<id>
-  ```
-  If the disk failed, [replace it and recreate the OSD](replace_failed_disk_and_recreate_the_osd.md).
-
-### 2. PGs (Placement Groups) Stuck
-- **Symptom:** `ceph -s` shows PGs in `stuck` or `inactive` state.  
-- **Fix:**  
-  - Check network connectivity between nodes.  
-  - Ensure all MONs are healthy (`ceph quorum_status`).  
-  - Restart Ceph services if needed.
-
-### 3. Slow Requests
-- **Symptom:** Logs show `slow requests are blocked`.  
-- **Fix:**  
-  - Verify network latency on the Ceph network (`ping`, `iperf`).  
-  - Check disk health (`smartctl`).  
-  - Increase replication or rebalance PGs if cluster is overloaded.
-
-### 4. Full or Near‑Full Cluster
-- **Symptom:** Warnings about `near full` or `full` OSDs.  
-- **Fix:**  
-  - Add more OSDs (additional disks).  
-  - Increase pool size or adjust PG count.  
-  - Clean up unused images or snapshots.
-
-### 5. MON Quorum Loss
-- **Symptom:** Cluster reports `no quorum`.  
-- **Fix:**  
-  - Ensure at least 2 of 3 MONs are running.  
-  - Restart MONs:
-    ```bash
-    systemctl restart ceph-mon@<hostname>
-    ```
+Even in a homelab, Ceph can encounter issues. See the [Ceph Troubleshooting Runbook](ceph_troubleshooting_runbook.md) provides a step-by-step diagnosis if common Ceph problems.
 
 ---
 

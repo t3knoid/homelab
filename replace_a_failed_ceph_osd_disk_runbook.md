@@ -189,4 +189,3 @@ journalctl -u ceph-osd@<new-id> -f
 - If `pveceph osd create` fails, check for leftover partitions or LVM volumes on the device, wipe it fully, and retry.
 - Rebalancing after a replacement causes heavy traffic on the Ceph network. Keep that network healthy and avoid other large transfers until recovery finishes.
 - For consistent performance, match SSD models and sizes across nodes.
-- Source: [Replace failed disk and recreate the OSD](replace_failed_disk_and_recreate_the_osd.html).

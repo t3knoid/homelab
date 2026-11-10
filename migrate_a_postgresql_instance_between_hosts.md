@@ -184,7 +184,7 @@ Archive migration records, ownership mappings, backup checksums, endpoint change
 
 ## 🧩 Optional Homelab Example: `pg-1` to TrueNAS
 
-This is one application of the generic procedure, not its required topology. Consult the [PostgreSQL inventory](../../inventory/pg/inventory.ini), [services inventory](../../inventory/services/inventory.ini), and [TrueNAS App configuration](../../inventory/truenas/host_vars/truenas-01/default.yml). Verify the running versions rather than assuming the inventory is current.
+This is one application of the generic procedure, not its required topology. Consult the [PostgreSQL inventory](https://github.com/t3knoid/ansible/blob/main/inventory/pg/inventory.ini), [services inventory](https://github.com/t3knoid/ansible/blob/main/inventory/services/inventory.ini), and [TrueNAS App configuration](https://github.com/t3knoid/ansible/blob/main/inventory/truenas/host_vars/truenas-01/default.yml). Verify the running versions rather than assuming the inventory is current.
 
 | Generic Input   | Example                                                                                           |
 | --------------- | ------------------------------------------------------------------------------------------------- |
@@ -195,15 +195,15 @@ This is one application of the generic procedure, not its required topology. Con
 | `TARGET_ADMIN`  | Approved App administration login, commonly `postgres`                                            |
 | Migration units | Sonarr, Radarr, and Lidarr main/log database pairs; discover actual names and any other databases |
 
-The [Apps playbook](../../playbooks/truenas/deploy_truenas_apps.yml) manages the destination container, not database roles or logical migration. The [VM PostgreSQL deployment playbook](../../playbooks/postgresql/deploy_postgresql.yml) and the [same-VM 17-to-18 migration playbook](../../playbooks/postgresql/migrate_postgresql_17_to_18.yml) are not host-to-host migration tools. Do not add the NAS to `pgdb`: existing database tasks assume APT/systemd and a local `postgres` OS account on a VM.
+The [Apps playbook](https://github.com/t3knoid/ansible/blob/main/playbooks/truenas/deploy_truenas_apps.yml) manages the destination container, not database roles or logical migration. The [VM PostgreSQL deployment playbook](https://github.com/t3knoid/ansible/blob/main/playbooks/postgresql/deploy_postgresql.yml) and the [same-VM 17-to-18 migration playbook](https://github.com/t3knoid/ansible/blob/main/playbooks/postgresql/migrate_postgresql_17_to_18.yml) are not host-to-host migration tools. Do not add the NAS to `pgdb`: existing database tasks assume APT/systemd and a local `postgres` OS account on a VM.
 
 For these applications, review `<service>_setup_db_name`, `<service>_setup_db_log`, `<service>_setup_db_user`, and vault-backed passwords. Set explicit endpoint overrides in only the migrated application's group variables:
 
 | Variables File                                                | Example Overrides                                                     |
 | ------------------------------------------------------------- | --------------------------------------------------------------------- |
-| [Sonarr](../../inventory/services/group_vars/sonarr/main.yml) | `sonarr_setup_pg_host: "192.168.2.250"`, `sonarr_setup_pg_port: 5432` |
-| [Radarr](../../inventory/services/group_vars/radarr/main.yml) | `radarr_setup_pg_host: "192.168.2.250"`, `radarr_setup_pg_port: 5432` |
-| [Lidarr](../../inventory/services/group_vars/lidarr/main.yml) | `lidarr_setup_pg_host: "192.168.2.250"`, `lidarr_setup_pg_port: 5432` |
+| [Sonarr](https://github.com/t3knoid/ansible/blob/main/inventory/services/group_vars/sonarr/main.yml) | `sonarr_setup_pg_host: "192.168.2.250"`, `sonarr_setup_pg_port: 5432` |
+| [Radarr](https://github.com/t3knoid/ansible/blob/main/inventory/services/group_vars/radarr/main.yml) | `radarr_setup_pg_host: "192.168.2.250"`, `radarr_setup_pg_port: 5432` |
+| [Lidarr](https://github.com/t3knoid/ansible/blob/main/inventory/services/group_vars/lidarr/main.yml) | `lidarr_setup_pg_host: "192.168.2.250"`, `lidarr_setup_pg_port: 5432` |
 
 Their role defaults can select `global_ip_addresses[groups['pgdb'][0]]`, so do not rely on group ordering. Review application backup/restore tasks too: some use source-host-local binaries, write source `.pgpass` files, or capture only a main database. Moving the runtime endpoint alone does not migrate provisioning and backup automation.
 

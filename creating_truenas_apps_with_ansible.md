@@ -21,13 +21,13 @@ For the role's general design, see the [TrueNAS Role Contributor Guide](truenas_
 
 ## 🧭 How App Deployment Works Here
 
-Apps are **not** part of `configure_truenas.yml`. They have their own playbook, [`playbooks/truenas/deploy_truenas_apps.yml`](../../playbooks/truenas/deploy_truenas_apps.yml), which imports [`roles/truenas/tasks/apps.yml`](../../roles/truenas/tasks/apps.yml).
+Apps are **not** part of `configure_truenas.yml`. They have their own playbook, [`playbooks/truenas/deploy_truenas_apps.yml`](https://github.com/t3knoid/ansible/blob/main/playbooks/truenas/deploy_truenas_apps.yml), which imports [`roles/truenas/tasks/apps.yml`](https://github.com/t3knoid/ansible/blob/main/roles/truenas/tasks/apps.yml).
 
 For each entry in `truenas_apps`, the workflow:
 
-1. validates every declaration locally ([`apps_validate.yml`](../../roles/truenas/tasks/apps_validate.yml)) before it contacts the NAS
+1. validates every declaration locally ([`apps_validate.yml`](https://github.com/t3knoid/ansible/blob/main/roles/truenas/tasks/apps_validate.yml)) before it contacts the NAS
 2. runs the read-only preflight and checks that an Apps storage pool exists (`docker.config`)
-3. calls the `truenas_api` module in `mode: app` ([`library/truenas_api.py`](../../roles/truenas/library/truenas_api.py)), which:
+3. calls the `truenas_api` module in `mode: app` ([`library/truenas_api.py`](https://github.com/t3knoid/ansible/blob/main/roles/truenas/library/truenas_api.py)), which:
    - creates the app with `app.create` when it does not exist
    - compares your `values` with `app.config <name>` and calls `app.update` only when they differ
    - calls `app.upgrade` when `catalog.version` changes, but only if you set `allow_upgrade: true`
@@ -36,7 +36,7 @@ For each entry in `truenas_apps`, the workflow:
 
 `truenas_apps_mode` defaults to `plan`, so the playbook only reports what it would do. Nothing changes until you pass `-e truenas_apps_mode=apply`. Ansible check mode (`--check`) is always read-only.
 
-App declarations go in [`inventory/truenas/host_vars/truenas-01/default.yml`](../../inventory/truenas/host_vars/truenas-01/default.yml). Secrets go in `inventory/truenas/host_vars/truenas-01/vault.yml`.
+App declarations go in [`inventory/truenas/host_vars/truenas-01/default.yml`](https://github.com/t3knoid/ansible/blob/main/inventory/truenas/host_vars/truenas-01/default.yml). Secrets go in `inventory/truenas/host_vars/truenas-01/vault.yml`.
 
 ---
 
@@ -136,7 +136,7 @@ Values are **merged** into the app's current configuration. The role only compar
 
 ### Comparison rules to keep in mind
 
-The module compares desired and current values strictly ([`app_config_matches`](../../roles/truenas/library/truenas_api.py)):
+The module compares desired and current values strictly ([`app_config_matches`](https://github.com/t3knoid/ansible/blob/main/roles/truenas/library/truenas_api.py)):
 
 - **Types must match exactly.** `port_number: 30495` matches, but `port_number: "30495"` is reported as a change on every run.
 - **Lists are compared in order and by length.** List `host_ips` in the same order every time.

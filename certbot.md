@@ -19,7 +19,7 @@ This role is intentionally minimal: it installs Certbot and the `certbot-nginx` 
 
 ## 🔧 Usage
 
-Certificate requests are performed using the [Request TLS Certificates Runbook](request_tls_certificates_runbook.md), which invokes the [Generate Certs](https://github.com/t3knoid/ansible/blob/main/docs/playbooks/generate_certs.md) playbook.
+Certificate requests are performed using the [Request Web Certificates Runbook](request_web_certificates_runbook.md), which invokes the [Generate Certs](https://github.com/t3knoid/ansible/blob/main/docs/playbooks/generate_certs.md) playbook.
 
 Certbot uses the **nginx plugin** to complete the **HTTP‑01 ACME challenge**.  
 This challenge verifies domain ownership by checking for a validation file served at:

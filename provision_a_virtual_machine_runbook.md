@@ -4,7 +4,7 @@ title: "Provision a Virtual Machine Runbook"
 
 # 🏃 Provision a Virtual Machine Runbook
 
-This runbook describes provisioning a new Ubuntu 24.04 virtual machine using [playbooks/provision_vm.yml](../playbooks/provision_vm.yml), or preparing an already installed baremetal host using the corresponding post-install stages.
+This runbook describes provisioning a new Ubuntu 24.04 virtual machine using [playbooks/provision_vm.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/provision_vm.yml), or preparing an already installed baremetal host using the corresponding post-install stages.
 
 VM provisioning clones an existing Proxmox cloud-init template, migrates it to the requested node, applies hardware and network settings, starts the guest, waits for cloud-init, removes the cloud-init drive, and reboots. The remaining stages bootstrap Python, join Active Directory, apply the Ansible node baseline, provision users, and prepare disks.
 
@@ -54,7 +54,7 @@ This workflow is currently Ubuntu-specific: the Python bootstrap hardcodes the U
 
 ### Inventory Groups
 
-Add the new host to the intended [inventory](../inventory/test/inventory.ini):
+Add the new host to the intended [inventory](https://github.com/t3knoid/ansible/blob/main/inventory/test/inventory.ini):
 
 {% raw %}
 ```ini
@@ -73,13 +73,13 @@ test-01
 
 ### Global IP Mapping
 
-Add the hostname and a unique address under the existing `global_ip_addresses` mapping in [roles/global/vars/main.yml](../roles/global/vars/main.yml). Do not replace the whole mapping. Select a free address in the intended subnet and check it against the existing map and network reservations.
+Add the hostname and a unique address under the existing `global_ip_addresses` mapping in [roles/global/vars/main.yml](https://github.com/t3knoid/ansible/blob/main/roles/global/vars/main.yml). Do not replace the whole mapping. Select a free address in the intended subnet and check it against the existing map and network reservations.
 
 `global_ip_address` is derived from this map. The current VM network template uses interface `ens18`, a `/24` prefix, and `global_gateway` (which defaults to the subnet's `.1` address). Confirm these assumptions fit the selected template, bridge, and VLAN before deployment.
 
 ### Host or Group Variables
 
-Create a host-specific variables file under the selected inventory, or use shared variables like [inventory/test/group_vars/all/main.yml](../inventory/test/group_vars/all/main.yml). A minimal example for the Ansible-native path is:
+Create a host-specific variables file under the selected inventory, or use shared variables like [inventory/test/group_vars/all/main.yml](https://github.com/t3knoid/ansible/blob/main/inventory/test/group_vars/all/main.yml). A minimal example for the Ansible-native path is:
 
 {% raw %}
 ```yaml
@@ -128,7 +128,7 @@ Terraform-backed provisioning is selected by `vms_use_terraform: true`. Its hard
 
 ## 💾 5. Review Disk Preparation Before Execution
 
-The final [disk stage](../playbooks/vms/prep_disk.yml) applies the [disks role](../roles/disks/tasks/main.yml) to both VMs and baremetal hosts.
+The final [disk stage](https://github.com/t3knoid/ansible/blob/main/playbooks/vms/prep_disk.yml) applies the [disks role](https://github.com/t3knoid/ansible/blob/main/roles/disks/tasks/main.yml) to both VMs and baremetal hosts.
 
 Its discovery is not limited to `vms_config.disk2`. It selects disks without child partitions, attempts to create GPT/ext4 partitions, discovers unmounted ext4 partitions, and may rewrite `/etc/fstab`. A disk without partitions is not necessarily empty: it may contain a whole-disk filesystem or valuable data.
 
@@ -223,7 +223,7 @@ The top-level provisioning playbook does not create a physical machine or instal
 
 ### Inventory and Variables
 
-Follow the group pattern in [inventory/dns/inventory.ini](../inventory/dns/inventory.ini):
+Follow the group pattern in [inventory/dns/inventory.ini](https://github.com/t3knoid/ansible/blob/main/inventory/dns/inventory.ini):
 
 {% raw %}
 ```ini
@@ -305,12 +305,12 @@ A successful ping alone does not verify domain membership, storage safety, or ap
 
 | Stage                                                          | Targets                   | Purpose                                                                                                |
 | -------------------------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------ |
-| [VM creation](../playbooks/vms/provision_vm.yml)               | `vms`                     | Pi-hole DNS updates followed by Ansible-native or Terraform-backed clone/cloud-init provisioning.      |
-| [Python bootstrap](../playbooks/python/bootstrap_python3.yml)  | `python`                  | Installs Python and prepares a virtual environment.                                                    |
-| [Domain join](../playbooks/ad/join_domain.yml)                 | `vms`, `baremetal`, `wsl` | Applies domain configuration and joins Active Directory.                                               |
-| [Node preparation](../playbooks/ansible/prep_ansible_node.yml) | `vms`, `baremetal`, `wsl` | Applies the managed-node baseline.                                                                     |
-| [User provisioning](../playbooks/vms/add_users.yml)            | `vms`, `baremetal`        | Provisions standard users.                                                                             |
-| [Disk preparation](../playbooks/vms/prep_disk.yml)             | `vms`, `baremetal`        | Discovers disks, partitions/formats candidates, and applies mounts; requires explicit operator review. |
+| [VM creation](https://github.com/t3knoid/ansible/blob/main/playbooks/vms/provision_vm.yml)               | `vms`                     | Pi-hole DNS updates followed by Ansible-native or Terraform-backed clone/cloud-init provisioning.      |
+| [Python bootstrap](https://github.com/t3knoid/ansible/blob/main/playbooks/python/bootstrap_python3.yml)  | `python`                  | Installs Python and prepares a virtual environment.                                                    |
+| [Domain join](https://github.com/t3knoid/ansible/blob/main/playbooks/ad/join_domain.yml)                 | `vms`, `baremetal`, `wsl` | Applies domain configuration and joins Active Directory.                                               |
+| [Node preparation](https://github.com/t3knoid/ansible/blob/main/playbooks/ansible/prep_ansible_node.yml) | `vms`, `baremetal`, `wsl` | Applies the managed-node baseline.                                                                     |
+| [User provisioning](https://github.com/t3knoid/ansible/blob/main/playbooks/vms/add_users.yml)            | `vms`, `baremetal`        | Provisions standard users.                                                                             |
+| [Disk preparation](https://github.com/t3knoid/ansible/blob/main/playbooks/vms/prep_disk.yml)             | `vms`, `baremetal`        | Discovers disks, partitions/formats candidates, and applies mounts; requires explicit operator review. |
 
 ## 📋 Minimum Inventory Contract
 

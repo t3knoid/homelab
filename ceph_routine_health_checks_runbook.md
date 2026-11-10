@@ -101,6 +101,3 @@ ceph osd reweight-by-utilization
 | Near-full warnings | Add OSDs, or clean up unused images and snapshots |
 | MON quorum loss | Make sure at least 2 of 3 MONs are running |
 
-## ✅ Notes
-
-- Source: [Ceph Operations Checklist](ceph_operations_checklist.html).

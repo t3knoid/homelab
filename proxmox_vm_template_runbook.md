@@ -4,7 +4,7 @@ title: "Proxmox VM Template Runbook"
 
 # 🏃 Proxmox VM Template Runbook
 
-This runbook provides **step-by-step instructions to create an Ubuntu 24.04 Server cloud-init VM template** in the Home Lab. It uses the existing `global` and `cloudinit` roles through the [template creation playbook](../playbooks/template/create_ubuntu_24_04_server_template.yml).
+This runbook provides **step-by-step instructions to create an Ubuntu 24.04 Server cloud-init VM template** in the Home Lab. It uses the existing `global` and `cloudinit` roles through the [template creation playbook](https://github.com/t3knoid/ansible/blob/main/playbooks/template/create_ubuntu_24_04_server_template.yml).
 
 ---
 
@@ -41,7 +41,7 @@ Preserve or resolve uncommitted changes before pulling. Confirm the activated en
 
 ## 3️⃣ Set Template Configuration
 
-Edit [inventory/template/group_vars/all.yml](../inventory/template/group_vars/all.yml). The existing configuration is:
+Edit [inventory/template/group_vars/all.yml](https://github.com/t3knoid/ansible/blob/main/inventory/template/group_vars/all.yml). The existing configuration is:
 
 {% raw %}
 ```yaml
@@ -158,7 +158,7 @@ The following example adds Ubuntu 22.04 alongside Ubuntu 24.04. These are instru
 
 ### Add Image Metadata
 
-In [roles/global/defaults/main/main.yml](../roles/global/defaults/main/main.yml), add this entry under the existing `global_os` mapping, preserving its other entries and indentation:
+In [roles/global/defaults/main/main.yml](https://github.com/t3knoid/ansible/blob/main/roles/global/defaults/main/main.yml), add this entry under the existing `global_os` mapping, preserving its other entries and indentation:
 
 {% raw %}
 ```yaml
@@ -176,7 +176,7 @@ The download task combines `cloudinit_download_url` and `cloudinit_img` with `/`
 
 ### Add Template Settings
 
-In [inventory/template/group_vars/all.yml](../inventory/template/group_vars/all.yml), add a matching entry under the existing `template` mapping:
+In [inventory/template/group_vars/all.yml](https://github.com/t3knoid/ansible/blob/main/inventory/template/group_vars/all.yml), add a matching entry under the existing `template` mapping:
 
 {% raw %}
 ```yaml
@@ -197,7 +197,7 @@ Replace `<unused-vmid>` with an unused numeric cluster-wide VMID. The key `ubunt
 
 ### Add an Inventory Group and Playbook
 
-Append a distinct group to [inventory/template/inventory.ini](../inventory/template/inventory.ini):
+Append a distinct group to [inventory/template/inventory.ini](https://github.com/t3knoid/ansible/blob/main/inventory/template/inventory.ini):
 
 {% raw %}
 ```ini

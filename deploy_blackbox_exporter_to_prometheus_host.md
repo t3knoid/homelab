@@ -109,7 +109,7 @@ Expected result: values should be `1` for healthy services and `0` for failing s
 - Blackbox targets are defined in the inventory and are the source of truth for probe targets.
 - The exporter service and target list are separate concerns in this repo.
 - Deploying the exporter alone does not automatically create the `blackbox_http` job in Prometheus.
-- The inventory file is [inventory/prometheus/inventory.ini](inventory/prometheus/inventory.ini).
-- The deployment playbook is [playbooks/prometheus/deploy_blackbox_exporter.yml](playbooks/prometheus/deploy_blackbox_exporter.yml).
-- The target refresh playbook is [playbooks/prometheus/deploy_prometheus_exporters.yml](playbooks/prometheus/deploy_prometheus_exporters.yml).
-- Target definitions live in [inventory/prometheus/group_vars/all/main.yml](inventory/prometheus/group_vars/all/main.yml) under `prometheus
+- The inventory file is [inventory/prometheus/inventory.ini](https://github.com/t3knoid/ansible/blob/main/inventory/prometheus/inventory.ini).
+- The deployment playbook is [playbooks/prometheus/deploy_blackbox_exporter.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/prometheus/deploy_blackbox_exporter.yml).
+- The target refresh playbook is [playbooks/prometheus/deploy_prometheus_exporters.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/prometheus/deploy_prometheus_exporters.yml).
+- Target definitions live in [inventory/prometheus/group_vars/all/main.yml](https://github.com/t3knoid/ansible/blob/main/inventory/prometheus/group_vars/all/main.yml) under `prometheus

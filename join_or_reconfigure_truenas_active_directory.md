@@ -4,7 +4,7 @@ title: "Join or Reconfigure TrueNAS Active Directory"
 
 # 🌐 Join or Reconfigure TrueNAS Active Directory
 
-Manage NAS network configuration and AD integration through [configure_truenas.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/truenas/configure_truenas.yml). This does not create domain users or replace domain-controller administration. See [the contributor guide](../contrib/truenas-role-contributor-guide.md) for the role's API mapping.
+Manage NAS network configuration and AD integration through [configure_truenas.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/truenas/configure_truenas.yml). This does not create domain users or replace domain-controller administration. See [TrueNAS Role Contributor Guide](truenas_role_contributor_guide.md) for the role's API mapping.
 
 ## 📋 Prerequisites
 

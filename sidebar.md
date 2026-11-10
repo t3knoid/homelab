@@ -82,7 +82,7 @@ title: "Sidebar"
     <ul>
       <li>[Calibre](calibre.md)</li>
       <li>[Calibre-Web](calibre-web.md)</li>
-      <li>[Lazy Librarian](lazy_librarian.md)</li>
+      <li>[LazyLibrarian](lazylibrarian.md)</li>
     </ul>
   </details>
 

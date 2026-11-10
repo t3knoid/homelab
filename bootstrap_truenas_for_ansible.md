@@ -38,5 +38,4 @@ The final command connects to the NAS and performs read-only readiness, version,
 
 - Verify key-based SSH, approved root escalation, successful preflight, and a separate working administrator session.
 - Document how to recover access from the console if SSH, keys, sudo, or network settings are wrong.
-- Continue with [Add Local Users](truenas_add_users.md) and [Add Shares](truenas_add_shares.md) using targeted tags.
-
+- Continue with [Add Local Users](manage_truenas_users_and_credentials.md) and [Add Shares](modify_or_retire_truenas_shares.md)  using targeted tags.

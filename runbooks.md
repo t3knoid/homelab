@@ -29,7 +29,7 @@ The following is a list of Runbooks grouped by category.
 | **[Deploy Lidarr Runbook](deploy_lidarr_runbook.md)**            | Step-by-step instructions to deploy or update Lidarr.            |
 | **[Deploy Radarr Runbook](deploy_radarr_runbook.md)**            | Step-by-step instructions to deploy or update Radarr.            |
 | **[Deploy Sonarr Runbook](deploy_sonarr_runbook.md)**            | Step-by-step instructions to deploy or update Sonarr.            |
-| **[Deploy Lazy Librarian Runbook](deploy_lazy_librarian_runbook.md)**    | Step-by-step instructions to deploy or update Lazy Librarian.    |
+| **[Deploy LazyLibrarian Runbook](deploy_lazylibrarian_runbook.md)**    | Step-by-step instructions to deploy or update LazyLibrarian.      |
 | **[Deploy Calibre-web Runbook](deploy_calibre-web_runbook.md)**       | Step-by-step instructions to deploy or update Calibre-web.       |
 | **[Deploy Calibre Runbook](deploy_calibre_runbook.md)**           | Step-by-step instructions to deploy or update Calibre.           |
 | **[Deploy Sabnzbd Runbook](deploy_sabnzbd_runbook.md)**           | Step-by-step instructions to deploy or update Sabnzbd.           |

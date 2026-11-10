@@ -14,7 +14,7 @@ This workflow manages any catalog app supported by the installed TrueNAS release
 
 - Confirm the installed TrueNAS release and supported catalog/custom Apps settings. The role checks middleware readiness, the minimum supported version (25.10 by default), and initial administrator setup before reading the Apps pool configuration.
 - Configure the Apps storage pool through an approved workflow, and confirm capacity, storage health, and administrator recovery access.
-- Create dedicated persistent datasets and establish the container's required UID/GID and permissions. Review the dataset and raw permission-call guidance in the [contributor guide](../contrib/truenas-role-contributor-guide.md).
+- Create dedicated persistent datasets and establish the container's required UID/GID and permissions. Review the dataset and raw permission-call guidance in the [contributor guide](truenas_role_contributor_guide.md).
 - Reserve app ports, review network restrictions, pin approved versions, and establish resource limits, health checks, backup policy, and recovery procedures.
 - Keep credentials in the encrypted host vault and preserve `truenas_no_log: true`. Do not put real secrets in CLI extra variables, plaintext Compose files, or published plans.
 
@@ -475,7 +475,7 @@ Review every app's proposed actions, not just the one that failed. This preview 
 
 ## 🧪 Offline Tests
 
-The [local fixture](../../roles/truenas/tests/apps.yml) validates declarations without NAS credentials or access. The [unit tests](../../roles/truenas/tests/test_apps.py) exercise catalog/custom lifecycle decisions, job failures/timeouts, approvals, idempotence, check mode, and runtime checks with mocked middleware:
+The [local fixture](https://github.com/t3knoid/ansible/blob/main/roles/truenas/tests/apps.yml) validates declarations without NAS credentials or access. The [unit tests](https://github.com/t3knoid/ansible/blob/main/roles/truenas/tests/test_apps.py) exercise catalog/custom lifecycle decisions, job failures/timeouts, approvals, idempotence, check mode, and runtime checks with mocked middleware:
 
 {% raw %}
 ```bash
@@ -538,7 +538,7 @@ Copy this object under `truenas_apps[].values.postgres`, preserving the property
 | `values.network.tcp_port.host_ips`    | `[]`                 | `["0.0.0.0"]`                             | Explicit approved IPv4 wildcard; requires firewall/client-access review |
 | `values.storage.data.type`            | `ix_volume`          | `ix_volume`                               | Retain local TrueNAS-managed data storage                               |
 
-The username/database names and resource sizing are choices, not conclusions inferred from metadata. Shared memory (`/dev/shm`), total container memory, and PostgreSQL `shared_buffers` are separate controls. These resource overrides are not recommendations for every workload and do not change [the NAS inventory](../../inventory/truenas/host_vars/truenas-01/default.yml) automatically. Omitted optional lists such as `additional_envs` need not be managed when unused.
+The username/database names and resource sizing are choices, not conclusions inferred from metadata. Shared memory (`/dev/shm`), total container memory, and PostgreSQL `shared_buffers` are separate controls. These resource overrides are not recommendations for every workload and do not change [the NAS inventory](https://github.com/t3knoid/ansible/blob/main/inventory/truenas/host_vars/truenas-01/default.yml) automatically. Omitted optional lists such as `additional_envs` need not be managed when unused.
 
 ### 📦 Assemble the Inventory Entry
 

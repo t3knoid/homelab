@@ -180,7 +180,7 @@ To add a new Grafana dashboard:
 1. Add the JSON file under `roles/grafana_setup/files/dashboards`
 2. Add any required defaults in `roles/grafana_setup/defaults/main/main.yml`
 3. Ensure `roles/grafana_setup/tasks/main.yml` copies and provisions the dashboard
-4. Deploy [playbooks/grafana/deploy_grafana.yml](playbooks/grafana/deploy_grafana.yml)
+4. Deploy [playbooks/grafana/deploy_grafana.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/grafana/deploy_grafana.yml)
 5. Validate the JSON, deployment path, and dashboard behavior in Grafana
 
 The existing `grafana_setup` role is the source of truth for how dashboards are provisioned and deployed in this repository.

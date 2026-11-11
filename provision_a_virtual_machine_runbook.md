@@ -38,7 +38,7 @@ Preserve or resolve local changes before pulling. Use the repository's branch an
 
 Before creating a VM, confirm:
 
-- An existing, tested Proxmox cloud-init template matches `global_os[vms_os].template`. For `ubuntu_24_server`, the configured name is `ubuntu-server-24.04-cloudinit`. See the [template creation runbook](create_proxmox_vm_template.md).
+- An existing, tested Proxmox cloud-init template matches `global_os[vms_os].template`. For `ubuntu_24_server`, the configured name is `ubuntu-server-24.04-cloudinit`. 👉 See the [Proxmox VM Template Runbook](proxmox_vm_template_runbook.md).
 - The source template and target node support the required clone/migration operations. The Ansible-native clone requests a full clone with `qcow2` format on `vms_config.storage`; use storage that supports this.
 - The target node's `local` storage supports snippets. The role writes user/network data into `/var/lib/vz/snippets` and references it as `local:snippets/...`.
 - The control node has SSH and privilege escalation access to the Proxmox target node. Its hostname must resolve.

@@ -4,7 +4,7 @@ title: "Create and Modify TrueNAS Datasets"
 
 # 💾 Create and Modify TrueNAS Datasets
 
-Manage filesystem datasets through `truenas_datasets` and [configure_truenas.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/truenas/configure_truenas.yml). Pool creation, dataset deletion, data migration, and block-storage provisioning are outside this procedure. See [Add TrueNAS Local Users](add_truenas_local_users.md) and [Manage TrueNAS Dataset Permissions and ACLs](manage_truenas_dataset_permissions_and_acls.md) for exposure and access.
+Manage filesystem datasets through `truenas_datasets` and [configure_truenas.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/truenas/configure_truenas.yml). Pool creation, dataset deletion, data migration, and block-storage provisioning are outside this procedure. 👉 See [Add TrueNAS Local Users](add_truenas_local_users.md) and [Manage TrueNAS Dataset Permissions and ACLs](manage_truenas_dataset_permissions_and_acls.md) for exposure and access.
 
 ## 📋 Prerequisites
 

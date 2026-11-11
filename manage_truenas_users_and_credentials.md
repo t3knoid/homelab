@@ -4,7 +4,7 @@ title: "Manage TrueNAS Users and Credentials"
 
 # 👤 Manage TrueNAS Users and Credentials
 
-Maintain existing local accounts, supplementary memberships, and credentials associated with [configure_truenas.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/truenas/configure_truenas.yml). This does not manage Active Directory user lifecycles. See [Add TrueNAS Local Users](add_truenas_local_users.md) for initial creation.
+Maintain existing local accounts, supplementary memberships, and credentials associated with [configure_truenas.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/truenas/configure_truenas.yml). This does not manage Active Directory user lifecycles. 👉 See [Add TrueNAS Local Users](add_truenas_local_users.md) for initial creation.
 
 ## 📋 Prerequisites
 

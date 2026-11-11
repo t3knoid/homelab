@@ -11,14 +11,14 @@ This page documents the deployment, management, and version‑tracking workflows
 ## 🟩 **Minecraft Bedrock Edition Server**  
 Documentation for the active Bedrock server deployment, including version pinning, Ansible role usage, and automated version checks.
 
-➡️ see: **[Minecraft Bedrock Edition Server](minecraft_bedrock_edition_server.md)**
+👉 see: **[Minecraft Bedrock Edition Server](minecraft_bedrock_edition_server.md)**
 
 ---
 
 ## 🟧 **Minecraft Java Edition Server**  
 Documentation for the Java Edition role, versioning model, manual version checks, and deployment workflow.
 
-➡️ see: **[Minecraft Java Edition Server](minecraft_java_edition_server.md)**
+👉 see: **[Minecraft Java Edition Server](minecraft_java_edition_server.md)**
 
 ---
 

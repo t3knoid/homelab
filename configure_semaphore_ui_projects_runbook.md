@@ -237,7 +237,7 @@ Each schedule:
 - Defines a **cron expression**
 - Can be enabled/disabled
 
-For a list of tasks scheduled to run in Semaphore, see: [Semaphore Scheduled Tasks](semaphore_scheduled_tasks.md)
+For a list of tasks scheduled to run in Semaphore, 👉 see: [Semaphore Scheduled Tasks](semaphore_scheduled_tasks.md)
 
 The role resolves template IDs automatically and creates missing schedules. The [Defining When Semaphore Runs a Scheduled Task](defining_when_semaphore_runs_a_scheduled_task.md) runbook provides further details on how to configure the **cron expression**.
 

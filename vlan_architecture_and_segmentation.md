@@ -8,9 +8,7 @@ One of the core design principles of my homelab is intentional network segmentat
 
 This homelab runs on the TP-Link Omada networking stack, which provides centralized control of switching, routing, wireless, VLANs, and firewall policies across the environment.
 
-For a deeper look at the hardware, controller model, and design philosophy behind the stack, see:
-
-👉 **[TP-Link Omada Ecosystem](tp-link_omada_ecosystem.md)**
+For a deeper look at the hardware, controller model, and design philosophy behind the stack, 👉 see: **[TP-Link Omada Ecosystem](tp-link_omada_ecosystem.md)**
 
 With centralized management in place, VLANs become more than just logical groupings — they define trust boundaries, availability domains, and security zones across the entire network.
 

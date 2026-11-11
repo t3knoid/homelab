@@ -117,4 +117,4 @@ If the ISP does not require tagging, leave this disabled.
 
 Omada Gateway ACLs control **inter‑VLAN traffic**. Rules are processed **top‑to‑bottom**, and the first match wins. These ACLs implement IoT isolation and allow required exceptions such as HDHomeRun access. For a list of Gateway ACL rules, 
 
-See **[Gateway VLAN ACL Rules](gateway_vlan_acl_rules.md)**
+👉 See **[Gateway VLAN ACL Rules](gateway_vlan_acl_rules.md)**

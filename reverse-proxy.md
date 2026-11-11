@@ -76,10 +76,9 @@ Cloudflare’s orange‑cloud proxy mode ensures that DNS records for public ser
 
 This public‑frontend layer now represents the **first hop** in the homelab’s ingress architecture, with the Reverse‑Proxy cluster continuing to serve as the internal routing and authentication gateway.
 
-👉 See: **[Cloudflare Public Frontend and IP Obfuscation](cloudflare_public_frontend_and_ip_obfuscation.md)**
+👉 See Cloudflare's **[Proxy Status](https://developers.cloudflare.com/dns/proxy-status/)** documentation.
 
 ---
-
 
 ## 🖥️ Frontend Server Configuration
 

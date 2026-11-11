@@ -4,7 +4,7 @@ title: "Bootstrap TrueNAS for Ansible"
 
 # 🚀 Bootstrap TrueNAS for Ansible
 
-Prepare an already-installed TrueNAS 25.10+ system for [configure_truenas.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/truenas/configure_truenas.yml). This is not an operating-system installation or storage-pool provisioning procedure. See the [TrueNAS Role Contributor Guide](truenas_role_contributor_guide.md).
+Prepare an already-installed TrueNAS 25.10+ system for [configure_truenas.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/truenas/configure_truenas.yml). This is not an operating-system installation or storage-pool provisioning procedure. 👉 See the [TrueNAS Role Contributor Guide](truenas_role_contributor_guide.md).
 
 ## 📋 Prerequisites
 

@@ -76,7 +76,7 @@ postgresql_setup_data_dir: /ansible/pgdata18
 ```
 {% endraw %}
 
-For `ansible-0`, use [inventory/ansible/group_vars/all/main.yml](../inventory/ansible/group_vars/all/main.yml). Keep one definition per key. Do not change role defaults for this migration.
+For `ansible-0`, use [inventory/ansible/group_vars/all/main.yml](https://github.com/t3knoid/ansible/tree/main/inventory/ansible/group_vars/all/main.yml). Keep one definition per key. Do not change role defaults for this migration.
 Resume writers only after validation, then take an independent version 18 backup.
 
 Do **not** rerun the normal setup role just to apply these inventory values: it deletes the default versioned directory and edits `pg_hba.conf` under the data directory, whereas migrated Debian/Ubuntu clusters normally use configuration under `/etc/postgresql`. That behavior has not been changed by this playbook.

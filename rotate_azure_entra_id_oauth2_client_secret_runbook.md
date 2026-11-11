@@ -7,7 +7,7 @@ title: "Rotate Azure Entra ID OAuth2 Client Secret Runbook"
 When the Azure Entra ID application’s **client secret expires**, operators must re‑run the OAuth2 provisioning workflow. This regenerates a new secret and injects it into the reverse proxy’s OAuth2 configuration via the `entra_id_oauth2` role.
 
 **Related Documentation:**  
-See **[Configure An Inventory For Entra ID OAuth2](configure_an_inventory_for_entra_id_oauth2.md)** for inventory prerequisites and variable definitions.
+👉 See **[Configure An Inventory For Entra ID OAuth2](configure_an_inventory_for_entra_id_oauth2.md)** for inventory prerequisites and variable definitions.
 
 ---
 

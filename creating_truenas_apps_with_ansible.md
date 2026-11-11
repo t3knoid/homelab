@@ -333,7 +333,7 @@ Use this if you want Nexdeck's data on a dataset you manage and snapshot, instea
 
 ### Step 3: (Optional) Publish through the reverse proxy
 
-If you set `public_url`, add the DNS and proxy entry for it. See [Configuring an inventory host web service for a reverse proxy](configuring-an-inventory-host-web-service-for-a-reverse-proxy.md). The backend is `http://192.168.2.250:30495`.
+If you set `public_url`, add the DNS and proxy entry for it. 👉 See [Configure An Inventory Host Web Service For A Reverse Proxy](configure_an_inventory_host_web_service_for_a_reverse_proxy.md). The backend is `http://192.168.2.250:30495`.
 
 ---
 

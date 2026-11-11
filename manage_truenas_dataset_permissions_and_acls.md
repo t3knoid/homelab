@@ -4,7 +4,7 @@ title: "Manage TrueNAS Dataset Permissions and ACLs"
 
 # 🔐 Manage TrueNAS Dataset Permissions and ACLs
 
-Define ownership, POSIX permissions, SMB ACLs, and multiprotocol access for datasets managed through [configure_truenas.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/truenas/configure_truenas.yml). Creating a user or share does not grant dataset access. See [Add TrueNAS Local Users](add_truenas_local_users.md) and [Add TrueNAS Shares](add_truenas_shares.md).
+Define ownership, POSIX permissions, SMB ACLs, and multiprotocol access for datasets managed through [configure_truenas.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/truenas/configure_truenas.yml). Creating a user or share does not grant dataset access. 👉 See [Add TrueNAS Local Users](add_truenas_local_users.md) and [Add TrueNAS Shares](add_truenas_shares.md).
 
 ## 📋 Prerequisites
 

@@ -68,8 +68,4 @@ Windows DNS runs on the domain controller and provides all internal name resolut
 
 Because Windows DNS is authoritative for the internal domain, other DNS services in the homelab (such as Pi‑hole) must forward internal queries to the domain controller. This ensures that all hosts resolve AD records correctly while still benefiting from network‑wide DNS filtering.
 
-For full details on zone management, PTR records, and DNS configuration, see:
-
-👉 See: [Windows DNS](windows_dns.md) 
-
-
+For full details on zone management, PTR records, and DNS configuration, 👉 See: [Windows DNS](windows_dns.md).

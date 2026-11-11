@@ -7,7 +7,7 @@ title: "️ Semaphore UI Setup – Role Overview"
 The semaphoreui_setup role installs and configures Semaphore UI with optional Entra ID OIDC integration.
 
 Primary role metadata:
-- [roles/semaphoreui_setup/meta/main.yml](roles/semaphoreui_setup/meta/main.yml)
+- [roles/semaphoreui_setup/meta/main.yml](https://github.com/t3knoid/ansible/blob/main/roles/semaphoreui_setup/meta/main.yml)
 
 Main responsibilities:
 - Install Semaphore UI binaries and prerequisites
@@ -27,7 +27,7 @@ Deployment mode:
 - gather_facts: true
 
 Main deploy playbook:
-- [playbooks/semaphoreui/deploy_semaphoreui.yml](playbooks/semaphoreui/deploy_semaphoreui.yml)
+- [playbooks/semaphoreui/deploy_semaphoreui.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/semaphoreui/deploy_semaphoreui.yml)
 
 Deployment role chain:
 1. global
@@ -44,7 +44,7 @@ Deployment role chain:
 Entra app registration and secret generation run before semaphoreui_setup.
 
 Entra registration logic:
-- [roles/entra_id_oauth2/tasks/register_app.yml](roles/entra_id_oauth2/tasks/register_app.yml)
+- [roles/entra_id_oauth2/tasks/register_app.yml](https://github.com/t3knoid/ansible/blob/main/roles/entra_id_oauth2/tasks/register_app.yml)
 
 Registration process:
 1. Resolve redirect URI from site config by priority:
@@ -60,7 +60,7 @@ Registration process:
 # 📂 Inventory Structure (Semaphore)
 
 Semaphore inventory config:
-- [inventory/semaphore/group_vars/all/main.yml](inventory/semaphore/group_vars/all/main.yml)
+- [inventory/semaphore/group_vars/all/main.yml](https://github.com/t3knoid/ansible/blob/main/inventory/semaphore/group_vars/all/main.yml)
 
 Site block contains:
 - rproxy_setup_sites entry for semaphore.refol.us
@@ -72,7 +72,7 @@ Site block contains:
 # ⚙️ Role Execution Structure
 
 Role entrypoint:
-- [roles/semaphoreui_setup/tasks/main.yml](roles/semaphoreui_setup/tasks/main.yml)
+- [roles/semaphoreui_setup/tasks/main.yml](https://github.com/t3knoid/ansible/blob/main/roles/semaphoreui_setup/tasks/main.yml)
 
 Execution flow:
 1. install.yml
@@ -80,11 +80,11 @@ Execution flow:
 3. runner.yml (when remote runner enabled)
 
 Config rendering:
-- [roles/semaphoreui_setup/tasks/configure.yml](roles/semaphoreui_setup/tasks/configure.yml)
-- [roles/semaphoreui_setup/templates/config.json.j2](roles/semaphoreui_setup/templates/config.json.j2)
+- [roles/semaphoreui_setup/tasks/configure.yml](https://github.com/t3knoid/ansible/blob/main/roles/semaphoreui_setup/tasks/configure.yml)
+- [roles/semaphoreui_setup/templates/config.json.j2](https://github.com/t3knoid/ansible/blob/main/roles/semaphoreui_setup/templates/config.json.j2)
 
 OIDC values sourced from:
-- [roles/semaphoreui_setup/defaults/main/main.yml](roles/semaphoreui_setup/defaults/main/main.yml)
+- [roles/semaphoreui_setup/defaults/main/main.yml](https://github.com/t3knoid/ansible/blob/main/roles/semaphoreui_setup/defaults/main/main.yml)
 - semaphoreui_setup_oidc_redirect_url derives from semaphoreui_setup_oidc_site.app_redirect_url
 
 ---
@@ -92,7 +92,7 @@ OIDC values sourced from:
 # 📌 Setup API Mode (Project/Template/Schedule Management)
 
 API setup entrypoint:
-- [roles/semaphoreui_setup/tasks/setup/main.yml](roles/semaphoreui_setup/tasks/setup/main.yml)
+- [roles/semaphoreui_setup/tasks/setup/main.yml](https://github.com/t3knoid/ansible/blob/main/roles/semaphoreui_setup/tasks/setup/main.yml)
 
 Handles:
 - API token creation
@@ -102,7 +102,7 @@ Handles:
 - Setup of views, keystores, repositories, inventories, templates, schedules
 
 Setup tasks:
-- [roles/semaphoreui_setup/tasks/setup](roles/semaphoreui_setup/tasks/setup.md)
+- [roles/semaphoreui_setup/tasks/setup](https://github.com/t3knoid/ansible/blob/main/roles/semaphoreui_setup/tasks/setup)
 
 ---
 

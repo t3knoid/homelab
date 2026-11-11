@@ -155,7 +155,7 @@ Prometheus is configured to scrape nginx-prometheus-exporter targets.
 
 ### Deployment Chain
 
-The [deploy_rproxy.yml](playbooks/rproxy/deploy_rproxy.yml) playbook deploys the complete rproxy stack in this order:
+The [deploy_rproxy.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/rproxy/deploy_rproxy.yml) playbook deploys the complete rproxy stack in this order:
 
 {% raw %}
 ```yaml
@@ -205,7 +205,7 @@ curl http://rproxy-host:9113/metrics
 
 Nginx exporter targets are defined in Prometheus inventory.
 
-**File:** [inventory/prometheus/group_vars/all/main.yml](inventory/prometheus/group_vars/all/main.yml)
+**File:** [inventory/prometheus/group_vars/all/main.yml](https://github.com/t3knoid/ansible/blob/main/inventory/prometheus/group_vars/all/main.yml)
 
 **Example Configuration:**
 
@@ -225,7 +225,7 @@ prometheus_setup_nginx_exporter_targets:
 
 ### Role Variables
 
-**Role:** [roles/nginx_prometheus_exporter_setup/defaults/main/main.yml](roles/nginx_prometheus_exporter_setup/defaults/main.yml)
+**Role:** [roles/nginx_prometheus_exporter_setup/defaults/main/main.yml](https://github.com/t3knoid/ansible/blob/main/roles/nginx_prometheus_exporter_setup/defaults/main.yml)
 
 Key configurable variables:
 
@@ -255,7 +255,7 @@ nginx_prometheus_exporter_setup_listen_address: "localhost:9113"
 
 The primary deployment playbook for reverse proxies.
 
-**File:** [playbooks/rproxy/deploy_rproxy.yml](playbooks/rproxy/deploy_rproxy.yml)
+**File:** [playbooks/rproxy/deploy_rproxy.yml](https://github.com/t3knoid/ansible/blob/main/playbooks/rproxy/deploy_rproxy.yml)
 
 **Content:**
 
@@ -348,7 +348,7 @@ Prometheus is configured via [roles/prometheus_setup/templates/prometheus.yml.j2
 
 ### How Targets are Passed to Prometheus
 
-1. **Inventory defines targets** in [inventory/prometheus/group_vars/all/main.yml](inventory/prometheus/group_vars/all/main.yml):
+1. **Inventory defines targets** in [inventory/prometheus/group_vars/all/main.yml](https://github.com/t3knoid/ansible/blob/main/inventory/prometheus/group_vars/all/main.yml):
 
    ```yaml
    prometheus_setup_nginx_exporter_targets:

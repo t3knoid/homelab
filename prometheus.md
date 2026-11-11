@@ -54,21 +54,9 @@ This architecture ensures reliability, simplicity, and clear data flow.
 - Provides service discovery and scrape scheduling
 
 ### 📦 **2. Exporters**
-Prometheus relies on exporters to expose metrics from services that do not natively support Prometheus format.
 
-The following is a list of common exporters deployed in this homelab:
+Prometheus relies on exporters to expose metrics from services that do not natively support Prometheus format. The [Prometheus Exporters](prometheus_exporters.md) page details exporters used in this home lab.
 
-- **[nginx-prometheus-exporter](nginx-prometheus-exporter.md)** (reverse proxy)
-- **[nginx-log-exporter](nginx-log-exporter.md)** (Per-domain traffic analysis)
-- **[node_exporter](node_exporter.md)** (Linux hosts, Proxmox nodes)  
-- **[pve_exporter](pve_exporter.md)** (Proxmox API metrics)  
-- **[ceph-mgr Prometheus module](ceph-mgr_prometheus_module.md)** (Ceph cluster)  
-- **[synology_exporter](synology_exporter.md)** (Synology NAS)  
-- **[truenas_exporter](truenas_exporter.md)** (TrueNAS)  
-- **[docker/cAdvisor exporters](docker/cadvisor_exporters.md)** (media stack containers)  
-- **[pihole_exporter](pihole_exporter.md)** (Pi‑hole DNS)  
-- **[snmp_exporter](snmp_exporter.md)** (network gear)  
-- **[blackbox_exporter](blackbox_exporter.md)** (HTTP/ICMP/TCP checks)
 
 ### 📐 **3. PromQL**
 Prometheus Query Language (PromQL) is used to build dashboards, alerts, and diagnostic queries.

@@ -10,7 +10,7 @@ The `truenas` role configures an already-installed TrueNAS 25.10+ system through
 
 - Ansible 2.14 or newer on the control node.
 - TrueNAS 25.10 or newer. The role checks the version before making changes.
-- SSH access to the NAS using the inventory connection user. In this repository inventory, [`inventory/truenas/inventory.ini`](../../inventory/truenas/inventory.ini) sets `ansible_user=ansible` for `truenas-01`.
+- SSH access to the NAS using the inventory connection user. In this repository inventory, [`inventory/truenas/inventory.ini`](https://github.com/t3knoid/ansible/blob/main/inventory/truenas/inventory.ini) sets `ansible_user=ansible` for `truenas-01`.
 - The initial local administrator must already have been configured in the TrueNAS web UI. The role fails with a setup hint if it has not.
 
 Before the first run, enable SSH in the TrueNAS UI for the inventory connection user, confirm that user can become root, and install its Ansible public key if you want passwordless runs. The role executes its custom `truenas_api` module on the NAS; it uses the built-in `truenas_api_client` when available and otherwise calls `midclt`. It does not install packages on TrueNAS or use web UI credentials.
@@ -19,7 +19,7 @@ If the inventory connection user does not have key-based SSH configured yet, run
 
 ## 📝 Repository Workflow
 
-The repository deployment inventory is [`inventory/truenas/inventory.ini`](../../inventory/truenas/inventory.ini), and the main configuration playbook is [`playbooks/truenas/configure_truenas.yml`](../../playbooks/truenas/configure_truenas.yml). Apps and VM management are invoked separately with [`playbooks/truenas/deploy_truenas_apps.yml`](../../playbooks/truenas/deploy_truenas_apps.yml) and [`playbooks/truenas/deploy_truenas_vms.yml`](../../playbooks/truenas/deploy_truenas_vms.yml). Host variables belong under `inventory/truenas/host_vars/truenas-01/`; files elsewhere beside the inventory are not automatically loaded by Ansible.
+The repository deployment inventory is [`inventory/truenas/inventory.ini`](https://github.com/t3knoid/ansible/blob/main/inventory/truenas/inventory.ini), and the main configuration playbook is [`playbooks/truenas/configure_truenas.yml`](https://github.com/t3knoid/ansible/blob/main/playbooks/truenas/configure_truenas.yml). Apps and VM management are invoked separately with [`playbooks/truenas/deploy_truenas_apps.yml`](https://github.com/t3knoid/ansible/blob/main/playbooks/truenas/deploy_truenas_apps.yml) and [`playbooks/truenas/deploy_truenas_vms.yml`](https://github.com/t3knoid/ansible/blob/main/playbooks/truenas/deploy_truenas_vms.yml). Host variables belong under `inventory/truenas/host_vars/truenas-01/`; files elsewhere beside the inventory are not automatically loaded by Ansible.
 
 Contributors should add or edit the host variable files directly. Define only the sections you want the role to manage, keep secrets in an encrypted vault file, and keep environment-specific values out of role defaults.
 
@@ -85,7 +85,7 @@ The role is intentionally thin. If a field is accepted by the underlying API met
 
 ## ⚙️ Configuration Reference
 
-All role inputs are declared in [`defaults/main.yml`](../../roles/truenas/defaults/main.yml); unset lists and maps default to empty, so their stages are skipped. Treat that file as the canonical variable contract when adding or reviewing new settings.
+All role inputs are declared in [`defaults/main.yml`](https://github.com/t3knoid/ansible/blob/main/roles/truenas/defaults/main.yml); unset lists and maps default to empty, so their stages are skipped. Treat that file as the canonical variable contract when adding or reviewing new settings.
 
 | Variable                                          | Purpose and behavior                                                                                                                                                                                                       |
 | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -213,7 +213,7 @@ truenas_datasets:
 
 ### 📦 Apps
 
-Apps are not managed by `configure_truenas.yml`. Add declarations to `inventory/truenas/host_vars/truenas-01/default.yml` and run the isolated [`deploy_truenas_apps.yml`](../../playbooks/truenas/deploy_truenas_apps.yml) playbook. TrueNAS must already have an Apps storage pool configured. The role validates all declarations before connecting and reports the planned actions; credentials in app values should be kept in the host's encrypted Vault file.
+Apps are not managed by `configure_truenas.yml`. Add declarations to `inventory/truenas/host_vars/truenas-01/default.yml` and run the isolated [`deploy_truenas_apps.yml`](https://github.com/t3knoid/ansible/blob/main/playbooks/truenas/deploy_truenas_apps.yml) playbook. TrueNAS must already have an Apps storage pool configured. The role validates all declarations before connecting and reports the planned actions; credentials in app values should be kept in the host's encrypted Vault file.
 
 `truenas_apps_mode` defaults to `plan`. First review the plan, then explicitly set the mode to `apply` to make changes. Ansible check mode remains read-only, even when the mode is `apply`.
 
@@ -548,7 +548,7 @@ The custom module queries each object and compares only the keys provided in its
 
 ## 🔌 The `truenas_api` Module
 
-The role's custom [truenas_api.py](../../roles/truenas/library/truenas_api.py) module is the implementation layer behind every stage.
+The role's custom [truenas_api.py](https://github.com/t3knoid/ansible/blob/main/roles/truenas/library/truenas_api.py) module is the implementation layer behind every stage.
 
 - `mode: resource` manages objects found through `<namespace>.query` and then created, updated, or deleted.
 - `mode: config` manages singleton configuration namespaces with `<namespace>.config` and `<namespace>.update`.
@@ -573,7 +573,7 @@ Use the module directly only when extending the role or prototyping a new resour
 - Keep the role interface narrow. Add a dedicated top-level variable only when a middleware surface needs custom orchestration, validation, or ordering beyond a generic `truenas_resources` entry.
 - Prefer expressing new TrueNAS objects through `truenas_resources` before introducing new tasks. Promote a pattern into its own task file only after the generic form becomes noisy or needs special update semantics.
 - When adding a new field to a managed object, check whether TrueNAS treats it as create-only, sensitive, name-to-id, or mutually exclusive with another field. Those rules belong in the task or module arguments, not only in prose.
-- Keep update semantics aligned with the middleware API. If an update requires companion fields such as SMB `purpose` or mutually exclusive NFS mapping keys, document that behavior and encode it in [`library/truenas_api.py`](../../roles/truenas/library/truenas_api.py) or the calling task.
+- Keep update semantics aligned with the middleware API. If an update requires companion fields such as SMB `purpose` or mutually exclusive NFS mapping keys, document that behavior and encode it in [`library/truenas_api.py`](https://github.com/t3knoid/ansible/blob/main/roles/truenas/library/truenas_api.py) or the calling task.
 - Validate role changes with the repository inventory and a focused tag whenever possible, then rerun a syntax check for the full playbook.
 
 Consult the [TrueNAS 25.10 API](https://api.truenas.com/v25.10/) for accepted fields. The API can also be inspected on the NAS with `midclt call <namespace>.query`.

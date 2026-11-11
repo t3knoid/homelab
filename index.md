@@ -112,7 +112,7 @@ The platform is observable by design.
 * **[Prometheus](prometheus.md)** for metrics collection
 * **[Grafana](grafana.md)** for dashboards and visualization
 * **[Loki](loki.md)** complements Prometheus to aggregate logs
-* **[Prometheus Exporters](prometheus#-2-exporters.md)** deployed across compute, storage, and services
+* **[Prometheus Exporters](prometheus_exporters.md)** deployed across compute, storage, and services
 
 For detailed architecture, 
 👉 see **[Monitoring & Observability](monitoring_&_observability.md)**.

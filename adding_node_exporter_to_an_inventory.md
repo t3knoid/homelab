@@ -239,8 +239,8 @@ To add node exporter for a given inventory:
 
 1. Define `node_exporter_port: 9200` in the inventory's `group_vars/all/main.yml`
 2. Edit the inventory and add hosts or groups to `node_exporter`
-3. Deploy [playbooks/prometheus/deploy_node_exporter.yml](playbooks/prometheus/deploy_node_exporter.yml)
-4. Deploy [playbooks/prometheus/deploy_prometheus_exporters.yml](playbooks/prometheus/deploy_prometheus_exporters.yml)
+3. Deploy [playbooks/prometheus/deploy_node_exporter.yml](https://github.com/t3knoid/ansible/tree/main/playbooks/prometheus/deploy_node_exporter.yml)
+4. Deploy [playbooks/prometheus/deploy_prometheus_exporters.yml](https://github.com/t3knoid/ansible/tree/main/playbooks/prometheus/deploy_prometheus_exporters.yml)
 5. Verify the new host in Prometheus and Grafana
 
 The inventory is the source of truth for which hosts should be scraped by the Prometheus `node` job.

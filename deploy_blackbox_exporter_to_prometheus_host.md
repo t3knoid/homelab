@@ -50,7 +50,7 @@ ansible-playbook -i $INV -k playbooks/prometheus/deploy_blackbox_exporter.yml
 
 > ⚡ Note: The `-k` option prompts for SSH password if needed.
 
-This playbook installs the Blackbox Exporter service on the hosts in the `blackbox_exporter` group defined by the current inventory. The repo pattern is visible in [inventory/prometheus/inventory.ini](inventory/prometheus/inventory.ini) and the playbook is defined in [playbooks/prometheus/deploy_blackbox_exporter.yml](playbooks/prometheus/deploy_blackbox_exporter.yml).
+This playbook installs the Blackbox Exporter service on the hosts in the `blackbox_exporter` group defined by the current inventory. The repo pattern is visible in [inventory/prometheus/inventory.ini](https://github.com/t3knoid/ansible/tree/main/inventory/prometheus/inventory.ini) and the playbook is defined in [playbooks/prometheus/deploy_blackbox_exporter.yml](https://github.com/t3knoid/ansible/tree/main/playbooks/prometheus/deploy_blackbox_exporter.yml).
 
 ---
 

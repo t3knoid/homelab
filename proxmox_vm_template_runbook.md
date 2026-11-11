@@ -206,7 +206,7 @@ ubu22-template
 ```
 {% endraw %}
 
-Create a dedicated playbook alongside the [Ubuntu 24.04 example](../playbooks/template/create_ubuntu_24_04_server_template.yml), with this content:
+Create a dedicated playbook alongside the [Ubuntu 24.04 example](https://github.com/t3knoid/ansible/blob/main/playbooks/template/create_ubuntu_24_04_server_template.yml), with this content:
 
 {% raw %}
 ```yaml

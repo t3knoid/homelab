@@ -268,8 +268,8 @@ To add PostgreSQL exporter for a given inventory:
 1. Define `postgres_exporter_port: 9187` and the PostgreSQL exporter connection settings in the inventory's `group_vars/all/main.yml`
 2. Define `postgres_exporter_setup_db_password` in the inventory vault
 3. Edit the inventory and add hosts to `postgres_exporter`
-4. Deploy [playbooks/prometheus/deploy_postgres_exporter.yml](playbooks/prometheus/deploy_postgres_exporter.yml)
-5. Deploy [playbooks/prometheus/deploy_prometheus_exporters.yml](playbooks/prometheus/deploy_prometheus_exporters.yml)
+4. Deploy [playbooks/prometheus/deploy_postgres_exporter.yml](https://github.com/t3knoid/ansible/tree/main/playbooks/prometheus/deploy_postgres_exporter.yml)
+5. Deploy [playbooks/prometheus/deploy_prometheus_exporters.yml](https://github.com/t3knoid/ansible/tree/main/playbooks/prometheus/deploy_prometheus_exporters.yml)
 6. Verify the new host in Prometheus and Grafana
 
 The inventory is the source of truth for which hosts should be scraped by the Prometheus `postgres_exporter` job.

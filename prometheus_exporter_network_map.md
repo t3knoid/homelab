@@ -8,10 +8,10 @@ This document describes how Prometheus exporters are deployed in this repository
 
 It is a reference map, not a runbook. For adding new targets, see:
 
-- [`adding-node-exporter-to-an-inventory.md`](adding-node-exporter-to-an-inventory.md)
-- [`adding-nginx-exporter-to-an-inventory.md`](adding-nginx-exporter-to-an-inventory.md)
-- [`adding-postgres-exporter-to-an-inventory.md`](adding-postgres-exporter-to-an-inventory.md)
-- [`adding-blackbox-targets.md`](adding-blackbox-targets.md)
+- [Adding Node Exporter to an Inventory](adding_node_exporter_to_an_inventory.md) 
+- [Adding NGINX Exporter to an Inventory](adding_nginx_exporter_to_an_inventory.md)
+- [Adding Postgres Exporter to_an_Inventory](adding_postgres_exporter_to_an_inventory.md)
+- [Adding Blackbox Exporter Targets](adding_blackbox_exporter_targets.md)
 
 ---
 

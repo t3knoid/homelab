@@ -31,4 +31,4 @@ These services share the VM and NAS book storage, but have their own hostnames a
 
 Calibre-Web is deployed with `deploy_calibreweb.yml`. I found no Calibre-Web-specific scheduled backup or restore task configured in Semaphore.
 
-👉 See: [Deploy Calibre-Web Runbook](deploy_calibre-web_runbook.md) [Deploy Lazy Librarian Runbook](deploy_lazy_librarian_runbook.md)
+👉 See: [Deploy Calibre-Web Runbook](deploy_calibre-web_runbook.md), [Deploy LazyLibrarian Runbook](deploy_lazylibrarian_runbook.md)

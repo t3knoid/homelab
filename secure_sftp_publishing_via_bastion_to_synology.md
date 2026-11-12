@@ -12,36 +12,9 @@ Synology remains completely hidden from the internet and never placed in the DMZ
 
 ## 🌐 High‑Level Architecture
 
-{% raw %}
-```
-                     Internet
-                         |
-                 [ Cloudflare WAF ]
-                         |
-                 Firewall (WAN → DMZ)
-                         |
-                    VLAN 30 (DMZ)
-                         |
-                +-------------------+
-                |   Bastion Host    |
-                |  Exposes SFTP:22  |
-                |  No shell access  |
-                +-------------------+
-                         |
-                 SSH (LAN-only)
-                         |
-                    VLAN 10 (LAN)
-                         |
-             +------------------------+
-             |     Synology NAS       |
-             |  SSH/SFTP internal     |
-             |  Never internet-facing |
-             +------------------------+
-```
-{% endraw %}
+![High-level architecture](attachments/secure_sftp_publishing_via_bastion_to_synology/bastion-high-level-architecture.jpg)
 
-The bastion receives all external SFTP connections and immediately forwards them to Synology using a forced SSH command.  
-Users never interact with the bastion filesystem.
+The bastion receives all external SFTP connections and immediately forwards them to Synology using a forced SSH command. Users never interact with the bastion filesystem.
 
 ---
 
@@ -157,41 +130,9 @@ This ensures the bastion cannot pivot.
 
 ---
 
-## 🧩 Connection Flow (ASCII Diagram)
+## 🧩 Connection Flow
 
-{% raw %}
-```
-+-------------------------+
-|      SFTP Client        |
-|  (User on the Internet) |
-+-----------+-------------+
-            |
-            |  SFTP over SSH (port 22)
-            v
-+-------------------------+
-|   Firewall / Cloudflare |
-|   Allowlist Enforcement |
-+-----------+-------------+
-            |
-            v
-+-------------------------+
-|     Bastion Host        |
-|  VLAN 30 (DMZ Network)  |
-|  - No shell             |
-|  - Key-only auth        |
-|  - ForcedCommand → SSH  |
-+-----------+-------------+
-            |
-            |  SSH (internal only)
-            v
-+-------------------------+
-|      Synology NAS       |
-|   VLAN 10 (LAN Network) |
-|   - Never exposed       |
-|   - Restricted user     |
-+-------------------------+
-```
-{% endraw %}
+![Bastion connection flow diagram](attachments/secure_sftp_publishing_via_bastion_to_synology/bastion-connection-flow.png)
 
 ---
 
@@ -202,5 +143,4 @@ This ensures the bastion cannot pivot.
 - Bastion has **no useful filesystem** for attackers  
 - Users cannot escape the forced tunnel  
 - Firewall boundaries remain clean and auditable  
-- Cloudflare provides external filtering and rate limiting  
-
+- Cloudflare provides external filtering and rate limiting

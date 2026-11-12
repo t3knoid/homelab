@@ -36,37 +36,7 @@ DHCP and firewalling are handled by the Omada router.
 
 ### Logical Network Layout
 
-{% raw %}
-```text
-                          Internet
-                              |
-                              |
-                     +------------------+
-                     |   Omada Router   |
-                     |  Firewall + DHCP |
-                     +------------------+
-                              |           
-                              |          
-                 VLAN 10 (DMZ)|
-               192.168.10.0/24|
-                              |
-                              | 
-                      +----------------+ 
-                      |  NGINX Reverse |
-                      |     Proxy VM   |
-                      |  192.168.10.10 |
-                      +----------------+ 
-                              |
-          Explicitly allowed  | 
-          DMZ → LAN traffic   | 
-                              v 
-                      +----------------+
-                      |  Backend VM A  |
-                      | 192.168.20.211 |
-                      | HTTPS / 443    |
-                      +----------------+
-```
-{% endraw %}
+![Logical Network Layout Diagram](attachments/dmz_network_design_and_implementation/logical-network-layout.jpg)
 
 ### Traffic Policy Summary
 
@@ -145,21 +115,7 @@ vmbr0
 
 ### Proxmox Placement Diagram
 
-{% raw %}
-```text
-                Omada Switch (Trunk Port)
- VLAN50 (Physical Control Plane) | VLAN 10 (DMZ)
-                                 |
-                        +----------------+
-                        | Proxmox Host   |
-                        | vmbr0 (VLAN50) |
-                        +----------------+
-                          |            |
-                  VLAN 20 |            | VLAN 10
-                          |            |
-              Backend Service VMs   NGINX Proxy VM
-```
-{% endraw %}
+![Proxmox Placement Diagram](attachments/dmz_network_design_and_implementation/proxmox-placement-diagram.jpg)
 
 ---
 
@@ -284,4 +240,3 @@ No port forwarding to LAN networks is permitted.
 * VLAN tagging must be validated end-to-end
 * Avoid temporary “any/any” rules during testing
 * Document each DMZ → LAN rule with justification
-

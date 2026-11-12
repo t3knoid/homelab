@@ -137,15 +137,7 @@ For more details on OAuth2 Proxy Configuration file properties,
 
 ## 🔄 Authentication Flow
 
-### ASCII Diagram
-
-{% raw %}
-```
-User Browser → Nginx → oauth2-proxy → Microsoft Entra ID
-                    ↘ authenticated ↙
-                          Backend
-```
-{% endraw %}
+![Authentication Flow diagram](attachments/oauth2_proxy_integration_with_entra_id/oauth2-proxy-auth-flow.jpg)
 
 ### Step-by-Step Table
 

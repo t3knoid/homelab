@@ -119,26 +119,7 @@ docker-compose -f {{ sabnzbd_setup_config_dir }}/docker-compose.yml up -d
 
 ## **5. Architecture Diagram**
 
-{% raw %}
-```
-                 ┌──────────────────────────────┐
-                 │  Host / Docker Environment   │
-                 │                              │
-                 │ ┌──────────────────────────┐ │
-                 │ │ SABnzbd Container        │ │
-                 │ │ - Pinned Image           │ │
-                 │ │ - Config & Backup Volumes│ │
-                 │ │ - Exposed Port 8080      │ │
-                 │ └──────────────────────────┘ │
-                 │                              │
-                 └────────────────▲─────────────┘
-                                 │ Access
-                 ┌───────────────┴─────────────┐
-                 │ Users / Clients             │
-                 │ Web Browser / API           │
-                 └─────────────────────────────┘
-```
-{% endraw %}
+![](attachments/sabnzbd_deployment_-_role_overview/sabnzbd-architecture.png)
 
 * Config directory is mounted inside the container
 * Backups can reside on NFS for centralized storage

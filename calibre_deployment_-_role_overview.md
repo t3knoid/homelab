@@ -112,32 +112,7 @@ All of these steps are **automated in the Ansible role**.
 
 ## **5. Architecture Diagram**
 
-{% raw %}
-```
-                 ┌───────────────────────────────┐
-                 │   Host / Docker Environment   │
-                 │                               │
-                 │ ┌───────────────────────────┐ │
-                 │ │ Calibre Container         │ │
-                 │ │ - Pinned Image            │ │
-                 │ │ - Config & Library Volumes│ │
-                 │ │ - Exposed Port 8080       │ │
-                 │ └───────────────────────────┘ │
-                 │                               │
-                 └───────────────▲───────────────┘
-                                 │ Access
-                 ┌───────────────┴───────────────┐
-                 │ Users / Clients               │
-                 │ Web Browser / Calibre Apps    │
-                 └───────────────▲───────────────┘
-                                 │ Library Storage
-                 ┌───────────────┴──────────────┐
-                 │ External / Network Storage   │
-                 │ - /books                     │
-                 │ - /nfs/backups/calibre       │
-                 └──────────────────────────────┘
-```
-{% endraw %}
+![Calibre Architecture Diagram](attachments/calibre_deployment_-_role_overview/calibre-architecture.png)
 
 * Config directory and library volumes are mounted inside the container
 * Optional NFS storage allows centralized library and backup management

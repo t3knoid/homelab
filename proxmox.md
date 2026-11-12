@@ -12,9 +12,7 @@ title: "️ Proxmox Virtual Environment (PVE)"
 
 The lab runs a **three‑node Proxmox cluster**, providing redundancy and high availability:
 
-- **pve‑0** → [https://192.168.2.200:8006/](https://192.168.2.200:8006/)  
-- **pve‑1** → [https://192.168.2.201:8006/](https://192.168.2.201:8006/)  
-- **pve‑2** → [https://192.168.2.202:8006/](https://192.168.2.202:8006/)  
+![Proxmox three-node cluster diagram](attachments/proxmox/proxmox-cluster.png)
 
 The cluster can be managed from any of these URLs, with quorum maintained across all three nodes.  
 Installation follows the official [Proxmox instructions](https://www.proxmox.com/en/proxmox-virtual-environment/get-started).
@@ -49,18 +47,11 @@ The secondary drive is a [Western Digital Red SA500 NAS SSD](https://www.amazon.
 - Each Proxmox node contributes its secondary SSD as a Ceph OSD (Object Storage Daemon).  
 - Ceph monitors (MONs) run on all three nodes to maintain cluster state.  
 - A replicated Ceph pool is used for VM disks, ensuring redundancy (e.g., 3‑way replication).  
-- VM disks stored on Ceph can be live‑migrated between nodes without downtime.  
+- VM disks stored on Ceph can be live‑migrated between nodes without downtime.
 
-### Storage Flow (Text Diagram)
-{% raw %}
-```
-[ VM Disk ] → stored in → [ Ceph Pool ]
-                 ↑
-   replicated across → [ OSDs on pve-0, pve-1, pve-2 ]
-                 ↑
-   managed by → [ Ceph MONs on all nodes ]
-```
-{% endraw %}
+### Storage Flow
+
+![Proxmox Storage Flow diagram](attachments/proxmox/proxmox-storage-flow.jpg)
 
 This mirrors enterprise‑grade storage practices while remaining lightweight enough for homelab hardware.
 

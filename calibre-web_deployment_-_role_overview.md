@@ -102,26 +102,7 @@ The sequence for deploying Calibre-Web is:
 
 ## **5. Architecture Diagram**
 
-{% raw %}
-```
-           ┌───────────────────────────┐
-           │ Host / Docker Environment │
-           │                           │
-           │ ┌──────────────────────┐  │
-           │ │ Calibre-Web Container│  │
-           │ │ - Pinned Image       │  │
-           │ │ - Config & Backup    │  │
-           │ │ - Exposed Port 8083  │  │
-           │ └──────────────────────┘  │
-           │                           │
-           └─────────────▲─────────────┘
-                         │ Access
-           ┌─────────────┴─────────────┐
-           │ Users / Clients           │
-           │ Web Browser / API         │
-           └───────────────────────────┘
-```
-{% endraw %}
+![Calibre-web architecture diagram](attachments/calibre-web_deployment_-_role_overview/calibre-web-architecture.jpg)
 
 * Config directory is mounted as `/config`
 * Backup folder can optionally reside on NFS for centralized storage

@@ -12,43 +12,7 @@ This runbook provides **step-by-step instructions to diagnose and resolve web se
 
 ## 🗺️ End-to-End Traffic Flow
 
-{% raw %}
-```
-  EXTERNAL PATH                           INTERNAL PATH
-  [ Browser / Client ]                    [ Browser / Client ]
-          |                                       |
-          | HTTPS (443)                           | HTTPS (443)
-          v                                       v
-  [ Cloudflare ]                          [ Pi-hole DNS ]
-  WAF · DDoS · TLS Edge · CDN             192.168.20.253 (primary)
-  Anycast → Nearest PoP                           |
-          |                                       |
-          | Origin Pull (Proxied HTTPS)           | Resolved A record → rproxy-0
-          |                                       |
-          +———————————————————+———————————————————+
-                              |
-                              v
-                       [ rproxy-0 ]
-                 nginx · upstream block
-                 Static IP · entry proxy
-                              |
-                 ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
-                 (optional) OAuth2 Proxy
-                 Azure Entra ID — identity
-                 verification before upstream
-                 ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
-                              |
-                    ┌─────────┴─────────┐
-                    v                   v
-             [ rproxy-1 ]         [ rproxy-2 ]
-             App Reverse Proxy    App Reverse Proxy
-                    └─────────┬─────────┘
-                              |
-                              v
-                 [ Backend Service ]
-                 [ backend-01 :8080 ] 
-```
-{% endraw %}
+![End-to-end traffic flow](attachments/web_service_outage_troubleshooting_runbook/end-to-end-traffic-flow.jpg)
 
 ---
 

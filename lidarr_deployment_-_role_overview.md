@@ -119,33 +119,7 @@ docker-compose -f {{ lidarr_setup_config_dir }}/docker-compose.yml up -d
 
 ## **5. Architecture Diagram**
 
-{% raw %}
-```
-                 ┌──────────────────────────────┐
-                 │  Host / Docker Environment   │
-                 │                              │
-                 │ ┌──────────────────────────┐ │
-                 │ │ Lidarr Container         │ │
-                 │ │ - Pinned Image           │ │
-                 │ │ - Config & Backup Volumes│ │
-                 │ │ - Exposed Ports 8686/6868│ │
-                 │ └──────────────────────────┘ │
-                 │                              │
-                 └────────────────▲─────────────┘
-                                 │ Access
-                 ┌───────────────┴─────────────┐
-                 │ Users / Clients             │
-                 │ Web Browser / API           │
-                 └───────────────▲─────────────┘
-                                 │ Database Connection
-                 ┌───────────────┴─────────────┐
-                 │ External PostgreSQL Server  │
-                 │ - Database: lidarr-main     │
-                 │ - User: lidarr              │
-                 │ - Port: 5432                │
-                 └─────────────────────────────┘
-```
-{% endraw %}
+![Lidarr Architecture Diagram](attachments/lidarr_deployment_-_role_overview/lidarr-architecture.png)
 
 * Config directory is mounted inside the container
 * Backups can reside on NFS for centralized storage

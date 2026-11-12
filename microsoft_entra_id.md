@@ -75,7 +75,7 @@ Used by:
 
 ## Diagram: App Registration → Service Principal → RBAC
 
-THe following illustrates the relationship between the afformentioned core concepts of Microsoft Entra ID.
+The following illustrates the relationship between the afformentioned core concepts of Microsoft Entra ID.
 
 {% raw %}
 ```

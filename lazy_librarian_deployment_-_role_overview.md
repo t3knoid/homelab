@@ -118,26 +118,7 @@ docker-compose -f {{ lazylibrarian_setup_config_dir }}/docker-compose.yml up -d
 
 ## **5. Architecture Diagram**
 
-{% raw %}
-```
-                 ┌──────────────────────────────┐
-                 │  Host / Docker Environment   │
-                 │                              │
-                 │ ┌──────────────────────────┐ │
-                 │ │ Lazy Librarian Container │ │
-                 │ │ - Pinned Image           │ │
-                 │ │ - Config & Backup Volumes│ │
-                 │ │ - Exposed Port 5299      │ │
-                 │ └──────────────────────────┘ │
-                 │                              │
-                 └────────────────▲─────────────┘
-                                 │ Access
-                 ┌───────────────┴─────────────┐
-                 │ Users / Clients             │
-                 │ Web Browser / API           │
-                 └─────────────────────────────┘
-```
-{% endraw %}
+![](attachments/lazy_librarian_deployment_-_role_overview/lazylibrarian-architecture.png)
 
 * Config directory is mounted inside the container
 * Backups can reside on NFS for centralized storage

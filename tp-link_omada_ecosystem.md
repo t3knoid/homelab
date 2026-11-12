@@ -4,7 +4,7 @@ title: "TP-Link Omada Ecosystem"
 
 # TP-Link Omada Ecosystem
 
-The homelab network is built on the **TP-Link Omada SDN ecosystem** — a centrally managed stack that unifies routing, switching, wireless access, VLAN segmentation, VPN connectivity, and firewall policy enforcement under a single control plane.
+The homelab network is built on the **[TP-Link Omada SDN ecosystem](https://www.omadanetworks.com/us/solution/omada-sdn/)** — a centrally managed stack that unifies routing, switching, wireless access, VLAN segmentation, VPN connectivity, and firewall policy enforcement under a single control plane.
 
 Rather than configuring each device independently, Omada provides controller-based management that ensures consistency, scalability, and clean network architecture. VLANs, SSIDs, port profiles, VPN policies, and firewall rules are defined once and propagated across the environment.
 
@@ -14,15 +14,7 @@ Rather than configuring each device independently, Omada provides controller-bas
 
 At a high level, the network follows a structured three-layer model:
 
-Internet
-↓
-**ER605 Gateway**
-↓
-**TL-SG2428P Main Switch**
-↓
-Access Points + Infrastructure Switch
-↓
-Homelab & Client Devices
+![Core network topology diagram](attachments/tp-link_omada_ecosystem/omada-high-level.jpg)
 
 Each component has a clearly defined role within the ecosystem.
 

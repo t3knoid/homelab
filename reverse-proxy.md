@@ -8,48 +8,9 @@ The Reverse-Proxy serves as the public gateway into the homelab’s internal ser
 
 ---
 
-## 🗺️ Architecture Overview (ASCII Diagram)
+## 🗺️ Architecture Overview
 
-{% raw %}
-```
-                          ┌───────────────────────────┐
-                          │         Internet          │
-                          └──────────────┬────────────┘
-                                         │
-                                         ▼
-                          ┌───────────────────────────┐
-                          │     Cloudflare Proxy      │
-                          │ (DNS + WAF + TLS Edge)    │
-                          └──────────────┬────────────┘
-                                         │
-                                 Encrypted HTTPS
-                                         │
-                                         ▼
-                          ┌───────────────────────────┐
-                          │    Frontend Nginx Proxy   │
-                          │ (Internal TLS termination)│
-                          └──────────────┬────────────┘
-                                         │
-                                 Upstream "backend"
-                                         │
-                 ┌───────────────────────┴────────────────────────┐
-                 │                                                │
-                 ▼                                                ▼
-    ┌────────────────────────┐                     ┌────────────────────────┐
-    │     Backend Proxy 1    │                     │     Backend Proxy 2    │
-    │   (Primary / Active)   │                     │  (Passive / Failover)  │
-    └────────────┬───────────┘                     └────────────┬───────────┘
-                 │                                              │
-                 └──────────────┬───────────────────────────────┘
-                                │
-                                ▼
-                  ┌──────────────────────────┐
-                  │  Internal Web Services   │
-                  │ (No SSL – Trust Boundary)│
-                  └──────────────────────────┘
-
-```
-{% endraw %}
+![Rproxy architecture overview](attachments/reverse-proxy/rproxy-architecture-overview.jpg)
 
 ---
 

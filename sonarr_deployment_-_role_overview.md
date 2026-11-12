@@ -119,33 +119,7 @@ docker-compose -f {{ sonarr_setup_config_dir }}/docker-compose.yml up -d
 
 ## **5. Architecture Diagram**
 
-{% raw %}
-```
-                 ┌──────────────────────────────┐
-                 │  Host / Docker Environment   │
-                 │                              │
-                 │ ┌──────────────────────────┐ │
-                 │ │ Sonarr Container         │ │
-                 │ │ - Pinned Image           │ │
-                 │ │ - Config & Backup Volumes│ │
-                 │ │ - Exposed Ports 8989/9898│ │
-                 │ └──────────────────────────┘ │
-                 │                              │
-                 └────────────────▲─────────────┘
-                                 │ Access
-                 ┌───────────────┴─────────────┐
-                 │ Users / Clients             │
-                 │ Web Browser / API           │
-                 └───────────────▲─────────────┘
-                                 │ Database Connection
-                 ┌───────────────┴─────────────┐
-                 │ External PostgreSQL Server  │
-                 │ - Database: sonarr-main     │
-                 │ - User: sonarr              │
-                 │ - Port: 5432                │
-                 └─────────────────────────────┘
-```
-{% endraw %}
+![Sonarr Architecture Diagram](attachments/sonarr_deployment_-_role_overview/sonarr-architecture.jpg)
 
 * Config directory is mounted inside the container
 * Backups can reside on NFS for centralized storage

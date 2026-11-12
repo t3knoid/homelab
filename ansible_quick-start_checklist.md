@@ -108,9 +108,5 @@ This should get the following response when successful.
 ---
 
 ## Quick Reference Diagram
-{% raw %}
-```
-Workflow:
-Clone Repo → SSH → Activate Python → Pull Repo → Run Playbook → (Optional) Manage via Semaphore UI
-```
-{% endraw %}
+
+![Ansible Workflow Quick Ref](attachments/ansible_quick-start_checklist/ansible-workflow-quick-reference.png)

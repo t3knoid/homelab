@@ -109,33 +109,7 @@ The sequence for deploying Radarr is:
 
 ## **5. Architecture Diagram**
 
-{% raw %}
-```
-                 ┌──────────────────────────────┐
-                 │  Host / Docker Environment   │
-                 │                              │
-                 │ ┌──────────────────────────┐ │
-                 │ │ Radarr Container         │ │
-                 │ │ - Pinned Image           │ │
-                 │ │ - Config & Backup Volumes│ │
-                 │ │ - Exposed Ports 7878/8787│ │
-                 │ └──────────────────────────┘ │
-                 │                              │
-                 └────────────────▲─────────────┘
-                                 │ Access
-                 ┌───────────────┴─────────────┐
-                 │ Users / Clients             │
-                 │ Web Browser / API           │
-                 └───────────────▲─────────────┘
-                                 │ Database Connection
-                 ┌───────────────┴─────────────┐
-                 │ External PostgreSQL Server  │
-                 │ - Database: radarr-main     │
-                 │ - User: radarr              │
-                 │ - Port: 5432                │
-                 └─────────────────────────────┘
-```
-{% endraw %}
+![Radarr architecture diagram](attachments/radarr_deployment_-_role_overview/radarr-architecture.jpg)
 
 * Config directory is mounted inside the container
 * Backups can reside on NFS for centralized storage

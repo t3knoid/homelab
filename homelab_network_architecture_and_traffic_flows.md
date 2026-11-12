@@ -21,44 +21,9 @@ It serves as the authoritative reference for contributors, troubleshooting, and 
 
 # 📡 **1. Physical Network Topology**
 
-This ASCII diagram recreates the physical topology in the homelab network as defined in the [TP-Link Omada Ecosystem](tp-link_omada_ecosystem.md). It shows how the modem, router, switches, APs, cameras, and client/server devices are interconnected.
+This diagram recreates the physical topology in the homelab network as defined in the [TP-Link Omada Ecosystem](tp-link_omada_ecosystem.md). It shows how the modem, router, switches, APs, cameras, and client/server devices are interconnected.
 
-{% raw %}
-```text
-                                  ┌──────────────┐
-                                  │   INTERNET   │
-                                  └──────┬───────┘
-                                         │
-                                   ┌─────▼────┐
-                                   │   xDSL   │
-                                   │   Modem  │
-                                   └─────┬────┘
-                                         │
-                          ┌──────────────▼─────────────┐
-                          │        Router / Switch     │
-                          └────┬─────────┬─────────┬───┘
-                               │         │         │
-                               │         │         │
-                               ▼         ▼         ▼
-                         ┌────────┐ ┌────────┐ ┌────────┐
-                         │ Access │ │ Access │ │ Access │
-                         │ Switch │ │ Switch │ │ Switch │
-                         └──┬───┬─┘ └──┬───┬─┘ └──┬───┬─┘
-                            │   │      │   │      │   │
-                            ▼   ▼      ▼   ▼      ▼   ▼
-                          [3] [24]    [4] [21]   [11][10]
-                         C/S C/S     C/S C/S     AP  C/S
-                          │   │       │   │       │   │
-                          ▼   ▼       ▼   ▼       ▼   ▼
-                         C/S C/S     C/S C/S     C/S C/S
-```
-{% endraw %}
-
-### 🔍 Legend
-
-- **C/S** = Client/Server device  
-- **AP** = Access Point  
-- Numbers in brackets represent the number of devices connected at that node  
+![Network Topology](attachments/homelab_network_architecture_and_traffic_flows/jpeg.jpg)
 
 This diagram represents the *physical* wiring and switching hierarchy. The logical architecture below overlays VLANs, DMZ boundaries, and traffic flows on top of this structure.
 

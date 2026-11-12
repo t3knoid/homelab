@@ -89,7 +89,7 @@ https://github.com/truenas/apps/tree/master/ix-dev/<train>/<app>/
 
 `master` holds the latest version. If you pin an older `catalog.version`, check that the schema has not changed since.
 
-**Option B: The NAS itself** (SSH as an admin user; see the [midclt cheat sheet](midclt-cheats-sheet-for-truenas.md)):
+**Option B: The NAS itself** (SSH as an admin user; see the [Midclt Cheat Sheet](midclt_cheat_sheet.md) ):
 
 {% raw %}
 ```bash

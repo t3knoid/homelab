@@ -55,8 +55,7 @@ This architecture ensures reliability, simplicity, and clear data flow.
 
 ### 📦 **2. Exporters**
 
-Prometheus relies on exporters to expose metrics from services that do not natively support Prometheus format. The [Prometheus Exporters](prometheus_exporters.md) page details exporters used in this home lab.
-
+Prometheus relies on exporters to expose metrics from services that do not natively support Prometheus format. The **[Prometheus Exporters](prometheus_exporters.md)** page details exporters used in this home lab.
 
 ### 📐 **3. PromQL**
 Prometheus Query Language (PromQL) is used to build dashboards, alerts, and diagnostic queries.

@@ -68,6 +68,7 @@ The following is a list of Runbooks grouped by category.
 | **[Deploy PVE Exporter to Proxmox Nodes](deploy_pve_exporter_to_proxmox_nodes.md)** | Step-by-Step instructions on deploying PVE exporter to Proxmox inventories. |
 | **[Deploy Grafana Dashboards](deploy_grafana_dashboards.md)** | Use an Ansible playbook to update provisioned dashboard files on an existing Grafana installation. |
 | **[Deploying the Ceph Mgr Prometheus Module to Proxmox Nodes](deploying_the_ceph_mgr_prometheus_module_to_proxmox_nodes.md)** | Instructions on how to deploy Ceph Mgr Prometheus module to Proxmox nodes. |
+| **[Deploying the Pi-hole Exporter to DNS Nodes](deploying_the_pi-hole_exporter_to_dns_nodes.md)** | Instructions on how to deploy Pi-hole Exporter to DNS nodes. |
 
 ---
 

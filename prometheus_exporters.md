@@ -14,7 +14,7 @@ The following is a list of common exporters deployed in this homelab:
 - **synology_exporter** (Synology NAS)  
 - **truenas_exporter** (TrueNAS)  
 - **docker/cAdvisor exporters** (media stack containers)  
-- **pihole_exporter** (Pi‑hole DNS)  
+- **[pihole_exporter](pihole_exporter.md)** (Pi‑hole DNS)  
 - **snmp_exporter** (network gear)  
 - **[blackbox_exporter](blackbox_exporter.md)** (HTTP/ICMP/TCP checks)
 

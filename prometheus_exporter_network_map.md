@@ -17,36 +17,7 @@ It is a reference map, not a runbook. For adding new targets, see:
 
 ## 🧭 Network Map
 
-{% raw %}
-```text
-grafana-0  (Grafana)
-   │  datasource: http://prometheus-0:9090
-   v
-prometheus-0  (Prometheus :9090) ───> Alertmanager (prometheus-0)
-   │
-   ├── scrape 5s ───────> job: node ─ node_exporter :9200
-   │                        ansible-0, dns-0/1, rproxy-0/1/2, pg-0 … pg-4,
-   │                        plex-0, tautulli-0, minecraft-1, redmine-0,
-   │                        semaphore-0, vpn-0, sonarr-0, radarr-0,
-   │                        lidarr-0, sabnzbd-0, books-0
-   │
-   ├── scrape 5s ───────> job: node ─ pve-0/1/2  node_exporter :9100
-   │
-   ├── scrape 30s /pve ─> job: pve_exporter ─ pve-0/1/2 :9221
-   │                        └── reads ───> own node's PVE API (target=localhost)
-   │
-   ├── scrape 5s ───────> job: nginx_exporter ─ rproxy-0/1/2 :9113
-   │                        └── reads ───> local nginx 127.0.0.1:9114/stub_status
-   │
-   ├── scrape 5s ───────> job: postgres_exporter ─ pg-0 … pg-4 :9187
-   │                        └── queries ─> local PostgreSQL 127.0.0.1:5432
-   │
-   └── /probe?target=… ─> blackbox_exporter :9115 (runs on prometheus-0)
-                            └── HTTP probe ─> ombi, books, lab, lidarr, radarr,
-                                              sonarr, sabnzbd, semaphore,
-                                              demo.ecube.one, lazy, tautulli
-```
-{% endraw %}
+![Monitoring map](monitoring-map.png)
 
 ---
 

@@ -17,7 +17,7 @@ It is a reference map, not a runbook. For adding new targets, see:
 
 ## 🧭 Network Map
 
-![Monitoring map](monitoring-map.png)
+![Monitoring map](attachments/prometheus_exporter_network_map/monitoring-map.png)
 
 ---
 

@@ -67,6 +67,7 @@ The following is a list of Runbooks grouped by category.
 | **[Deploy PostgreSQL Exporter to the PostgreSQL Inventory](deploy_postgresql_exporter_to_the_postgresql_inventory.md)** | Step-by-Step instructions on deploying postgresql exporter to PostgreSQL inventories. |
 | **[Deploy PVE Exporter to Proxmox Nodes](deploy_pve_exporter_to_proxmox_nodes.md)** | Step-by-Step instructions on deploying PVE exporter to Proxmox inventories. |
 | **[Deploy Grafana Dashboards](deploy_grafana_dashboards.md)** | Use an Ansible playbook to update provisioned dashboard files on an existing Grafana installation. |
+| **[Deploying the Ceph Mgr Prometheus Module to Proxmox Nodes](deploying_the_ceph_mgr_prometheus_module_to_proxmox_nodes.md)** | Instructions on how to deploy Ceph Mgr Prometheus module to Proxmox nodes. |
 
 ---
 

@@ -10,6 +10,44 @@ From the Omada Web UI, navigate Settings > Security > ACL > Gateway ACL.
 
 ---
 
+## **Allow** HTTP/s from Frontend to Backend Proxy Servers
+
+Ingress traffic should only go through the frontend reverse proxy server. This rule allows traffic from the frontend to backend reverse proxy servers.
+
+**Create ACL: "Allow https from rproxy-0 to backend proxy servers"**
+
+| Field | Value |
+|-------|--------|
+| **Policy** | Allow |
+| **Source Type** | IP Group |
+| **Source IP Subnets** | 192.168.30.210/32 |
+| **Source IP Ports** | 443, 80 |
+| **Destination Type** | IP-Port Group |
+| **Destination IP Subnets** | 192.168.20.211/32, 192.168.20.212/32 |
+| **Destination Ports** | 443, 80 |
+| **Protocols** | TCP |
+| **Binding Type** | Network |
+ 
+---
+
+## **Allow** HTTP/s from Backend Proxy Servers to Infrastructure VLAN (20)
+
+Ingress traffic goes through rproxy-1 or rproxy-2 to the application hosts.
+
+**Create ACL: “Allow HTTP from Backend Proxy Servers to Infrastructure”**
+
+| Field | Value |
+|-------|--------|
+| **Policy** | Allow |
+| **Source Type** | IP-Port Group |
+| **Source IP Subnets** | 192.168.29.211/32, 192.168.20.212/32 |
+| **Source IP Ports** | 443, 80 |
+| **Destination** | VLAN 20 (Infrastructure) |
+| **Protocols** | TCP |
+| **Binding Type** | Network |
+
+This rule should appear **before** default deny rules.
+
 ## **Deny IoT VLAN (40) Access to Internal Networks**
 
 IoT devices are untrusted and should not reach Client, Infrastructure, or DMZ networks.

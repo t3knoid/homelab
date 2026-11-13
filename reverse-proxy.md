@@ -43,7 +43,7 @@ This public‑frontend layer now represents the **first hop** in the homelab’s
 
 ## 🖥️ Frontend Server Configuration
 
-The frontend server uses an Nginx upstream block to define the backend cluster. Traffic is routed to the first server listed unless it becomes unreachable, at which point Nginx automatically promotes the backup node.
+The frontend server uses an Nginx upstream block to define the backend cluster. It sits on an internet-facing VLAN (the DMZ) and only accepts traffic from Cloudflare. It terminates TLS, applies the path allowlist and rate limits, then forwards to the backend. Traffic is routed to the first server listed unless it becomes unreachable, at which point Nginx automatically promotes the backup node.
 
 {% raw %}
 ```nginx
@@ -83,7 +83,7 @@ server {
 
 ## ⚙️ Backend Server Configuration
 
-Backend servers are identical. They operate purely as reverse proxies to internal applications—no SSL, no domain logic, no routing complexity.
+Backend servers are identical. They operate purely as reverse proxies to internal applications—no SSL, no domain logic, no routing complexity. These servers sit on an internal VLAN and only accepts traffic from the frontend proxy. It never accepts traffic from the internet, from Cloudflare, or from any other host.
 
 {% raw %}
 ```nginx

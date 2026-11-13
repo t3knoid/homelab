@@ -6,7 +6,7 @@ title: "Securing a Public Homelab Service with Cloudflare and Nginx"
 
 This how-to article covers exposing a homelab web service to the internet without exposing all of it. Cloudflare's free plan protects the edge, and the frontend Nginx reverse proxy decides which paths the internet can reach.
 
-It applies to any service that needs a public page but keeps admin functions on the LAN. ROSIE, the homelab's self-hosted AI assistant, was the first service published this way ([LinkedIn post](https://lnkd.in/p/eRrjE5e3)).
+It applies to any service that needs a public page but keeps admin functions on the LAN. ROSIE, the homelab's self-hosted AI assistant, was the first service published this way (See [Building ROSIE](building_rosie.md)).
 
 Examples on this page use `app.refol.us` as the site name. Replace it, the paths and the limits with the service's own.
 
@@ -356,7 +356,6 @@ Most of the pieces in this how-to are deployed with [Ansible](ansible.md) in thi
 ### **Gaps**
 
 - **Per-site snippets aren't in the Ansible deployment yet.** The site definitions in the reverse proxy runbook have no option for extra include files, so the snippets in section 6 are hand edits that the next deployment overwrites. The `rproxy` role needs an option for per-site includes, and the runbook needs a section on using it.
-- **The frontend-to-backend ACL isn't documented.** [Gateway VLAN ACL Rules](gateway_vlan_acl_rules.md) doesn't list the rule that allows only the frontend proxy to reach the backend proxy. Add it there.
 
 ---
 

@@ -160,26 +160,7 @@ For all procedures,
 
 The homelab follows a layered dependency model consistent with platform engineering and SRE practices.
 
-{% raw %}
-```text
-+--------------------------------------------------+
-|                  Applications                    |
-|   Media services, test workloads, experiments    |
-+--------------------------------------------------+
-|           Platform Capabilities & Ops            |
-|   CI/CD, Automation, IaC, Runbooks               |
-+--------------------------------------------------+
-|              Core Platform Services              |
-|   Identity, Databases, Backup, Monitoring        |
-+--------------------------------------------------+
-|              Platform Foundation                 |
-|   Compute, Networking, Storage                   |
-+--------------------------------------------------+
-|               Physical Infrastructure            |
-|   Hosts, disks, network hardware                 |
-+--------------------------------------------------+
-```
-{% endraw %}
+![Platform Dependency Model diagram](attachments/index/dependency-model.png)
 
 Each layer depends only on the layer below it. Failures in lower layers propagate upward, informing monitoring priorities, recovery planning, and operational response.
 

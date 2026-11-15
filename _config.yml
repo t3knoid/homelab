@@ -31,3 +31,13 @@ defaults:
       path: "index.md"
     values:
       layout: "home"
+
+# Live status strip on the home page (_includes/home-live-status.html).
+# url: Grafana externally shared dashboard link. Leave empty to hide the strip.
+home_status:
+  title: "Homelab Status"
+  url: "https://grafana.refol.us/public-dashboards/703ed200b94a457b8ed0355c66d5739c"
+  theme: "light"
+  from: "now-6h"
+  height: 220
+  mobile_height: 420

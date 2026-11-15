@@ -1,0 +1,86 @@
+<!-- Home page overview: rendered by _layouts/home.html between the wiki intro and the wiki body.
+     Wording comes from the Redmine "Wiki" page; update chips here when services are added. -->
+{%- assign u = '/' | relative_url -%}
+<section class="hl-overview" aria-label="Platform overview">
+
+  <h2 class="hl-h">🧭 Platform at a Glance</h2>
+  <p class="hl-sub">Each layer depends only on the layer below it. Select any service to open its page.</p>
+
+  <div class="hl-stack">
+    <div class="hl-layer hl-work">
+      <div class="hl-lname">🧩 Application Workloads<small>User-facing services</small></div>
+      <div class="hl-groups">
+        <div class="hl-g"><b>🎬 Media Services</b>
+          <a href="{{ u }}plex.html">Plex</a><a href="{{ u }}tautulli.html">Tautulli</a><a href="{{ u }}radarr.html">Radarr</a><a href="{{ u }}sonarr.html">Sonarr</a><a href="{{ u }}lidarr.html">Lidarr</a><a href="{{ u }}sabnzbd.html">Sabnzbd</a><a href="{{ u }}ombi.html">Ombi</a></div>
+        <div class="hl-g"><b>📚 Library &amp; Content Management</b>
+          <a href="{{ u }}calibre.html">Calibre</a><a href="{{ u }}calibre-web.html">Calibre-Web</a><a href="{{ u }}lazylibrarian.html">LazyLibrarian</a></div>
+        <div class="hl-g"><b>🎮 Game Servers</b>
+          <a href="{{ u }}minecraft_server.html">Minecraft Server</a></div>
+        <div class="hl-g"><b>🤖 Home Automation</b>
+          <a href="{{ u }}home_assistant.html">Home Assistant</a></div>
+      </div>
+    </div>
+
+    <div class="hl-layer hl-ops">
+      <div class="hl-lname">⚙️ Platform Operations<small>Changes are automated, auditable, and repeatable</small></div>
+      <div class="hl-groups">
+        <div class="hl-g"><b>📈 Monitoring &amp; Observability</b>
+          <a href="{{ u }}prometheus.html">Prometheus</a><a href="{{ u }}grafana.html">Grafana</a><a href="{{ u }}loki.html">Loki</a><a href="{{ u }}prometheus_exporters.html">Prometheus Exporters</a></div>
+        <div class="hl-g"><b>⚙️ Automation &amp; Platform Operations</b>
+          <a href="{{ u }}ansible.html">Ansible</a><a href="{{ u }}semaphore.html">Semaphore</a><a href="{{ u }}terraform.html">Terraform</a><a href="{{ u }}jenkins.html">Jenkins</a><a href="{{ u }}github.html">GitHub Actions</a></div>
+        <div class="hl-g"><b>💻 Infrastructure-as-Code</b>
+          <a href="{{ u }}github.html">GitHub</a><a href="{{ u }}visual_studio_code.html">Visual Studio Code</a><a href="{{ u }}code_server.html">Code Server</a></div>
+        <div class="hl-g"><b>📚 Operational Runbooks</b>
+          <a href="{{ u }}runbooks.html">Runbooks</a></div>
+      </div>
+    </div>
+
+    <div class="hl-layer hl-id">
+      <div class="hl-lname">🔐 Identity &amp; Access Management<small>A first-class platform service</small></div>
+      <div class="hl-groups">
+        <div class="hl-g"><b>Directory</b>
+          <a href="{{ u }}domain_controller.html">Domain Controller</a><a href="{{ u }}ldap.html">LDAP</a></div>
+        <div class="hl-g"><b>Modern authentication</b>
+          <a href="{{ u }}oauth2_proxy.html">OAuth2 Proxy</a><a href="{{ u }}microsoft_entra_id.html">Microsoft Entra ID</a></div>
+      </div>
+    </div>
+
+    <div class="hl-layer hl-found">
+      <div class="hl-lname">🧱 Platform Foundation<small>The execution environment</small></div>
+      <div class="hl-groups">
+        <div class="hl-g"><b>🖥 Compute &amp; Virtualization</b>
+          <a href="{{ u }}proxmox.html">Proxmox</a><a href="{{ u }}cloud-init.html">cloud-init</a><a href="{{ u }}ansible.html">Ansible</a><a href="{{ u }}docker.html">Docker</a><a href="{{ u }}wsl2.html">WSL2</a></div>
+        <div class="hl-g"><b>🌐 Networking</b>
+          <a href="{{ u }}cloudflare.html">Cloudflare</a><a href="{{ u }}vlan_architecture_and_segmentation.html">VLANs</a><a href="{{ u }}reverse-proxy.html">reverse-proxy</a><a href="{{ u }}certbot.html">Certbot</a><a href="{{ u }}pi-hole_dns.html">Pi-hole DNS</a></div>
+        <div class="hl-g"><b>💾 Storage &amp; Data Protection</b>
+          <a href="{{ u }}ceph.html">Ceph</a><a href="{{ u }}iscsi.html">iSCSI</a><a href="{{ u }}synology_nas.html">Synology NAS</a><a href="{{ u }}nfs.html">NFS</a><a href="{{ u }}truenas.html">TrueNAS</a><a href="{{ u }}postgresql.html">PostgreSQL</a><a href="{{ u }}proxmox_backup_server.html">Proxmox Backup Server</a></div>
+      </div>
+    </div>
+  </div>
+  <p class="hl-cap">▲ Failures in lower layers propagate upward</p>
+
+  <h2 class="hl-h">🌐 How Traffic Reaches a Service</h2>
+  <p class="hl-sub">Networking is designed for availability, segmentation, and secure ingress.</p>
+  <div class="hl-flow">
+    <div class="hl-hop hl-edge"><span class="hl-k">Public edge</span>
+      <a class="hl-n" href="{{ u }}cloudflare.html">Cloudflare</a>
+      <span class="hl-p">DNS, reverse‑proxy protection, and secure IP‑obfuscated access</span></div>
+    <div class="hl-conn" aria-hidden="true"></div>
+    <div class="hl-hop hl-ing"><span class="hl-k">Ingress</span>
+      <a class="hl-n" href="{{ u }}reverse-proxy.html">Nginx reverse-proxy</a>
+      <span class="hl-p">Routing and TLS termination · certificates via <a href="{{ u }}certbot.html">Certbot</a></span></div>
+    <div class="hl-conn" aria-hidden="true"></div>
+    <div class="hl-hop hl-acc"><span class="hl-k">Access</span>
+      <a class="hl-n" href="{{ u }}oauth2_proxy.html">OAuth2 Proxy</a>
+      <span class="hl-p">Access via <a href="{{ u }}microsoft_entra_id.html">Microsoft Entra ID</a></span></div>
+    <div class="hl-conn" aria-hidden="true"></div>
+    <div class="hl-hop hl-wl"><span class="hl-k">Workloads</span>
+      <a class="hl-n" href="{{ u }}proxmox.html">Proxmox VE</a>
+      <span class="hl-p">VMs and <a href="{{ u }}docker.html">Docker</a> containers</span></div>
+  </div>
+  <div class="hl-side">
+    <a class="hl-mini" href="{{ u }}pi-hole_dns.html"><span class="hl-k">Internal DNS</span>Redundant Pi-hole DNS</a>
+    <a class="hl-mini" href="{{ u }}vlan_architecture_and_segmentation.html"><span class="hl-k">Segmentation</span>VLAN Architecture and Segmentation</a>
+    <a class="hl-mini" href="{{ u }}homelab_network_architecture_and_traffic_flows.html"><span class="hl-k">Deep dive</span>Homelab Network Architecture and Traffic Flows</a>
+  </div>
+</section>

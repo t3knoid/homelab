@@ -1,0 +1,130 @@
+---
+layout: default
+---
+{%- comment -%}
+  Home page layout (applied to index.md via _config.yml defaults).
+  The mirrored wiki page is split on its first horizontal rule (---):
+    1. wiki intro (title + opening paragraphs)
+    2. interactive overview (_includes/home-overview.html)
+    3. the rest of the wiki page, turned into collapsible sections by the script below
+  Without JavaScript the full wiki page still renders normally.
+{%- endcomment -%}
+{%- assign parts = content | split: '<hr />' -%}
+<style>
+  .hl-intro h1{margin-bottom:.4rem}
+  .hl-overview{margin:1.6rem 0 2.2rem}
+  .hl-h{margin:1.8rem 0 .2rem}
+  .hl-sub{color:#59636e;margin:0 0 1rem}
+  .hl-stack{display:flex;flex-direction:column;gap:10px}
+  .hl-layer{display:grid;grid-template-columns:200px 1fr;border:1px solid #d8dee4;border-left:7px solid var(--c);
+    border-radius:12px;background:var(--bg);transition:box-shadow .2s,transform .2s}
+  .hl-layer:hover{box-shadow:0 6px 18px rgba(0,0,0,.07);transform:translateY(-1px)}
+  .hl-lname{padding:14px 16px;font-weight:700;display:flex;flex-direction:column;justify-content:center;line-height:1.3}
+  .hl-lname small{font-weight:400;color:#59636e;font-size:.8rem;margin-top:4px}
+  .hl-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;padding:10px 10px 10px 0}
+  .hl-g{background:#fff;border:1px solid #d8dee4;border-radius:9px;padding:9px 11px;font-size:.88rem}
+  .hl-g b{display:block;margin-bottom:6px}
+  .hl-g a{display:inline-block;margin:0 5px 5px 0;padding:2px 9px;border-radius:999px;border:1px solid var(--c2);
+    background:var(--bg);color:#1f2328;text-decoration:none;font-size:.82rem;transition:background .15s,color .15s}
+  .hl-g a:hover{background:var(--c);border-color:var(--c);color:#fff}
+  .hl-work{--c:#0969da;--c2:#b6d4f5;--bg:#eef5fd}
+  .hl-ops{--c:#8250df;--c2:#d6c6f5;--bg:#f5f0fd}
+  .hl-id{--c:#bf8700;--c2:#ecd9a6;--bg:#fdf8ea}
+  .hl-found{--c:#1a7f5a;--c2:#b4dfcb;--bg:#edf8f2}
+  .hl-cap{text-align:center;color:#59636e;font-size:.85rem;margin:.5rem 0 0}
+
+  .hl-flow{display:flex;align-items:stretch}
+  .hl-hop{flex:1 1 0;border:1px solid #d8dee4;border-top:5px solid var(--c);border-radius:12px;padding:12px;
+    background:var(--bg);display:flex;flex-direction:column;gap:3px;min-width:0}
+  .hl-k{font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;color:#59636e;font-weight:700;display:block}
+  .hl-n{font-weight:700;font-size:1rem;color:#1f2328;text-decoration:none}
+  .hl-n:hover{text-decoration:underline}
+  .hl-p{font-size:.82rem;color:#424a53}
+  .hl-edge{--c:#f38020;--bg:#fff6ee}.hl-ing{--c:#1a7f5a;--bg:#edf8f2}.hl-acc{--c:#bf8700;--bg:#fdf8ea}.hl-wl{--c:#0969da;--bg:#eef5fd}
+  .hl-conn{flex:0 0 30px;position:relative}
+  .hl-conn::before{content:"";position:absolute;left:3px;right:8px;top:50%;height:2px;
+    background:repeating-linear-gradient(90deg,#0969da 0 6px,transparent 6px 12px);background-size:24px 2px;
+    animation:hl-dash 1s linear infinite}
+  .hl-conn::after{content:"";position:absolute;right:3px;top:calc(50% - 5px);border:5px solid transparent;border-left:7px solid #0969da;border-right:0}
+  @keyframes hl-dash{to{background-position:24px 0}}
+  @media (prefers-reduced-motion:reduce){.hl-conn::before{animation:none}.hl-layer{transition:none}}
+  .hl-side{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:10px}
+  .hl-mini{border:1px solid #d8dee4;border-radius:10px;padding:10px 12px;background:#f6f8fa;color:#1f2328;
+    text-decoration:none;font-weight:600;font-size:.9rem}
+  .hl-mini:hover{border-color:#0969da}
+
+  @media (max-width:760px){
+    .hl-layer{grid-template-columns:1fr}
+    .hl-groups{padding:0 10px 10px}
+    .hl-flow{flex-direction:column}
+    .hl-conn{flex-basis:26px}
+    .hl-conn::before{left:50%;right:auto;top:2px;bottom:8px;width:2px;height:auto;
+      background:repeating-linear-gradient(180deg,#0969da 0 6px,transparent 6px 12px);background-size:2px 24px}
+    .hl-conn::after{right:auto;left:calc(50% - 5px);top:auto;bottom:2px;border:5px solid transparent;border-top:7px solid #0969da;border-bottom:0}
+    @keyframes hl-dash{to{background-position:0 24px}}
+  }
+
+  /* Wiki body as collapsible sections (added by script) */
+  .hl-tools{display:flex;justify-content:space-between;align-items:baseline;margin:2rem 0 .6rem}
+  .hl-tools h2{margin:0}
+  .hl-tools button{border:1px solid #d8dee4;background:#fff;border-radius:8px;padding:5px 12px;cursor:pointer;font-size:.85rem}
+  .hl-sec{border:1px solid #d8dee4;border-radius:12px;margin:0 0 10px;background:#fff}
+  .hl-sec>summary{cursor:pointer;list-style:none;padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
+  .hl-sec>summary::-webkit-details-marker{display:none}
+  .hl-sec>summary h2{margin:0;font-size:1.2rem}
+  .hl-sec>summary::after{content:"＋";color:#59636e;font-weight:700}
+  .hl-sec[open]>summary::after{content:"－"}
+  .hl-sec>.hl-body{padding:0 16px 8px}
+  /* The wiki's static diagram images are replaced on the site by the interactive overview above */
+  .hl-details img[src*="platform-map"],.hl-details img[src*="traffic-flow"]{display:none}
+</style>
+
+<div class="hl-intro">{{ parts[0] }}</div>
+
+{% include home-overview.html %}
+
+<div class="hl-details" id="hl-details">
+{%- for part in parts offset:1 -%}
+  {{ part }}{% unless forloop.last %}<hr />{% endunless %}
+{%- endfor -%}
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById('hl-details');
+  if (!root || !root.querySelector('h2')) return;
+  // Group each <h2> with everything up to the next <h2> into a <details> card.
+  var nodes = Array.prototype.slice.call(root.childNodes), sections = [], cur = null;
+  nodes.forEach(function (n) {
+    if (n.nodeName === 'H2') {
+      cur = document.createElement('details'); cur.className = 'hl-sec';
+      var s = document.createElement('summary'), body = document.createElement('div');
+      body.className = 'hl-body'; s.appendChild(n); cur.appendChild(s); cur.appendChild(body);
+      sections.push(cur);
+    } else if (cur) {
+      if (n.nodeName === 'HR') { n.remove(); return; }
+      cur.lastChild.appendChild(n);
+    }
+  });
+  root.innerHTML = '';
+  var tools = document.createElement('div'); tools.className = 'hl-tools';
+  tools.innerHTML = '<h2>📖 Platform Details</h2><button type="button">Expand all</button>';
+  root.appendChild(tools);
+  sections.forEach(function (d, i) {
+    // Keep the goals and the summary open; collapse the detailed sections.
+    if (i === 0 || i === sections.length - 1) d.open = true;
+    root.appendChild(d);
+  });
+  var btn = tools.querySelector('button');
+  btn.addEventListener('click', function () {
+    var open = btn.textContent === 'Expand all';
+    sections.forEach(function (d) { d.open = open; });
+    btn.textContent = open ? 'Collapse all' : 'Expand all';
+  });
+  // Open a section if the URL points at something inside it.
+  if (location.hash) {
+    var t = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var d = t && t.closest('details'); if (d) { d.open = true; t.scrollIntoView(); }
+  }
+})();
+</script>

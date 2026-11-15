@@ -139,16 +139,6 @@ For all procedures,
 
 ---
 
-## 🧱 Platform Dependency Model
-
-The homelab follows a layered dependency model consistent with platform engineering and SRE practices.
-
-![Platform Dependency Model diagram](dependency-model.png)
-
-Each layer depends only on the layer below it. Failures in lower layers propagate upward, informing monitoring priorities, recovery planning, and operational response.
-
----
-
 ## 📘 Platform Governance & Documentation
 
 * **[Redmine](redmine.md)** serves as the system of record for issues and documentation

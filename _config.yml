@@ -41,3 +41,4 @@ home_status:
   from: "now-6h"
   height: 350
   mobile_height: 420
+  wide_width: 1180

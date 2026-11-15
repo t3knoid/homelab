@@ -4,7 +4,9 @@ title: "Reverse-Proxy"
 
 # 🌐 Reverse-Proxy
 
-The Reverse-Proxy serves as the public gateway into the homelab’s internal services. It abstracts internal topology, centralizes TLS termination, enforces security policies, and improves performance through caching and request routing. The Reverse-Proxy is configured as a cluster of Nginx servers composed of a **frontend Nginx server** and two redundant **backend proxy nodes**, forming a resilient and maintainable ingress layer.
+The Reverse-Proxy is the single public entry point into the homelab. It is a small Nginx cluster with one **frontend server** in the DMZ and two identical **backend proxy nodes** on an internal VLAN. The frontend handles everything that faces the client: TLS, routing, rate limits, and authentication. The backends only forward requests to application servers.
+
+This page covers the ingress topology, the role of each tier, and how failover works. For how sign-in is enforced on top of this cluster, see [Reverse-Proxy with OAuth2 Integration](reverse-proxy_with_oauth2_integration.md).
 
 ---
 
@@ -12,38 +14,37 @@ The Reverse-Proxy serves as the public gateway into the homelab’s internal ser
 
 ![Rproxy architecture overview](attachments/reverse-proxy/rproxy-architecture-overview.jpg)
 
----
+Traffic passes through three hops before reaching an application:
 
-## 🌐 Public Frontend & IP Obfuscation Layer
-
-To prevent the homelab’s residential WAN IP from ever being exposed publicly, all external traffic is routed through Cloudflare’s reverse‑proxy network. Cloudflare becomes the public edge of the homelab, providing TLS termination, DDoS protection, and complete IP obfuscation before requests reach the frontend Nginx server.
-
-Cloudflare’s orange‑cloud proxy mode ensures that DNS records for public services resolve to Cloudflare Anycast IPs rather than the homelab’s WAN address. The true origin IP is never visible to clients, scanners, or crawlers.
-
-**Benefits:**
-
-- Works for any protocol (not just HTTP/HTTPS)  
-- Fully isolates the homelab from direct exposure  
-- Integrates cleanly with the existing frontend Nginx server  
+| Hop | Component | Network | Responsibility |
+| --- | --- | --- | --- |
+| 1 | Cloudflare | Internet | Hides the WAN IP, absorbs DDoS, first TLS hop |
+| 2 | Frontend Nginx | DMZ | TLS termination, path allowlist, rate limits, auth, routing |
+| 3 | Backend Nginx (rproxy-1 / rproxy-2) | Internal VLAN | Plain forwarding to application servers |
 
 ---
 
-### **Why This Layer Exists**
+## ☁️ Cloudflare Edge
 
-- Prevents WAN IP leakage through DNS, logs, or direct scans  
-- Adds a cloud‑grade buffer between the internet and the homelab  
-- Enables future expansion (multi‑region ingress, geo‑routing, etc.)  
-- Mirrors real‑world DMZ and edge‑proxy patterns  
+Public DNS records use Cloudflare's orange-cloud proxy mode, so they resolve to Cloudflare Anycast IPs instead of the homelab's residential WAN address. Clients, scanners, and crawlers never see the origin IP.
 
-This public‑frontend layer now represents the **first hop** in the homelab’s ingress architecture, with the Reverse‑Proxy cluster continuing to serve as the internal routing and authentication gateway.
+This layer:
+
+- Prevents WAN IP leakage through DNS, logs, or direct scans
+- Puts DDoS protection and a first TLS hop in front of the homelab
+- Leaves room for later additions such as geo-routing or multi-region ingress
+
+Orange-cloud proxying covers HTTP and HTTPS. Other protocols are not proxied and would expose the origin IP if published the same way.
 
 👉 See Cloudflare's **[Proxy Status](https://developers.cloudflare.com/dns/proxy-status/)** documentation.
 
 ---
 
-## 🖥️ Frontend Server Configuration
+## 🖥️ Frontend Server
 
-The frontend server uses an Nginx upstream block to define the backend cluster. It sits on an internet-facing VLAN (the DMZ) and only accepts traffic from Cloudflare. It terminates TLS, applies the path allowlist and rate limits, then forwards to the backend. Traffic is routed to the first server listed unless it becomes unreachable, at which point Nginx automatically promotes the backup node.
+The frontend sits on the DMZ VLAN and accepts traffic only from Cloudflare. Every public hostname has a virtual host here, and every certificate lives here.
+
+The backend cluster is defined once as an upstream block:
 
 {% raw %}
 ```nginx
@@ -58,7 +59,7 @@ http {
 ```
 {% endraw %}
 
-Example virtual host configuration (TLS termination happens here):
+A basic (unauthenticated) virtual host terminates TLS and hands the request to that upstream:
 
 {% raw %}
 ```nginx
@@ -81,9 +82,9 @@ server {
 
 ---
 
-## ⚙️ Backend Server Configuration
+## ⚙️ Backend Servers
 
-Backend servers are identical. They operate purely as reverse proxies to internal applications—no SSL, no domain logic, no routing complexity. These servers sit on an internal VLAN and only accepts traffic from the frontend proxy. It never accepts traffic from the internet, from Cloudflare, or from any other host.
+The two backend nodes are configured identically. They carry no certificates, no domain logic, and no authentication. They sit on an internal VLAN and accept traffic only from the frontend, never from the internet or Cloudflare directly.
 
 {% raw %}
 ```nginx
@@ -93,132 +94,37 @@ location / {
 ```
 {% endraw %}
 
-This consistency allows either backend node to assume full responsibility during failover.
+Because both nodes are identical, either one can carry the full load during a failover.
 
 ---
 
-## 💠 High Availability Strategy (HA)
+## 💠 High Availability
 
-The reverse-proxy cluster implements an **active–passive HA model**:
+The backend tier runs **active–passive**, driven entirely by the frontend's upstream block.
 
-### **Active Node**
+- **Normal operation:** rproxy-1 receives all traffic. rproxy-2 stays running and idle.
+- **Failure detection:** if rproxy-1 fails 3 times within 5 seconds (`max_fails=3`, `fail_timeout=5s`), Nginx marks it unavailable and sends traffic to rproxy-2.
+- **Recovery:** after `fail_timeout` expires, Nginx tries rproxy-1 again and returns traffic to it once it responds.
+- **Maintenance:** stopping rproxy-1 drains traffic to rproxy-2, so a node can be patched with minimal disruption.
 
-* Receives all traffic under normal conditions
-* Performs forwarding to internal services
+Because the frontend makes the failover decision, there is no shared virtual IP, Keepalived, VRRP, or external load balancer to run.
 
-### **Passive Node**
-
-* Stays warm and ready
-* Automatically activated via Nginx upstream health checks
-
-### **Failure Detection**
-
-Nginx monitors each backend with:
-
-* `max_fails=3`
-* `fail_timeout=5s`
-
-If the primary fails to respond or exceeds failure thresholds, traffic is immediately shifted to the backup.
-
-### **Recovery**
-
-Once the primary node becomes healthy again, Nginx gradually resumes routing traffic back without downtime or manual intervention.
-
-### **Benefits**
-
-* Zero external change during backend node failure
-* No need for shared IP or VRRP due to frontend-based decision-making
-* Upgrades can be performed with minimal disruption by draining traffic to the backup
+The frontend itself is a single node. Redundancy currently applies to the backend tier only.
 
 ---
 
 ## 🎯 Why This Design?
 
-This architecture was selected for the homelab due to its strong balance of **simplicity**, **resilience**, and **maintainability**:
-
-### **1. Clear Separation of Responsibilities**
-
-* Frontend handles TLS, routing, caching, and public ingress
-* Backends focus solely on efficient proxy operations
-* Internal services remain clean and configuration-light
-
-### **2. Built-In Redundancy Without Extra Complexity**
-
-No need for:
-
-* Keepalived
-* VRRP
-* Consul
-* External load balancers
-
-The upstream block alone provides transparent failover.
-
-### **3. Reduced Attack Surface**
-
-Only the frontend server is publicly exposed, minimizing exposure of:
-
-* Internal IPs
-* Backend ports
-* Application servers
-
-### **4. Simplified Certificate and Domain Management**
-
-All SSL certificates are managed in one place—easier renewals, updates, and automation.
-
-### **5. Scalable and Homelab-Friendly**
-
-New backend nodes can be added or removed without major architectural changes.
-Ideal for a homelab where services evolve frequently.
-
-### **6. Cloud-Service-Like Architecture**
-
-The design mirrors industry-standard ingress layers used in:
-
-* Kubernetes clusters
-* Cloud load balancers (AWS ALB, GCP HTTPS LB)
-* Enterprise DMZ architectures
-
-This makes it both educational and practical.
-
-## 🔐 Authentication & OAuth2 Integration
-
-The reverse‑proxy cluster also serves as the enforcement point for user authentication. To protect internal applications, the frontend Nginx server integrates with **[OAuth2 Proxy](oauth2_proxy.md)**, which authenticates users against **Microsoft Entra ID** and injects identity headers into upstream requests.
-
-This authentication layer is documented in two dedicated pages:
-
-### **Reverse‑Proxy with OAuth2 Integration**
-
-Explains how the frontend Nginx server uses OAuth2 Proxy to enforce authentication:
-
-- `auth_request` flow  
-- How Nginx delegates authentication  
-- How identity headers are passed to backend services  
-- Request flow diagrams  
-- How protected vs unprotected routes are handled  
-
-👉 *See: [Reverse-Proxy with OAuth2 Integration](reverse-proxy_with_oauth2_integration.md)*
+- **One place for TLS and certificates.** All certificates are issued and renewed on the frontend, which keeps automation simple.
+- **Small attack surface.** Only the frontend is reachable from outside. Backend IPs, ports, and application servers stay on internal VLANs.
+- **Redundancy without extra moving parts.** One upstream block provides failover without a clustering stack.
+- **Easy to grow.** Backend nodes can be added or removed without changing the frontend's virtual hosts.
+- **Familiar pattern.** The layout mirrors Kubernetes ingress controllers, cloud load balancers (AWS ALB, GCP HTTPS LB), and enterprise DMZ designs.
 
 ---
 
-### **OAuth2 Proxy: Authentication & Identity Layer**
+## 🔐 Authentication
 
-A deep dive into the OAuth2 Proxy service, including:
+The frontend is also where user sign-in is enforced. Protected sites check each request against OAuth2 Proxy and Microsoft Entra ID before it is forwarded to the backends. Backends need no changes to support this.
 
-- Entra ID application registration  
-- Token validation  
-- Identity headers  
-- `/oauth2/auth` and `/oauth2/callback` endpoints  
-- Per‑domain configuration  
-
-👉 *See: [OAuth2 Proxy Integration with Entra ID](oauth2_proxy_integration_with_entra_id.md)*
-
----
-
-### **How These Components Work Together**  
-- Nginx receives the request  
-- Nginx calls OAuth2 Proxy’s `/oauth2/auth` endpoint  
-- OAuth2 Proxy validates the session or redirects to Entra ID  
-- On success, OAuth2 Proxy injects identity headers  
-- Nginx forwards the authenticated request to backend services  
-
-This layered design keeps authentication centralized, consistent, and easy to maintain.
+👉 See: [Reverse-Proxy with OAuth2 Integration](reverse-proxy_with_oauth2_integration.md)

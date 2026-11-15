@@ -4,36 +4,63 @@ title: "️ Reverse-Proxy with OAuth2 Integration"
 
 # 🛡️ Reverse-Proxy with OAuth2 Integration
 
-The reverse-proxy forms the front line of the homelab’s application delivery architecture. It abstracts internal services, offloads TLS/SSL operations, provides intelligent load distribution, and now enforces **centralized authentication via [OAuth2 Proxy with Microsoft Entra ID](oauth2_proxy_integration_with_entra_id.md)** for services that require identity-aware access. The following details how the Nginx reverse-proxy cluster is extended to use an OAuth2 proxy to provide single-sign on to web services.
+This page explains how single sign-on is added to the [Reverse-Proxy](reverse-proxy.md) cluster: where OAuth2 Proxy runs, how a site is switched from public to protected, and what changes (and what doesn't) for the backends. It assumes the frontend/backend layout and failover described on the Reverse-Proxy page.
 
-A primary frontend node terminates HTTPS traffic, performs OAuth2 authentication checks when needed, and routes requests to one of two backend Nginx servers. Backend nodes provide redundancy, delivering highly available and fault-tolerant service delivery.
+For the OAuth2 Proxy configuration file, the Entra ID sign-in sequence, and the full list of identity headers, see [OAuth2 Proxy Integration with Entra ID](oauth2_proxy_integration_with_entra_id.md).
 
 ---
 
-## 🏗️ Frontend Server Configuration (with OAuth2 Support)
+## 📍 Where Authentication Lives
 
-The primary frontend Nginx server defines an *upstream pool* of backend proxy nodes:
+Authentication is handled entirely on the **frontend server**:
+
+- Each protected domain has its own OAuth2 Proxy instance running on the frontend, bound to a loopback port (for example `127.0.0.1:4180`). It is never reachable from the network.
+- Nginx asks that instance whether a request is allowed before proxying it.
+- OAuth2 Proxy talks to **Microsoft Entra ID** for sign-in and token validation.
+
+The backend nodes run no authentication software and hold no secrets. A request reaching them has already been checked.
+
+---
+
+## 🔀 Protected vs. Public Sites
+
+Both kinds of site share the same frontend, upstream pool, and backends. The only difference is in the frontend virtual host.
 
 {% raw %}
-```nginx
-http {
-# BEGIN ANSIBLE MANAGED BLOCK
-upstream backend {
-  server rproxy-1:80 max_fails=3 fail_timeout=5s;
-  server rproxy-2:80 backup;
-}
-# END ANSIBLE MANAGED BLOCK
-}
+```
+                        Frontend Nginx (DMZ)
+                                │
+              ┌─────────────────┴─────────────────┐
+        Protected site                       Public site
+              │                                   │
+     auth_request /oauth2/auth                    │
+              ▼                                   │
+  OAuth2 Proxy (127.0.0.1:port) ◀──▶ Entra ID      │
+              │                                   │
+     202 → continue                               │
+     401 → /oauth2/sign_in                        │
+              │                                   │
+              └─────────────────┬─────────────────┘
+                                ▼
+                upstream backend (rproxy-1 / rproxy-2)
+                                ▼
+                         Application server
 ```
 {% endraw %}
 
-Each HTTPS vhost then proxies authenticated traffic into the backend pool.
-If the site uses OAuth2, its configuration includes an authentication gate:
+A public site is a plain virtual host, as shown on the [Reverse-Proxy](reverse-proxy.md) page. A protected site adds an authentication gate.
+
+---
+
+## 🧱 Adding the Authentication Gate
+
+To protect a site, two things are added to its frontend virtual host:
 
 {% raw %}
 ```nginx
+# 1. Internal endpoint Nginx calls to check the session
 location = /oauth2/auth {
-    proxy_pass http://127.0.0.1:4180; 
+    proxy_pass http://127.0.0.1:4180;
     proxy_set_header Host $http_host;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -42,6 +69,7 @@ location = /oauth2/auth {
     proxy_set_header Content-Length "";
 }
 
+# 2. Gate on the application route
 location / {
     auth_request /oauth2/auth;
     error_page 401 = /oauth2/sign_in;
@@ -51,180 +79,54 @@ location / {
 ```
 {% endraw %}
 
-The OAuth2 Proxy service running locally on the frontend authenticates the user via **Microsoft Entra ID** before backend servers ever see the request.
+- `auth_request` sends a lightweight subrequest (headers only, no body) to OAuth2 Proxy for every incoming request.
+- A `202` response lets the request continue to `http://backend`.
+- A `401` response sends the user to `/oauth2/sign_in`, which starts the Entra ID login.
+- `proxy_pass http://backend` is unchanged from a public site, so failover between rproxy-1 and rproxy-2 works the same way.
+
+A complete production virtual host for `code.refol.us` is on [OAuth2 Proxy Integration with Entra ID](oauth2_proxy_integration_with_entra_id.md).
 
 ---
 
-## 🗄️ Backend Server Configuration
+## 📨 What the Backends Receive
 
-Backend Nginx servers are intentionally simple.
-They act only as reverse proxies to the internal application servers and do **not** terminate SSL or run OAuth2 logic:
+After a successful check, the frontend forwards the request with identity headers such as `X-Auth-Request-User`, `X-Auth-Request-Email`, and `Authorization: Bearer <token>`.
 
-{% raw %}
-```nginx
-location / {
-    proxy_pass http://192.168.2.186:80;
-}
-```
-{% endraw %}
-
-Frontend nodes perform all heavy lifting — SSL, authentication, routing — while backend nodes focus purely on forwarding.
+Backend nodes pass these through untouched. Applications that understand them can use the signed-in identity, and applications that don't can ignore them. Neither the backend proxies nor the applications need to implement OAuth2 or OIDC.
 
 ---
 
-## 🔄 Full Request Flow (OAuth2 + Reverse Proxy)
+## 🔁 Sessions and Scaling
 
-### ASCII Architecture Diagram
+OAuth2 Proxy keeps sessions in **encrypted browser cookies**, not in a server-side store. As a result:
 
-{% raw %}
-```
-                           ┌──────────────────────────────┐
-                           │        Internet Client       │
-                           └───────────────┬──────────────┘
-                                           │ HTTPS
-                                           ▼
-                        ┌──────────────────────────────────────┐
-                        │    Frontend Nginx Reverse Proxy      │
-                        │ (SSL termination + OAuth2 enforcement│
-                        │       + routing to backend)          │
-                        └──────────────────────────┬───────────┘
-                 OAuth2 Sites Only                 │ 
-                         │                         │
-                         ▼                         │
-                ┌────────────────────────────┐     │
-                │         OAuth2 Proxy       │     │  
-                │ (Microsoft Entra ID OIDC)  │     │ Normal Sites
-                └───────────────┬────────────┘     │
-                                │ Token Issuance   │
-                                ▼                  │
-                     ┌────────────────────────┐    │
-                     │   Microsoft Entra ID   │    │
-                     └────────────────────────┘    │
-                         │                         ▼
-                         ▼  Authenticated, Header-Injected Traffic
-       ┌────────────────────────────────────────────────────────────────┐
-       │                 Backend Reverse-Proxy Pool (HA)                │
-       │   upstream backend { rproxy-1; rproxy-2 backup; }              │
-       └───────┬────────────────────────────────────────────────────────┘
-               │
-     ┌─────────┴───────────┐
-     │                     │
-┌────────────┐      ┌───────────┐
-│ rproxy-1   │      │ rproxy-2  │ (Backup)
-└─────┬──────┘      └─────┬─────┘
-      │                   │
-      ▼                   ▼
-┌───────────────┐    ┌──────────────┐
-│ App Server(s) │    │ App Server(s)│
-└───────────────┘    └──────────────┘
-```
-{% endraw %}
+- No shared database or cache is needed for sessions.
+- A second frontend could be added later and validate the same cookies, provided it uses the same cookie secret.
+- Entra ID remains the single source of truth for identity.
 
 ---
 
-## ❓ Why This Design
+## 🤖 Automation
 
-This architecture is intentionally layered to balance security, reliability, and maintainability.
+OAuth2 Proxy instances and gate configuration are generated per domain from templates, so the process is idempotent:
 
-### **1. Clear Separation of Responsibilities**
-
-* **[Frontend Nginx](reverse-proxy#%ef%b8%8f-frontend-server-configuration.md)**
-
-  * Terminates SSL
-  * Performs OAuth2 authentication
-  * Controls routing
-
-* **[OAuth2 Proxy Integration with Entra ID](oauth2_proxy_integration_with_entra_id.md)**
-
-  * Handles identity logic
-  * Integrates with Microsoft Entra ID
-  * Injects identity headers
-* **[Backend Nginx](reverse-proxy#%ef%b8%8f-backend-server-configuration.md)**
-
-  * Only performs simple reverse proxy duties
-
-This avoids complexity on backend nodes and makes identity management uniform.
+- **Protect a domain:** an OAuth2 Proxy service and gated virtual host are created.
+- **Remove protection:** the service and configuration are removed.
+- **Backends:** never touched in either case.
 
 ---
 
-### **2. Centralized Authentication**
+## ❓ Why Authenticate at the Frontend?
 
-Only the frontend server runs OAuth2 Proxy instances, ensuring:
-
-* No duplication of identity configuration
-* Unified logging
-* Consistent session handling
-* Predictable behavior across all OAuth2-protected services
+- **One identity configuration.** Client IDs, secrets, and redirect URLs exist only on the frontend, not on every app or backend node.
+- **Consistent behavior.** Every protected site uses the same login flow, session lifetime, and MFA policy from Entra ID.
+- **Unified logging.** All sign-in and authorization decisions are recorded in one place.
+- **Unauthenticated requests stop early.** They are rejected at the DMZ before reaching the internal VLAN.
 
 ---
 
-### **3. Minimal Exposure of Internal Network**
+## 🔗 Related Pages
 
-Frontend handles all public traffic, so backend servers:
-
-* Need not expose SSL or OAuth2
-* Are unreachable from the public internet
-* Can run lighter configurations with fewer security concerns
-
----
-
-### **4. Simplified Automation**
-
-With configuration templates and per-domain OAuth2 Proxy services, the system is fully idempotent:
-
-* Add a domain → Service and config generated
-* Remove a domain → Service and config removed
-* Backend nodes remain unchanged
-
----
-
-## 🟩 High Availability (HA) Characteristics
-
-The architecture supports HA using lightweight but effective mechanisms:
-
-### **Backend Redundancy**
-
-The upstream block:
-
-{% raw %}
-```
-upstream backend {
-  server rproxy-1:80 max_fails=3 fail_timeout=5s;
-  server rproxy-2:80 backup;
-}
-```
-{% endraw %}
-
-achieves:
-
-* **Automatic failover**
-  If rproxy-1 fails 3 times in 5 seconds, traffic moves to rproxy-2
-* **Active/Backup mode** (most efficient for small homelabs)
-
----
-
-### **Stateless OAuth2 Authentication**
-
-Because OAuth2 Proxy uses **cookie-based sessions**, the frontend can be scaled:
-
-* Multiple frontends can be added later
-* No shared DB or cache is required
-* Entra ID acts as the authoritative identity backend
-
----
-
-### **Frontend as the Control Plane**
-
-The frontend is the *authoritative router* and *authentication gatekeeper*.
-
-Backend nodes never need to know:
-
-* Who the user is
-* Whether they're authenticated
-* Whether they’re allowed
-
-The frontend injects all required headers:
-
-* `X-Auth-Request-User`
-* `X-Auth-Request-Email`
-* `Authorization: Bearer <token>`
+- [Reverse-Proxy](reverse-proxy.md): cluster topology, Cloudflare edge, and failover
+- [OAuth2 Proxy](oauth2_proxy.md): service overview
+- [OAuth2 Proxy Integration with Entra ID](oauth2_proxy_integration_with_entra_id.md): config file, sign-in sequence, header reference

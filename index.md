@@ -8,6 +8,8 @@ This home lab is a **self-hosted internal platform** designed to model productio
 
 The platform emphasizes **reproducibility, automation, observability, and operational discipline**, mirroring modern platform engineering principles.
 
+![Home Lab Platform at a Glance](attachments/index/platform-map.png)
+
 ---
 
 ## 🎯 Platform Goals
@@ -41,6 +43,8 @@ A clustered **Proxmox Virtual Environment** provides the compute substrate for a
 ### 🌐 Networking
 
 Networking is designed for availability, segmentation, and secure ingress. The **[Homelab Network Architecture and Traffic Flows](homelab_network_architecture_and_traffic_flows.md)** provides a clear, end‑to‑end view of how traffic moves through the homelab—from physical topology to VLAN boundaries and service‑level flows.
+
+![How Traffic Reaches a Service](attachments/index/traffic-flow.png)
 
 * **[Cloudflare](cloudflare.md)** provides the homelab’s public‑facing edge, delivering DNS, reverse‑proxy protection, and secure IP‑obfuscated access to internal services.
 * **[VLAN Architecture and Segmentation](vlan_architecture_and_segmentation.md)** summarizes the design and usage of network segmentation
@@ -79,29 +83,12 @@ This enables testing of federation, authorization, and modern authentication flo
 Application workloads are user-facing services deployed on top of the platform.  
 They consume core services such as identity, storage, networking, and monitoring.
 
-### 🎬 Media Services
-
-- [Plex](plex.md)
-- [Tautulli](tautulli.md)
-- [Radarr](radarr.md)
-- [Sonarr](sonarr.md)
-- [Lidarr](lidarr.md)
-- [Sabnzbd](sabnzbd.md)
-- [Ombi](ombi.md)
-
-### 📚 Library & Content Management
-
-- [Calibre](calibre.md)
-- [Calibre-Web](calibre-web.md)
-- [LazyLibrarian](lazylibrarian.md)
-
-### 🎮 Game Servers
-
-- [Minecraft Server](minecraft_server.md)
-
-### 🤖 Home Automation
-
-- [Home Assistant](home_assistant.md) 
+| Category | Services |
+|---|---|
+| 🎬 **Media Services** | [Plex](plex.md) · [Tautulli](tautulli.md) · [Radarr](radarr.md) · [Sonarr](sonarr.md) · [Lidarr](lidarr.md) · [Sabnzbd](sabnzbd.md) · [Ombi](ombi.md) |
+| 📚 **Library & Content Management** | [Calibre](calibre.md) · [Calibre-Web](calibre-web.md) · [LazyLibrarian](lazylibrarian.md) |
+| 🎮 **Game Servers** | [Minecraft Server](minecraft_server.md) |
+| 🤖 **Home Automation** | [Home Assistant](home_assistant.md) |
 
 ---
 

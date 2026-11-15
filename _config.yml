@@ -39,6 +39,6 @@ home_status:
   url: "https://grafana.refol.us/public-dashboards/703ed200b94a457b8ed0355c66d5739c"
   theme: "light"
   from: "now-6h"
-  height: 350
+  height: 320
   mobile_height: 420
   wide_width: 1180

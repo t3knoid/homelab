@@ -8,8 +8,6 @@ This home lab is a **self-hosted internal platform** designed to model productio
 
 The platform emphasizes **reproducibility, automation, observability, and operational discipline**, mirroring modern platform engineering principles.
 
-![Home Lab Platform at a Glance](attachments/index/platform-map.png)
-
 ---
 
 ## 🎯 Platform Goals
@@ -43,8 +41,6 @@ A clustered **Proxmox Virtual Environment** provides the compute substrate for a
 ### 🌐 Networking
 
 Networking is designed for availability, segmentation, and secure ingress. The **[Homelab Network Architecture and Traffic Flows](homelab_network_architecture_and_traffic_flows.md)** provides a clear, end‑to‑end view of how traffic moves through the homelab—from physical topology to VLAN boundaries and service‑level flows.
-
-![How Traffic Reaches a Service](attachments/index/traffic-flow.png)
 
 * **[Cloudflare](cloudflare.md)** provides the homelab’s public‑facing edge, delivering DNS, reverse‑proxy protection, and secure IP‑obfuscated access to internal services.
 * **[VLAN Architecture and Segmentation](vlan_architecture_and_segmentation.md)** summarizes the design and usage of network segmentation
@@ -147,7 +143,7 @@ For all procedures,
 
 The homelab follows a layered dependency model consistent with platform engineering and SRE practices.
 
-![Platform Dependency Model diagram](attachments/index/dependency-model.png)
+![Platform Dependency Model diagram](dependency-model.png)
 
 Each layer depends only on the layer below it. Failures in lower layers propagate upward, informing monitoring priorities, recovery planning, and operational response.
 
